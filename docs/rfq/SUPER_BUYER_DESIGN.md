@@ -884,7 +884,7 @@ Super Buyer order list query từ **`super_buyer_orders` table** (Eloquent) — 
 - Chỉ khi xem detail mới cần gọi WP API
 
 **Filters:**
-- Status: tất cả | rfq_pending | ordered | packaging | delivering | completed | cancelled
+- Status: tất cả | ordered | rfq_pending | rfq_approved | packaging | ready_for_pickup | delivering | completed | cancelled | refunded
 - Order type: tất cả | normal | rfq
 
 **List item hiển thị:**
@@ -906,7 +906,8 @@ Super Buyer order list query từ **`super_buyer_orders` table** (Eloquent) — 
 
 Super Buyer có thể cancel order:
 1. Gọi `Order::sellerCancel()` trên WP (reuse existing method)
-2. Update `super_buyer_orders.status = 'cancelled'`
+2. Chỉ cho phép khi order còn trước giao vận thực tế: `pending`, `ordered`, `processing`, `packaging`, `rfq_pending`
+3. Update `super_buyer_orders.status = 'seller_cancelled'` và clear `rfq_status` để UI không giữ RFQ overlay sai sau khi hủy
 
 ---
 
@@ -968,7 +969,8 @@ Response:
         "order_type": "rfq",
         "rfq_price": 150000,
         "total": 200000,
-        "status": "rfq_pending",
+        "rfq_status": "rfq_pending",
+        "status": "ordered",
         "created_at": "2026-03-17 10:00:00"
     },
     "message": "Đặt hàng thành công"
@@ -978,7 +980,7 @@ Response:
 ### 10.4 List Orders
 
 ```
-GET /api/v1/brand/super-buyer/orders?status=rfq_pending&order_type=rfq&page=1
+GET /api/v1/brand/super-buyer/orders?rfq_status=rfq_pending&order_type=rfq&page=1
 
 Response:
 {
@@ -994,7 +996,7 @@ Response:
             "rfq_price": 150000,
             "rfq_status": "rfq_pending",
             "total": 200000,
-            "status": "rfq_pending",
+            "status": "ordered",
             "created_at": "2026-03-17 10:00:00"
         }
     ],

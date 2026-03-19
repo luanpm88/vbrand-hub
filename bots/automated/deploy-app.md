@@ -44,12 +44,16 @@ cd /home/vbrand/app
 git pull origin brand
 php composer.phar install --no-dev --optimize-autoloader
 php artisan migrate --force
-php artisan config:clear
+php artisan config:cache
 php artisan cache:clear
 php artisan view:clear
 php artisan route:clear
 "
 ```
+
+> ⚠️ **Quan trọng — Cache rules:**
+> - Luôn dùng `config:cache` (KHÔNG dùng `config:clear`) — vì `routes/web.php` dùng `config('app.brand')` để conditionally load brand routes. Nếu config không được cache thì brand routes sẽ không load → 404 toàn bộ `/brand/*`
+> - Luôn dùng `route:clear` (KHÔNG dùng `route:cache`) — vì `BaokimController` không tồn tại trên prod, khiến `route:cache` fail
 
 ### Bước 3: Verify
 

@@ -233,12 +233,14 @@ cd /home/vbrand/app
 git pull origin brand
 php composer.phar install --no-dev --optimize-autoloader
 php artisan migrate --force
-php artisan config:clear
+php artisan config:cache
 php artisan cache:clear
 php artisan view:clear
 php artisan route:clear
 "
 ```
+
+> ⚠️ Luôn dùng `config:cache` (không phải `config:clear`) và `route:clear` (không phải `route:cache`). Xem lý do trong `deploy-app.md`.
 
 **Nếu component:vbrandsync hoặc component:themes đã thay đổi → Deploy sites:**
 
@@ -262,7 +264,7 @@ sed -i 's/^DB_PREFIX=.*/DB_PREFIX=wp_vbs_/' .env
 chmod -R 775 storage bootstrap/cache
 php composer.phar install --no-dev --optimize-autoloader
 php artisan migrate --force
-php artisan config:clear
+php artisan config:cache
 php artisan cache:clear
 php artisan view:clear
 "

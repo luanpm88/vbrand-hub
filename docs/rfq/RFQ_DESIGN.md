@@ -20,16 +20,19 @@ RFQ (Request For Quotation) là loại đơn hàng đặc biệt trong đó **Su
 ### Concept
 - RFQ là **WooCommerce order** giống order thường, chỉ khác:
   - Có `_order_type = 'rfq'` (thay vì `'normal'`)
-  - Có `_rfq_price` = giá đề xuất từ buyer
+    - Có `_rfq_unit_price` = đơn giá buyer đề xuất cho SKU duy nhất
+    - Có `_rfq_line_total` = `rfq_unit_price x quantity`
   - Có `_rfq_status` = `'rfq_pending'` → `'rfq_approved'`
   - Status ban đầu là `wc-rfq_pending` (custom WC status)
-- Khi seller duyệt RFQ → giá line item đổi thành `rfq_price`, order status chuyển thành `packaging` (giống flow seller confirm thường)
-- **Không có nút Cancel** cho RFQ — seller chỉ cần không duyệt
+- Khi seller duyệt RFQ → giữ line item subtotal gốc, set line item total = `rfq_unit_price x quantity`, order status chuyển thành `packaging` (giống flow seller confirm thường)
+- Sau khi duyệt RFQ, `order total` là **giá vận hành hiện tại** của đơn; giá trước duyệt phải lấy từ snapshot riêng, không lấy lại từ `total`
+- Super Buyer có thể hủy RFQ khi còn ở `rfq_pending`; sau khi seller duyệt thì order quay về buyer cancellation policy chung trước giao vận
+- RFQ v1 chỉ hỗ trợ **1 SKU / order**. Quantity > 1 vẫn được phép.
 
 ### Actors
 | Actor | Hành động |
 |-------|-----------|
-| Super Buyer | Tạo đơn RFQ, nhập `rfq_price`, xem trạng thái |
+| Super Buyer | Tạo đơn RFQ, nhập `rfq_unit_price`, xem trạng thái |
 | Seller (Customer) | Xem đơn RFQ, thấy giá đề xuất vs giá gốc vs lời/lỗ, duyệt hoặc bỏ qua |
 | Admin | Xem đơn RFQ, không có action (chỉ view) |
 
@@ -47,7 +50,7 @@ RFQ (Request For Quotation) là loại đơn hàng đặc biệt trong đó **Su
                     └───────────┬───────────┘
                                 │
                     Seller nhấn "Duyệt RFQ"
-                    (line item price → rfq_price)
+                    (line item total → rfq_unit_price x quantity)
                     (recalculate totals)
                                 │
                                 ▼
@@ -61,7 +64,24 @@ RFQ (Request For Quotation) là loại đơn hàng đặc biệt trong đó **Su
                     packaging → ready_for_pickup → delivering → completed
 ```
 
-> **CRITICAL:** Khi duyệt RFQ, hệ thống **ĐỔI GIÁ line item** thành `rfq_price` rồi mới `calculate_totals()`. Điều này đảm bảo `$order->total` phản ánh đúng giá RFQ sau khi duyệt.
+> **CRITICAL:** Khi duyệt RFQ, hệ thống **giữ `line item subtotal` gốc** và chỉ set `line item total = rfq_unit_price x quantity` rồi mới `calculate_totals()`. Điều này đảm bảo `$order->total` phản ánh đúng giá RFQ sau khi duyệt mà vẫn giữ được giá gốc trước RFQ.
+
+### 2.1 Pricing Semantics Decision
+
+Đây là quyết định chuẩn để tránh một field mang hai ý nghĩa khác nhau:
+
+- `order.total` = **giá thực tế hiện tại** của đơn tại thời điểm đang xem. Với RFQ đã duyệt, field này phải bằng tổng đã negotiated sau approval.
+- `rfq_unit_price` = **đơn giá RFQ buyer đề xuất / seller đã duyệt** cho SKU duy nhất của RFQ order.
+- `rfq_line_total` = **tổng RFQ hiển thị** = `rfq_unit_price x quantity`.
+- `original_total_before_rfq` = **snapshot bất biến** của tổng đơn trước khi approve RFQ. Chỉ dùng cho UI lịch sử, so sánh chênh lệch, audit trail.
+
+Rule bắt buộc:
+
+- Trước duyệt (`rfq_pending`): UI hiển thị `Giá gốc đơn hàng` và `Tổng RFQ đề xuất`.
+- Sau duyệt (`rfq_approved` hoặc base status `packaging` trở đi): UI hiển thị `Giá trước duyệt RFQ` và `Giá đơn hàng hiện tại`.
+- Có thể hiển thị thêm `rfq_unit_price x quantity` như explanatory row cho buyer/seller để tránh nhầm giữa đơn giá và tổng RFQ.
+
+RFQ v1 chốt hẳn theo line duy nhất, nên không cần support multi-SKU RFQ trong phase này.
 
 ---
 
@@ -99,9 +119,15 @@ Mỗi order trên WooCommerce lưu thêm meta:
 | Meta Key | Type | Values | Mô tả |
 |----------|------|--------|--------|
 | `_order_type` | string | `'normal'` \| `'rfq'` | Loại đơn hàng |
-| `_rfq_price` | float | e.g. `150000` | Giá đề xuất từ buyer (chỉ khi RFQ) |
+| `_rfq_unit_price` | float | e.g. `150000` | Đơn giá buyer đề xuất (chỉ khi RFQ) |
+| `_rfq_line_total` | float | e.g. `300000` | Tổng RFQ = `rfq_unit_price x quantity` |
 | `_rfq_status` | string | `'rfq_pending'` \| `'rfq_approved'` \| `null` | Trạng thái RFQ |
+| `_rfq_original_total` | float | e.g. `220000` | Snapshot tổng đơn trước khi approve RFQ |
+| `_rfq_approved_total` | float | e.g. `150000` | Snapshot tổng đơn ngay sau khi approve RFQ |
+| `_rfq_approved_at` | datetime string | ISO datetime \| `null` | Thời điểm seller duyệt RFQ |
 | `_super_buyer_id` | int | e.g. `1` | ID Super Buyer trên Laravel (cross-reference) |
+
+> Để tương thích ngược, code có thể mirror `_rfq_price` = `_rfq_unit_price` trong giai đoạn chuyển đổi. Tuy nhiên semantic chuẩn mới là `_rfq_unit_price`.
 
 Sử dụng WooCommerce API:
 ```php
@@ -146,19 +172,20 @@ File: `site/wp-content/plugins/vbrandsync/app/Wordpress/Models/Order.php`
  *
  * @param array $params Keys: product_id, quantity, first_name, last_name,
  *                      phone, email, address_1, city, state,
- *                      order_type(normal|rfq), rfq_price, super_buyer_id
+ *                      order_type(normal|rfq), rfq_unit_price, super_buyer_id
  * @return self
  */
 public static function createOrder($params)
 {
     $order = wc_create_order();
+     $quantity = intval($params['quantity'] ?? 1);
 
     // Add product
     $product = wc_get_product($params['product_id']);
     if (!$product) {
         throw new \Exception('Product not found: ' . $params['product_id']);
     }
-    $order->add_product($product, intval($params['quantity'] ?? 1));
+    $order->add_product($product, $quantity);
 
     // Billing info
     $order->set_billing_first_name($params['first_name'] ?? '');
@@ -174,7 +201,9 @@ public static function createOrder($params)
     $order->update_meta_data('_order_type', $orderType);
 
     if ($orderType === 'rfq') {
-        $order->update_meta_data('_rfq_price', floatval($params['rfq_price']));
+        $rfqUnitPrice = floatval($params['rfq_unit_price']);
+        $order->update_meta_data('_rfq_unit_price', $rfqUnitPrice);
+        $order->update_meta_data('_rfq_line_total', $rfqUnitPrice * $quantity);
         $order->update_meta_data('_rfq_status', 'rfq_pending');
         $order->set_status('rfq_pending');
     } else {
@@ -187,6 +216,9 @@ public static function createOrder($params)
     }
 
     $order->calculate_totals();
+    if ($orderType === 'rfq') {
+        $order->update_meta_data('_rfq_original_total', floatval($order->get_total()));
+    }
     $order->save();
 
     // Return as model instance
@@ -200,7 +232,7 @@ public static function createOrder($params)
 
 ```php
 /**
- * Duyệt RFQ: đổi giá line item → rfq_price, chuyển status → packaging
+ * Duyệt RFQ: giữ line subtotal gốc, set line total theo rfq_unit_price x quantity, chuyển status → packaging
  *
  * @return self
  */
@@ -216,18 +248,34 @@ public function approveRfq()
         throw new \Exception('Order is not in rfq_pending status');
     }
 
-    $rfqPrice = floatval($wcOrder->get_meta('_rfq_price'));
+    $rfqUnitPrice = floatval($wcOrder->get_meta('_rfq_unit_price'));
 
-    // Đổi giá line item thành rfq_price
-    foreach ($wcOrder->get_items() as $item) {
-        $item->set_subtotal($rfqPrice * $item->get_quantity());
-        $item->set_total($rfqPrice * $item->get_quantity());
+    $items = array_values($wcOrder->get_items());
+    if (count($items) !== 1) {
+        throw new \Exception('RFQ v1 only supports exactly one SKU per order');
+    }
+
+    foreach ($items as $item) {
+        $originalLineSubtotal = (float) $item->get_subtotal();
+        $approvedLineTotal = $rfqUnitPrice * $item->get_quantity();
+
+        if (!$wcOrder->get_meta('_rfq_original_total')) {
+            $wcOrder->update_meta_data('_rfq_original_total', floatval($wcOrder->get_total()));
+        }
+
+        $wcOrder->update_meta_data('_rfq_original_line_subtotal', $originalLineSubtotal);
+        $wcOrder->update_meta_data('_rfq_line_total', $approvedLineTotal);
+
+        $item->set_subtotal($originalLineSubtotal);
+        $item->set_total($approvedLineTotal);
         $item->save();
     }
 
     // Recalculate & update status
     $wcOrder->calculate_totals();
     $wcOrder->update_meta_data('_rfq_status', 'rfq_approved');
+    $wcOrder->update_meta_data('_rfq_approved_total', floatval($wcOrder->get_total()));
+    $wcOrder->update_meta_data('_rfq_approved_at', current_time('mysql'));
     $wcOrder->update_status('packaging');
     $wcOrder->save();
 
@@ -274,6 +322,9 @@ Thêm properties vào class:
 public $order_type;
 public $rfq_price;
 public $rfq_status;
+public $rfq_original_total;
+public $rfq_approved_total;
+public $rfq_approved_at;
 public $super_buyer_id;
 ```
 
@@ -283,6 +334,9 @@ Thêm vào `mappingWcOrder()` (sau phần mapping hiện có):
 $this->order_type = $od->get_meta('_order_type') ?: 'normal';
 $this->rfq_price = $od->get_meta('_rfq_price') ?: null;
 $this->rfq_status = $od->get_meta('_rfq_status') ?: null;
+$this->rfq_original_total = $od->get_meta('_rfq_original_total') ?: null;
+$this->rfq_approved_total = $od->get_meta('_rfq_approved_total') ?: null;
+$this->rfq_approved_at = $od->get_meta('_rfq_approved_at') ?: null;
 $this->super_buyer_id = $od->get_meta('_super_buyer_id') ?: null;
 ```
 
@@ -291,6 +345,9 @@ Thêm vào `getAttributes()` return array:
 'order_type' => $this->order_type,
 'rfq_price' => $this->rfq_price,
 'rfq_status' => $this->rfq_status,
+'rfq_original_total' => $this->rfq_original_total,
+'rfq_approved_total' => $this->rfq_approved_total,
+'rfq_approved_at' => $this->rfq_approved_at,
 'super_buyer_id' => $this->super_buyer_id,
 ```
 
@@ -307,6 +364,9 @@ File: `app/app/Wordpress/Order.php`
 public $order_type;
 public $rfq_price;
 public $rfq_status;
+public $rfq_original_total;
+public $rfq_approved_total;
+public $rfq_approved_at;
 public $super_buyer_id;
 ```
 
@@ -320,6 +380,9 @@ const URI_APPROVE_RFQ = 'order/approve-rfq/{id}';
 $this->order_type = $apiData['order_type'] ?? 'normal';
 $this->rfq_price = $apiData['rfq_price'] ?? null;
 $this->rfq_status = $apiData['rfq_status'] ?? null;
+$this->rfq_original_total = $apiData['rfq_original_total'] ?? null;
+$this->rfq_approved_total = $apiData['rfq_approved_total'] ?? null;
+$this->rfq_approved_at = $apiData['rfq_approved_at'] ?? null;
 $this->super_buyer_id = $apiData['super_buyer_id'] ?? null;
 ```
 
@@ -373,9 +436,54 @@ File: `app/app/DTOs/OrderDTO.php`
 'is_rfq'     => ($order->order_type ?? 'normal') === 'rfq',
 'rfq_price'  => $order->rfq_price ?? null,
 'rfq_status' => $order->rfq_status ?? null,
+'rfq_original_total' => $order->rfq_original_total ?? null,
+'rfq_approved_total' => $order->rfq_approved_total ?? null,
+'rfq_approved_at'    => $order->rfq_approved_at ?? null,
+'pricing_summary'    => static::pricingSummary($order),
 ```
 
 **Extend `detail()` — same fields** (detail extends summary nên tự có, nhưng double check).
+
+**Add canonical helper:**
+```php
+protected static function pricingSummary($order)
+{
+    $isRfq = ($order->order_type ?? 'normal') === 'rfq';
+
+    if (!$isRfq) {
+        return [
+            'mode' => 'normal',
+            'current_total' => $order->total ?? null,
+        ];
+    }
+
+    $isPending = ($order->rfq_status ?? null) === 'rfq_pending';
+    $original = $order->rfq_original_total ?: $order->total;
+    $approved = $order->rfq_approved_total ?: $order->total;
+    $proposed = $order->rfq_price ?? null;
+
+    return [
+        'mode' => $isPending ? 'rfq_pending_compare' : 'rfq_approved_history',
+        'current_total' => $order->total ?? null,
+        'original_total_before_rfq' => $isPending ? $order->total ?? null : $original,
+        'proposed_rfq_total' => $proposed,
+        'approved_rfq_total' => $isPending ? null : $approved,
+        'delta_amount' => $proposed !== null ? max(0, (float) $original - (float) $proposed) : null,
+        'delta_direction' => $proposed !== null && (float) $original >= (float) $proposed ? 'down' : 'up',
+        'labels' => $isPending
+            ? [
+                'primary' => 'Giá gốc đơn hàng',
+                'secondary' => 'Giá đề xuất RFQ',
+                'delta' => 'Chênh lệch',
+            ]
+            : [
+                'primary' => 'Giá trước duyệt RFQ',
+                'secondary' => 'Giá đơn hàng hiện tại',
+                'delta' => 'Mức giảm RFQ',
+            ],
+    ];
+}
+```
 
 ### 5.4 Routes
 
@@ -478,33 +586,56 @@ Hiển thị trong order list khi `order_type === 'rfq'`:
             <span class="text-sm font-bold text-orange-900">Yêu cầu báo giá (RFQ)</span>
         </div>
         <div class="space-y-2">
-            <div class="flex justify-between text-xs">
-                <span class="text-orange-700">Giá đề xuất</span>
-                <span class="text-orange-900 font-bold text-sm">
-                    {{ number_format((float)($order->rfq_price ?? 0)) }}₫
-                </span>
-            </div>
-            <div class="flex justify-between text-xs">
-                <span class="text-orange-700">Giá gốc sản phẩm</span>
-                <span class="text-orange-900">
-                    {{ number_format((float)($order->total ?? 0)) }}₫
-                </span>
-            </div>
             @php
-                $diff = ($order->total ?? 0) - ($order->rfq_price ?? 0);
+                $summary = $order->pricing_summary ?? [];
+                $mode = $summary['mode'] ?? 'normal';
+                $primary = $summary['labels']['primary'] ?? 'Giá gốc đơn hàng';
+                $secondary = $summary['labels']['secondary'] ?? 'Giá đề xuất RFQ';
+                $deltaLabel = $summary['labels']['delta'] ?? 'Chênh lệch';
+                $primaryValue = $mode === 'rfq_approved_history'
+                    ? ($summary['original_total_before_rfq'] ?? $order->rfq_original_total ?? null)
+                    : ($summary['original_total_before_rfq'] ?? $order->total ?? null);
+                $secondaryValue = $mode === 'rfq_approved_history'
+                    ? ($summary['current_total'] ?? $order->total ?? null)
+                    : ($summary['proposed_rfq_total'] ?? $order->rfq_price ?? null);
+                $delta = $summary['delta_amount'] ?? null;
             @endphp
-            <div class="flex justify-between text-xs border-t border-orange-200 pt-2 mt-2">
-                <span class="text-orange-700">Chênh lệch</span>
-                <span class="font-bold {{ $diff >= 0 ? 'text-red-600' : 'text-emerald-600' }}">
-                    {{ $diff >= 0 ? '-' : '+' }}{{ number_format(abs($diff)) }}₫
-                    ({{ $diff >= 0 ? 'lỗ' : 'lời' }})
+            <div class="flex justify-between text-xs">
+                <span class="text-orange-700">{{ $primary }}</span>
+                <span class="text-orange-900 font-bold text-sm">
+                    {{ number_format((float)($primaryValue ?? 0)) }}₫
                 </span>
             </div>
+            <div class="flex justify-between text-xs">
+                <span class="text-orange-700">{{ $secondary }}</span>
+                <span class="text-orange-900">
+                    {{ number_format((float)($secondaryValue ?? 0)) }}₫
+                </span>
+            </div>
+            @if($delta !== null)
+                <div class="flex justify-between text-xs border-t border-orange-200 pt-2 mt-2">
+                    <span class="text-orange-700">{{ $deltaLabel }}</span>
+                    <span class="font-bold text-red-600">
+                        -{{ number_format(abs((float) $delta)) }}₫
+                    </span>
+                </div>
+            @endif
         </div>
     </div>
 </div>
 @endif
 ```
+
+UI rules dùng chung cho mọi surface:
+
+- `rfq_pending_compare`: hiển thị `Giá gốc đơn hàng` + `Giá đề xuất RFQ` + `Chênh lệch`.
+- `rfq_approved_history`: hiển thị `Giá trước duyệt RFQ` + `Giá đơn hàng hiện tại` + `Mức giảm RFQ`.
+- `normal`: không hiển thị RFQ card.
+
+Best practice cho list view:
+
+- Surface chung như seller orders, admin orders, store orders: dùng 2-line summary compact cho RFQ orders thay vì thêm một cột global cho mọi order.
+- Surface chuyên RFQ hoặc audit table có thể thêm cột riêng `Giá trước RFQ`, nhưng component canonical vẫn nên lấy từ cùng pricing summary contract.
 
 ### 6.3 Status Filter Tab
 
@@ -558,7 +689,9 @@ Response (same as order/find):
   { id, customer_id, first_name, last_name, email, phone, total, currency,
     status, date_created, date_modified, item_count, payment_method,
     shipping_method, order_items, shipping_fee, tax,
-    order_type, rfq_price, rfq_status, super_buyer_id }
+        order_type, rfq_price, rfq_status,
+        rfq_original_total, rfq_approved_total, rfq_approved_at,
+        pricing_summary, super_buyer_id }
 ```
 
 ### 7.2 Approve RFQ
@@ -569,7 +702,10 @@ Request: (no body needed)
 
 Response (updated order):
   { ...same as above, with rfq_status='rfq_approved', status='packaging',
-    total=(recalculated with rfq_price) }
+    total=(recalculated with rfq_price),
+    rfq_original_total=(snapshot before approval),
+    rfq_approved_total=(snapshot after approval),
+    pricing_summary.mode='rfq_approved_history' }
 ```
 
 ### 7.3 Order List/Detail — Extended Fields
@@ -580,9 +716,33 @@ Tất cả order responses giờ có thêm:
     "order_type": "rfq",
     "is_rfq": true,
     "rfq_price": 150000,
-    "rfq_status": "rfq_pending"
+    "rfq_status": "rfq_pending",
+    "rfq_original_total": null,
+    "rfq_approved_total": null,
+    "rfq_approved_at": null,
+    "pricing_summary": {
+        "mode": "rfq_pending_compare",
+        "current_total": 220000,
+        "original_total_before_rfq": 220000,
+        "proposed_rfq_total": 150000,
+        "approved_rfq_total": null,
+        "delta_amount": 70000,
+        "delta_direction": "down",
+        "labels": {
+            "primary": "Giá gốc đơn hàng",
+            "secondary": "Giá đề xuất RFQ",
+            "delta": "Chênh lệch"
+        }
+    }
 }
 ```
+
+### 7.4 Canonical Contract Rules
+
+- `pricing_summary.mode = normal`: non-RFQ order, chỉ cần `current_total`.
+- `pricing_summary.mode = rfq_pending_compare`: so sánh trước duyệt; `current_total` và `original_total_before_rfq` cùng meaning tại thời điểm chưa duyệt.
+- `pricing_summary.mode = rfq_approved_history`: historical mode; UI phải dùng `original_total_before_rfq` làm giá cũ và `current_total` làm giá hiện tại.
+- Mobile, webapp, store/admin và Super Buyer không tự suy luận label từ `status` nếu đã có `pricing_summary`; chỉ dùng contract này để render.
 
 ---
 
@@ -594,30 +754,38 @@ Tất cả order responses giờ có thêm:
 |---|------|--------|
 | 1 | `site/wp-content/plugins/vbrandsync/plugin.php` | Register `wc-rfq_pending` custom status |
 | 2 | `site/wp-content/plugins/vbrandsync/wordpress/api/order.php` | Implement `order/add` + add `order/approve-rfq/{id}` |
-| 3 | `site/wp-content/plugins/vbrandsync/app/Wordpress/Models/Order.php` | Add `createOrder()`, `approveRfq()`, extend `mappingWcOrder()` + `getAttributes()` |
-| 4 | `app/app/Wordpress/Order.php` | Add RFQ properties, extend `mapping()` + `add()`, add `approveRfq()` |
+| 3 | `site/wp-content/plugins/vbrandsync/app/Wordpress/Models/Order.php` | Add `createOrder()`, `approveRfq()`, snapshot RFQ totals, extend `mappingWcOrder()` + `getAttributes()` |
+| 4 | `app/app/Wordpress/Order.php` | Add RFQ properties, snapshot fields, extend `mapping()` + `add()`, add `approveRfq()` |
 | 5 | `app/config/order_statuses.php` | Add `rfq_pending` entry |
-| 6 | `app/app/DTOs/OrderDTO.php` | Add RFQ fields to `summary()` + `detail()` |
+| 6 | `app/app/DTOs/OrderDTO.php` | Add RFQ fields + canonical `pricing_summary` to `summary()` + `detail()` |
 | 7 | `app/routes/brand_webapp.php` | Add `approve-rfq` route |
 | 8 | `app/routes/brand_api_v1.php` | Add `approve-rfq` route |
 | 9 | `app/app/Http/Controllers/Brand/Webapp/OrderController.php` | Add `approveRfq()` |
 | 10 | `app/app/Http/Controllers/Brand/Api/OrderController.php` | Add `approveRfq()` |
-| 11 | `app/resources/views/webapp/orders/_list.blade.php` | RFQ badge |
-| 12 | `app/resources/views/webapp/orders/show.blade.php` | RFQ info card |
+| 11 | `app/resources/views/webapp/orders/_list.blade.php` | RFQ badge + compact pricing summary |
+| 12 | `app/resources/views/webapp/orders/show.blade.php` | RFQ pricing summary card driven by `pricing_summary` |
 | 13 | `app/resources/views/webapp/orders/index.blade.php` | RFQ filter tab |
 | 14 | `app/resources/views/webapp/components/_status_badge.blade.php` | RFQ color mapping |
+| 15 | `mobile/src/types/index.ts` | Add RFQ snapshot fields + `pricing_summary` type |
+| 16 | `mobile/src/screens/orders/OrderDetailScreen.tsx` | Render lifecycle-aware RFQ pricing summary, not `total` as original |
+| 17 | `mobile/src/components/OrderCard.tsx` | Compact RFQ pricing summary row for approved history when needed |
+| 18 | `app/resources/views/store/orders/list.blade.php` | Compact RFQ pricing summary |
+| 19 | `app/resources/views/admin/brand/orders/list.blade.php` | Compact RFQ pricing summary |
+| 20 | `app/resources/views/superbuyer/orders/show.blade.php` | Same detail pricing semantics as seller/mobile |
 
 ### Implementation Order
-1. WP plugin: register status → implement `createOrder()` → implement `approveRfq()` → deploy sites
-2. Laravel: extend Order model → config → DTO → routes → controllers
-3. UI: views update (badge, info card, filter, action)
+1. WP plugin: register status → implement `createOrder()` → implement `approveRfq()` with `_rfq_original_total` snapshot → expose snapshot fields via API → deploy sites
+2. Laravel: extend Order wrapper → DTO → canonical `pricing_summary` helper → routes/controllers
+3. UI: views/screens update to consume `pricing_summary` instead of inferring from `total`
+4. Verification: test pending vs approved lifecycle on seller, mobile, admin, Super Buyer
 
 ### Verification
 1. Curl test: `POST {wp_endpoint}/order/add` with `order_type=rfq` → verify order created with correct meta
-2. Curl test: `POST {wp_endpoint}/order/approve-rfq/{id}` → verify price changed + status updated
-3. Webapp: seller order list → see RFQ badge → click → see info card → approve → verify flow
-4. API: mobile app → same flow via JSON API
-5. Admin: order list → see RFQ badge + filter
+2. Curl test: `POST {wp_endpoint}/order/approve-rfq/{id}` → verify `total` changed, `rfq_original_total` preserved, `rfq_approved_total` filled
+3. Webapp: seller order detail trước approve → thấy `Giá gốc đơn hàng` vs `Giá đề xuất RFQ`
+4. Webapp/mobile/admin/superbuyer sau approve → thấy `Giá trước duyệt RFQ` vs `Giá đơn hàng hiện tại`
+5. API: mọi clients nhận cùng `pricing_summary.mode` và cùng field names
+6. Generic non-RFQ orders không đổi UI và không có pricing summary block RFQ
 
 ---
 

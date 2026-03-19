@@ -152,6 +152,21 @@ Decision business-safe:
 - `payment/check` là side-effect action, không nên coi là transition business step độc lập
 - `complete`, `deliver`, `pay` là legacy hoặc route-level action; khi tài liệu hóa business nên ưu tiên map về các transition chính đã có trong bảng
 
+### Super Buyer source of truth
+- Super Buyer phải lấy chung từ `app/app/Support/OrderStatusCatalog.php` cho 4 thứ: display status, buyer-facing description, filters, và actions
+- RFQ overlay không còn override vô điều kiện:
+  - `rfq_pending` là display status khi buyer còn đang chờ seller phản hồi
+  - `rfq_approved` chỉ nên hiện ở giai đoạn trước bàn giao vận chuyển (`ordered`, `processing`, `packaging`)
+  - từ `ready_for_pickup` trở đi, display status quay về base lifecycle status
+- Buyer cancel policy hợp lý cho app thương mại:
+  - cho phép: `pending`, `ordered`, `processing`, `packaging`, `rfq_pending`
+  - không cho phép: `ready_for_pickup`, `delivering`, `completed`, các trạng thái đã hủy, hoàn tiền, hoặc sự cố
+- Buyer-facing action copy nên đổi theo ngữ cảnh:
+  - `rfq_pending`: “Hủy yêu cầu báo giá”
+  - `pending`: mô tả đơn còn ở giai đoạn chờ thanh toán/xác nhận thanh toán
+  - `ordered` / `processing`: mô tả shop chưa bàn giao đơn vị vận chuyển
+  - `packaging` / `rfq_approved`: mô tả vẫn còn hủy được nhưng chỉ trước lúc bàn giao đơn vị vận chuyển
+
 ### Display grouping recommendation
 
 Để các surface khác nhau bớt lệch nhau mà không cần đổi code, có thể nhóm hiển thị như sau:
@@ -210,7 +225,7 @@ Decision business-safe:
 | `complete` | varies | `completed` | Action hoàn tất thủ công hoặc legacy path. Cần rà lại use case thật. |
 | `deliver` | varies | unclear | Có route/method riêng ở webapp nhưng semantics đang trùng hoặc mơ hồ so với `set-delivering` và `set-delivered`. |
 | `pay` | varies | unclear | Có route/method riêng ở webapp nhưng semantics hiện chưa rõ và cần review implement thật. |
-| `seller-cancel` | `pending`, `ordered`, `processing`, `packaging`, `ready_for_pickup`, có thể cả `rfq_pending` | `seller_cancelled` | Seller hủy đơn. |
+| `seller-cancel` | `pending`, `ordered`, `processing`, `packaging`, có thể cả `rfq_pending` | `seller_cancelled` | Seller hủy đơn. Với Super Buyer surface, đây cũng là action cancel duy nhất buyer được dùng trước khi order đi vào giao vận. |
 | `refund` | `completed`, `seller_cancelled` | `refunded` | Hoàn tiền chung. |
 | `report-lost-product` | `delivering` | `lost` | Báo mất hàng trong lúc giao. |
 | `lost-refund` | `lost` | `lost_refunded` | Hoàn tiền cho case mất hàng. |
@@ -295,8 +310,10 @@ flowchart TD
   - base `status`
   - overlay `rfq_status`
 - Filter subset quá hẹp, không phản ánh lifecycle chung
-- Cách hiển thị status ở list/detail đang ưu tiên `rfq_status` nếu có, hợp lý cho RFQ nhưng cần tài liệu hóa rõ
-- Hành động hiện chủ yếu là cancel, không có cùng action matrix như seller
+- Canonical direction sau khi chỉnh:
+  - list/detail/filter/action đều đi qua `OrderStatusCatalog`
+  - filter có thể đọc cả `status` và `rfq_status`
+  - buyer chỉ thấy action buyer thật sự được phép làm trên surface này, thay vì dùng nguyên seller/admin action matrix
 
 ### Mobile app
 - Có type và badge map riêng

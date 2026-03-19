@@ -877,6 +877,11 @@ Schema sections:
 - DTO mapping for API responses: `app/app/DTOs/OrderDTO.php`
 - Mobile order filters are delivered by `GET /api/v1/brand/orders/stats` in the `filters` field
 - Webapp, store, admin, and super buyer order UIs should read labels, descriptions, actions, filters, and progress semantics from the shared catalog instead of hardcoding per-screen arrays
+- Filter metadata may represent a business stage backed by multiple raw statuses. Current example: `Đã đặt hàng` expands to both `ordered` and `processing` so all surfaces show the same items under the same tab.
+- Super Buyer uses the same shared catalog, with buyer-specific policy layered in one place:
+    - display status is resolved from base `status` plus `rfq_status`, not by blindly preferring RFQ overlay forever
+    - buyer-facing status description also comes from the shared catalog
+    - buyer actions only expose what buyer can actually do on that surface
 
 ### 7.3 Order Accounting
 When an order is completed, accounting entries are recorded:
@@ -1989,15 +1994,34 @@ Super Buyer là vai trò đặc biệt — **1 buyer duy nhất** có thể brow
 - Webapp riêng tại `/brand/super-buyer/mobile/*` với **theme cam (orange)**
 - **WP connection switch per-request** theo shop đang browse (không có connection cố định)
 - Orders tracked trên **cả 2 nơi**: WooCommerce (order thật) + Laravel DB (`super_buyer_orders` table)
+- Order list/detail/filter/action của Super Buyer phải đọc từ `OrderStatusCatalog` để tránh drift giữa tabs, badge, mô tả trạng thái, và quyền thao tác
 
 ### 18.2 Database
 
 | Table | Mô tả |
 |-------|--------|
 | `super_buyers` | id, user_id (FK→users), name, phone, company_name, status |
-| `super_buyer_orders` | id, uid, super_buyer_id, customer_id, wc_order_id, order_type, rfq_price, rfq_status, total, status — UNIQUE(customer_id, wc_order_id) |
+| `super_buyer_orders` | id, uid, super_buyer_id, customer_id, wc_order_id, order_type, quantity, rfq_unit_price, rfq_line_total, rfq_price, rfq_original_total, rfq_approved_total, rfq_status, total, status — UNIQUE(customer_id, wc_order_id) |
 
 **Models:** `Acelle\Model\SuperBuyer`, `Acelle\Model\SuperBuyerOrder`
+
+**Operational backfill:** nếu có RFQ rows cũ trước RFQ v1, chạy `php artisan super-buyer:backfill-rfq` để hydrate `quantity`, `rfq_unit_price`, `rfq_line_total`, `rfq_original_total`, `rfq_approved_total` từ Woo order hiện tại. Có thể preview bằng `php artisan super-buyer:backfill-rfq --dry-run`.
+
+### 18.2.1 Buyer-facing status and cancellation policy
+
+- Super Buyer display status is resolved centrally from `status` + `rfq_status`:
+    - `rfq_pending` stays visible while the RFQ is still waiting for seller response
+    - `rfq_approved` is only shown while the order is still before shipment handoff (`ordered`, `processing`, `packaging`)
+    - from `ready_for_pickup` onward, the UI falls back to the base lifecycle status so the buyer sees the real fulfillment stage
+- Super Buyer filters support both `status` and `rfq_status` chips from the shared catalog
+- Current buyer cancel policy:
+    - allowed: `pending`, `ordered`, `processing`, `packaging`, `rfq_pending`
+    - blocked: `ready_for_pickup`, `delivering`, `completed`, cancelled/refunded/incident statuses
+- Buyer-facing copy is status-aware:
+    - `rfq_pending` => “Hủy yêu cầu báo giá”
+    - `pending` => cancel copy explains the order is still waiting for payment/confirmation
+    - `ordered` / `processing` => cancel copy explains the shop has not handed over to shipping yet
+    - `packaging` / `rfq_approved` => cancel copy explains buyer can still cancel only before shipment handoff
 
 ### 18.3 Authentication
 
@@ -2053,9 +2077,10 @@ SuperBuyer submit checkout form
 
 RFQ là loại đơn hàng đặc biệt — **Super Buyer đề xuất giá mua thấp hơn giá gốc**. Seller xem xét và duyệt hoặc bỏ qua.
 
-- RFQ = WooCommerce order với `_order_type = 'rfq'`, `_rfq_price`, `_rfq_status`
+- RFQ = WooCommerce order với `_order_type = 'rfq'`, `_rfq_unit_price`, `_rfq_line_total`, `_rfq_status`
 - Status ban đầu: `wc-rfq_pending` (custom WC status)
-- **Không có nút Cancel** — seller chỉ cần không duyệt
+- Super Buyer có thể hủy RFQ khi còn ở `rfq_pending`; sau khi seller duyệt thì follow buyer cancellation policy chung của Super Buyer surface
+- RFQ v1 chỉ hỗ trợ đúng 1 SKU trên mỗi order; quantity > 1 vẫn hợp lệ
 
 ### 19.2 Status Flow
 
@@ -2064,19 +2089,35 @@ Super Buyer tạo đơn RFQ
         │
         ▼
     rfq_pending  →  Seller nhấn "Duyệt RFQ"  →  packaging  →  flow thường
-                     (line item price → rfq_price)
+                     (line total → rfq_unit_price x quantity)
                      (recalculate totals)
 ```
 
-> **CRITICAL:** Khi duyệt RFQ, hệ thống **ĐỔI GIÁ line item** thành `rfq_price` rồi mới `calculate_totals()`.
+> **CRITICAL:** Khi duyệt RFQ, hệ thống giữ `line item subtotal` gốc, chỉ đổi `line item total` thành `rfq_unit_price x quantity` rồi mới `calculate_totals()`. Cách này giữ được giá gốc và làm RFQ discount hiện rõ trong WooCommerce.
+
+### 19.2.1 Pricing Decision
+
+- `order.total` luôn là giá vận hành hiện tại của đơn.
+- Với RFQ đã duyệt, `order.total` phải phản ánh giá negotiated sau approve, không phải giá gốc trước RFQ.
+- `rfq_unit_price` là đơn giá buyer đề xuất cho SKU duy nhất của RFQ order.
+- `rfq_line_total = rfq_unit_price x quantity` là tổng RFQ hiển thị ra mọi UI.
+- Giá trước duyệt phải được lưu ở snapshot riêng, recommended key: `_rfq_original_total`.
+- UI lifecycle:
+    - `rfq_pending`: `Giá gốc đơn hàng` / `Tổng RFQ đề xuất`
+    - `rfq_approved` và `packaging+`: `Giá trước duyệt RFQ` / `Giá đơn hàng hiện tại`
+- Không dùng lại `order.total` làm “giá gốc” sau approval.
 
 ### 19.3 WooCommerce Meta
 
 | Meta Key | Values | Mô tả |
 |----------|--------|--------|
 | `_order_type` | `'normal'` \| `'rfq'` | Loại đơn hàng |
-| `_rfq_price` | float | Giá đề xuất từ buyer |
+| `_rfq_unit_price` | float | Đơn giá RFQ buyer nhập cho SKU duy nhất |
+| `_rfq_line_total` | float | Tổng RFQ = `rfq_unit_price x quantity` |
 | `_rfq_status` | `'rfq_pending'` \| `'rfq_approved'` | Trạng thái RFQ |
+| `_rfq_original_total` | float | Snapshot tổng đơn trước approve RFQ |
+| `_rfq_approved_total` | float | Snapshot tổng đơn ngay sau approve RFQ |
+| `_rfq_approved_at` | datetime | Thời điểm approve RFQ |
 | `_super_buyer_id` | int | ID Super Buyer trên Laravel |
 
 ### 19.4 Key Endpoints
@@ -2094,10 +2135,28 @@ Super Buyer tạo đơn RFQ
 
 ### 19.6 UI Components
 
-- **RFQ Badge**: orange badge `RFQ 150,000₫` trong order list
-- **RFQ Info Card**: hiển thị giá đề xuất vs giá gốc vs chênh lệch trong order detail
+- **RFQ Badge**: orange badge `RFQ` + pricing summary hiển thị `giá gốc → tổng RFQ`
+- **RFQ Pricing Summary**: lifecycle-aware block dùng cùng một contract trên webapp, admin, store, Super Buyer và mobile
 - **Filter Tab**: tab `RFQ` trong order list filter
 - **Status Badge**: orange cho `wc-rfq_pending`
+
+### 19.7 Canonical API/UI Contract
+
+Order DTO/API nên expose thêm các field sau cho RFQ:
+
+- `rfq_original_total`
+- `rfq_approved_total`
+- `rfq_approved_at`
+- `rfq_unit_price`
+- `pricing_summary`
+
+`pricing_summary` là contract dùng chung cho mọi surface:
+
+- `mode = normal`
+- `mode = rfq_pending_compare`
+- `mode = rfq_approved_history`
+
+Mỗi mode trả đủ `current_total`, `rfq_unit_price`, `quantity`, historical snapshot cần thiết, delta và labels để client render mà không phải tự suy luận từ `total`.
 
 ---
 

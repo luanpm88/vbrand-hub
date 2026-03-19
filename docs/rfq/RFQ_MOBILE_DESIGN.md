@@ -7,9 +7,9 @@
 4. [StatusBadge](#4-statusbadge)
 5. [OrderCard — RFQ Badge](#5-ordercard--rfq-badge)
 6. [OrdersScreen — Filter Tab](#6-ordersscreen--filter-tab)
-7. [OrderDetailScreen — RFQ Info Card + Icon](#7-orderdetailscreen--rfq-info-card--icon)
+7. [OrderDetailScreen — RFQ Pricing Summary + Icon](#7-orderdetailscreen--rfq-pricing-summary--icon)
 8. [i18n — Translation Keys](#8-i18n--translation-keys)
-9. [API — Không Cần Thay Đổi](#9-api--không-cần-thay-đổi)
+9. [API Contract — Cần Mở Rộng Response](#9-api-contract--cần-mở-rộng-response)
 10. [Implementation Checklist](#10-implementation-checklist)
 
 ---
@@ -22,15 +22,15 @@ Document changes trong **seller mobile app** (`/mobile`) để support RFQ order
 ### Prerequisite
 Backend API phải implement trước theo `docs/RFQ_DESIGN.md`:
 - vbrandsync plugin: `wc-rfq_pending` custom status, `order/approve-rfq/{id}` endpoint, RFQ meta trong `mappingWcOrder()`
-- Laravel: Order model RFQ properties, `OrderDTO` với `is_rfq`/`rfq_price`/`rfq_status`, API route `orders/{id}/approve-rfq`, `order_statuses.php` config với `rfq_pending`
+- Laravel: Order model RFQ properties, snapshot fields, `OrderDTO` với `is_rfq`/`rfq_price`/`rfq_status`/`pricing_summary`, API route `orders/{id}/approve-rfq`, `order_statuses.php` config với `rfq_pending`
 
 ### Scope
-- **8 files** sửa, **0 files** tạo mới, **0 screens** mới
-- **0 API calls** mới — `ordersApi.action(id, 'approve-rfq')` đã hoạt động generic
-- Backward compatible: `is_rfq = undefined` (falsy) → không hiện RFQ UI
+- Detail/list UI phải đọc cùng một `pricing_summary` contract từ backend để phân biệt pending compare và approved history
+- Không thêm API endpoint mới, nhưng **response contract có thay đổi**
+- Backward compatible cho non-RFQ orders: `pricing_summary.mode = 'normal'`
 
 ### Trạng thái
-7/8 files đã implement (✅). Chỉ còn `OrderDetailScreen.tsx` — RFQ Info Card + `thumb_up` icon (❌).
+Phần RFQ badge/filter/status cơ bản đã có. Phase tiếp theo là đồng bộ `pricing_summary` contract và lifecycle-aware UI cho detail/list RFQ.
 
 ---
 
@@ -66,6 +66,23 @@ export interface OrderSummary {
   is_rfq?: boolean;
   rfq_price?: string | number | null;
   rfq_status?: 'rfq_pending' | 'rfq_approved' | null;
+  rfq_original_total?: string | number | null;
+  rfq_approved_total?: string | number | null;
+  rfq_approved_at?: string | null;
+  pricing_summary?: {
+    mode: 'normal' | 'rfq_pending_compare' | 'rfq_approved_history';
+    current_total?: string | number | null;
+    original_total_before_rfq?: string | number | null;
+    proposed_rfq_total?: string | number | null;
+    approved_rfq_total?: string | number | null;
+    delta_amount?: string | number | null;
+    delta_direction?: 'down' | 'up' | null;
+    labels?: {
+      primary?: string;
+      secondary?: string;
+      delta?: string;
+    };
+  };
 }
 ```
 
@@ -149,7 +166,7 @@ Vị trí: `Tất cả > Đã đặt > [Chờ duyệt RFQ] > Đóng gói > ...`
 
 ---
 
-## 7. OrderDetailScreen — RFQ Info Card + Icon
+## 7. OrderDetailScreen — RFQ Pricing Summary + Icon
 
 **File:** `mobile/src/screens/orders/OrderDetailScreen.tsx`
 
@@ -171,22 +188,23 @@ const ICON_MAP: Record<string, string> = {
 import { Typography, Spacing, BorderRadius, Shadow, Colors } from '../../theme';
 ```
 
-### 7.3 ❌ RFQ Info Card
+### 7.3 ❌ RFQ Pricing Summary Card
 
 Thêm sau order header card (sau line 134, trước Customer info card).
 
 ```tsx
-{/* RFQ Info Card */}
-{order.is_rfq && order.rfq_price != null && (() => {
+{/* RFQ Pricing Summary */}
+{order.is_rfq && order.pricing_summary && (() => {
   const isDark = colors === Colors.dark;
   const rfq = isDark
     ? { bg: '#431407', border: '#9A3412', icon: '#FB923C', title: '#FDBA74', text: '#FB923C', divider: '#9A3412' }
     : { bg: '#FFF7ED', border: '#FDBA74', icon: '#EA580C', title: '#9A3412', text: '#C2410C', divider: '#FDBA74' };
 
-  const originalTotal = typeof order.total === 'string' ? parseFloat(order.total) : order.total;
-  const rfqPrice = typeof order.rfq_price === 'string' ? parseFloat(order.rfq_price) : order.rfq_price!;
-  const diff = originalTotal - rfqPrice;
-  const isLoss = diff > 0;
+  const summary = order.pricing_summary;
+  const isApprovedHistory = summary.mode === 'rfq_approved_history';
+  const primaryValue = summary.original_total_before_rfq;
+  const secondaryValue = isApprovedHistory ? summary.current_total : summary.proposed_rfq_total;
+  const delta = typeof summary.delta_amount === 'string' ? parseFloat(summary.delta_amount) : summary.delta_amount;
 
   return (
     <View style={[styles.card, { backgroundColor: rfq.bg, borderColor: rfq.border }]}>
@@ -198,29 +216,30 @@ Thêm sau order header card (sau line 134, trước Customer info card).
       </View>
 
       <View style={rfqInfoStyles.row}>
-        <Text style={[Typography.body, { color: rfq.text }]}>{t('orders.rfqProposedPrice')}</Text>
-        <Text style={[Typography.h4, { color: rfq.title }]}>{formatPrice(rfqPrice)}</Text>
+        <Text style={[Typography.body, { color: rfq.text }]}>{summary.labels?.primary || t('orders.rfqOriginalPrice')}</Text>
+        <Text style={[Typography.h4, { color: rfq.title }]}>{formatPrice(primaryValue)}</Text>
       </View>
 
       <View style={rfqInfoStyles.row}>
-        <Text style={[Typography.body, { color: rfq.text }]}>{t('orders.rfqOriginalPrice')}</Text>
-        <Text style={[Typography.body, { color: rfq.title }]}>{formatPrice(order.total)}</Text>
+        <Text style={[Typography.body, { color: rfq.text }]}>{summary.labels?.secondary || t('orders.rfqProposedPrice')}</Text>
+        <Text style={[Typography.body, { color: rfq.title }]}>{formatPrice(secondaryValue)}</Text>
       </View>
 
-      <View style={[rfqInfoStyles.divider, { borderTopColor: rfq.divider }]} />
-      <View style={rfqInfoStyles.row}>
-        <Text style={[Typography.body, { color: rfq.text }]}>{t('orders.rfqDifference')}</Text>
-        <Text style={[Typography.bodySemibold, { color: isLoss ? '#DC2626' : '#16A34A' }]}>
-          {isLoss ? '-' : '+'}{formatPrice(Math.abs(diff))}
-          {' '}({isLoss ? t('orders.rfqLoss') : t('orders.rfqProfit')})
-        </Text>
-      </View>
+      {delta != null && (
+        <>
+          <View style={[rfqInfoStyles.divider, { borderTopColor: rfq.divider }]} />
+          <View style={rfqInfoStyles.row}>
+            <Text style={[Typography.body, { color: rfq.text }]}>{summary.labels?.delta || t('orders.rfqDifference')}</Text>
+            <Text style={[Typography.bodySemibold, { color: '#DC2626' }]}>-{formatPrice(Math.abs(delta))}</Text>
+          </View>
+        </>
+      )}
     </View>
   );
 })()}
 ```
 
-### 7.4 ❌ StyleSheet cho RFQ Info Card
+### 7.4 ❌ StyleSheet cho RFQ Pricing Summary
 
 Thêm cuối file:
 
@@ -255,11 +274,17 @@ const rfqInfoStyles = StyleSheet.create({
 | `text` | `#C2410C` (orange-700) | `#FB923C` (orange-400) |
 | `divider` | `#FDBA74` (orange-300) | `#9A3412` (orange-800) |
 
-### 7.6 Price difference logic
+### 7.6 Pricing summary rules
 
-- `diff = originalTotal - rfqPrice`
-- `diff > 0` → seller mất tiền → đỏ (`#DC2626`) + "(lỗ)"
-- `diff <= 0` → seller lời → xanh (`#16A34A`) + "(lời)"
+- `pricing_summary.mode = rfq_pending_compare`:
+  - primary = `Giá gốc đơn hàng`
+  - secondary = `Giá đề xuất RFQ`
+  - delta = giảm giá so với giá gốc
+- `pricing_summary.mode = rfq_approved_history`:
+  - primary = `Giá trước duyệt RFQ`
+  - secondary = `Giá đơn hàng hiện tại`
+  - delta = mức giảm RFQ đã chốt
+- Mobile không tự dùng `order.total` làm original price nếu order đã approved.
 
 ### 7.7 ✅ Action button — Tự hoạt động
 
@@ -281,14 +306,14 @@ const rfqInfoStyles = StyleSheet.create({
 | `orders.rfqPending` | Chờ duyệt RFQ | RFQ Pending |
 | `orders.rfqTitle` | Yêu cầu báo giá (RFQ) | Request for Quotation (RFQ) |
 | `orders.rfqProposedPrice` | Giá đề xuất | Proposed Price |
-| `orders.rfqOriginalPrice` | Giá gốc sản phẩm | Original Price |
+| `orders.rfqOriginalPrice` | Giá gốc đơn hàng | Original Order Price |
 | `orders.rfqDifference` | Chênh lệch | Difference |
 | `orders.rfqLoss` | lỗ | loss |
 | `orders.rfqProfit` | lời | profit |
 
 ---
 
-## 9. API — Không Cần Thay Đổi
+## 9. API Contract — Cần Mở Rộng Response
 
 **File:** `mobile/src/api/orders.ts`
 
@@ -299,7 +324,14 @@ const rfqInfoStyles = StyleSheet.create({
 | Approve RFQ | `ordersApi.action(id, 'approve-rfq')` | Generic action method |
 | Stats | `ordersApi.stats()` | `Record<string, number>` — nhận key bất kỳ |
 
-> **Backend prerequisite:** `OrderDTO` phải trả `order_type`, `is_rfq`, `rfq_price`, `rfq_status`. Config `order_statuses.php` phải có `rfq_pending` với action `approve-rfq`. Xem [RFQ_DESIGN.md](RFQ_DESIGN.md).
+Backend phải trả thêm:
+
+- `rfq_original_total`
+- `rfq_approved_total`
+- `rfq_approved_at`
+- `pricing_summary`
+
+Mobile app chỉ nên render RFQ pricing UI từ `pricing_summary`, không tự suy luận từ `total` và `rfq_price` sau approval.
 
 ---
 
@@ -314,7 +346,9 @@ const rfqInfoStyles = StyleSheet.create({
 | 5 | `mobile/src/components/StatusBadge.tsx` | `wc-rfq_pending` mapping | ✅ |
 | 6 | `mobile/src/components/OrderCard.tsx` | RFQ price badge (orange pill) | ✅ |
 | 7 | `mobile/src/screens/orders/OrdersScreen.tsx` | RFQ filter tab | ✅ |
-| 8 | `mobile/src/screens/orders/OrderDetailScreen.tsx` | `thumb_up` icon + RFQ Info Card | ❌ |
+| 8 | `mobile/src/screens/orders/OrderDetailScreen.tsx` | `thumb_up` icon + lifecycle-aware RFQ pricing summary card | ❌ |
+| 9 | `mobile/src/types/index.ts` | Add RFQ snapshot + `pricing_summary` types | ❌ |
+| 10 | `mobile/src/components/OrderCard.tsx` | Optional compact approved-history summary for RFQ list rows | ❌ |
 
 ### Verification
 
@@ -323,8 +357,9 @@ const rfqInfoStyles = StyleSheet.create({
 3. **Dark mode:** Toggle → RFQ card readable cả 2 mode
 4. **E2E (sau backend deploy):**
    - Orders tab → "Chờ duyệt RFQ" filter → thấy RFQ orders
-   - Order detail → RFQ Info Card (giá đề xuất / gốc / chênh lệch)
-   - "Duyệt RFQ" button → confirm → order → `packaging`
+  - Order detail trước approve → `Giá gốc đơn hàng / Giá đề xuất RFQ`
+  - "Duyệt RFQ" button → confirm → order → `packaging`
+  - Order detail sau approve → `Giá trước duyệt RFQ / Giá đơn hàng hiện tại`
 
 ### Out of scope
 - Dashboard RFQ stats widget
