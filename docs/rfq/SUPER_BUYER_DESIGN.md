@@ -11,7 +11,8 @@
 8. [Checkout Flow (Order Creation)](#8-checkout-flow-order-creation)
 9. [Order Management](#9-order-management)
 10. [API Contracts (Mobile App)](#10-api-contracts-mobile-app)
-11. [Implementation Checklist](#11-implementation-checklist)
+11. [Artisan Commands](#11-artisan-commands)
+12. [Implementation Checklist](#12-implementation-checklist)
 
 ---
 
@@ -1003,7 +1004,50 @@ Response:
 
 ---
 
-## 11. Implementation Checklist
+## 11. Artisan Commands
+
+### `brand:set-buyer` — Tạo / kích hoạt Super Buyer
+
+```bash
+# Tạo bằng email
+php artisan brand:set-buyer --user_email=buyer@example.com
+
+# Tạo bằng user_id, đặt tên custom
+php artisan brand:set-buyer --user_id=5 --name="Nguyen Van A"
+
+# Deactivate
+php artisan brand:set-buyer --user_email=buyer@example.com --deactivate
+```
+
+**Options:**
+
+| Option | Mô tả |
+|--------|-------|
+| `--user_id` | ID của user trong bảng `users` |
+| `--user_email` | Email của user (tìm trong bảng `users`) |
+| `--name` | Tên hiển thị (mặc định lấy `user->name` hoặc email) |
+| `--deactivate` | Set status = inactive thay vì active |
+
+**Output:**
+```
+✓ Created Super Buyer
++----------+------------------------------------------+
+| Field    | Value                                    |
++----------+------------------------------------------+
+| User ID  | 5                                        |
+| Email    | buyer@example.com                        |
+| Name     | Nguyen Van A                             |
+| Status   | active                                   |
+| SB ID    | 1                                        |
+| Login URL| https://yourdomain.com/brand/super-buyer/mobile/login |
++----------+------------------------------------------+
+```
+
+Command dùng `updateOrCreate` — chạy nhiều lần an toàn (idempotent).
+
+---
+
+## 12. Implementation Checklist
 
 ### New Files to Create
 
