@@ -870,6 +870,14 @@ Schema sections:
 | System cancel | `store/orders/{id}/system-cancel` | `admin/store/{uid}/orders/{id}/system-cancel` |
 | Check payment | `store/orders/{id}/payment/check` | `admin/store/{uid}/orders/{id}/payment/check` |
 
+### 7.2.1 Shared Status Catalog
+
+- Shared runtime catalog: `app/app/Support/OrderStatusCatalog.php`
+- Base status/action definitions: `app/config/order_statuses.php`
+- DTO mapping for API responses: `app/app/DTOs/OrderDTO.php`
+- Mobile order filters are delivered by `GET /api/v1/brand/orders/stats` in the `filters` field
+- Webapp, store, admin, and super buyer order UIs should read labels, descriptions, actions, filters, and progress semantics from the shared catalog instead of hardcoding per-screen arrays
+
 ### 7.3 Order Accounting
 When an order is completed, accounting entries are recorded:
 - `ACC_USER_CASH` — User cash account
