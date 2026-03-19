@@ -1,0 +1,11 @@
+# Component repos — each has its own git remote
+app/
+site/
+mobile/
+
+# Bot reports (ephemeral, not needed in hub)
+bots/automated/reports/
+
+# OS
+.DS_Store
+*.swp

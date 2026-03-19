@@ -1,0 +1,12 @@
+{
+  "shop": "nike-flagship-store",
+  "url": "https://www.lazada.vn/shop/nike-flagship-store/",
+  "scrapedAt": "2026-03-16T22:17:43.094Z",
+  "outputDir": "/Users/luan/apps/vbrand/bots/scrape/shops/nike-flagship-store",
+  "apiParams": {
+    "shopId": "4767314",
+    "sellerId": "200712880444",
+    "campaignId": "438927",
+    "promotionTag": "2024143"
+  }
+}
