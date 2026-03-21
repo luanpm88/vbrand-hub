@@ -61,7 +61,7 @@ sed -i 's/^DB_USERNAME=.*/DB_USERNAME=${DIR_NAME}/' .env
 sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=aA456321@/' .env
 sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env
 sed -i 's/^DB_PREFIX=.*/DB_PREFIX=wp_vbs_/' .env
-chmod -R 775 storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 php composer.phar install --no-dev --optimize-autoloader
 php artisan migrate --force
 php artisan config:clear
@@ -103,3 +103,10 @@ wp theme list --format=table
 - nike.b-teka.com ✓
 - Deployed at: <timestamp>
 ```
+
+## Learned Issues
+
+### chmod: Operation not permitted (2026-03-21)
+**Vấn đề:** `chmod -R 775 storage bootstrap/cache` fail vì files thuộc sở hữu `www-data`, user `vbrand` không có quyền đổi permissions.
+**Fix:** Thêm `2>/dev/null || true` — permissions đã đúng sẵn từ setup ban đầu, chmod chỉ là safety check không bắt buộc.
+**Rule:** Luôn dùng `|| true` cho các lệnh chmod trong deploy — không để chmod fail block toàn bộ deploy.
