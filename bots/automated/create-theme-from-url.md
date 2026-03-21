@@ -512,12 +512,17 @@ Mỗi audit round tạo `issues.md`:
 1. Copy audit cuối thành final: `cp -r design/versions/audit_N design/versions/final`
 2. Generate `screenshot.png` (1200x900) cho WP admin
 3. Update `design/HISTORY.md` với full build history
-4. `git add <theme-name>/`
-5. `git commit -m "feat: add <theme-name> theme — <style> inspired"`
-6. **Cập nhật bot này** (`bots/automated/create-theme-from-url.md`):
+4. **Git commit — BẮT BUỘC, KHÔNG SKIP:**
+   ```bash
+   cd /Users/luan/apps/vbrand/site/wp-content/themes
+   git add <theme-name>/
+   git commit -m "feat: add <theme-name> theme — <style> inspired"
+   ```
+5. **Cập nhật bot này** (`bots/automated/create-theme-from-url.md`):
    - Thêm mọi lỗi mới vào KNOWN PITFALLS
    - Cập nhật "Latest theme" ở đầu file
    - Thêm pattern mới vào section phù hợp
+   - Commit bot update: `cd /Users/luan/apps/vbrand && git add bots/ && git commit -m "docs: update create-theme bot — <theme-name> lessons"`
 
 ---
 
