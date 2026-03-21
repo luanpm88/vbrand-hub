@@ -139,6 +139,77 @@ cd /tmp && NODE_PATH=/tmp/node_modules WP_URL="http://brand-site.test" node <scr
 
 ---
 
+## 🟡 MAJOR: Single product — quantity input không có nút +/−, Add to Cart không cùng hàng
+
+**Triệu chứng:** Quantity chỉ là input số thuần, không có nút tăng/giảm. Add to Cart nằm trên dòng riêng trông rời rạc.
+
+**Fix — 3 bước:**
+
+**1. Override `woocommerce/global/quantity-input.php`** — thêm nút +/− xung quanh input:
+```php
+<div class="quantity dc-qty">
+    <button type="button" class="dc-qty__btn dc-qty__btn--minus" aria-label="...">
+        <!-- SVG minus icon -->
+    </button>
+    <input type="number" ... />
+    <button type="button" class="dc-qty__btn dc-qty__btn--plus" aria-label="...">
+        <!-- SVG plus icon -->
+    </button>
+</div>
+```
+
+**2. CSS** — stepper dạng pill (border bao ngoài, nút hai đầu), add-to-cart form flex row:
+```css
+/* Form add-to-cart: quantity + button cùng hàng */
+.dc-single-product__summary .cart {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap;
+}
+
+/* Quantity stepper */
+.dc-qty {
+    display: flex !important;
+    align-items: center !important;
+    border: 1px solid var(--dc-border) !important;
+    border-radius: var(--dc-radius) !important;
+    overflow: hidden;
+    height: 48px;
+}
+.dc-qty__btn { /* hover → background primary */ }
+.dc-qty input[type="number"] {
+    border: none !important;
+    border-left: 1px solid var(--dc-border) !important;
+    border-right: 1px solid var(--dc-border) !important;
+    border-radius: 0 !important;
+    -moz-appearance: textfield !important;
+}
+.dc-qty input::-webkit-outer-spin-button,
+.dc-qty input::-webkit-inner-spin-button { -webkit-appearance: none; }
+```
+
+**3. JS trong footer.php** (trước `wp_footer()`) — xử lý click +/−:
+```js
+document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.dc-qty__btn');
+    if (!btn) return;
+    var input = btn.closest('.dc-qty').querySelector('input[type="number"]');
+    var val = parseInt(input.value, 10) || 1;
+    if (btn.classList.contains('dc-qty__btn--minus')) {
+        if (!isNaN(parseInt(input.min)) && val - 1 < parseInt(input.min)) return;
+        input.value = val - 1;
+    } else {
+        input.value = val + 1;
+    }
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+});
+```
+
+Xem `dreamcafe/woocommerce/global/quantity-input.php` + `dreamcafe/footer.php` để tham khảo full code.
+
+---
+
 ## 🟠 MINOR: Quên copy audit cuối thành `final/`
 
 **Triệu chứng:** Không có thư mục `design/versions/final/` — khó biết bản nào là chính thức.
