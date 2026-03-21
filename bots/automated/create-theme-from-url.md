@@ -25,7 +25,141 @@ bots/automated/create-theme-from-url.md fix <theme-name> <mô tả issue>
 
 ---
 
+# SELF-IMPROVE RULE — ĐỌC TRƯỚC KHI LÀM GÌ
+
+**Sau mỗi lần build theme, bot PHẢI tự cập nhật file này với:**
+1. Mọi lỗi mới gặp → thêm vào `KNOWN PITFALLS` bên dưới
+2. Pattern mới hiệu quả → thêm vào section phù hợp
+3. Checklist mới → thêm vào Audit Checklist
+
+**Khi làm theme MỚI:**
+- Reference latest theme (hiện tại: `dreamcafe`) để học hỏi patterns
+- KHÔNG clone/copy code từ theme cũ — build from scratch chuẩn WP + WooCommerce
+- Đọc latest theme's `design/HISTORY.md` để tránh lặp lỗi cũ
+
+**Latest theme:** `dreamcafe` (built 2026-03-21, coffee shop, mauve palette)
+→ Xem `/site/wp-content/themes/dreamcafe/` để tham khảo patterns
+
+---
+
+# KNOWN PITFALLS — LỖI ĐÃ GẶP, ĐỪNG LẶP LẠI
+
+## 🔴 CRITICAL: woocommerce.php trong theme root phá hỏng WC template routing
+
+**Triệu chứng:** `woocommerce/archive-product.php` không bao giờ được load, dù file tồn tại và `locate_template()` trả về đúng path. Shop page vẫn render WC default (`<ul class="products columns-3">` rỗng).
+
+**Root cause:** Nếu có file `woocommerce.php` trong theme root, WC ưu tiên nó cho MỌI WC page trước khi check subfolder `woocommerce/`. File này gọi `woocommerce_content()` → render WC default loop thay vì template của mình.
+
+**Fix:** **ĐỪNG tạo `woocommerce.php` trong theme root.** Không cần thiết. Với `add_theme_support('woocommerce')`, WC tự route đúng:
+- `woocommerce/archive-product.php` → shop archive
+- `woocommerce/single-product.php` → single product
+- `page.php` → cart, checkout, account (WC block pages)
+
+**File structure ĐÚNG:** Không có `woocommerce.php` ở root. Chỉ có thư mục `woocommerce/`.
+
+---
+
+## 🔴 CRITICAL: WC 10.6.1+ `woocommerce_product_loop()` luôn trả về true
+
+**Triệu chứng:** `woocommerce_product_loop()` trả về `true` dù không có sản phẩm nào → `woocommerce_product_loop_start()` render `<ul class="products">` rỗng.
+
+**Root cause:** Trong WC 10.6.1+:
+```php
+function woocommerce_product_loop() {
+    return have_posts() || 'products' !== woocommerce_get_loop_display_mode();
+}
+```
+Nếu display mode là `'subcategories'` hoặc `'both'`, function trả về `true` kể cả khi `have_posts()` = false.
+
+**Fix:** Không dùng WC loop trong `archive-product.php`. Dùng `wc_get_products()` trực tiếp:
+```php
+$products = wc_get_products(['status' => 'publish', 'limit' => $per_page, 'page' => $paged, ...]);
+foreach ($products as $product): // render card inline
+```
+Xem `dreamcafe/woocommerce/archive-product.php` để tham khảo full implementation.
+
+---
+
+## 🟡 MAJOR: content-product.php dùng `<div>` thay vì `<li>`
+
+**Triệu chứng:** Product cards không hiển thị đúng trong grid, layout bị vỡ.
+
+**Root cause:** WC product loop wrap cards trong `<ul class="products">`. HTML chuẩn yêu cầu `<ul>` chỉ chứa `<li>`. Nếu dùng `<div>`, browser tự sửa DOM → layout CSS sai.
+
+**Fix:** `content-product.php` phải dùng `<li>` làm root element:
+```php
+<li <?php post_class('dc-wc-product-card'); ?>>
+    ...
+</li>
+```
+
+**Note:** Nếu dùng `wc_get_products()` trực tiếp trong `archive-product.php` (như pitfall trên), thì không cần lo việc này — render inline dùng `<div>` bình thường.
+
+---
+
+## 🟡 MAJOR: Mobile shop grid vẫn 2-col dù đã có responsive CSS
+
+**Triệu chứng:** Shop grid ở 375px vẫn hiện 2 cột, nhưng CSS đã có breakpoint 640px.
+
+**Root cause:** Rule `grid-template-columns: repeat(2, 1fr)` được set tại `960px` breakpoint, nhưng `640px` breakpoint không explicitly override nó về `1fr`. CSS cascade giữ giá trị từ `960px`.
+
+**Fix:** Tại `640px` breakpoint, PHẢI explicitly set shop grid về 1 cột:
+```css
+@media (max-width: 640px) {
+    .dc-shop-product-grid { grid-template-columns: 1fr !important; }
+}
+```
+
+---
+
+## 🟡 MAJOR: WC blockified templates bypass PHP template hierarchy
+
+**Triệu chứng:** WC 9.0+ có "blockified" templates. Một số trang (cart, checkout, account) được render bởi Gutenberg blocks, không phải PHP templates.
+
+**Fix:** KHÔNG cố tạo PHP templates cho cart/checkout/account. Thay vào đó:
+- `page.php` detect và render full-width container cho WC block pages:
+```php
+$is_wc_block_page = false;
+if (function_exists('is_cart') && is_cart()) $is_wc_block_page = true;
+if (function_exists('is_checkout') && is_checkout()) $is_wc_block_page = true;
+if (function_exists('is_account_page') && is_account_page()) $is_wc_block_page = true;
+```
+- Style WC block components trong CSS: `.wc-block-cart`, `.wc-block-checkout`, `.wp-block-woocommerce-*`
+
+---
+
+## 🟠 MINOR: Puppeteer NODE_PATH khi chạy từ /tmp
+
+**Triệu chứng:** `require('puppeteer')` fail nếu không chỉ định `NODE_PATH`.
+
+**Fix:**
+```bash
+cd /tmp && NODE_PATH=/tmp/node_modules WP_URL="http://brand-site.test" node <script> <outdir>
+```
+
+---
+
+## 🟠 MINOR: Quên copy audit cuối thành `final/`
+
+**Triệu chứng:** Không có thư mục `design/versions/final/` — khó biết bản nào là chính thức.
+
+**Fix:** Sau audit round cuối, LUÔN copy:
+```bash
+cp -r design/versions/audit_N design/versions/final
+```
+
+---
+
 # MODE 1: Tạo Theme Mới
+
+## PHASE 0: Đọc latest theme để học hỏi
+
+Trước khi build, đọc:
+- `/site/wp-content/themes/dreamcafe/design/HISTORY.md` — design decisions, known issues
+- `/site/wp-content/themes/dreamcafe/functions.php` — WC hooks pattern
+- `/site/wp-content/themes/dreamcafe/woocommerce/archive-product.php` — shop template pattern
+
+**Mục tiêu:** Học patterns, tránh pitfalls. KHÔNG copy code — viết mới từ đầu với style của theme mới.
 
 ## PHASE 1: Research — Chụp & Phân tích website gốc
 
@@ -45,9 +179,10 @@ Dùng Puppeteer headless browser:
 Download images phù hợp:
 - Hero/banner images → assets/images/hero/
 - Featured section images → assets/images/featured/
-- Category images → assets/images/sport/
-- About page images → assets/images/hero/ (reuse)
-- Contact/help images → assets/images/contact/
+- Category images → assets/images/categories/
+- About page images → assets/images/about/
+- Menu/product images → assets/images/menu/
+- Contact images → assets/images/contact/
 - Icons → assets/images/icons/
 
 CHÚ Ý: Không download trademark logos. Dùng generic SVG thay thế.
@@ -81,25 +216,29 @@ Từ screenshots gốc, note:
 ├── page-homepage.php          # Template Name: Homepage
 ├── page-aboutus.php           # Template Name: About Us
 ├── page-contact.php           # Template Name: Contact
-├── woocommerce.php            # WooCommerce wrapper (fallback)
+│
+│   ⚠️  KHÔNG có woocommerce.php ở root! (xem KNOWN PITFALLS)
+│
 ├── woocommerce/
-│   ├── archive-product.php    # Shop page
+│   ├── archive-product.php    # Shop page — dùng wc_get_products() trực tiếp
 │   ├── single-product.php     # Product detail wrapper
-│   ├── content-product.php    # Product card in loop
+│   ├── content-product.php    # Product card in WC loop (dùng <li>!)
 │   └── content-single-product.php  # Product detail layout
 ├── assets/images/             # Downloaded + fallback images
 │   ├── hero/
 │   ├── featured/
-│   ├── sport/
+│   ├── categories/
+│   ├── about/
+│   ├── menu/
 │   ├── contact/
 │   └── icons/
 └── design/                    # Design assets & audit history
-    ├── HISTORY.md             # Full build history
+    ├── HISTORY.md             # Full build history + design decisions
     ├── original_site_screenshots/
     ├── versions/
-    │   ├── audit_1/           # screenshots/ + issues.md
+    │   ├── audit_1/           # screenshots
     │   ├── audit_2/
-    │   └── final/
+    │   └── final/             # Copy của audit tốt nhất
     └── scripts/
         └── screenshot-all.js  # Puppeteer screenshot script
 ```
@@ -115,7 +254,7 @@ Required sessions & options: xem SCHEMA REFERENCE bên dưới.
 ```
 - CSS custom properties cho colors, fonts, spacing
 - BEM naming: .{prefix}-{block}__{element}--{modifier}
-- Prefix 2 chữ từ theme name (nz- cho nikezero, ap- cho adidas-prime)
+- Prefix 2 chữ từ theme name (dc- cho dreamcafe, nz- cho nikezero)
 - Pure CSS, không framework
 - Smooth transitions (0.2s-0.3s)
 ```
@@ -131,8 +270,9 @@ Required sessions & options: xem SCHEMA REFERENCE bên dưới.
 | `:root` override `--wp--preset--color--accent` | Prevent WC purple default |
 | Hide webkit number spin: `-moz-appearance: textfield` | Native spinner ugly |
 | `page.php` detect `is_cart()`/`is_checkout()` → full-width | Block cart/checkout cần wide container |
+| Shop grid explicitly 1-col tại 640px breakpoint | Cascade từ 960px giữ 2-col nếu không override |
 
-**Required CSS sections (22):**
+**Required CSS sections (27):**
 1. Reset & base
 2. Layout (container, gutter)
 3. Top bar
@@ -141,20 +281,26 @@ Required sessions & options: xem SCHEMA REFERENCE bên dưới.
 6. Hero section
 7. Buttons (primary, outline, white)
 8. Section titles & navigation
-9. Featured cards
-10. Product carousel
-11. Category carousel
-12. Spotlight grid
-13. Footer
-14. About page
-15. Contact/Help page + form
-16. WooCommerce shop (product grid, filter pills, sort, pagination)
-17. WooCommerce single product (gallery + summary, tabs, variations)
-18. **WooCommerce Block Cart** (items, totals, proceed button, coupon)
-19. **WooCommerce Block Checkout** (inputs, order summary, place order, shipping, payment)
-20. **Global WC button overrides** (`.button.alt`, `.wp-element-button`, disabled state)
-21. Mobile nav overlay
-22. Responsive breakpoints (640, 960, 1200)
+9. About section
+10. Popular menu / featured cards
+11. Services cards
+12. Product carousel (horizontal scroll)
+13. Category carousel
+14. Testimonials
+15. Spotlight grid
+16. Footer
+17. Page hero (shop, about, contact banners)
+18. Shop controls (filter pills, sort dropdown)
+19. WooCommerce shop grid + product cards
+20. WooCommerce single product
+21. **WooCommerce Block Cart**
+22. **WooCommerce Block Checkout**
+23. **Global WC button overrides** (`.button.alt`, `.wp-element-button`, disabled)
+24. Mobile nav + overlay
+25. Responsive — 1200px
+26. Responsive — 960px
+27. Responsive — 640px (shop grid PHẢI về 1-col!)
+28. WordPress Admin Bar offset
 
 ### 2.4 PHP Templates — Key Patterns
 
@@ -191,13 +337,29 @@ if (function_exists('is_account_page') && is_account_page()) $is_wc_block_page =
 // → use full-width container for WC block pages
 ```
 
+**archive-product.php — dùng wc_get_products() trực tiếp (không dùng WC loop):**
+```php
+$paged    = (int) (get_query_var('paged') ?: get_query_var('page') ?: 1);
+$per_page = (int) apply_filters('loop_shop_per_page', 12);
+$sort_param = isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : get_option('woocommerce_default_catalog_orderby', 'menu_order');
+
+$args = ['status' => 'publish', 'limit' => $per_page, 'page' => $paged, 'return' => 'objects'];
+// apply sort to $args...
+$products = wc_get_products($args);
+
+// Pagination: count separately
+$count_args = array_merge($args, ['limit' => -1, 'return' => 'ids']);
+$total = count(wc_get_products($count_args));
+```
+
 **functions.php must include:**
 - Theme support (title-tag, post-thumbnails, woocommerce, wc-product-gallery-*)
 - Style enqueue
-- Remove WC default wrapper/breadcrumb/sidebar
-- Products per page filter
+- Remove WC default wrapper/breadcrumb/sidebar actions
+- Products per page + columns filters
 - Contact form handler
 - Auto page setup from menu schema
+- **KHÔNG register `woocommerce.php` anywhere**
 
 ## PHASE 3: Pixel-Perfect Audit Loop
 
@@ -214,7 +376,7 @@ if (function_exists('is_account_page') && is_account_page()) $is_wc_block_page =
 │  3. Liệt kê MỌI issue → issues.md           │
 │  4. Fix ALL issues                           │
 │  5. Nếu còn issue → repeat (max 5 rounds)   │
-│  6. Done → copy to design/versions/final/    │
+│  6. Done → cp -r audit_N/ final/            │
 │                                              │
 │  Chất lượng output = chất lượng audit        │
 └─────────────────────────────────────────────┘
@@ -242,17 +404,19 @@ if (function_exists('is_account_page') && is_account_page()) $is_wc_block_page =
 | 16 | **WC notices** | Info/success/error messages styled |
 | 17 | **Footer** | Multi-column, copyright, links all from schema |
 | 18 | **Admin bar** | Sticky header offset for logged-in users |
+| 19 | **Shop grid mobile** | 1-col at 375px, NOT 2-col (common regression!) |
+| 20 | **Shop products loading** | Products actually rendering (not empty `<ul>`) |
 
 ### Screenshot Script
 
 Script sống trong theme: `design/scripts/screenshot-all.js`
 
 ```bash
-# Chạy từ thư mục có puppeteer (hoặc /tmp):
-cd /tmp && node <theme-path>/design/scripts/screenshot-all.js <output-dir>
+# Chạy từ /tmp (có puppeteer):
+cd /tmp && NODE_PATH=/tmp/node_modules WP_URL="http://brand-site.test" node <theme-path>/design/scripts/screenshot-all.js <output-dir>
 
 # Auto-increment audit number:
-cd /tmp && node <theme-path>/design/scripts/screenshot-all.js
+cd /tmp && NODE_PATH=/tmp/node_modules WP_URL="http://brand-site.test" node <theme-path>/design/scripts/screenshot-all.js
 ```
 
 ### Issues File Format
@@ -274,10 +438,15 @@ Mỗi audit round tạo `issues.md`:
 
 ## PHASE 4: Finalize
 
-1. Generate `screenshot.png` (1200x900) cho WP admin
-2. Update `design/HISTORY.md` với full build history
-3. `git add <theme-name>/`
-4. `git commit -m "feat: add <theme-name> theme — <style> inspired"`
+1. Copy audit cuối thành final: `cp -r design/versions/audit_N design/versions/final`
+2. Generate `screenshot.png` (1200x900) cho WP admin
+3. Update `design/HISTORY.md` với full build history
+4. `git add <theme-name>/`
+5. `git commit -m "feat: add <theme-name> theme — <style> inspired"`
+6. **Cập nhật bot này** (`bots/automated/create-theme-from-url.md`):
+   - Thêm mọi lỗi mới vào KNOWN PITFALLS
+   - Cập nhật "Latest theme" ở đầu file
+   - Thêm pattern mới vào section phù hợp
 
 ---
 
@@ -288,12 +457,13 @@ bots/automated/create-theme-from-url.md review <theme-name>
 ```
 
 1. Chạy screenshot script → `design/versions/audit_N/`
-2. Xem screenshots, audit theo checklist (18 items trên)
+2. Xem screenshots, audit theo checklist (20 items trên)
 3. Tạo `issues.md` với tất cả issues
 4. Fix all issues
 5. Repeat audit loop đến khi clean
-6. Update `design/HISTORY.md`
-7. Commit
+6. `cp -r audit_N/ final/`
+7. Update `design/HISTORY.md`
+8. Commit
 
 ---
 
@@ -348,3 +518,4 @@ text, textarea, image, boolean, number, select, list (has `max` + `schema` sub-f
 - Download hình fail → gradient/placeholder fallback
 - Theme đã tồn tại → hỏi confirm overwrite
 - Coming Soon mode → auto login trước khi chụp
+- Shop products không hiển thị → kiểm tra ngay: có `woocommerce.php` ở root không? Xóa nó đi.
