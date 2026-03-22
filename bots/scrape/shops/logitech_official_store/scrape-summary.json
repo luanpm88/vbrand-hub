@@ -1,0 +1,15 @@
+{
+  "shop": "logitech.official.store",
+  "shopId": "52679373",
+  "parsedFrom": "html",
+  "htmlFile": "/Users/luan/apps/vbrand/tmp/shopee.html",
+  "scrapedAt": "2026-03-22T10:30:37.538Z",
+  "outputDir": "/tmp/shopee-logitech-out",
+  "counts": {
+    "products": 61
+  },
+  "selectors": {
+    "productLink": "a[href*=\"-i.\"] → regex -i\\.(\\d+)\\.(\\d+)",
+    "note": "DOM parse mode — name from img.alt or card text, price from [class*=price]"
+  }
+}

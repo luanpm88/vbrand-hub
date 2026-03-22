@@ -47,3 +47,27 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Timezone: Asia/Ho_Chi_Minh
 - SSL: Yes (expires 2026-06-13)
 - Created: 2026-03-15
+
+---
+
+## 3. Guucoffee.com
+- DIR_NAME: Guucoffee_com
+- DB_NAME: Guucoffee_com
+- DB_USER: Guucoffee_com
+- DB_PASS: aA456321@
+- WP Admin: admin
+- WP Pass: aA456321@
+- WP Path: /home/vbrand/sites/Guucoffee_com
+- WP API: http://guucoffee.com/wp-json/vbrandsync/v1
+- Brand Endpoint: https://app.brandviet.vn/api/brand
+- Brand Token: BZPSmpdy1vSUlF77OaFlqa2ytgdgR9mdoOKvg7lsD1Tg86IelHFi4kXSHfLQ
+- Customer Name: GuuCoffee
+- Customer Email: Marketingmientrung@gmail.com
+- Customer Password: Aa456321$
+- First Name: Anh
+- Last Name: Linh
+- Phone:
+- Theme: dreamcafe
+- Timezone: Asia/Ho_Chi_Minh
+- SSL: No
+- Created: 2026-03-22

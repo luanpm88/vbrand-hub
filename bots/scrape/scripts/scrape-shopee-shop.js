@@ -12,9 +12,12 @@
  *    Không cần mở browser login lại.
  *
  * Usage:
- *   cd /private/tmp && node <path>/scrape-shopee-shop.js <shop_url> [options]
+ *   cd /private/tmp && node <path>/scrape-shopee-shop.js <shop_name> [options]
  *
  * Examples:
+ *   # HTML mode: user copy HTML từ DevTools → parse (không cần browser/login)
+ *   node scrape.js baseus.flagship.vn --html /tmp/shopee-baseus.html
+ *
  *   # Lần đầu: login thủ công, save cookies
  *   node scrape.js "https://shopee.vn/baseus.flagship.vn" --login-wait --user luanpm3108 --pass 'xxx'
  *
@@ -25,14 +28,24 @@
  *   node scrape.js "https://shopee.vn/baseus.flagship.vn" --products --limit 10 --cookies shopee-cookies.json
  */
 
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const http = require('http');
 
-puppeteer.use(StealthPlugin());
+// Load puppeteer: stealth for browser automation, plain core for HTML parse mode
+let puppeteer;
+function loadPuppeteer() {
+    if (puppeteer) return;
+    const candidates = ['puppeteer-extra', 'puppeteer', 'puppeteer-core'];
+    for (const name of candidates) {
+        try { puppeteer = require(name); break; } catch (e) {}
+    }
+    if (!puppeteer) throw new Error('No puppeteer package found. Run: npm install puppeteer-core');
+    if (puppeteer.use) {
+        try { puppeteer.use(require('puppeteer-extra-plugin-stealth')()); } catch (e) {}
+    }
+}
 
 const BOTS_DIR = '/Users/luan/apps/vbrand/bots/scrape/shops';
 const COOKIES_FILE = '/Users/luan/apps/vbrand/bots/scrape/shopee-cookies.json';
@@ -47,6 +60,7 @@ let opts = {
     loginWait: false,   // visible browser, wait for user to complete verify
     cookiesFile: '',    // load cookies from file
     chromeProfile: '',  // use existing Chrome profile (reuse login session)
+    htmlFile: '',       // parse from manually-copied HTML file (no browser needed)
 };
 
 for (let i = 0; i < args.length; i++) {
@@ -63,6 +77,7 @@ for (let i = 0; i < args.length; i++) {
         case '--cookies': opts.cookiesFile = args[++i]; break;
         case '--chrome-profile': opts.chromeProfile = args[++i]; break;
         case '--chrome': opts.chromeProfile = 'default'; break; // use Default Chrome profile
+        case '--html': opts.htmlFile = args[++i]; break;
         default: if (!args[i].startsWith('--')) shopUrl = args[i];
     }
 }
@@ -70,13 +85,17 @@ for (let i = 0; i < args.length; i++) {
 if (opts.all) { opts.shopInfo = true; opts.products = true; opts.categories = true; }
 
 if (!shopUrl) {
-    console.error('Usage: node scrape-shopee-shop.js <shop_url> [--login-wait --user U --pass P] [--cookies file.json] [--all|--products] [--limit N]');
+    console.error('Usage: node scrape-shopee-shop.js <shop_name_or_url> [--html file.html] [--login-wait --user U --pass P] [--cookies file.json] [--all|--products] [--limit N]');
     process.exit(1);
 }
 
 function extractShopName(url) {
+    // URL format: https://shopee.vn/shopname or just "shopname" or "shopname --html ..."
     const m = url.match(/shopee\.vn\/([^?\/]+)/);
-    return m ? m[1] : 'unknown_shop';
+    if (m) return m[1];
+    // If user passed just shop name (not full URL), use as-is
+    if (!url.startsWith('http') && !url.startsWith('/')) return url;
+    return 'unknown_shop';
 }
 
 const shopNameRaw = extractShopName(shopUrl);
@@ -112,6 +131,18 @@ async function main() {
     console.log('🛒 Shopee Scraper');
     console.log(`   Shop: ${shopNameRaw}`);
     console.log(`   Output: ${outputDir}`);
+
+    // ---- HTML mode: short-circuit browser automation ----
+    if (opts.htmlFile) {
+        const htmlPath = path.isAbsolute(opts.htmlFile) ? opts.htmlFile : path.resolve(opts.htmlFile);
+        if (!fs.existsSync(htmlPath)) {
+            console.error(`❌ HTML file not found: ${htmlPath}`);
+            process.exit(1);
+        }
+        await parseFromHtmlFile(htmlPath, outputDir);
+        return;
+    }
+
     console.log(`   Auth: ${opts.loginWait ? 'login-wait (manual verify)' : opts.cookiesFile ? 'cookies file' : 'none'}`);
     console.log('');
 
@@ -123,6 +154,7 @@ async function main() {
     // ============================================================
     // LAUNCH BROWSER
     // ============================================================
+    loadPuppeteer();
     const useHeadless = !opts.loginWait && !opts.chromeProfile;
     console.log(`🚀 Launching ${useHeadless ? 'headless' : 'visible'} browser...`);
 
@@ -594,6 +626,305 @@ async function main() {
 
     console.log('\n✅ Done!');
     console.log(`   ${outputDir}`);
+}
+
+// ============================================================
+// HTML PARSE MODE — parse manually-copied Shopee HTML
+// ============================================================
+async function parseFromHtmlFile(htmlFile, outputDir) {
+    console.log(`\n📄 HTML Parse Mode`);
+    console.log(`   File: ${htmlFile}`);
+    console.log('');
+
+    ensureDir(outputDir);
+    ensureDir(path.join(outputDir, 'images/products'));
+    ensureDir(path.join(outputDir, 'images/shop'));
+
+    const html = fs.readFileSync(htmlFile, 'utf8');
+
+    // Save full HTML for reference
+    const savedHtml = path.join(outputDir, 'full.html');
+    fs.copyFileSync(htmlFile, savedHtml);
+    console.log(`  ✓ full.html saved`);
+
+    // --- Strategy 1: Extract JSON from script tags ---
+    let jsonProducts = [];
+    const jsonPatterns = [
+        /"item_basic"\s*:\s*\{[^}]*"itemid"\s*:\s*(\d+)/g,  // detect if item_basic present
+    ];
+    // Try to find large JSON blobs with itemid arrays
+    const scriptMatches = html.match(/<script[^>]*>([\s\S]*?)<\/script>/g) || [];
+    for (const scriptTag of scriptMatches) {
+        const content = scriptTag.replace(/<script[^>]*>|<\/script>/g, '');
+        // Look for itemid patterns in script content
+        if (content.includes('"itemid"') && content.includes('"name"') && content.length > 500) {
+            try {
+                // Try to find items array
+                const itemsMatch = content.match(/"items"\s*:\s*(\[[^\]]{100,}\])/);
+                if (itemsMatch) {
+                    const items = JSON.parse(itemsMatch[1]);
+                    if (Array.isArray(items) && items.length > 0 && items[0].itemid) {
+                        jsonProducts = items;
+                        console.log(`  📡 Strategy 1: found ${items.length} products in script JSON`);
+                        break;
+                    }
+                }
+            } catch (e) {}
+        }
+    }
+
+    // --- Strategy 2+3: DOM extraction via Puppeteer ---
+    console.log(`  🔍 Launching Puppeteer to parse DOM...`);
+    loadPuppeteer();
+    const browser = await puppeteer.launch({
+        headless: 'new',
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
+    });
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', req => req.abort()); // block all network — parse only from HTML
+
+    await page.setContent(html, { waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {});
+    await sleep(1000);
+
+    // Extract shop info from meta tags
+    const shopMeta = await page.evaluate(() => {
+        const og = (prop) => document.querySelector(`meta[property="og:${prop}"]`)?.content || '';
+        const title = document.title || og('title') || '';
+        const image = og('image') || '';
+        const url   = og('url')   || document.querySelector('link[rel="canonical"]')?.href || '';
+        return { title, image, url };
+    });
+
+    // Extract products from DOM
+    const domProducts = await page.evaluate(() => {
+        const results = []; const seen = new Set();
+
+        function parseVndPrice(text) {
+            if (!text) return { price: 0, priceMin: 0, priceMax: 0 };
+            const clean = text.replace(/[₫đ\s\.]/g, '').replace(/,/g, '');
+            const nums = clean.match(/\d+/g) || [];
+            const vals = nums.map(n => parseInt(n)).filter(n => n > 1000);
+            return { price: vals[0] || 0, priceMin: vals[0] || 0, priceMax: vals[1] || vals[0] || 0 };
+        }
+
+        function parseSold(text) {
+            if (!text) return 0;
+            const m = text.match(/(\d[\d\.,]*)/);
+            return m ? parseInt(m[1].replace(/[,\.]/g, '')) : 0;
+        }
+
+        function getBestImg(card) {
+            const imgs = card.querySelectorAll('img');
+            for (const img of imgs) {
+                const src = img.src || img.dataset?.src || img.getAttribute('data-src') || '';
+                if (src && src.includes('susercontent') && !src.includes('100x100')) return src;
+            }
+            for (const img of imgs) {
+                const src = img.src || img.dataset?.src || img.getAttribute('data-src') || '';
+                if (src && src.startsWith('http')) return src;
+            }
+            return '';
+        }
+
+        // Find all product links: href contains "-i.SHOPID.ITEMID"
+        const links = document.querySelectorAll('a[href*="-i."]');
+        links.forEach(a => {
+            const m = a.href.match(/-i\.(\d+)\.(\d+)/);
+            if (!m) return;
+            const shopId = m[1], itemId = m[2];
+            if (seen.has(itemId)) return;
+            seen.add(itemId);
+
+            // Walk up to product card
+            const card = a.closest('li, [class*="shopee-search-item"], [class*="col-"], [class*="item"]') || a;
+
+            // Name: try img alt first, then text nodes
+            const img = card.querySelector('img');
+            let name = img?.alt?.trim() || '';
+            if (!name) {
+                const nameEl = card.querySelector('[class*="name"], [class*="title"], [class*="text"]');
+                name = nameEl?.textContent?.trim() || a.textContent?.trim() || '';
+            }
+            // Clean up name (remove price/sold noise)
+            name = name.split('\n')[0].trim().substring(0, 200);
+
+            // Price: Shopee uses aria-label="promotion price" as an empty accessibility span
+            // The actual price is in the next sibling div, e.g: <span>2.619.000</span><span>₫</span>
+            let price = 0, priceMin = 0, priceMax = 0;
+            const priceA11y = card.querySelector('[aria-label="promotion price"]');
+            if (priceA11y) {
+                // Walk up to parent wrapper, then find all spans with digit patterns
+                const priceWrapper = priceA11y.parentElement || priceA11y;
+                const priceSpans = Array.from(priceWrapper.querySelectorAll('span'));
+                const vals = priceSpans
+                    .map(s => s.textContent.trim())
+                    .filter(t => /^\d[\d\.]+$/.test(t)) // "2.619.000" — digits + dots only
+                    .map(t => parseInt(t.replace(/\./g, '')))
+                    .filter(n => n > 1000);
+                price = vals[0] || 0; priceMin = vals[0] || 0; priceMax = vals[1] || vals[0] || 0;
+            } else {
+                // Fallback: old selector
+                const priceEl = card.querySelector('[class*="price"]');
+                ({ price, priceMin, priceMax } = parseVndPrice(priceEl?.textContent || ''));
+            }
+
+            // Sold: "Đã bán 5k+" or "Đã bán 1.200" text in any div
+            let sold = 0;
+            const allDivs = Array.from(card.querySelectorAll('div, span'));
+            const soldEl = allDivs.find(el => /Đã bán|đã bán/.test(el.textContent) && el.children.length === 0);
+            if (soldEl) {
+                const soldText = soldEl.textContent.trim();
+                // Handle "5k+" → 5000, "1.2k" → 1200, "1.200" → 1200
+                const m2 = soldText.match(/([\d\.]+)\s*k\+?/i);
+                if (m2) sold = Math.round(parseFloat(m2[1].replace(',', '.')) * 1000);
+                else sold = parseSold(soldText);
+            } else {
+                // Fallback: old selector
+                const soldEl2 = card.querySelector('[class*="sold"], [class*="historical"]');
+                sold = parseSold(soldEl2?.textContent || '');
+            }
+
+            // Rating: img[alt="rating-star"] nextElementSibling has the rating text e.g. "4.9"
+            let rating = 0;
+            const ratingImg = card.querySelector('img[alt="rating-star"]');
+            if (ratingImg?.nextElementSibling) {
+                rating = parseFloat(ratingImg.nextElementSibling.textContent) || 0;
+            } else {
+                // Fallback: old selector
+                const ratingEl = card.querySelector('[class*="rating"] [class*="stars"], [class*="stars-filled"]');
+                rating = parseFloat(ratingEl?.style?.width || '0') / 20 || 0;
+            }
+
+            const image = getBestImg(card);
+
+            if (!name && !image) return; // skip empty cards (nav links, etc.)
+
+            results.push({ itemId, shopId, name, price, priceMin, priceMax, sold, rating, image,
+                url: `https://shopee.vn/product/${shopId}/${itemId}` });
+        });
+
+        // Fallback: /product/SHOPID/ITEMID format
+        if (results.length === 0) {
+            document.querySelectorAll('a[href*="/product/"]').forEach(a => {
+                const m = a.href.match(/\/product\/(\d+)\/(\d+)/);
+                if (!m) return;
+                const shopId = m[1], itemId = m[2];
+                if (seen.has(itemId)) return;
+                seen.add(itemId);
+                const img = a.querySelector('img');
+                results.push({ itemId, shopId, name: img?.alt || a.textContent?.trim() || '',
+                    price: 0, priceMin: 0, priceMax: 0, sold: 0, rating: 0,
+                    image: img?.src || '', url: `https://shopee.vn/product/${shopId}/${itemId}` });
+            });
+        }
+
+        return results;
+    });
+
+    await browser.close();
+
+    // Merge: prefer JSON products if found, else DOM products
+    let products = [];
+    if (jsonProducts.length > 0) {
+        products = jsonProducts.map(item => {
+            const p = item.item_basic || item;
+            return {
+                id: String(p.itemid || p.item_id),
+                shopId: String(p.shopid || ''),
+                name: p.name || '',
+                description: p.description || '',
+                price: p.price ? p.price / 100000 : 0,
+                priceMin: p.price_min ? p.price_min / 100000 : 0,
+                priceMax: p.price_max ? p.price_max / 100000 : 0,
+                currency: 'VND',
+                stock: p.stock || 0,
+                sold: p.sold || p.historical_sold || 0,
+                rating: p.item_rating?.rating_star || 0,
+                image: p.image ? shopeeImg(p.image) : '',
+                images: (p.images || []).map(i => shopeeImg(i)),
+                url: `https://shopee.vn/product/${p.shopid}/${p.itemid}`,
+            };
+        });
+    } else {
+        products = domProducts.map(d => ({
+            id: d.itemId,
+            shopId: d.shopId,
+            name: d.name,
+            description: '',
+            price: d.price,
+            priceMin: d.priceMin,
+            priceMax: d.priceMax,
+            currency: 'VND',
+            stock: 0,
+            sold: d.sold,
+            rating: d.rating,
+            image: d.image,
+            images: d.image ? [d.image] : [],
+            url: d.url,
+        }));
+    }
+
+    const shopId = products[0]?.shopId || '';
+    console.log(`\n📊 Results: ${products.length} products found`);
+    if (products.length === 0) {
+        console.log('  ⚠️  No products found. Tips:');
+        console.log('     - Make sure to scroll to bottom before copying HTML');
+        console.log('     - Copy the FULL page HTML (right-click on <html> tag in DevTools → Copy → Copy outerHTML)');
+    }
+
+    // Shop info from meta
+    const shopInfo = {
+        name: shopMeta.title.replace(/\s*[-|].*$/, '').trim() || shopNameRaw,
+        username: shopNameRaw,
+        avatar: shopMeta.image || '',
+        url: shopMeta.url || `https://shopee.vn/${shopNameRaw}`,
+        shopId,
+        itemCount: products.length,
+        parsedFrom: 'html',
+    };
+    if (shopInfo.avatar) {
+        const ok = await downloadImage(shopInfo.avatar, path.join(outputDir, 'images/shop/avatar.jpg'));
+        if (ok) shopInfo.localAvatar = 'images/shop/avatar.jpg';
+    }
+    saveJson(path.join(outputDir, 'shop-info.json'), shopInfo);
+    saveJson(path.join(outputDir, 'categories.json'), []);
+
+    // Download product images
+    console.log(`\n  📸 Downloading ${products.length} product images...`);
+    let imgCount = 0;
+    for (let i = 0; i < products.length; i++) {
+        const p = products[i];
+        if (p.image) {
+            const ok = await downloadImage(p.image, path.join(outputDir, 'images/products', `${p.id}.jpg`));
+            if (ok) { p.localImage = `images/products/${p.id}.jpg`; imgCount++; }
+        }
+        if (p.images?.length > 1) {
+            p.localImages = [];
+            for (let j = 1; j < Math.min(p.images.length, 5); j++) {
+                const ok = await downloadImage(p.images[j], path.join(outputDir, 'images/products', `${p.id}_${j}.jpg`));
+                if (ok) p.localImages.push(`images/products/${p.id}_${j}.jpg`);
+            }
+        }
+        if ((i + 1) % 20 === 0) console.log(`  Images: ${imgCount} / ${i + 1}`);
+    }
+    console.log(`  ✅ ${imgCount} images downloaded`);
+
+    saveJson(path.join(outputDir, 'products.json'), products);
+    saveProductsMd(products, shopInfo, shopNameRaw, outputDir);
+    saveJson(path.join(outputDir, 'scrape-summary.json'), {
+        shop: shopNameRaw, shopId, parsedFrom: 'html', htmlFile,
+        scrapedAt: new Date().toISOString(), outputDir,
+        counts: { products: products.length },
+        selectors: {
+            productLink: 'a[href*="-i."] → regex -i\\.(\\d+)\\.(\\d+)',
+            note: 'DOM parse mode — name from img.alt or card text, price from [class*=price]',
+        },
+    });
+
+    console.log(`\n✅ Done!`);
+    console.log(`   ${outputDir}`);
+    console.log(`   Products: ${products.length} | Images: ${imgCount}`);
 }
 
 function saveShopInfo(sd, dir) {

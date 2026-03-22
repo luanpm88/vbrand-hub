@@ -8,6 +8,7 @@ Tạo WordPress + WooCommerce site mới trên production server, tạo customer
 bots/vbrand_new_prod_site.md tạo site logitech.b-teka.com
 bots/vbrand_new_prod_site.md tạo site logitech.b-teka.com công ty "Logitech Vietnam" email huy@logitech.com
 bots/vbrand_new_prod_site.md tạo site nike.b-teka.com theme logitech
+bots/vbrand_new_prod_site.md Guucoffee.com email Marketingmientrung@gmail.com tên khách "Anh Linh" công ty "GuuCoffee" theme dreamcafe
 ```
 
 ## Input
@@ -15,8 +16,9 @@ bots/vbrand_new_prod_site.md tạo site nike.b-teka.com theme logitech
 - **DOMAIN** (bắt buộc) — domain của site (ví dụ: `logitech.b-teka.com`)
 - **COMPANY_NAME** (optional) — tên công ty/shop. Mặc định: lấy phần đầu domain viết hoa (ví dụ: `logitech.b-teka.com` → `Logitech`)
 - **ADMIN_EMAIL** (optional) — email quản lý. Mặc định: `{domain_slug}@gmail.com` (ví dụ: `logitech@gmail.com`)
-- **FIRST_NAME** (optional) — tên admin. Mặc định: `Admin`
-- **LAST_NAME** (optional) — họ admin. Mặc định: `Shop`
+- **USER_NAME** (optional) — tên khách hàng, dạng "Anh Linh" hoặc "Nguyễn Văn A". Bot tự tách: từ đầu = FIRST_NAME, từ cuối = LAST_NAME. Ví dụ: `"Anh Linh"` → FIRST_NAME=`Anh`, LAST_NAME=`Linh`. Nếu chỉ có 1 từ thì FIRST_NAME = từ đó, LAST_NAME = rỗng
+- **FIRST_NAME** (optional) — tên admin. Mặc định: `Admin`. Bị override nếu có USER_NAME
+- **LAST_NAME** (optional) — họ admin. Mặc định: `Shop`. Bị override nếu có USER_NAME
 - **PHONE** (optional) — SĐT admin. Mặc định: không có
 - **TIMEZONE** (optional) — timezone. Mặc định: `Asia/Ho_Chi_Minh`
 - **THEME** (optional) — tên theme WordPress cần activate. Mặc định: `logitech`
@@ -24,7 +26,7 @@ bots/vbrand_new_prod_site.md tạo site nike.b-teka.com theme logitech
 ## Quy tắc xử lý biến
 
 Từ DOMAIN, tính ra các biến:
-- `DOMAIN` = domain user nhập (ví dụ: `logitech.com`)
+- `DOMAIN` = domain user nhập, **lowercase toàn bộ** (ví dụ: `Guucoffee.com` → `guucoffee.com`)
 - `DIR_NAME` = thay `.` và `-` thành `_` (ví dụ: `logitech.com` → `logitech_com`, `logitech.b-teka.com` → `logitech_b_teka_com`)
 - `DB_NAME` = giống DIR_NAME (ví dụ: `logitech_com`)
 - `DB_USER` = giống DIR_NAME (ví dụ: `logitech_com`)
@@ -40,8 +42,9 @@ Từ DOMAIN, tính ra các biến:
 Biến optional:
 - `COMPANY_NAME` = nếu user không nhập → lấy phần đầu domain trước dấu `.` đầu tiên, viết hoa chữ cái đầu (ví dụ: `logitech.b-teka.com` → `Logitech`)
 - `ADMIN_EMAIL` = nếu user không nhập → `{phần_trước_dấu_chấm_đầu}@gmail.com` (ví dụ: `logitech@gmail.com`)
-- `FIRST_NAME` = mặc định `Admin`
-- `LAST_NAME` = mặc định `Shop`
+- `USER_NAME` = nếu user nhập "tên khách" hoặc "tên" → tách: từ đầu = FIRST_NAME, từ cuối = LAST_NAME
+- `FIRST_NAME` = mặc định `Admin` (override bởi USER_NAME nếu có)
+- `LAST_NAME` = mặc định `Shop` (override bởi USER_NAME nếu có)
 - `TIMEZONE` = mặc định `Asia/Ho_Chi_Minh`
 - `THEME` = mặc định `logitech`
 

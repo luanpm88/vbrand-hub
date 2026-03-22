@@ -104,7 +104,8 @@ User report bug/feature → GitHub Issues [vbrand, status:new] trên luanpm88/vb
 | Deploy Sites | `bots/automated/deploy-sites.md` | Sync themes + vbrandsync plugin lên WP sites |
 | Deploy Mobile | `bots/automated/deploy-mobile.md` | Commit + push mobile (không build) |
 | Design Doc | `bots/automated/DESIGN_USAGE_PROMPTS.md` | Architecture + usage guide chi tiết |
-| Scrape & Import | `bots/scrape/scrape-lazada-shop.md` | Scrape Lazada Mall shop → Import vào WooCommerce |
+| Scrape Lazada | `bots/scrape/scrape-lazada-shop.md` | Scrape Lazada Mall shop → Import vào WooCommerce |
+| Scrape Shopee | `bots/scrape/scrape-shopee-shop.md` | Scrape Shopee shop qua HTML mode (copy từ DevTools) |
 
 ### Usage — Cách gọi bots
 
@@ -155,6 +156,7 @@ User có thể nói ngắn — Claude phải tự hiểu và chạy đúng bot:
 | `scrape lazada <url>` | Chạy `scrape-lazada-shop.md scrape <url>` |
 | `import <shop> vào <site>` | Chạy `scrape-lazada-shop.md import <site> <shop_dir> --clean` |
 | `scrape + import <url> vào <site>` | Scrape rồi import |
+| `scrape shopee <shop>` | Hướng dẫn copy HTML → chạy `scrape-shopee-shop.md` |
 
 ### Label conventions
 

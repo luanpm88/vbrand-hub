@@ -9,3 +9,4 @@ bots/automated/reports/
 # OS
 .DS_Store
 *.swp
+tmp/
