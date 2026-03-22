@@ -322,7 +322,13 @@ async function main() {
                 nameRaw: p.title || '',
                 url: p.pdpUrl || p.mobileUrl || '',
                 image: p.imageUrl ? (p.imageUrl.startsWith('//') ? 'https:' + p.imageUrl : p.imageUrl) : '',
-                price: p.discountPriceFormatted || p.priceFormatted || '',
+                // Standard fields (cross-platform)
+                price: p.price || 0,
+                salePrice: (p.discountPrice && p.discountPrice < p.price) ? p.discountPrice : null,
+                sold: p.volumePayOrdPrdQty1m || 0,
+                source: 'lazada',
+                // Lazada-specific (kept for backward compat)
+                priceFormatted: p.discountPriceFormatted || p.priceFormatted || '',
                 priceRaw: p.discountPrice || p.price || 0,
                 originalPrice: p.price !== p.discountPrice ? p.priceFormatted : '',
                 originalPriceRaw: p.price || 0,

@@ -151,7 +151,7 @@ async function main() {
     // ============================================================
     if (shopInfo) {
         console.log('\n🏪 Importing shop info...');
-        const logoUrl = shopInfo.logo || '';
+        const logoUrl = shopInfo.logo || shopInfo.avatar || '';
         const shopData = {
             name: shopInfo.name || '',
             shop_id: shopInfo.shopId || '',
@@ -193,29 +193,34 @@ async function main() {
     for (let i = 0; i < products.length; i++) {
         const p = products[i];
 
-        // Build image URL (prefer Lazada CDN URL)
+        // Build image URL
         let imageUrl = '';
         if (!opts.skipImages) {
             imageUrl = p.image || '';
-            // Ensure full URL
             if (imageUrl.startsWith('//')) imageUrl = 'https:' + imageUrl;
-            // Get higher res
-            imageUrl = imageUrl.replace(/_\d+x\d+q\d+/, '_720x720q80');
+            imageUrl = imageUrl.replace(/_\d+x\d+q\d+/, '_720x720q80'); // Lazada: get higher res
         }
+
+        // Standard format (cross-platform) with Lazada backward-compat fallbacks
+        const regularPrice = p.price || p.originalPriceRaw || p.priceRaw || 0;
+        const salePrice = p.salePrice ?? (
+            p.priceRaw && p.originalPriceRaw && p.priceRaw < p.originalPriceRaw ? p.priceRaw : null
+        );
+        const soldCount = p.sold ?? p.soldLastMonth ?? 0;
 
         const productData = {
             title: p.name || p.nameRaw || '',
             description: p.description || '',
-            price: p.originalPriceRaw || p.priceRaw || '',
-            discount_price: p.priceRaw && p.originalPriceRaw && p.priceRaw < p.originalPriceRaw ? p.priceRaw : '',
-            lazada_id: p.id || '',
-            source: 'lazada',
+            price: regularPrice || '',
+            discount_price: salePrice || '',
+            product_id: p.id || '',
+            source: p.source || 'unknown',
             sku: p.sku || '',
             rating: p.rating || '',
             review_count: p.reviews || '',
-            sold_last_month: p.soldLastMonth || '',
+            sold_count: soldCount || '',
             brand_id: p.brandId || '',
-            lazada_url: p.url || '',
+            product_url: p.url || '',
         };
 
         if (imageUrl) {

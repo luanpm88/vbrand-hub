@@ -1,10 +1,11 @@
 {
   "name": "LOGITECH OFFICIAL STORE",
-  "username": "logitech.official.store",
-  "avatar": "https://down-zl-vn.img.susercontent.com/97e16ce2497766d89209dc6348283b5f.webp",
+  "slug": "logitech.official.store",
+  "logo": "https://down-zl-vn.img.susercontent.com/97e16ce2497766d89209dc6348283b5f.webp",
   "url": "https://shopee.vn/logitech_officialshop",
   "shopId": "52679373",
+  "source": "shopee",
   "itemCount": 61,
   "parsedFrom": "html",
-  "localAvatar": "images/shop/avatar.jpg"
+  "localLogo": "images/shop/avatar.jpg"
 }

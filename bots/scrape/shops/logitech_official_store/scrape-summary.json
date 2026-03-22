@@ -3,8 +3,8 @@
   "shopId": "52679373",
   "parsedFrom": "html",
   "htmlFile": "/Users/luan/apps/vbrand/tmp/shopee.html",
-  "scrapedAt": "2026-03-22T10:30:37.538Z",
-  "outputDir": "/tmp/shopee-logitech-out",
+  "scrapedAt": "2026-03-22T10:40:15.667Z",
+  "outputDir": "/Users/luan/apps/vbrand/bots/scrape/shops/logitech_official_store",
   "counts": {
     "products": 61
   },

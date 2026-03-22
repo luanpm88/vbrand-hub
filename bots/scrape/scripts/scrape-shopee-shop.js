@@ -829,17 +829,23 @@ async function parseFromHtmlFile(htmlFile, outputDir) {
     if (jsonProducts.length > 0) {
         products = jsonProducts.map(item => {
             const p = item.item_basic || item;
+            const priceVal = p.price ? p.price / 100000 : 0;
+            const priceMin = p.price_min ? p.price_min / 100000 : 0;
+            const priceMax = p.price_max ? p.price_max / 100000 : 0;
             return {
                 id: String(p.itemid || p.item_id),
                 shopId: String(p.shopid || ''),
                 name: p.name || '',
                 description: p.description || '',
-                price: p.price ? p.price / 100000 : 0,
-                priceMin: p.price_min ? p.price_min / 100000 : 0,
-                priceMax: p.price_max ? p.price_max / 100000 : 0,
+                // Standard fields
+                price: priceVal,
+                salePrice: (priceMin && priceMin < priceVal) ? priceMin : null,
+                sold: p.sold || p.historical_sold || 0,
+                source: 'shopee',
+                // Shopee-specific
+                priceMin, priceMax,
                 currency: 'VND',
                 stock: p.stock || 0,
-                sold: p.sold || p.historical_sold || 0,
                 rating: p.item_rating?.rating_star || 0,
                 image: p.image ? shopeeImg(p.image) : '',
                 images: (p.images || []).map(i => shopeeImg(i)),
@@ -852,12 +858,16 @@ async function parseFromHtmlFile(htmlFile, outputDir) {
             shopId: d.shopId,
             name: d.name,
             description: '',
+            // Standard fields
             price: d.price,
+            salePrice: (d.priceMin && d.priceMin < d.price) ? d.priceMin : null,
+            sold: d.sold,
+            source: 'shopee',
+            // Shopee-specific
             priceMin: d.priceMin,
             priceMax: d.priceMax,
             currency: 'VND',
             stock: 0,
-            sold: d.sold,
             rating: d.rating,
             image: d.image,
             images: d.image ? [d.image] : [],
@@ -873,19 +883,20 @@ async function parseFromHtmlFile(htmlFile, outputDir) {
         console.log('     - Copy the FULL page HTML (right-click on <html> tag in DevTools → Copy → Copy outerHTML)');
     }
 
-    // Shop info from meta
+    // Shop info from meta (standard format: logo + localLogo)
     const shopInfo = {
         name: shopMeta.title.replace(/\s*[-|].*$/, '').trim() || shopNameRaw,
-        username: shopNameRaw,
-        avatar: shopMeta.image || '',
+        slug: shopNameRaw,
+        logo: shopMeta.image || '',
         url: shopMeta.url || `https://shopee.vn/${shopNameRaw}`,
         shopId,
+        source: 'shopee',
         itemCount: products.length,
         parsedFrom: 'html',
     };
-    if (shopInfo.avatar) {
-        const ok = await downloadImage(shopInfo.avatar, path.join(outputDir, 'images/shop/avatar.jpg'));
-        if (ok) shopInfo.localAvatar = 'images/shop/avatar.jpg';
+    if (shopInfo.logo) {
+        const ok = await downloadImage(shopInfo.logo, path.join(outputDir, 'images/shop/avatar.jpg'));
+        if (ok) shopInfo.localLogo = 'images/shop/avatar.jpg';
     }
     saveJson(path.join(outputDir, 'shop-info.json'), shopInfo);
     saveJson(path.join(outputDir, 'categories.json'), []);

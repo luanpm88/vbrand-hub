@@ -2,7 +2,7 @@
 
 **Shop:** [logitech.official.store](https://shopee.vn/logitech.official.store)  
 **Total:** 61 products  
-**Scraped:** 2026-03-22T10:30:37.521Z  
+**Scraped:** 2026-03-22T10:40:15.645Z  
 
 | # | Name | Price (₫) | Sold | Rating | Vars |
 |---|------|-----------|------|--------|------|
