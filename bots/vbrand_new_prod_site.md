@@ -226,6 +226,23 @@ wp rewrite structure '/%postname%/' --hard
 "
 ```
 
+**Sau khi install**, cấu hình WooCommerce cho Việt Nam:
+
+```bash
+ssh vbrand@18.141.199.175 "
+cd /home/vbrand/sites/${DIR_NAME}
+wp option update woocommerce_default_country 'VN'
+wp option update woocommerce_store_city 'Hồ Chí Minh'
+wp option update woocommerce_currency 'VND'
+wp option update woocommerce_currency_pos 'right_space'
+wp option update woocommerce_price_decimal_sep ','
+wp option update woocommerce_price_thousand_sep '.'
+wp option update woocommerce_price_num_decimals '0'
+"
+```
+
+**Lưu ý**: `woocommerce_default_country = VN` là bắt buộc. WC Blocks dùng option này để khởi tạo country mặc định trong checkout form — nếu không set, Blocks sẽ hiển thị địa chỉ Mỹ (US). Plugin vbrandsync đã có filter `pre_option_woocommerce_default_country` nhưng set thẳng vào DB ở đây để chắc chắn.
+
 ### Bước 6: Sync plugin vbrandsync + themes từ local (rsync → vbrand@)
 
 rsync qua `vbrand@` — file tự động thuộc `vbrand:vbrand`, không cần chown/chmod.
