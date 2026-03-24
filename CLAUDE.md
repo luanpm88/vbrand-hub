@@ -108,6 +108,7 @@ User report bug/feature → GitHub Issues [vbrand, status:new] trên luanpm88/vb
 | Import WooCommerce | `bots/scrape/bot-import-woo.md` | Import `shops/` data vào WooCommerce (any source) |
 | Scrape Lazada | `bots/scrape/scrape-lazada-shop.md` | Scrape Lazada Mall shop → `shops/` standard format |
 | Scrape Shopee | `bots/scrape/scrape-shopee-shop.md` | Scrape Shopee shop qua HTML mode (copy từ DevTools) |
+| Clone Full Site | `bots/scrape/full-site/scraper.md` | Clone/copy website thành standalone PHP site |
 
 ### Usage — Cách gọi bots
 
@@ -159,6 +160,10 @@ User có thể nói ngắn — Claude phải tự hiểu và chạy đúng bot:
 | `scrape shopee <shop>` | Hướng dẫn copy HTML → chạy `bot-scrape.md --type=shopee` |
 | `import <shop> vào <site>` | Chạy `bot-import-woo.md import <site> shops/<shop>/ --clean` |
 | `scrape + import <url> vào <site>` | Scrape (bot-scrape) rồi import (bot-import-woo) |
+| `clone site mailchimp.com` | Chạy `scraper.md clone https://mailchimp.com` |
+| `clone site giống X` | Tìm site phù hợp → chạy `scraper.md clone` |
+| `update mailchimp fix menu` | Chạy `scraper.md update mailchimp` |
+| `audit mailchimp` | Screenshot + review site mailchimp |
 
 ### Label conventions
 
