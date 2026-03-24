@@ -6,7 +6,11 @@ mobile/
 # Bot reports (ephemeral, not needed in hub)
 bots/automated/reports/
 
+# Flarum — separate git repo
+flarum/
+
 # OS
 .DS_Store
 *.swp
 tmp/
+node_modules/

@@ -1,4 +1,7 @@
 node_modules/
 design/versions/
 design/reference/
+design/node_modules/
+flarum/
+bots/
 .DS_Store
