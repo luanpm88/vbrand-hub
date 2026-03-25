@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" font-family="'IBM Plex Sans', Arial, sans-serif">
+  <defs>
+    <filter id="shadow-card" x="-8%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="7" flood-color="#241C15" flood-opacity="0.10"/>
+    </filter>
+    <filter id="shadow-center" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="10" flood-color="#E8571A" flood-opacity="0.20"/>
+    </filter>
+    <marker id="arr-accent" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="#E8571A"/>
+    </marker>
+    <linearGradient id="grad-arrow1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E5E0DA"/>
+      <stop offset="100%" stop-color="#E8571A"/>
+    </linearGradient>
+    <linearGradient id="grad-arrow2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E5E0DA"/>
+      <stop offset="100%" stop-color="#E8571A"/>
+    </linearGradient>
+    <linearGradient id="grad-arrow3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E5E0DA"/>
+      <stop offset="100%" stop-color="#E8571A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="520" height="400" fill="#FEF7F2"/>
+
+  <!-- Subtle background circles for depth -->
+  <circle cx="340" cy="210" r="130" fill="#F6F1EB" opacity="0.6"/>
+  <circle cx="340" cy="210" r="90" fill="#FEF7F2" opacity="0.8"/>
+
+  <!-- ======== TITLE SECTION ======== -->
+  <text x="260" y="28" font-size="13" fill="#241C15" text-anchor="middle" font-weight="700">Switching is easy.</text>
+  <text x="260" y="44" font-size="10" fill="#928B83" text-anchor="middle">Import everything from any email platform in minutes.</text>
+
+  <!-- ======== LEFT COLUMN — Source ESPs ======== -->
+
+  <!-- ESP 1 -->
+  <rect x="18" y="60" width="156" height="82" rx="10" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1.5" filter="url(#shadow-card)"/>
+  <rect x="18" y="60" width="156" height="6" rx="10" fill="#D6D0CA"/>
+  <rect x="18" y="64" width="156" height="4" fill="#D6D0CA"/>
+  <!-- logo placeholder -->
+  <rect x="32" y="76" width="28" height="12" rx="3" fill="#E5E0DA"/>
+  <rect x="66" y="78" width="46" height="8" rx="2" fill="#E5E0DA"/>
+  <!-- lines -->
+  <rect x="32" y="96" width="116" height="6" rx="1.5" fill="#F6F1EB"/>
+  <rect x="32" y="106" width="86" height="6" rx="1.5" fill="#F6F1EB"/>
+  <rect x="32" y="116" width="100" height="6" rx="1.5" fill="#F6F1EB"/>
+  <!-- label -->
+  <text x="96" y="152" font-size="10.5" fill="#928B83" text-anchor="middle" font-weight="500">Other ESP 1</text>
+
+  <!-- ESP 2 -->
+  <rect x="18" y="188" width="156" height="82" rx="10" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1.5" filter="url(#shadow-card)"/>
+  <rect x="18" y="188" width="156" height="6" rx="10" fill="#D6D0CA"/>
+  <rect x="18" y="192" width="156" height="4" fill="#D6D0CA"/>
+  <rect x="32" y="204" width="28" height="12" rx="3" fill="#E5E0DA"/>
+  <rect x="66" y="206" width="46" height="8" rx="2" fill="#E5E0DA"/>
+  <rect x="32" y="224" width="116" height="6" rx="1.5" fill="#F6F1EB"/>
+  <rect x="32" y="234" width="86" height="6" rx="1.5" fill="#F6F1EB"/>
+  <rect x="32" y="244" width="100" height="6" rx="1.5" fill="#F6F1EB"/>
+  <text x="96" y="280" font-size="10.5" fill="#928B83" text-anchor="middle" font-weight="500">Other ESP 2</text>
+
+  <!-- ESP 3 -->
+  <rect x="18" y="314" width="156" height="82" rx="10" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1.5" filter="url(#shadow-card)"/>
+  <rect x="18" y="314" width="156" height="6" rx="10" fill="#D6D0CA"/>
+  <rect x="18" y="318" width="156" height="4" fill="#D6D0CA"/>
+  <rect x="32" y="330" width="28" height="12" rx="3" fill="#E5E0DA"/>
+  <rect x="66" y="332" width="46" height="8" rx="2" fill="#E5E0DA"/>
+  <rect x="32" y="350" width="116" height="6" rx="1.5" fill="#F6F1EB"/>
+  <rect x="32" y="360" width="86" height="6" rx="1.5" fill="#F6F1EB"/>
+  <rect x="32" y="370" width="100" height="6" rx="1.5" fill="#F6F1EB"/>
+  <text x="96" y="406" font-size="10.5" fill="#928B83" text-anchor="middle" font-weight="500">Other ESP 3</text>
+
+  <!-- ======== MIGRATION ARROWS ======== -->
+
+  <!-- Arrow 1: right edge of ESP1 (x=174, y=101) → center input (x=296, y=210) -->
+  <path d="M174,101 C224,101 246,210 296,210" stroke="url(#grad-arrow1)" stroke-width="2" fill="none" marker-end="url(#arr-accent)"/>
+
+  <!-- Arrow 2: right edge of ESP2 (x=174, y=229) → center input (x=296, y=210) -->
+  <line x1="174" y1="229" x2="296" y2="210" stroke="url(#grad-arrow2)" stroke-width="2" marker-end="url(#arr-accent)"/>
+
+  <!-- Arrow 3: right edge of ESP3 (x=174, y=355) → center input (x=296, y=210) -->
+  <path d="M174,355 C224,355 246,210 296,210" stroke="url(#grad-arrow3)" stroke-width="2" fill="none" marker-end="url(#arr-accent)"/>
+
+  <!-- ======== DATA PILLS on arrows ======== -->
+
+  <!-- Contacts pill (near arrow 1) -->
+  <rect x="186" y="100" width="68" height="20" rx="10" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1" filter="url(#shadow-card)"/>
+  <circle cx="199" cy="110" r="4" fill="#E8571A" opacity="0.25"/>
+  <circle cx="199" cy="110" r="2" fill="#E8571A"/>
+  <text x="209" y="114" font-size="9" fill="#241C15" font-weight="500">Contacts</text>
+
+  <!-- Campaigns pill (near arrow 2) -->
+  <rect x="200" y="210" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1" filter="url(#shadow-card)"/>
+  <circle cx="213" cy="220" r="4" fill="#E8571A" opacity="0.25"/>
+  <circle cx="213" cy="220" r="2" fill="#E8571A"/>
+  <text x="223" y="224" font-size="9" fill="#241C15" font-weight="500">Campaigns</text>
+
+  <!-- Templates pill (near arrow 3) -->
+  <rect x="186" y="300" width="72" height="20" rx="10" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1" filter="url(#shadow-card)"/>
+  <circle cx="199" cy="310" r="4" fill="#E8571A" opacity="0.25"/>
+  <circle cx="199" cy="310" r="2" fill="#E8571A"/>
+  <text x="209" y="314" font-size="9" fill="#241C15" font-weight="500">Templates</text>
+
+  <!-- ======== CENTER — AcelleMail destination ======== -->
+
+  <!-- Outer glow rings -->
+  <circle cx="378" cy="210" r="78" fill="none" stroke="#E8571A" stroke-width="1" opacity="0.18"/>
+  <circle cx="378" cy="210" r="62" fill="none" stroke="#E8571A" stroke-width="1" opacity="0.12"/>
+
+  <!-- Main card -->
+  <rect x="306" y="158" width="144" height="104" rx="14" fill="#241C15" filter="url(#shadow-center)"/>
+
+  <!-- Logo mark — "A" triangle -->
+  <circle cx="350" cy="184" r="13" fill="#E8571A" opacity="0.15"/>
+  <polygon points="350,173 343,191 357,191" fill="none" stroke="#E8571A" stroke-width="2.5" stroke-linejoin="round"/>
+  <line x1="345" y1="186" x2="355" y2="186" stroke="#E8571A" stroke-width="2"/>
+
+  <!-- Brand name -->
+  <text x="369" y="181" font-size="13" fill="#FFFFFF" font-weight="700">Acelle</text>
+  <text x="369" y="195" font-size="13" fill="#E8571A" font-weight="700">Mail</text>
+
+  <!-- Divider -->
+  <line x1="316" y1="207" x2="440" y2="207" stroke="#FFFFFF" stroke-width="1" opacity="0.08"/>
+
+  <!-- Stats inside card -->
+  <text x="330" y="222" font-size="7.5" fill="#928B83" text-anchor="middle">Contacts</text>
+  <text x="330" y="235" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="700">100%</text>
+
+  <text x="378" y="222" font-size="7.5" fill="#928B83" text-anchor="middle">Templates</text>
+  <!-- checkmark -->
+  <polyline points="371,232 375,236 385,228" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="428" y="222" font-size="7.5" fill="#928B83" text-anchor="middle">Campaigns</text>
+  <polyline points="421,232 425,236 435,228" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- ======== SUCCESS BADGE ======== -->
+  <rect x="316" y="272" width="124" height="26" rx="13" fill="#E8571A"/>
+  <!-- check icon in badge -->
+  <polyline points="326,285 330,289 338,281" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="386" y="289" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="600">Migration Complete</text>
+
+  <!-- ======== FEATURE TAG PILLS (bottom) ======== -->
+  <rect x="306" y="312" width="80" height="22" rx="11" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1"/>
+  <text x="346" y="326" font-size="9" fill="#241C15" text-anchor="middle" font-weight="500">Free Migration</text>
+
+  <rect x="394" y="312" width="76" height="22" rx="11" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1"/>
+  <text x="432" y="326" font-size="9" fill="#241C15" text-anchor="middle" font-weight="500">Zero Downtime</text>
+
+  <rect x="306" y="340" width="88" height="22" rx="11" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1"/>
+  <text x="350" y="354" font-size="9" fill="#241C15" text-anchor="middle" font-weight="500">Keep Your Lists</text>
+
+  <rect x="402" y="340" width="68" height="22" rx="11" fill="#FEF7F2" stroke="#E8571A" stroke-width="1.2"/>
+  <text x="436" y="354" font-size="9" fill="#E8571A" text-anchor="middle" font-weight="600">1-Click Move</text>
+</svg>

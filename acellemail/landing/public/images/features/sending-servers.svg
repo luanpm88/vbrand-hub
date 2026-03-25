@@ -1,0 +1,53 @@
+<svg viewBox="0 0 520 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="520" height="300" rx="12" fill="#FEF7F2"/>
+  <!-- Server cards -->
+  <g transform="translate(20,20)">
+    <rect width="150" height="80" rx="10" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <rect x="12" y="12" width="32" height="32" rx="8" fill="#FF9900" opacity="0.15"/>
+    <text x="28" y="33" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="14" font-weight="700" fill="#FF9900">S</text>
+    <text x="54" y="28" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#241C15">Amazon SES</text>
+    <text x="54" y="40" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#928B83">$0.10/1K emails</text>
+    <rect x="12" y="56" width="60" height="14" rx="7" fill="#E8571A" opacity="0.1"/>
+    <text x="42" y="66" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" font-weight="600" fill="#E8571A">Primary</text>
+  </g>
+  <g transform="translate(185,20)">
+    <rect width="150" height="80" rx="10" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <rect x="12" y="12" width="32" height="32" rx="8" fill="#1A82E2" opacity="0.15"/>
+    <text x="28" y="33" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="14" font-weight="700" fill="#1A82E2">S</text>
+    <text x="54" y="28" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#241C15">SendGrid</text>
+    <text x="54" y="40" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#928B83">100 free/day</text>
+    <rect x="12" y="56" width="60" height="14" rx="7" fill="#F6F1EB"/>
+    <text x="42" y="66" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" font-weight="500" fill="#928B83">Backup</text>
+  </g>
+  <g transform="translate(350,20)">
+    <rect width="150" height="80" rx="10" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <rect x="12" y="12" width="32" height="32" rx="8" fill="#64748B" opacity="0.15"/>
+    <text x="28" y="33" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="14" font-weight="700" fill="#64748B">@</text>
+    <text x="54" y="28" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#241C15">Your SMTP</text>
+    <text x="54" y="40" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#928B83">Free forever</text>
+    <rect x="12" y="56" width="60" height="14" rx="7" fill="#F6F1EB"/>
+    <text x="42" y="66" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" font-weight="500" fill="#928B83">Standby</text>
+  </g>
+  <!-- Rotation diagram -->
+  <g transform="translate(30,120)">
+    <rect width="460" height="70" rx="10" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <text x="16" y="24" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="600" fill="#241C15">Smart Server Rotation</text>
+    <text x="16" y="38" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#928B83">Distribute sending load across multiple servers automatically</text>
+    <rect x="16" y="48" width="428" height="8" rx="4" fill="#F6F1EB"/>
+    <rect x="16" y="48" width="260" height="8" rx="4" fill="#E8571A"/>
+    <rect x="276" y="48" width="100" height="8" rx="4" fill="#1A82E2" opacity="0.6"/>
+    <rect x="376" y="48" width="68" height="8" rx="4" fill="#928B83" opacity="0.4"/>
+  </g>
+  <!-- Auth badges -->
+  <g transform="translate(30,210)">
+    <rect width="460" height="70" rx="10" fill="#241C15"/>
+    <text x="16" y="24" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="600" fill="#fff">Domain Authentication</text>
+    <g transform="translate(16,36)">
+      <rect width="60" height="22" rx="11" fill="#E8571A"/><text x="30" y="15" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="600" fill="#fff">SPF ✓</text>
+      <rect x="70" width="68" height="22" rx="11" fill="#E8571A"/><text x="104" y="15" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="600" fill="#fff">DKIM ✓</text>
+      <rect x="148" width="80" height="22" rx="11" fill="#E8571A"/><text x="188" y="15" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="600" fill="#fff">DMARC ✓</text>
+    </g>
+    <text x="370" y="28" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="20" font-weight="700" fill="#E8571A">99.2%</text>
+    <text x="370" y="42" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#928B83">Inbox placement</text>
+  </g>
+</svg>

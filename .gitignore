@@ -14,3 +14,16 @@ flarum/
 *.swp
 tmp/
 node_modules/
+
+# AcelleMail Landing
+acellemail/landing/vendor/
+acellemail/landing/node_modules/
+acellemail/landing/.env
+acellemail/landing/storage/logs/
+acellemail/landing/storage/framework/cache/data/
+acellemail/landing/storage/framework/sessions/
+acellemail/landing/storage/framework/views/
+acellemail/landing/database/database.sqlite
+acellemail/node_modules/
+acellemail/design/node_modules/
+acellemail/design/versions/

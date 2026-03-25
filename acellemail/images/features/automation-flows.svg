@@ -1,0 +1,80 @@
+<svg viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans', sans-serif">
+  <!-- Background -->
+  <rect width="520" height="400" fill="#FEF7F2" rx="12"/>
+
+  <!-- Title -->
+  <text x="260" y="36" text-anchor="middle" font-size="13" font-weight="600" fill="#241C15" letter-spacing="0.3">Welcome Series</text>
+  <text x="260" y="52" text-anchor="middle" font-size="11" fill="#928B83">Automation Flow</text>
+
+  <!-- Connector lines -->
+  <!-- Trigger → Delay -->
+  <line x1="260" y1="112" x2="260" y2="148" stroke="#E5E0DA" stroke-width="2" stroke-dasharray="4,3"/>
+  <!-- Delay → Email -->
+  <line x1="260" y1="192" x2="260" y2="228" stroke="#E5E0DA" stroke-width="2" stroke-dasharray="4,3"/>
+  <!-- Email → Diamond -->
+  <line x1="260" y1="272" x2="260" y2="308" stroke="#E5E0DA" stroke-width="2" stroke-dasharray="4,3"/>
+  <!-- Diamond → Yes branch -->
+  <line x1="229" y1="328" x2="148" y2="328" stroke="#E5E0DA" stroke-width="2" stroke-dasharray="4,3"/>
+  <line x1="148" y1="328" x2="148" y2="354" stroke="#E5E0DA" stroke-width="2" stroke-dasharray="4,3"/>
+  <!-- Diamond → No branch -->
+  <line x1="291" y1="328" x2="372" y2="328" stroke="#E5E0DA" stroke-width="2" stroke-dasharray="4,3"/>
+  <line x1="372" y1="328" x2="372" y2="354" stroke="#E5E0DA" stroke-width="2" stroke-dasharray="4,3"/>
+
+  <!-- Arrow heads -->
+  <polygon points="260,148 256,140 264,140" fill="#928B83"/>
+  <polygon points="260,228 256,220 264,220" fill="#928B83"/>
+  <polygon points="260,308 256,300 264,300" fill="#928B83"/>
+  <polygon points="148,354 144,346 152,346" fill="#928B83"/>
+  <polygon points="372,354 368,346 376,346" fill="#928B83"/>
+
+  <!-- Node 1: Trigger -->
+  <rect x="180" y="68" width="160" height="44" rx="22" fill="#E8571A"/>
+  <!-- Bolt/trigger icon -->
+  <polygon points="254,81 249,92 258,90 246,105 251,94 242,96" fill="white" opacity="0.9"/>
+  <text x="268" y="87" font-size="12" font-weight="600" fill="white">Trigger</text>
+  <text x="268" y="102" font-size="10" fill="rgba(255,255,255,0.8)">New subscriber joins</text>
+
+  <!-- Node 2: Delay -->
+  <rect x="180" y="148" width="160" height="44" rx="8" fill="white" stroke="#E5E0DA" stroke-width="1.5"/>
+  <!-- Clock icon -->
+  <circle cx="200" cy="170" r="9" fill="none" stroke="#928B83" stroke-width="1.5"/>
+  <line x1="200" y1="164" x2="200" y2="170" stroke="#928B83" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="200" y1="170" x2="205" y2="173" stroke="#928B83" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="216" y="167" font-size="12" font-weight="500" fill="#241C15">Wait 1 Day</text>
+  <text x="216" y="181" font-size="10" fill="#928B83">Time delay</text>
+
+  <!-- Node 3: Send Email -->
+  <rect x="180" y="228" width="160" height="44" rx="8" fill="white" stroke="#E5E0DA" stroke-width="1.5"/>
+  <!-- Envelope icon -->
+  <rect x="190" y="241" width="18" height="13" rx="2" fill="none" stroke="#E8571A" stroke-width="1.5"/>
+  <polyline points="190,243 199,250 208,243" fill="none" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="216" y="247" font-size="12" font-weight="500" fill="#241C15">Send Email</text>
+  <text x="216" y="261" font-size="10" fill="#928B83">Welcome message</text>
+
+  <!-- Node 4: Condition Diamond -->
+  <polygon points="260,308 229,328 260,348 291,328" fill="white" stroke="#E8571A" stroke-width="1.5"/>
+  <text x="260" y="325" text-anchor="middle" font-size="9.5" font-weight="600" fill="#E8571A">Opened?</text>
+
+  <!-- Yes label -->
+  <text x="148" y="344" text-anchor="middle" font-size="9" fill="#928B83">Yes</text>
+  <!-- No label -->
+  <text x="372" y="344" text-anchor="middle" font-size="9" fill="#928B83">No</text>
+
+  <!-- Branch Yes: Follow-up -->
+  <rect x="88" y="354" width="120" height="36" rx="8" fill="#FEF7F2" stroke="#E8571A" stroke-width="1.5"/>
+  <text x="148" y="369" text-anchor="middle" font-size="11" font-weight="500" fill="#E8571A">Follow-up</text>
+  <text x="148" y="382" text-anchor="middle" font-size="9" fill="#928B83">Nurture sequence</text>
+
+  <!-- Branch No: Resend -->
+  <rect x="312" y="354" width="120" height="36" rx="8" fill="#F6F1EB" stroke="#E5E0DA" stroke-width="1.5"/>
+  <text x="372" y="369" text-anchor="middle" font-size="11" font-weight="500" fill="#241C15">Resend</text>
+  <text x="372" y="382" text-anchor="middle" font-size="9" fill="#928B83">24h later</text>
+
+  <!-- Step count badge -->
+  <rect x="20" y="68" width="50" height="20" rx="4" fill="#E8571A" opacity="0.12"/>
+  <text x="45" y="82" text-anchor="middle" font-size="9" fill="#E8571A" font-weight="600">4 STEPS</text>
+
+  <!-- Active badge -->
+  <circle cx="470" cy="78" r="5" fill="#22C55E"/>
+  <text x="482" y="82" font-size="10" fill="#928B83">Active</text>
+</svg>

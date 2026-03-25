@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 48" fill="none">
+  <!-- Lightning bolt -->
+  <path d="M18 4L8 26h10l-6 18 20-24H20l10-16z" fill="#FA6423"/>
+  <!-- Text -->
+  <text x="40" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" font-weight="700" fill="#2D2D2D">Spark</text>
+  <text x="103" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" font-weight="700" fill="#FA6423">Post</text>
+</svg>
