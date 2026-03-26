@@ -1,0 +1,182 @@
+/* AcelleMail KB — Admin CSS Override
+   Uses Bootstrap 5.3 CSS variables for theming.
+   No hardcoded colors — everything through variables.
+*/
+
+:root {
+  --bs-primary: #E8571A;
+  --bs-primary-rgb: 232, 87, 26;
+  --bs-link-color: #E8571A;
+  --bs-link-hover-color: #c94a15;
+  --kb-sidebar-width: 240px;
+  --kb-header-height: 56px;
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #1a1d21;
+  --bs-body-color: #dee2e6;
+  --bs-tertiary-bg: #2b3035;
+}
+
+/* Sidebar */
+.kb-admin-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--kb-sidebar-width);
+  height: 100vh;
+  background: var(--bs-dark, #212529);
+  color: #fff;
+  padding-top: var(--kb-header-height);
+  overflow-y: auto;
+  z-index: 1030;
+  transition: transform 0.3s ease;
+}
+
+.kb-admin-sidebar__brand {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--kb-sidebar-width);
+  height: var(--kb-header-height);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  background: rgba(0,0,0,0.15);
+  z-index: 1031;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+.kb-admin-sidebar__brand img {
+  width: 28px;
+  height: 28px;
+}
+
+.kb-admin-sidebar__nav {
+  padding: 1rem 0.75rem;
+}
+
+.kb-admin-sidebar__section {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.4);
+  padding: 1rem 0.75rem 0.5rem;
+}
+
+.kb-admin-sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.15s;
+}
+
+.kb-admin-sidebar__link:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.kb-admin-sidebar__link--active {
+  background: var(--bs-primary);
+  color: #fff;
+}
+
+.kb-admin-sidebar__link--active:hover {
+  background: var(--bs-primary);
+}
+
+/* Main content */
+.kb-admin-main {
+  margin-left: var(--kb-sidebar-width);
+  min-height: 100vh;
+}
+
+.kb-admin-topbar {
+  height: var(--kb-header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.kb-admin-content {
+  padding: 1.5rem;
+}
+
+/* Badges */
+.badge-published { background: #198754; }
+.badge-draft { background: #6c757d; }
+.badge-archived { background: #dc3545; }
+
+/* Color swatch */
+.color-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.1);
+  vertical-align: middle;
+}
+
+/* EasyMDE overrides */
+.EasyMDEContainer .CodeMirror {
+  min-height: 400px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.EasyMDEContainer .editor-toolbar {
+  border-color: var(--bs-border-color);
+}
+
+[data-bs-theme="dark"] .EasyMDEContainer .CodeMirror {
+  background: var(--bs-tertiary-bg);
+  color: var(--bs-body-color);
+}
+
+[data-bs-theme="dark"] .EasyMDEContainer .editor-toolbar {
+  background: var(--bs-tertiary-bg);
+  border-color: var(--bs-border-color);
+}
+
+[data-bs-theme="dark"] .EasyMDEContainer .editor-toolbar button {
+  color: var(--bs-body-color);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .kb-admin-sidebar { transform: translateX(-100%); }
+  .kb-admin-sidebar.show { transform: translateX(0); }
+  .kb-admin-main { margin-left: 0; }
+}
+
+/* Page header */
+.kb-admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+/* Btn primary override */
+.btn-primary {
+  --bs-btn-bg: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-bg: #c94a15;
+  --bs-btn-hover-border-color: #c94a15;
+  --bs-btn-active-bg: #b3420f;
+}

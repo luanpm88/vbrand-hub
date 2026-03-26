@@ -13,8 +13,13 @@ Route::get('/tag/{slug}', [ArticleController::class, 'tag'])->name('articles.tag
 Route::get('/search', [ArticleController::class, 'search'])->name('articles.search');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-// Admin routes
-Route::prefix('admin')->name('admin.')->group(function () {
+// Admin routes (auth protected)
+Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
     Route::get('/', fn() => redirect()->route('admin.articles.index'));
     Route::resource('articles', Admin\ArticleController::class);
+    Route::get('articles/{article}/preview', [Admin\ArticleController::class, 'preview'])->name('articles.preview');
+    Route::resource('categories', Admin\CategoryController::class)->except(['show']);
+    Route::resource('tags', Admin\TagController::class)->except(['show']);
 });
+
+require __DIR__.'/auth.php';

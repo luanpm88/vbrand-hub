@@ -24,7 +24,7 @@
     20 => 'Illuminate\\Translation\\TranslationServiceProvider',
     21 => 'Illuminate\\Validation\\ValidationServiceProvider',
     22 => 'Illuminate\\View\\ViewServiceProvider',
-    23 => 'Laravel\\Pail\\PailServiceProvider',
+    23 => 'Laravel\\Breeze\\BreezeServiceProvider',
     24 => 'Laravel\\Tinker\\TinkerServiceProvider',
     25 => 'Carbon\\Laravel\\ServiceProvider',
     26 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
@@ -43,11 +43,10 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
-    10 => 'Laravel\\Pail\\PailServiceProvider',
-    11 => 'Carbon\\Laravel\\ServiceProvider',
-    12 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    13 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    14 => 'App\\Providers\\AppServiceProvider',
+    10 => 'Carbon\\Laravel\\ServiceProvider',
+    11 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    12 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    13 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (
@@ -208,6 +207,7 @@
     'validator' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'Illuminate\\Contracts\\Validation\\UncompromisedVerifier' => 'Illuminate\\Validation\\ValidationServiceProvider',
+    'Laravel\\Breeze\\Console\\InstallCommand' => 'Laravel\\Breeze\\BreezeServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
   ),
   'when' => 
@@ -249,6 +249,9 @@
     array (
     ),
     'Illuminate\\Validation\\ValidationServiceProvider' => 
+    array (
+    ),
+    'Laravel\\Breeze\\BreezeServiceProvider' => 
     array (
     ),
     'Laravel\\Tinker\\TinkerServiceProvider' => 

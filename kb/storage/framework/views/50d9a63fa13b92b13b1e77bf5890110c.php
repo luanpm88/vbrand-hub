@@ -14,12 +14,12 @@
     </select>
 
     
-    <select name="type" class="kb-select" onchange="this.form.submit()">
+    <select name="content_type" class="kb-select" onchange="this.form.submit()">
         <option value="">All Types</option>
-        <option value="tutorial" <?php echo e(($filters['type'] ?? '') === 'tutorial' ? 'selected' : ''); ?>>Tutorial</option>
-        <option value="guide" <?php echo e(($filters['type'] ?? '') === 'guide' ? 'selected' : ''); ?>>Guide</option>
-        <option value="reference" <?php echo e(($filters['type'] ?? '') === 'reference' ? 'selected' : ''); ?>>Reference</option>
-        <option value="comparison" <?php echo e(($filters['type'] ?? '') === 'comparison' ? 'selected' : ''); ?>>Comparison</option>
+        <option value="tutorial" <?php echo e(($filters['content_type'] ?? '') === 'tutorial' ? 'selected' : ''); ?>>Tutorial</option>
+        <option value="guide" <?php echo e(($filters['content_type'] ?? '') === 'guide' ? 'selected' : ''); ?>>Guide</option>
+        <option value="reference" <?php echo e(($filters['content_type'] ?? '') === 'reference' ? 'selected' : ''); ?>>Reference</option>
+        <option value="comparison" <?php echo e(($filters['content_type'] ?? '') === 'comparison' ? 'selected' : ''); ?>>Comparison</option>
     </select>
 
     
@@ -29,7 +29,7 @@
         <option value="popular" <?php echo e(($filters['sort'] ?? '') === 'popular' ? 'selected' : ''); ?>>Most Popular</option>
     </select>
 
-    <?php if(!empty($filters['category']) || !empty($filters['type']) || ($filters['sort'] ?? 'newest') !== 'newest'): ?>
+    <?php if(!empty($filters['category']) || !empty($filters['content_type']) || ($filters['sort'] ?? 'newest') !== 'newest'): ?>
         <a href="<?php echo e(url()->current()); ?>" class="kb-btn kb-btn--secondary kb-btn--sm">Clear Filters</a>
     <?php endif; ?>
 </form>

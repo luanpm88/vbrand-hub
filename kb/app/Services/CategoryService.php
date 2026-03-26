@@ -21,4 +21,26 @@ class CategoryService
     {
         return Category::where('slug', $slug)->first();
     }
+
+    public function store(array $data): Category
+    {
+        if (empty($data['slug'])) {
+            $data['slug'] = \Illuminate\Support\Str::slug($data['name']);
+        }
+        return Category::create($data);
+    }
+
+    public function update(Category $category, array $data): Category
+    {
+        if (empty($data['slug'])) {
+            $data['slug'] = \Illuminate\Support\Str::slug($data['name']);
+        }
+        $category->update($data);
+        return $category->fresh();
+    }
+
+    public function delete(Category $category): void
+    {
+        $category->delete();
+    }
 }

@@ -9,12 +9,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        if (class_exists(\Faker\Factory::class)) {
-            User::factory()->create([
-                'name' => 'Admin',
-                'email' => 'admin@acellemail.com',
-            ]);
-        }
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@acellemail.com',
+            'password' => bcrypt('123456@'),
+        ]);
 
         $this->call([
             CategorySeeder::class,

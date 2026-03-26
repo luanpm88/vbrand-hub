@@ -13,12 +13,12 @@
     </select>
 
     {{-- Content Type --}}
-    <select name="type" class="kb-select" onchange="this.form.submit()">
+    <select name="content_type" class="kb-select" onchange="this.form.submit()">
         <option value="">All Types</option>
-        <option value="tutorial" {{ ($filters['type'] ?? '') === 'tutorial' ? 'selected' : '' }}>Tutorial</option>
-        <option value="guide" {{ ($filters['type'] ?? '') === 'guide' ? 'selected' : '' }}>Guide</option>
-        <option value="reference" {{ ($filters['type'] ?? '') === 'reference' ? 'selected' : '' }}>Reference</option>
-        <option value="comparison" {{ ($filters['type'] ?? '') === 'comparison' ? 'selected' : '' }}>Comparison</option>
+        <option value="tutorial" {{ ($filters['content_type'] ?? '') === 'tutorial' ? 'selected' : '' }}>Tutorial</option>
+        <option value="guide" {{ ($filters['content_type'] ?? '') === 'guide' ? 'selected' : '' }}>Guide</option>
+        <option value="reference" {{ ($filters['content_type'] ?? '') === 'reference' ? 'selected' : '' }}>Reference</option>
+        <option value="comparison" {{ ($filters['content_type'] ?? '') === 'comparison' ? 'selected' : '' }}>Comparison</option>
     </select>
 
     {{-- Sort --}}
@@ -28,7 +28,7 @@
         <option value="popular" {{ ($filters['sort'] ?? '') === 'popular' ? 'selected' : '' }}>Most Popular</option>
     </select>
 
-    @if(!empty($filters['category']) || !empty($filters['type']) || ($filters['sort'] ?? 'newest') !== 'newest')
+    @if(!empty($filters['category']) || !empty($filters['content_type']) || ($filters['sort'] ?? 'newest') !== 'newest')
         <a href="{{ url()->current() }}" class="kb-btn kb-btn--secondary kb-btn--sm">Clear Filters</a>
     @endif
 </form>

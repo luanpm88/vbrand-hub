@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.kb')
 
 @section('title', ($query ?? '') ? '"' . $query . '" — Search — AcelleMail KB' : 'Search — AcelleMail KB')
 

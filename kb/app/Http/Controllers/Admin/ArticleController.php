@@ -63,4 +63,15 @@ class ArticleController extends Controller
         return redirect()->route('admin.articles.index')
             ->with('success', 'Article deleted.');
     }
+
+    public function preview(Article $article)
+    {
+        $article->load('category', 'tags');
+        $toc = $this->articleService->generateToc($article->body_html);
+        return view('articles.show', [
+            'article' => $article,
+            'toc' => $toc,
+            'categories' => Category::ordered()->where('articles_count', '>', 0)->get(),
+        ]);
+    }
 }

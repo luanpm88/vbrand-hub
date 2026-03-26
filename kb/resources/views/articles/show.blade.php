@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.kb')
 
 @section('title', ($article->meta_title ?: $article->title) . ' — AcelleMail KB')
 @section('meta_description', $article->meta_description ?: $article->excerpt)

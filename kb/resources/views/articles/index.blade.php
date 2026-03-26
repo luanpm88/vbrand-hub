@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.kb')
 
 @section('title', 'AcelleMail Knowledge Base — Tutorials, Guides & References')
 @section('meta_description', 'Learn everything about AcelleMail — self-hosted email marketing. Tutorials, guides, references, and best practices.')

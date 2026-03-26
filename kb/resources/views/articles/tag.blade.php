@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.kb')
 
 @section('title', '#' . $tag->name . ' — AcelleMail KB')
 @section('meta_description', 'Articles tagged with "' . $tag->name . '" on AcelleMail Knowledge Base.')
