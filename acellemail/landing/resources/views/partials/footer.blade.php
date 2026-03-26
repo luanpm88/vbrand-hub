@@ -30,6 +30,7 @@
       <div class="mc-footer__col">
         <h4 class="mc-footer__col-title">Resources</h4>
         <nav class="mc-footer__links">
+          <a href="https://knowledge.acellemail.com" class="mc-footer__link" target="_blank">Knowledge Base</a>
           <a href="{{ route('help') }}" class="mc-footer__link">Documentation</a>
           <a href="https://acellemail.com" class="mc-footer__link" target="_blank">API Docs</a>
           <a href="{{ route('help') }}" class="mc-footer__link">Installation Guide</a>

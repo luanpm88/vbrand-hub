@@ -532,6 +532,17 @@
                     <span class="mc-card__link">View changelog</span>
                 </div>
             </a>
+            <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
+                <div class="mc-card__image mc-card__image--fixed">
+                    <img src="{{ asset('images/about/newsroom.jpg') }}" alt="Knowledge Base">
+                </div>
+                <div class="mc-card__body">
+                    <span class="mc-card__eyebrow">Knowledge</span>
+                    <h4 class="mc-card__title">Knowledge Base</h4>
+                    <p class="mc-card__desc">Tutorials, guides, and references covering email marketing, deliverability, automation, and more.</p>
+                    <span class="mc-card__link">Browse KB</span>
+                </div>
+            </a>
         </div>
     </div>
 </section>

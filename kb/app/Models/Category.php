@@ -13,6 +13,7 @@ class Category extends Model
         'description',
         'icon',
         'color',
+        'group',
         'sort_order',
         'articles_count',
     ];

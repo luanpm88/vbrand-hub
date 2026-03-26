@@ -17,6 +17,7 @@
           <a href="{{ route('pricing') }}" class="mc-header__nav-link{{ $currentPage === 'pricing' ? ' mc-header__nav-link--active' : '' }}">Pricing</a>
           <a href="{{ route('security') }}" class="mc-header__nav-link{{ $currentPage === 'security' ? ' mc-header__nav-link--active' : '' }}">Security</a>
           <a href="{{ route('about') }}" class="mc-header__nav-link{{ $currentPage === 'about' ? ' mc-header__nav-link--active' : '' }}">About</a>
+          <a href="https://knowledge.acellemail.com" class="mc-header__nav-link" target="_blank">KB</a>
           <a href="{{ route('help') }}" class="mc-header__nav-link{{ $currentPage === 'help' ? ' mc-header__nav-link--active' : '' }}">Help</a>
           <a href="{{ route('contact') }}" class="mc-header__nav-link{{ $currentPage === 'contact' ? ' mc-header__nav-link--active' : '' }}">Contact</a>
         </nav>

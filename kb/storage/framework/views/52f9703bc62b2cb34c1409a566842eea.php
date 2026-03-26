@@ -1,56 +1,64 @@
 <header class="kb-header">
     <div class="kb-container">
         <div class="kb-header__inner">
-            
             <a href="<?php echo e(route('home')); ?>" class="kb-header__logo">
-                <span class="kb-header__logo-icon">A</span>
-                AcelleMail KB
+                <img src="<?php echo e(asset('images/kb-icon.svg')); ?>" alt="" width="28" height="28" class="kb-header__logo-icon">
+                <img src="<?php echo e(asset('images/logo_dark.svg')); ?>" alt="AcelleMail" height="22" class="kb-header__logo-wordmark">
             </a>
 
-            
             <nav class="kb-header__nav">
                 <a href="<?php echo e(route('home')); ?>" class="kb-header__link <?php echo e(request()->routeIs('home') ? 'kb-header__link--active' : ''); ?>">Home</a>
 
                 <div class="kb-header__dropdown">
                     <button class="kb-header__dropdown-toggle" type="button">
                         Categories
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="kb-header__dropdown-menu">
-                        <?php
-                            $headerCategories = \App\Models\Category::ordered()->get();
-                        ?>
-                        <?php $__currentLoopData = $headerCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item">
-                                <?php echo e($cat->icon ?? ''); ?> <?php echo e($cat->name); ?>
+                        <?php $headerCategories = \App\Models\Category::ordered()->get(); ?>
 
-                            </a>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <div class="kb-header__dropdown-group">
+                            <span class="kb-header__dropdown-label">Getting Started</span>
+                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['email-marketing', 'automation', 'list-management', 'analytics-reporting']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+
+                        <div class="kb-header__dropdown-group">
+                            <span class="kb-header__dropdown-label">Infrastructure</span>
+                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['sending-deliverability', 'dns-domain-setup', 'server-management', 'installation-setup']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+
+                        <div class="kb-header__dropdown-group">
+                            <span class="kb-header__dropdown-label">Advanced</span>
+                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['integrations', 'developer-guide', 'saas-multi-tenant', 'security-compliance']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+
+                        <div class="kb-header__dropdown-group">
+                            <span class="kb-header__dropdown-label">Resources</span>
+                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['best-practices', 'troubleshooting', 'migration-comparison']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
                     </div>
                 </div>
 
                 <a href="<?php echo e(route('articles.search')); ?>" class="kb-header__link <?php echo e(request()->routeIs('articles.search') ? 'kb-header__link--active' : ''); ?>">Search</a>
+                <a href="https://acellemail.com" class="kb-header__link" target="_blank">AcelleMail</a>
             </nav>
 
-            
             <form action="<?php echo e(route('articles.search')); ?>" method="GET" class="kb-header__search">
                 <svg class="kb-header__search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <input
-                    type="text"
-                    name="q"
-                    class="kb-header__search-input"
-                    placeholder="Search articles..."
-                    value="<?php echo e(request('q')); ?>"
-                    autocomplete="off"
-                >
+                <input type="text" name="q" class="kb-header__search-input" placeholder="Search articles..." value="<?php echo e(request('q')); ?>" autocomplete="off">
             </form>
 
-            
             <button class="kb-header__mobile-toggle" type="button" aria-label="Toggle menu">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="3" y1="6" x2="21" y2="6"></line>

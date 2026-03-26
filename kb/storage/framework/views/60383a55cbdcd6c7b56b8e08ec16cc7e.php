@@ -542,14 +542,13 @@
         .kb-header__logo-icon {
             width: 28px;
             height: 28px;
-            background: #E8571A;
             border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 0.875rem;
-            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .kb-header__logo-wordmark {
+            height: 22px;
+            width: auto;
         }
 
         .kb-header__nav {
@@ -608,22 +607,40 @@
             border: 1px solid #E5E0DA;
             border-radius: 12px;
             padding: 8px;
-            min-width: 220px;
-            box-shadow: 0 12px 32px rgba(36, 28, 21, 0.1);
+            min-width: 520px;
+            box-shadow: 0 12px 32px rgba(36, 28, 21, 0.12);
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            padding: 16px;
         }
 
         .kb-header__dropdown:hover .kb-header__dropdown-menu {
-            display: block;
+            display: grid;
         }
 
         .kb-header__dropdown:hover .kb-header__dropdown-toggle svg {
             transform: rotate(180deg);
         }
 
+        .kb-header__dropdown-group {
+            padding: 4px 0;
+        }
+
+        .kb-header__dropdown-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #928B83;
+            padding: 4px 10px 6px;
+        }
+
         .kb-header__dropdown-item {
             display: block;
-            padding: 8px 14px;
-            font-size: 0.875rem;
+            padding: 6px 10px;
+            font-size: 0.8125rem;
             color: #241C15;
             border-radius: 6px;
             transition: background 0.15s ease;
@@ -837,14 +854,19 @@
         }
 
         .kb-cat-card__icon {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             flex-shrink: 0;
+        }
+
+        .kb-cat-card__dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
         }
 
         .kb-cat-card__info h3 {
@@ -1178,6 +1200,22 @@
         .kb-pagination a:hover {
             border-color: #E8571A;
             color: #E8571A;
+        }
+
+        .kb-pagination svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .kb-pagination p {
+            font-size: 0.875rem;
+            color: #928B83;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .kb-pagination .hidden {
+            display: none;
         }
 
         /* --- Admin Table --- */

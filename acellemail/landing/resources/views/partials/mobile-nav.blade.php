@@ -20,6 +20,7 @@
     </a>
     <a href="{{ route('pricing') }}" class="mc-mobile-nav__link">Pricing</a>
     <a href="{{ route('security') }}" class="mc-mobile-nav__link">Security</a>
+    <a href="https://knowledge.acellemail.com" class="mc-mobile-nav__link" target="_blank">Knowledge Base</a>
     <a href="{{ route('help') }}" class="mc-mobile-nav__link">Help</a>
     <a href="{{ route('about') }}" class="mc-mobile-nav__link">About</a>
     <a href="{{ route('contact') }}" class="mc-mobile-nav__link">Contact</a>

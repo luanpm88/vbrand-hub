@@ -25,6 +25,25 @@
 </section>
 
 <!-- ======================================================================
+     HELP — KNOWLEDGE BASE CTA
+     ====================================================================== -->
+<section class="mc-section mc-section--cream">
+  <div class="mc-container">
+    <div class="mc-feature-row">
+      <div class="mc-feature-row__content">
+        <span class="mc-eyebrow">Knowledge Base</span>
+        <h2 class="mc-feature-row__title">Browse the Knowledge Base</h2>
+        <p class="mc-feature-row__desc">
+          Browse our comprehensive Knowledge Base with tutorials, guides, and references for email marketing.
+          Find step-by-step articles on deliverability, automation, sending servers, and more &mdash; all in one place.
+        </p>
+        <a href="https://knowledge.acellemail.com" class="mc-btn mc-btn--primary" target="_blank">Open Knowledge Base</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
      HELP — POPULAR GUIDES
      ====================================================================== -->
 <section class="mc-section">
