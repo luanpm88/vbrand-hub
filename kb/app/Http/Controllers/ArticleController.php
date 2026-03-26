@@ -68,7 +68,7 @@ class ArticleController extends Controller
 
     public function search(SearchRequest $request)
     {
-        $query = $request->input('q', '');
+        $query = $request->input('q') ?? '';
         $articles = $this->searchService->search($query);
         $categories = $this->categoryService->getWithArticleCounts();
 

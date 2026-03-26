@@ -21,5 +21,21 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             ArticleSeeder::class,
         ]);
+
+        // Batch seeders (additional articles)
+        if (class_exists(ArticleBatch1Seeder::class)) {
+            $this->call(ArticleBatch1Seeder::class);
+        }
+        if (class_exists(ArticleBatch2Seeder::class)) {
+            $this->call(ArticleBatch2Seeder::class);
+        }
+        if (class_exists(ArticleBatch3Seeder::class)) {
+            $this->call(ArticleBatch3Seeder::class);
+        }
+
+        // Update category article counts
+        foreach (\App\Models\Category::all() as $cat) {
+            $cat->update(['articles_count' => $cat->articles()->where('status', 'published')->count()]);
+        }
     }
 }

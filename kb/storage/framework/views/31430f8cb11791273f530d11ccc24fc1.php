@@ -10,8 +10,8 @@
 
     
     <div class="kb-category-header">
-        <div class="kb-category-header__icon" style="background-color: <?php echo e($category->color ?? '#E8571A'); ?>20;">
-            <span><?php echo e($category->icon ?? '📁'); ?></span>
+        <div class="kb-category-header__icon" style="background-color: <?php echo e($category->color ?? '#E8571A'); ?>15;">
+            <span class="kb-cat-card__dot" style="background: <?php echo e($category->color ?? '#E8571A'); ?>; width: 20px; height: 20px;"></span>
         </div>
         <div class="kb-category-header__info">
             <h1><?php echo e($category->name); ?></h1>

@@ -600,19 +600,29 @@
         .kb-header__dropdown-menu {
             display: none;
             position: absolute;
-            top: calc(100% + 8px);
+            top: 100%;
             left: 50%;
             transform: translateX(-50%);
             background: #fff;
             border: 1px solid #E5E0DA;
             border-radius: 12px;
-            padding: 8px;
-            min-width: 520px;
+            min-width: 600px;
             box-shadow: 0 12px 32px rgba(36, 28, 21, 0.12);
-            display: none;
-            grid-template-columns: 1fr 1fr;
-            gap: 4px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
             padding: 16px;
+            padding-top: 24px;
+            margin-top: 0;
+        }
+
+        /* Invisible bridge to prevent hover gap */
+        .kb-header__dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 0;
+            right: 0;
+            height: 12px;
         }
 
         .kb-header__dropdown:hover .kb-header__dropdown-menu {

@@ -17,33 +17,22 @@
                     <div class="kb-header__dropdown-menu">
                         <?php $headerCategories = \App\Models\Category::ordered()->get(); ?>
 
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Getting Started</span>
-                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['email-marketing', 'automation', 'list-management', 'analytics-reporting']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
-
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Infrastructure</span>
-                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['sending-deliverability', 'dns-domain-setup', 'server-management', 'installation-setup']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
-
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Advanced</span>
-                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['integrations', 'developer-guide', 'saas-multi-tenant', 'security-compliance']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
-
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Resources</span>
-                            <?php $__currentLoopData = $headerCategories->whereIn('slug', ['best-practices', 'troubleshooting', 'migration-comparison']); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
+                        <?php
+                            $groups = [
+                                'getting-started' => 'Getting Started',
+                                'infrastructure' => 'Infrastructure',
+                                'advanced' => 'Advanced',
+                                'resources' => 'Resources',
+                            ];
+                        ?>
+                        <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $groupSlug => $groupLabel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="kb-header__dropdown-group">
+                                <span class="kb-header__dropdown-label"><?php echo e($groupLabel); ?></span>
+                                <?php $__currentLoopData = $headerCategories->where('group', $groupSlug); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <a href="<?php echo e(route('articles.category', $cat->slug)); ?>" class="kb-header__dropdown-item"><?php echo e($cat->name); ?></a>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
 

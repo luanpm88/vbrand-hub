@@ -17,33 +17,22 @@
                     <div class="kb-header__dropdown-menu">
                         @php $headerCategories = \App\Models\Category::ordered()->get(); @endphp
 
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Getting Started</span>
-                            @foreach($headerCategories->whereIn('slug', ['email-marketing', 'automation', 'list-management', 'analytics-reporting']) as $cat)
-                                <a href="{{ route('articles.category', $cat->slug) }}" class="kb-header__dropdown-item">{{ $cat->name }}</a>
-                            @endforeach
-                        </div>
-
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Infrastructure</span>
-                            @foreach($headerCategories->whereIn('slug', ['sending-deliverability', 'dns-domain-setup', 'server-management', 'installation-setup']) as $cat)
-                                <a href="{{ route('articles.category', $cat->slug) }}" class="kb-header__dropdown-item">{{ $cat->name }}</a>
-                            @endforeach
-                        </div>
-
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Advanced</span>
-                            @foreach($headerCategories->whereIn('slug', ['integrations', 'developer-guide', 'saas-multi-tenant', 'security-compliance']) as $cat)
-                                <a href="{{ route('articles.category', $cat->slug) }}" class="kb-header__dropdown-item">{{ $cat->name }}</a>
-                            @endforeach
-                        </div>
-
-                        <div class="kb-header__dropdown-group">
-                            <span class="kb-header__dropdown-label">Resources</span>
-                            @foreach($headerCategories->whereIn('slug', ['best-practices', 'troubleshooting', 'migration-comparison']) as $cat)
-                                <a href="{{ route('articles.category', $cat->slug) }}" class="kb-header__dropdown-item">{{ $cat->name }}</a>
-                            @endforeach
-                        </div>
+                        @php
+                            $groups = [
+                                'getting-started' => 'Getting Started',
+                                'infrastructure' => 'Infrastructure',
+                                'advanced' => 'Advanced',
+                                'resources' => 'Resources',
+                            ];
+                        @endphp
+                        @foreach($groups as $groupSlug => $groupLabel)
+                            <div class="kb-header__dropdown-group">
+                                <span class="kb-header__dropdown-label">{{ $groupLabel }}</span>
+                                @foreach($headerCategories->where('group', $groupSlug) as $cat)
+                                    <a href="{{ route('articles.category', $cat->slug) }}" class="kb-header__dropdown-item">{{ $cat->name }}</a>
+                                @endforeach
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
