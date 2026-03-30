@@ -52,7 +52,7 @@
     <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
 
       <!-- Guide 1 -->
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-guide">
+      <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-card mc-card--bordered mc-help-guide" target="_blank">
         <div class="mc-card__body mc-card__body--lg">
           <span class="mc-help-guide__number">1</span>
           <h4 class="mc-card__title">Getting Started: Install AcelleMail on Your Server</h4>
@@ -62,7 +62,7 @@
       </a>
 
       <!-- Guide 2 -->
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-guide">
+      <a href="https://knowledge.acellemail.com/category/sending-deliverability" class="mc-card mc-card--bordered mc-help-guide" target="_blank">
         <div class="mc-card__body mc-card__body--lg">
           <span class="mc-help-guide__number">2</span>
           <h4 class="mc-card__title">Sending Configuration: Amazon SES, SendGrid &amp; SMTP</h4>
@@ -72,7 +72,7 @@
       </a>
 
       <!-- Guide 3 -->
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-guide">
+      <a href="https://knowledge.acellemail.com/category/email-design" class="mc-card mc-card--bordered mc-help-guide" target="_blank">
         <div class="mc-card__body mc-card__body--lg">
           <span class="mc-help-guide__number">3</span>
           <h4 class="mc-card__title">Template Customization: Drag &amp; Drop Builder</h4>
@@ -82,7 +82,7 @@
       </a>
 
       <!-- Guide 4 -->
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-guide">
+      <a href="https://knowledge.acellemail.com/category/automation" class="mc-card mc-card--bordered mc-help-guide" target="_blank">
         <div class="mc-card__body mc-card__body--lg">
           <span class="mc-help-guide__number">4</span>
           <h4 class="mc-card__title">Automation Setup: Triggers, Journeys &amp; Scheduling</h4>
@@ -92,7 +92,7 @@
       </a>
 
       <!-- Guide 5 -->
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-guide">
+      <a href="https://knowledge.acellemail.com/category/server-management" class="mc-card mc-card--bordered mc-help-guide" target="_blank">
         <div class="mc-card__body mc-card__body--lg">
           <span class="mc-help-guide__number">5</span>
           <h4 class="mc-card__title">Server Optimization: Queue Workers &amp; Cron Jobs</h4>
@@ -102,7 +102,7 @@
       </a>
 
       <!-- Guide 6 -->
-      <a href="{{ route('pricing') }}" class="mc-card mc-card--bordered mc-help-guide">
+      <a href="https://knowledge.acellemail.com/category/saas-multi-tenant" class="mc-card mc-card--bordered mc-help-guide" target="_blank">
         <div class="mc-card__body mc-card__body--lg">
           <span class="mc-help-guide__number">6</span>
           <h4 class="mc-card__title">SaaS Setup: Multi-Tenant Billing &amp; User Management</h4>
@@ -132,7 +132,7 @@
         </p>
         <div class="mc-hero__actions">
           <a href="{{ route('pricing') }}" class="mc-btn mc-btn--primary">Get AcelleMail</a>
-          <a href="#" class="mc-btn mc-btn--secondary">Try the Demo</a>
+          <a href="https://demo.acellemail.com" class="mc-btn mc-btn--secondary" target="_blank">Try the Demo</a>
         </div>
       </div>
     </div>
@@ -147,126 +147,126 @@
     <h2 class="mc-text-center" style="margin-bottom: var(--space-2xl);">Help by Topic</h2>
     <div class="mc-grid mc-grid--3 mc-grid--gap-md mc-help-topics">
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Installation</h5>
           <p class="mc-help-topic__desc">Server requirements, installation steps, and environment configuration.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/list-management" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Subscriber Lists</h5>
           <p class="mc-help-topic__desc">Import, organize, segment, and manage your subscriber lists.</p>
         </div>
       </a>
 
-      <a href="{{ route('automation') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/automation" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Automation</h5>
           <p class="mc-help-topic__desc">Create automated email journeys with triggers and conditions.</p>
         </div>
       </a>
 
-      <a href="{{ route('security') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/security-compliance" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Security &amp; Privacy</h5>
           <p class="mc-help-topic__desc">GDPR tools, SPF/DKIM setup, access controls, and data protection.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/email-design" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Template Builder</h5>
           <p class="mc-help-topic__desc">Drag &amp; drop editor, custom HTML templates, and template management.</p>
         </div>
       </a>
 
-      <a href="{{ route('email-marketing') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/sending-deliverability" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Email Delivery</h5>
           <p class="mc-help-topic__desc">Sending server setup, bounce handling, and deliverability optimization.</p>
         </div>
       </a>
 
-      <a href="{{ route('email-marketing') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/email-marketing" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Campaigns</h5>
           <p class="mc-help-topic__desc">Create, schedule, and send email campaigns to your subscribers.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/sending-deliverability" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Sending Servers</h5>
           <p class="mc-help-topic__desc">Configure Amazon SES, SendGrid, Mailgun, SparkPost, or SMTP.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/server-management" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Queue &amp; Cron Jobs</h5>
           <p class="mc-help-topic__desc">Set up queue workers and cron jobs for reliable email processing.</p>
         </div>
       </a>
 
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/integrations" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Integrations</h5>
           <p class="mc-help-topic__desc">Connect AcelleMail with WordPress, WooCommerce, and third-party services.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Signup Forms</h5>
           <p class="mc-help-topic__desc">Embedded forms, popup forms, and landing pages to grow your list.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/saas-multi-tenant" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">SaaS &amp; Multi-Tenant</h5>
           <p class="mc-help-topic__desc">Run AcelleMail as a service with billing, plans, and customer management.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Personalization</h5>
           <p class="mc-help-topic__desc">Use merge tags, dynamic content, and conditional blocks in your emails.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/articles/rest-api-authentication-and-endpoints" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">API &amp; Webhooks</h5>
           <p class="mc-help-topic__desc">REST API documentation, webhook events, and developer integration guides.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/analytics-reporting" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Reports &amp; Analytics</h5>
           <p class="mc-help-topic__desc">Track opens, clicks, bounces, and campaign performance metrics.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/email-design" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Templates</h5>
           <p class="mc-help-topic__desc">Use, customize, and create email templates for your campaigns.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/troubleshooting" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Troubleshooting</h5>
           <p class="mc-help-topic__desc">Common issues, error messages, and solutions for AcelleMail.</p>
         </div>
       </a>
 
-      <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-help-topic">
+      <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered mc-help-topic" target="_blank">
         <div class="mc-card__body">
           <h5 class="mc-help-topic__title">Updates &amp; Migration</h5>
           <p class="mc-help-topic__desc">Upgrade to the latest version and migrate from other email platforms.</p>
@@ -310,7 +310,7 @@
       <h2>Still have questions?</h2>
       <p class="mc-text-lg" style="margin-top: var(--space-md);">
         Ask the community on our <a href="https://forum.acellemail.com" style="color: var(--mc-teal);" target="_blank">forum</a>,
-        visit <a href="https://acellemail.com" style="color: var(--mc-teal);">acellemail.com</a> for full documentation,
+        visit <a href="https://knowledge.acellemail.com" style="color: var(--mc-teal);" target="_blank">the knowledge base</a> for full documentation,
         or try the <a href="https://demo.acellemail.com" style="color: var(--mc-teal);">live demo</a> to explore features before purchasing.
       </p>
       <div style="display: flex; gap: var(--space-md); justify-content: center; margin-top: var(--space-lg); flex-wrap: wrap;">

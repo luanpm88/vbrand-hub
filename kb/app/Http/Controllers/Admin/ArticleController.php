@@ -16,11 +16,38 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = Article::with('category')
-            ->latest('updated_at')
-            ->paginate(20);
+        $query = Article::with('category');
 
-        return view('admin.articles.index', compact('articles'));
+        // Keyword search
+        if ($search = request('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('excerpt', 'like', "%{$search}%");
+            });
+        }
+
+        // Category filter
+        if ($categoryId = request('category')) {
+            $query->where('category_id', $categoryId);
+        }
+
+        // Status filter
+        if ($status = request('status')) {
+            $query->where('status', $status);
+        }
+
+        // Content type filter
+        if ($type = request('type')) {
+            $query->where('content_type', $type);
+        }
+
+        $articles = $query->latest('updated_at')
+            ->paginate(20)
+            ->withQueryString();
+
+        $categories = Category::ordered()->get();
+
+        return view('admin.articles.index', compact('articles', 'categories'));
     }
 
     public function create()

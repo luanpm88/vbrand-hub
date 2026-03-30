@@ -74,7 +74,7 @@
         is built transparently, so we ship full source code with every release&mdash;no encoded files, no
         hidden dependencies. Whether you&rsquo;re customizing the platform for a client or extending it
         with your own plugins, you have complete freedom to make it yours. And by the
-        way&mdash;<a href="https://acellemail.com" class="mc-link">we&rsquo;d love your feedback</a>.
+        way&mdash;<a href="https://forum.acellemail.com" class="mc-link" target="_blank">we&rsquo;d love your feedback</a>.
       </p>
       <p>
         Community feedback is central to how we build and improve. Every feature request, bug report,
@@ -114,7 +114,7 @@
     <h2 class="mc-text-center" style="margin-bottom: var(--space-2xl);">Learn more about AcelleMail</h2>
     <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
       <!-- Card 1: Documentation -->
-      <a href="https://acellemail.com" class="mc-card mc-card--bordered">
+      <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
           <img src="{{ asset('images/about/newsroom.jpg') }}" alt="AcelleMail Documentation">
         </div>
@@ -126,7 +126,7 @@
       </a>
 
       <!-- Card 2: Changelog -->
-      <a href="{{ route('features') }}" class="mc-card mc-card--bordered">
+      <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
           <img src="{{ asset('images/about/why-acellemail.jpg') }}" alt="See what's new in every release">
         </div>
@@ -138,7 +138,7 @@
       </a>
 
       <!-- Card 3: Community -->
-      <a href="https://acellemail.com" class="mc-card mc-card--bordered">
+      <a href="https://forum.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
           <img src="{{ asset('images/about/whats-new.png') }}" alt="AcelleMail Community">
         </div>

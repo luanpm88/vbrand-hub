@@ -19,10 +19,11 @@ acellemail/landing/          → Laravel 12 project
 
 ```bash
 # From vbrand workspace root
-rsync -avz --rsync-path="sudo rsync" \
+rsync -avz --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --rsync-path="sudo rsync" \
   --exclude='.git/' \
   --exclude='node_modules/' \
   --exclude='vendor/' \
+  --exclude='bootstrap/cache/*.php' \
   --exclude='storage/logs/*' \
   --exclude='storage/framework/cache/*' \
   --exclude='.env' \
@@ -32,6 +33,9 @@ rsync -avz --rsync-path="sudo rsync" \
 
 # Install deps + optimize on server
 ssh brandnew "cd /var/www/acellemail-landing && \
+  sudo rm -f bootstrap/cache/*.php && \
+  sudo find public -type d -exec chmod 755 {} + && \
+  sudo find public -type f -exec chmod 644 {} + && \
   sudo -u vbrandwww composer install --no-dev --optimize-autoloader && \
   sudo -u vbrandwww php artisan config:cache && \
   sudo -u vbrandwww php artisan route:cache && \
@@ -42,7 +46,7 @@ ssh brandnew "cd /var/www/acellemail-landing && \
 ## Deploy Views Only (fast)
 
 ```bash
-rsync -avz --rsync-path="sudo rsync" \
+rsync -avz --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --rsync-path="sudo rsync" \
   acellemail/landing/resources/views/ \
   brandnew:/var/www/acellemail-landing/resources/views/
 
@@ -54,15 +58,16 @@ ssh brandnew "cd /var/www/acellemail-landing && \
 ## Deploy Assets Only (CSS/JS/images)
 
 ```bash
-rsync -avz --rsync-path="sudo rsync" \
+rsync -avz --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --rsync-path="sudo rsync" \
   acellemail/landing/public/css/ \
   brandnew:/var/www/acellemail-landing/public/css/
 
-rsync -avz --rsync-path="sudo rsync" \
+rsync -avz --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --rsync-path="sudo rsync" \
   acellemail/landing/public/images/ \
   brandnew:/var/www/acellemail-landing/public/images/
 
 ssh brandnew "sudo chown -R vbrandwww:vbrand /var/www/acellemail-landing/public"
+ssh brandnew "sudo find /var/www/acellemail-landing/public -type d -exec chmod 755 {} + && sudo find /var/www/acellemail-landing/public -type f -exec chmod 644 {} +"
 ```
 
 ## Verify After Deploy
@@ -84,13 +89,17 @@ curl -sI https://acellemail.com/automation
 
 ```bash
 # 1. Upload project
-rsync -avz --rsync-path="sudo rsync" \
+rsync -avz --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --rsync-path="sudo rsync" \
   --exclude='.git/' --exclude='node_modules/' --exclude='.DS_Store' \
+  --exclude='bootstrap/cache/*.php' \
   acellemail/landing/ \
   brandnew:/var/www/acellemail-landing/
 
 # 2. Install deps
 ssh brandnew "cd /var/www/acellemail-landing && \
+  sudo rm -f bootstrap/cache/*.php && \
+  sudo find public -type d -exec chmod 755 {} + && \
+  sudo find public -type f -exec chmod 644 {} + && \
   sudo -u vbrandwww composer install --no-dev --optimize-autoloader"
 
 # 3. Setup env

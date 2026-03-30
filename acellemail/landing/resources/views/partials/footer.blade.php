@@ -31,10 +31,10 @@
         <h4 class="mc-footer__col-title">Resources</h4>
         <nav class="mc-footer__links">
           <a href="https://knowledge.acellemail.com" class="mc-footer__link" target="_blank">Knowledge Base</a>
-          <a href="{{ route('help') }}" class="mc-footer__link">Documentation</a>
-          <a href="https://acellemail.com" class="mc-footer__link" target="_blank">API Docs</a>
-          <a href="{{ route('help') }}" class="mc-footer__link">Installation Guide</a>
-          <a href="{{ route('help') }}" class="mc-footer__link">Server Requirements</a>
+          <a href="https://knowledge.acellemail.com" class="mc-footer__link" target="_blank">Documentation</a>
+          <a href="https://knowledge.acellemail.com/articles/rest-api-authentication-and-endpoints" class="mc-footer__link" target="_blank">API Docs</a>
+          <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-footer__link" target="_blank">Installation Guide</a>
+          <a href="https://knowledge.acellemail.com/category/server-management" class="mc-footer__link" target="_blank">Server Requirements</a>
         </nav>
       </div>
 
@@ -43,8 +43,8 @@
         <nav class="mc-footer__links">
           <a href="https://forum.acellemail.com" class="mc-footer__link" target="_blank">Community Forum</a>
           <a href="https://forum.acellemail.com" class="mc-footer__link" target="_blank">Ask a Question</a>
-          <a href="{{ route('integrations') }}" class="mc-footer__link">Developers</a>
-          <a href="{{ route('help') }}" class="mc-footer__link">Changelog</a>
+          <a href="https://knowledge.acellemail.com/category/developer-guide" class="mc-footer__link" target="_blank">Developers</a>
+          <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-footer__link" target="_blank">Changelog</a>
         </nav>
       </div>
 
@@ -52,7 +52,7 @@
         <h4 class="mc-footer__col-title">Company</h4>
         <nav class="mc-footer__links">
           <a href="{{ route('about') }}" class="mc-footer__link">Our Story</a>
-          <a href="{{ route('about') }}" class="mc-footer__link">Open Source</a>
+          <a href="{{ route('about') }}" class="mc-footer__link">Full Source Code</a>
           <a href="{{ route('contact') }}" class="mc-footer__link">Contact</a>
           <a href="{{ route('security') }}" class="mc-footer__link">Privacy &amp; GDPR</a>
         </nav>
@@ -78,18 +78,6 @@
         Self-hosted email marketing built on Laravel. Full source code, unlimited emails, your server.
         <a href="https://demo.acellemail.com" target="_blank">Try the demo</a>
       </p>
-    </div>
-
-    <div class="mc-footer__bottom">
-      <div class="mc-footer__social">
-        <a href="#" class="mc-footer__social-link" aria-label="Facebook"><img src="{{ asset('images/social/facebook.svg') }}" alt="" width="20" height="20"></a>
-        <a href="#" class="mc-footer__social-link" aria-label="X (Twitter)"><img src="{{ asset('images/social/twitter.svg') }}" alt="" width="20" height="20"></a>
-        <a href="#" class="mc-footer__social-link" aria-label="LinkedIn"><img src="{{ asset('images/social/linkedin.svg') }}" alt="" width="20" height="20"></a>
-        <a href="#" class="mc-footer__social-link" aria-label="YouTube"><img src="{{ asset('images/social/youtube.svg') }}" alt="" width="20" height="20"></a>
-      </div>
-      <div class="mc-footer__app-links">
-        <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--secondary" target="_blank">View on CodeCanyon</a>
-      </div>
     </div>
 
     <div class="mc-footer__legal">

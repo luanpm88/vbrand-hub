@@ -382,7 +382,7 @@
                     <li class="mc-feature-list__item">Detailed documentation and video guides</li>
                     <li class="mc-feature-list__item">Active community and priority support</li>
                 </ul>
-                <a href="https://acellemail.com" class="mc-btn mc-btn--primary">View documentation</a>
+                <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-btn mc-btn--primary" target="_blank">View documentation</a>
             </div>
             <div class="mc-feature-row__image">
                 <img src="{{ asset('images/features/installation_setup.svg') }}" alt="Easy installation on any server">
@@ -499,7 +499,7 @@
             <p class="mc-text-lg" style="margin-top: var(--space-md);">From installation guides to advanced configuration, our documentation covers every step of your journey.</p>
         </div>
         <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
-            <a href="https://acellemail.com" class="mc-card mc-card--bordered">
+            <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-card mc-card--bordered" target="_blank">
                 <div class="mc-card__image mc-card__image--fixed">
                     <img src="{{ asset('images/about/newsroom.jpg') }}" alt="Installation Guide">
                 </div>
@@ -521,7 +521,7 @@
                     <span class="mc-card__link">Launch demo</span>
                 </div>
             </a>
-            <a href="https://acellemail.com" class="mc-card mc-card--bordered">
+            <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
                 <div class="mc-card__image mc-card__image--fixed">
                     <img src="{{ asset('images/about/whats-new.png') }}" alt="Changelog">
                 </div>

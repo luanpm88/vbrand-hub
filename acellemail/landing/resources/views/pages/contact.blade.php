@@ -26,7 +26,7 @@
 <section class="mc-section--sm">
   <div class="mc-container">
     <div class="mc-contact-quick">
-      <a href="https://acellemail.com" class="mc-card mc-card--bordered mc-contact-quick__card" target="_blank">
+      <a href="https://knowledge.acellemail.com/articles/rest-api-authentication-and-endpoints" class="mc-card mc-card--bordered mc-contact-quick__card" target="_blank">
         <div class="mc-card__body">
           <p class="mc-contact-quick__title">Looking for API documentation?</p>
           <span class="mc-card__link">View API docs</span>
@@ -50,11 +50,11 @@
     <div class="mc-contact-form">
       <h3 class="mc-text-center" style="margin-bottom: var(--space-xl);">Send us a message</h3>
 
-      <form action="#" method="post" class="mc-contact-form__inner">
+      <form action="mailto:support@acellemail.com" method="post" enctype="text/plain" class="mc-contact-form__inner">
         <!-- Topic -->
         <div class="mc-form-group">
           <label for="contact-topic">Topic</label>
-          <select id="contact-topic" class="mc-input mc-contact-form__select">
+          <select id="contact-topic" name="topic" class="mc-input mc-contact-form__select">
             <option value="" disabled selected>Select a topic</option>
             <option value="technical">Technical Support</option>
             <option value="license">License Questions</option>
@@ -68,30 +68,30 @@
         <div class="mc-contact-form__row">
           <div class="mc-form-group">
             <label for="contact-first">First name</label>
-            <input type="text" id="contact-first" class="mc-input" placeholder="Jane">
+            <input type="text" id="contact-first" name="first_name" class="mc-input" placeholder="Jane">
           </div>
           <div class="mc-form-group">
             <label for="contact-last">Last name</label>
-            <input type="text" id="contact-last" class="mc-input" placeholder="Doe">
+            <input type="text" id="contact-last" name="last_name" class="mc-input" placeholder="Doe">
           </div>
         </div>
 
         <!-- Email -->
         <div class="mc-form-group">
           <label for="contact-email">Email</label>
-          <input type="email" id="contact-email" class="mc-input" placeholder="jane@example.com">
+          <input type="email" id="contact-email" name="email" class="mc-input" placeholder="jane@example.com">
         </div>
 
         <!-- Subject -->
         <div class="mc-form-group">
           <label for="contact-subject">Subject</label>
-          <input type="text" id="contact-subject" class="mc-input" placeholder="How can we help?">
+          <input type="text" id="contact-subject" name="subject" class="mc-input" placeholder="How can we help?">
         </div>
 
         <!-- Message -->
         <div class="mc-form-group">
           <label for="contact-message">Message</label>
-          <textarea id="contact-message" class="mc-input mc-contact-form__textarea" rows="6" placeholder="Tell us more about your question or issue..."></textarea>
+          <textarea id="contact-message" name="message" class="mc-input mc-contact-form__textarea" rows="6" placeholder="Tell us more about your question or issue..."></textarea>
         </div>
 
         <!-- Submit -->
@@ -147,7 +147,7 @@
             <span class="mc-card__link">Ask a question</span>
           </div>
         </a>
-        <a href="{{ route('help') }}" class="mc-card mc-card--bordered mc-contact-intuit__card">
+        <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered mc-contact-intuit__card" target="_blank">
           <div class="mc-card__body mc-card__body--lg mc-text-center">
             <h4 class="mc-card__title">Documentation</h4>
             <span class="mc-card__link">Browse guides</span>

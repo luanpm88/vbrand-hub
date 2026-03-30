@@ -61,7 +61,7 @@
 
     @if($tags->hasPages())
         <div class="mt-3">
-            {{ $tags->links() }}
+            {{ $tags->links('pagination::bootstrap-5') }}
         </div>
     @endif
 @endsection
