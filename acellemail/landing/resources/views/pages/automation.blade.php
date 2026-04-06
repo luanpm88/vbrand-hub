@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Automation | AcelleMail')
+@section('title', 'Marketing Automation — Trigger-Based Emails & Workflows | AcelleMail')
+@section('meta_description', 'Build automated email workflows with triggers, delays, and conditions. Welcome series, drip campaigns, and customer journeys — all self-hosted on your server.')
+@section('og_title', 'Marketing Automation — AcelleMail')
 
 @section('content')
 
@@ -15,7 +17,7 @@
                 <a href="{{ route('pricing') }}" class="mc-btn mc-btn--primary mc-btn--lg">Get Started</a>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ asset('images/hero/automation-hero.svg') }}" alt="AcelleMail marketing automation">
+                <img src="{{ asset('images/hero/automation-hero.svg') }}" alt="AcelleMail marketing automation" fetchpriority="high">
             </div>
         </div>
     </div>
@@ -58,7 +60,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Welcome series automation">
+                <img src="{{ asset('images/features/predictive.svg') }}" alt="Welcome series automation" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Welcome new subscribers with automated series</h2>
@@ -77,7 +79,7 @@
                 <p class="mc-feature-alt__text">Build automated flows that fire when subscribers open an email, click a link, join a list, or match a custom field condition. Combine event triggers with time-based delays and conditional splits to create journeys that respond to how each person interacts with your emails.</p>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automation-flows.svg') }}" alt="Automation event triggers">
+                <img src="{{ asset('images/features/automation-flows.svg') }}" alt="Automation event triggers" loading="lazy">
             </div>
         </div>
     </div>
@@ -88,7 +90,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/integrations-auto.svg') }}" alt="Sending service integrations">
+                <img src="{{ asset('images/features/integrations-auto.svg') }}" alt="Sending service integrations" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Connect any SMTP or sending service</h2>
@@ -104,7 +106,7 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study.png') }}" alt="AcelleMail automation success story">
+                <img src="{{ asset('images/features/case-study.png') }}" alt="AcelleMail automation success story" loading="lazy">
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
@@ -140,7 +142,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Explore automation features <span>&rarr;</span></a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/campaign-manager.svg') }}" alt="Drip campaign automation builder">
+                <img src="{{ asset('images/features/campaign-manager.svg') }}" alt="Drip campaign automation builder" loading="lazy">
             </div>
         </div>
     </div>
@@ -151,7 +153,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/whats-new.svg') }}" alt="What's new in AcelleMail">
+                <img src="{{ asset('images/features/whats-new.svg') }}" alt="What's new in AcelleMail" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">What's new in AcelleMail?</h2>
@@ -285,7 +287,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="AcelleMail automation capabilities">
+                <img src="{{ asset('images/features/email-sms.svg') }}" alt="AcelleMail automation capabilities" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Powerful automation building blocks</h2>
@@ -313,7 +315,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about A/B testing <span>&rarr;</span></a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="A/B testing within automation workflows">
+                <img src="{{ asset('images/features/predictive.svg') }}" alt="A/B testing within automation workflows" loading="lazy">
             </div>
         </div>
     </div>
@@ -410,7 +412,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/api-custom.svg') }}" alt="AcelleMail REST API">
+                <img src="{{ asset('images/features/api-custom.svg') }}" alt="AcelleMail REST API" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Build custom automations with our API</h2>
@@ -421,3 +423,14 @@
     </div>
 </section>
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Marketing Automation'])
+@include('partials.seo.jsonld-faq', ['faqs' => [
+    ['question' => 'Does AcelleMail support marketing automation?', 'answer' => 'Yes. AcelleMail includes a full automation engine that lets you create trigger-based email workflows. You can set up welcome series, re-engagement campaigns, birthday emails, drip sequences, and more — all running on your own server with no per-email fees.'],
+    ['question' => 'What triggers can I use to start an automation?', 'answer' => 'AcelleMail supports multiple trigger types: subscriber joins a list, opens an email, clicks a specific link, a date-based field matches (like birthdays or anniversaries), a custom field changes, or an external event fires via the API. You can combine triggers with time delays and conditional splits.'],
+    ['question' => 'Are there sending limits on automated emails?', 'answer' => 'No. Since AcelleMail is self-hosted, there are no platform-imposed sending limits. Your throughput depends on your server capacity and your sending service. Most users send hundreds of thousands of automated emails per month at minimal cost.'],
+    ['question' => 'Can I use automation for abandoned cart emails?', 'answer' => 'Yes. For SaaS applications and web apps, you can trigger abandoned cart or abandoned signup automations using AcelleMail\'s API.'],
+    ['question' => 'How does self-hosted automation compare to cloud platforms?', 'answer' => 'Self-hosted automation gives you full control over your data, no per-subscriber pricing, no sending limits, and complete customization. You own your subscriber data, can modify the source code, and pay only for server hosting and sending service fees — typically 10-20x cheaper than cloud platforms at scale.'],
+]])
+@endpush

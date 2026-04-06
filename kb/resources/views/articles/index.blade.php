@@ -1,7 +1,8 @@
 @extends('layouts.kb')
 
-@section('title', 'AcelleMail Knowledge Base — Tutorials, Guides & References')
-@section('meta_description', 'Learn everything about AcelleMail — self-hosted email marketing. Tutorials, guides, references, and best practices.')
+@section('title', 'AcelleMail Knowledge Base — Email Marketing Tutorials, Guides & How-To')
+@section('meta_description', 'Learn email marketing with AcelleMail: tutorials, setup guides, automation tips, deliverability best practices. Self-hosted alternative to Mailchimp & SendGrid.')
+@section('og_title', 'AcelleMail Knowledge Base — Learn Email Marketing')
 
 @section('content')
     {{-- Hero Section --}}
@@ -96,3 +97,8 @@
         </aside>
     </div>
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-website')
+@include('partials.seo.jsonld-organization')
+@endpush

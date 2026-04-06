@@ -7,6 +7,28 @@
 
     <title>@yield('title', 'AcelleMail Knowledge Base')</title>
     <meta name="description" content="@yield('meta_description', 'Tutorials, guides, and references for AcelleMail — the self-hosted email marketing platform.')">
+    <meta name="robots" content="@yield('robots', 'index, follow')">
+    <link rel="canonical" href="@yield('canonical_url', url()->current())">
+
+    {{-- Open Graph --}}
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:site_name" content="AcelleMail Knowledge Base">
+    <meta property="og:title" content="@yield('og_title', 'AcelleMail Knowledge Base')">
+    <meta property="og:description" content="@yield('meta_description', 'Tutorials, guides, and references for AcelleMail — the self-hosted email marketing platform.')">
+    <meta property="og:url" content="@yield('canonical_url', url()->current())">
+    <meta property="og:image" content="@yield('og_image', 'https://acellemail.com/images/og/og-default.svg')">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('og_title', 'AcelleMail Knowledge Base')">
+    <meta name="twitter:description" content="@yield('meta_description', 'Tutorials, guides, and references for AcelleMail — the self-hosted email marketing platform.')">
+    <meta name="twitter:image" content="@yield('og_image', 'https://acellemail.com/images/og/og-default.svg')">
+
+    {{-- Structured Data --}}
+    @stack('jsonld')
 
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

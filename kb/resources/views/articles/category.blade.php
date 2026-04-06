@@ -1,7 +1,9 @@
 @extends('layouts.kb')
 
-@section('title', $category->name . ' — AcelleMail KB')
-@section('meta_description', $category->description ?: 'Browse ' . $category->name . ' articles on AcelleMail Knowledge Base.')
+@section('title', $category->name . ' — Email Marketing Guides | AcelleMail KB')
+@section('meta_description', $category->description ?: 'Browse ' . $category->name . ' articles on AcelleMail Knowledge Base. Tutorials, guides, and best practices.')
+@section('og_title', $category->name . ' — AcelleMail Knowledge Base')
+@section('canonical_url', route('articles.category', $category->slug))
 
 @section('content')
     {{-- Breadcrumbs --}}
@@ -39,3 +41,10 @@
         {{ $articles->links() }}
     </div>
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbItems' => [
+    ['name' => 'Home', 'url' => route('home')],
+    ['name' => $category->name, 'url' => route('articles.category', $category->slug)],
+]])
+@endpush

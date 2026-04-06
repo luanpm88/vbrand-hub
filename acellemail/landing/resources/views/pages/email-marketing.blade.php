@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Email Marketing | AcelleMail')
+@section('title', 'Self-Hosted Email Marketing Software — Send Unlimited Emails | AcelleMail')
+@section('meta_description', 'Send unlimited email campaigns from your own server. Drag & drop builder, 100+ templates, real-time analytics. No per-subscriber fees. Full data ownership.')
+@section('og_title', 'Email Marketing That You Own — AcelleMail')
 
 @section('content')
 
@@ -20,7 +22,7 @@
                 </div>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="AcelleMail email marketing platform — design, send, and analyze email campaigns">
+                <img src="{{ asset('images/features/email-sms.svg') }}" alt="AcelleMail email marketing platform — design, send, and analyze email campaigns" fetchpriority="high">
             </div>
         </div>
     </div>
@@ -50,7 +52,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder interface">
+                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder interface" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Email Builder</span>
@@ -91,7 +93,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Browse all templates &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Professional email templates for every industry">
+                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Professional email templates for every industry" loading="lazy">
             </div>
         </div>
     </div>
@@ -149,7 +151,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Advanced audience segmentation tools">
+                <img src="{{ asset('images/features/predictive.svg') }}" alt="Advanced audience segmentation tools" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Segmentation &amp; List Management</span>
@@ -210,7 +212,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about testing &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="A/B testing dashboard showing campaign variations and results">
+                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="A/B testing dashboard showing campaign variations and results" loading="lazy">
             </div>
         </div>
     </div>
@@ -257,7 +259,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/sending-servers.svg') }}" alt="Sending server management">
+                <img src="{{ asset('images/features/sending-servers.svg') }}" alt="Sending server management" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Deliverability &amp; Sending Servers</span>
@@ -368,7 +370,7 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study.png') }}" alt="Cost savings case study — self-hosted email marketing">
+                <img src="{{ asset('images/features/case-study.png') }}" alt="Cost savings case study — self-hosted email marketing" loading="lazy">
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
@@ -480,7 +482,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Email marketing analytics and reporting dashboard">
+                <img src="{{ asset('images/features/predictive.svg') }}" alt="Email marketing analytics and reporting dashboard" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Analytics &amp; Reporting</span>
@@ -521,7 +523,7 @@
                 <a href="{{ route('automation') }}" class="mc-feature-alt__link">Explore automations &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Email automation builder with triggers and workflows">
+                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Email automation builder with triggers and workflows" loading="lazy">
             </div>
         </div>
     </div>
@@ -639,3 +641,14 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Email Marketing'])
+@include('partials.seo.jsonld-faq', ['faqs' => [
+    ['question' => 'What is AcelleMail and how is it different from SaaS email platforms?', 'answer' => 'AcelleMail is a self-hosted email marketing web application that you install on your own server. Unlike SaaS platforms like Mailchimp or Sendinblue that charge monthly fees based on subscriber count, AcelleMail is a one-time purchase. You own the software and all your data stays on your server. You connect your own sending service (Amazon SES, SendGrid, SparkPost, etc.) and pay only for what you send.'],
+    ['question' => 'How much does it cost to send emails with AcelleMail?', 'answer' => 'AcelleMail itself is a one-time purchase from CodeCanyon. Your ongoing cost is only the sending service you choose. With Amazon SES, sending costs just $0.10 per 1,000 emails. That means sending to a list of 100,000 subscribers costs approximately $10 per campaign.'],
+    ['question' => 'What are the server requirements to run AcelleMail?', 'answer' => 'AcelleMail runs on any standard Linux web server with PHP 8.0+, MySQL 5.7+ (or MariaDB), and a web server like Apache or Nginx. A VPS with 2GB RAM is sufficient for most installations.'],
+    ['question' => 'How do I ensure good email deliverability with AcelleMail?', 'answer' => 'AcelleMail includes built-in tools for domain authentication (SPF, DKIM, DMARC), bounce handling, and feedback loop integration. It also includes email verification to clean your lists before sending, reducing bounces and protecting your sender reputation.'],
+    ['question' => 'Can I use AcelleMail to run an email marketing service for my clients?', 'answer' => 'Yes, AcelleMail has built-in multi-tenant support designed for agencies and resellers. You can create sub-accounts for each client with their own sending limits, mailing lists, templates, and campaigns. The platform supports white-labeling so your clients see your brand.'],
+]])
+@endpush

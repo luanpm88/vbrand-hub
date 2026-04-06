@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Pricing | AcelleMail')
+@section('title', 'Pricing — $64 One-Time License, No Monthly Fees | AcelleMail')
+@section('meta_description', 'AcelleMail starts at $64 — one-time payment, lifetime updates, full source code. No monthly fees, no per-subscriber charges. Compare Regular vs Extended.')
+@section('og_title', 'Simple, One-Time Pricing — AcelleMail')
 
 @section('content')
 
@@ -18,7 +20,7 @@
                 <p class="mc-pricing-hero__subheading">No monthly fees. No per-subscriber charges. Pay once, own forever. Self-hosted on your own server with full source code included &mdash; you control everything.</p>
             </div>
             <div class="mc-pricing-hero__image">
-                <img src="{{ asset('images/features/pricing-hero.svg') }}" alt="Simple, One-Time Pricing" style="width:100%;border-radius:var(--radius-lg);">
+                <img src="{{ asset('images/features/pricing-hero.svg') }}" alt="Simple, One-Time Pricing" style="width:100%;border-radius:var(--radius-lg);" fetchpriority="high">
             </div>
         </div>
     </div>
@@ -229,12 +231,12 @@
     <div class="mc-container">
         <h3 class="mc-services-bar__title">Works with your favorite sending services</h3>
         <div class="mc-services-bar__logos">
-            <div class="mc-services-bar__item"><img src="{{ asset('images/services/amazon-ses.svg') }}" alt="Amazon SES" width="36" height="36"><span>Amazon SES</span></div>
-            <div class="mc-services-bar__item"><img src="{{ asset('images/services/sendgrid.svg') }}" alt="SendGrid" width="36" height="36"><span>SendGrid</span></div>
-            <div class="mc-services-bar__item"><img src="{{ asset('images/services/sparkpost.svg') }}" alt="SparkPost" width="36" height="36"><span>SparkPost</span></div>
-            <div class="mc-services-bar__item"><img src="{{ asset('images/services/mailgun.svg') }}" alt="Mailgun" width="36" height="36"><span>Mailgun</span></div>
-            <div class="mc-services-bar__item"><img src="{{ asset('images/services/postmark.svg') }}" alt="Postmark" width="36" height="36"><span>Postmark</span></div>
-            <div class="mc-services-bar__item"><img src="{{ asset('images/services/elastic-email.svg') }}" alt="Elastic Email" width="36" height="36"><span>Elastic Email</span></div>
+            <div class="mc-services-bar__item"><img src="{{ asset('images/services/amazon-ses.svg') }}" alt="Amazon SES" width="36" height="36" loading="lazy"><span>Amazon SES</span></div>
+            <div class="mc-services-bar__item"><img src="{{ asset('images/services/sendgrid.svg') }}" alt="SendGrid" width="36" height="36" loading="lazy"><span>SendGrid</span></div>
+            <div class="mc-services-bar__item"><img src="{{ asset('images/services/sparkpost.svg') }}" alt="SparkPost" width="36" height="36" loading="lazy"><span>SparkPost</span></div>
+            <div class="mc-services-bar__item"><img src="{{ asset('images/services/mailgun.svg') }}" alt="Mailgun" width="36" height="36" loading="lazy"><span>Mailgun</span></div>
+            <div class="mc-services-bar__item"><img src="{{ asset('images/services/postmark.svg') }}" alt="Postmark" width="36" height="36" loading="lazy"><span>Postmark</span></div>
+            <div class="mc-services-bar__item"><img src="{{ asset('images/services/elastic-email.svg') }}" alt="Elastic Email" width="36" height="36" loading="lazy"><span>Elastic Email</span></div>
         </div>
     </div>
 </section>
@@ -330,7 +332,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Sending cost comparison chart">
+                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Sending cost comparison chart" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Cost Comparison</span>
@@ -356,7 +358,7 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study-savings.svg') }}" alt="Save $12,000+ per year" style="width:100%;border-radius:var(--radius-lg);">
+                <img src="{{ asset('images/features/case-study-savings.svg') }}" alt="Save $12,000+ per year" style="width:100%;border-radius:var(--radius-lg);" loading="lazy">
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
@@ -493,3 +495,16 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Pricing'])
+@include('partials.seo.jsonld-product')
+@include('partials.seo.jsonld-faq', ['faqs' => [
+    ['question' => 'What is included in my purchase?', 'answer' => 'Every purchase includes the complete AcelleMail source code (PHP/Laravel), lifetime free updates, 6 months of technical support, full documentation, and access to our community forum. You can install it on any Linux server with PHP and MySQL — no additional licensing fees ever.'],
+    ['question' => 'Can I modify the source code?', 'answer' => 'Yes, absolutely. You receive the full unencrypted PHP source code and are free to modify, customize, and extend it to fit your exact needs. The only restriction is redistribution of the source code itself.'],
+    ['question' => 'Can I build a SaaS with AcelleMail?', 'answer' => 'Yes — with the Extended License ($199). The Extended License allows you to charge end users for access to your email marketing platform. It includes built-in multi-tenant management, subscription plans with Stripe/PayPal billing, and white-label branding.'],
+    ['question' => 'How do updates work after purchase?', 'answer' => 'All updates are free for life — no recurring fee required. When we release a new version, you can download it from CodeCanyon and update your installation.'],
+    ['question' => 'What if I need support after 6 months?', 'answer' => 'You can extend support directly through CodeCanyon, or purchase our Annual Support package ($149/year) for priority ticket support, server migration assistance, and custom configuration help.'],
+    ['question' => 'Is there a refund policy?', 'answer' => 'Purchases are covered by Envato\'s refund policy. If the item is significantly different from its description or doesn\'t work as advertised, you can request a refund through CodeCanyon.'],
+]])
+@endpush

@@ -58,6 +58,40 @@ Mỗi component là 1 git repo riêng → commit/push riêng.
 - **App path:** `/home/vbrand/app` (branch: `brand`)
 - **Sites path:** `/home/vbrand/sites/*/` — mỗi site = 1 WP instance
 - **Sites registry:** `bots/report/sites.md` — danh sách tất cả sites
+- **PHP-FPM socket:** `/var/run/php/php8.3-fpm.vbrand.sock` (dùng cho nginx)
+- **Admin account:** `admin@sgconnect.vn` / `aA456321@`
+
+## Lessons Learned (từ audit 2026-04-06)
+
+### Clone WP site (không phải tạo mới từ 0)
+Khi cần clone 1 WP site sang domain mới:
+1. `mysqldump` DB cũ → `mysql` DB mới
+2. `cp -r` thư mục WP
+3. Sửa `wp-config.php` (DB_NAME, DB_USER, DB_PASSWORD)
+4. `wp search-replace 'old-url' 'new-url' --all-tables` (chạy 2 lần: http→https rồi domain→domain)
+5. Copy nginx config từ site đang chạy, sed đổi domain/path — **KHÔNG viết từ heredoc** (dễ lỗi escape `$`)
+6. SSL: `certbot --nginx -d domain --non-interactive --agree-tos`
+7. Sau SSL: `wp option update siteurl/home` thành https
+8. Tạo customer trên brand app: Customer → User (user.customer_id = customer.id)
+9. Generate API token trên WP: `wp eval` với `update_option('vbrandsync_api_token', ...)`
+
+### Nginx config
+- **LUÔN copy từ site đang chạy** (`cp + sed`) thay vì viết heredoc qua SSH — tránh lỗi escape `$uri`, `$args`
+- PHP-FPM sock: `php8.3-fpm.vbrand.sock` (KHÔNG phải `php8.2-fpm.sock`)
+
+### Brand app user-customer relationship
+- Table `customers` KHÔNG có `user_id` — thay vào đó `users.customer_id` trỏ tới `customers.id`
+- Tạo customer trước → lấy customer.id → set vào user.customer_id
+
+### Admin login
+- Admin email prod: `admin@sgconnect.vn` (đã đổi từ `admin@brandviet.vn`)
+- Login route: `/login` (cùng route cho cả admin + customer)
+- Sau login, HomeController check `config('app.brand')` → redirect `Brand\HomeController@index`
+- Admin access policy: `UserPolicy@admin_access` check `!is_null($user->admin)`
+
+### WooCommerce COD
+- Bật COD: `update_option('woocommerce_cod_settings', array('enabled'=>'yes', ...))`
+- Nên set title tiếng Việt: "Thanh toán khi nhận hàng"
 
 ## Architecture (3-layer API chain)
 
@@ -109,6 +143,7 @@ User report bug/feature → GitHub Issues [vbrand, status:new] trên luanpm88/vb
 | Scrape Lazada | `bots/scrape/scrape-lazada-shop.md` | Scrape Lazada Mall shop → `shops/` standard format |
 | Scrape Shopee | `bots/scrape/scrape-shopee-shop.md` | Scrape Shopee shop qua HTML mode (copy từ DevTools) |
 | Clone Full Site | `bots/scrape/full-site/scraper.md` | Clone/copy website thành standalone PHP site |
+| Sync Drive | `bots/sync-drive.md` | Sync `docs/drive_shared/` lên Google Drive (`luanpm88:vBrand_Shared/SGCONNECT/`) |
 
 ### Usage — Cách gọi bots
 
@@ -164,6 +199,9 @@ User có thể nói ngắn — Claude phải tự hiểu và chạy đúng bot:
 | `clone site giống X` | Tìm site phù hợp → chạy `scraper.md clone` |
 | `update mailchimp fix menu` | Chạy `scraper.md update mailchimp` |
 | `audit mailchimp` | Screenshot + review site mailchimp |
+| `export sales handoff` hoặc `xuất pdf sales` | Gen PDF từ `SALES_HANDOVER.md` + `USER_GUIDE.md` → copy vào `docs/drive_shared/` (tăng version) |
+| `sync drive` hoặc `đẩy lên drive` | Chạy `rclone sync docs/drive_shared/ luanpm88:vBrand_Shared/SGCONNECT/ --progress` |
+| `export sales handoff và sync drive` | Gen PDF + copy drive_shared + rclone sync — full pipeline |
 
 ### Label conventions
 

@@ -38,9 +38,15 @@ Nếu có unpushed commits → cảnh báo: "Có commits chưa push. Push trư�
 
 ### Bước 2: Deploy
 
+**Trước khi pull** — reset server về trạng thái sạch (discard mọi uncommitted + untracked changes):
+
 ```bash
 ssh vbrand@18.141.199.175 "
 cd /home/vbrand/app
+echo '=== Cleaning server working directory ==='
+git checkout -- .
+git clean -fd
+echo '=== Pulling ==='
 git pull origin brand
 php composer.phar install --no-dev --optimize-autoloader
 php artisan migrate --force
@@ -50,6 +56,9 @@ php artisan view:clear
 php artisan route:clear
 "
 ```
+
+> **Tại sao reset trước khi pull?**
+> Server có thể có uncommitted/untracked changes (do edit trực tiếp, hoặc code được copy lên ngoài git). Nếu không reset, `git pull` sẽ fail do conflict. Vì source of truth luôn là git repo (local commit → push → server pull), nên discard server changes là an toàn.
 
 > ⚠️ **Quan trọng — Cache rules:**
 > - Luôn dùng `config:cache` (KHÔNG dùng `config:clear`) — vì `routes/web.php` dùng `config('app.brand')` để conditionally load brand routes. Nếu config không được cache thì brand routes sẽ không load → 404 toàn bộ `/brand/*`

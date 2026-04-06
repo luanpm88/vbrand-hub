@@ -13,3 +13,9 @@ Route::get('/security', [PageController::class, 'security'])->name('security');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/help', [PageController::class, 'help'])->name('help');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+
+Route::get('/sitemap.xml', function () {
+    return response()
+        ->view('sitemap')
+        ->header('Content-Type', 'application/xml');
+})->name('sitemap');

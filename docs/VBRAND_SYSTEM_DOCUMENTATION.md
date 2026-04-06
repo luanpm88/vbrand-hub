@@ -236,6 +236,13 @@ class Wordpress {
 }
 ```
 
+**Connection failure handling:**
+- Nếu `customers.wordpress_endpoint` chưa được cấu hình hoặc WordPress site không phản hồi, `Wordpress::request()` sẽ ném `Acelle\Exceptions\WordpressConnectionException`.
+- Mobile webapp (`/brand/mobile/*`) render thông báo thân thiện cho customer thay vì show stack trace/exception page.
+- Desktop brand app (`/brand/*`) dùng `Customer::getWordPressConnectionState()` để tránh gọi trực tiếp WordPress trong layout/menu chung.
+- Desktop AJAX GET cho các list trong `/brand/*` trả về HTML cảnh báo ngay trong vùng list; desktop mutation requests vẫn trả JSON lỗi để frontend xử lý đúng.
+- AJAX/JSON actions trả về HTTP `503` với thông điệp tiếng Việt để frontend hiển thị rõ ràng.
+
 #### `Acelle\Wordpress\Product`
 File: `app/app/Wordpress/Product.php`
 
@@ -928,6 +935,7 @@ Customer Panel (Laravel)                    WordPress/WooCommerce
 |----------|-----------|------|
 | `title` | `post_title` | string |
 | `description` | `post_content` | string |
+| `permalink` | `get_permalink(product_id)` | string \| null |
 | `price` | `_price` / `_regular_price` meta | number |
 | `discount_price` | `_price` meta (when has discount) | number |
 | `image_url` | Post thumbnail | string (URL) |
@@ -937,6 +945,8 @@ Customer Panel (Laravel)                    WordPress/WooCommerce
 | `lazada_id` | `lazada_id` meta | string |
 | `attributes` | WC Product Attributes | array |
 | `variations` | WC Product Variations | array |
+
+`App\Wordpress\Models\Product::mapFromWPPostId()` map thêm `permalink` để Laravel app có thể hiển thị hoặc copy đúng public WordPress URL của sản phẩm mà không phải tự dựng link từ slug.
 
 ### 8.3 Product Variations
 Products support WooCommerce variable products with:
@@ -1458,6 +1468,8 @@ POST   api/v1/brand/products               → ProductController@store
 PUT    api/v1/brand/products/{id}          → ProductController@update
 DELETE api/v1/brand/products/{id}          → ProductController@destroy
 
+`ProductDTO::summary()` và `ProductDTO::detail()` trả thêm field `permalink` cho từng sản phẩm. `brand/mobile/products` dùng field này để copy public product link trực tiếp từ WordPress site.
+
 # Profile
 GET    api/v1/brand/profile                → ProfileController@show
 PUT    api/v1/brand/profile                → ProfileController@update
@@ -1931,6 +1943,7 @@ All WP-calling controllers use `HandlesWPErrors` trait (`app/Wordpress/Concerns/
 - **Errors**: `Log::error("WP API cURL error [{method} {uri}]...")`
 - **Slow requests** (>3s): `Log::warning("WP API slow [{method} {uri}]...")`
 - Includes timing (ms) and HTTP status codes
+- **Connection issues**: missing endpoint / no response now throw `WordpressConnectionException` for customer-friendly handling
 
 ### 17.4 Bug Fixes Applied
 

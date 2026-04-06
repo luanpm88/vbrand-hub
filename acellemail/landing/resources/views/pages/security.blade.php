@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Security & GDPR | AcelleMail')
+@section('title', 'Security & GDPR Compliance — Your Data on Your Server | AcelleMail')
+@section('meta_description', 'AcelleMail is self-hosted: subscriber data never leaves your server. Full GDPR compliance, encryption at rest, role-based access, and audit logging built in.')
+@section('og_title', 'Security & GDPR — AcelleMail')
 
 @section('content')
 
@@ -88,7 +90,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/security-control.svg') }}" alt="Self-hosted security control">
+        <img src="{{ asset('images/features/security-control.svg') }}" alt="Self-hosted security control" fetchpriority="high">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">Self-hosted means full control</h2>
@@ -153,7 +155,7 @@
         </ul>
       </div>
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/predictive.svg') }}" alt="GDPR compliance tools">
+        <img src="{{ asset('images/features/predictive.svg') }}" alt="GDPR compliance tools" loading="lazy">
       </div>
     </div>
   </div>
@@ -202,7 +204,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/integrations-auto.svg') }}" alt="Email authentication and deliverability">
+        <img src="{{ asset('images/features/integrations-auto.svg') }}" alt="Email authentication and deliverability" loading="lazy">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">SPF, DKIM &amp; DMARC Support</h2>
@@ -402,7 +404,7 @@
         </ul>
       </div>
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/automation-flows.svg') }}" alt="Server security">
+        <img src="{{ asset('images/features/automation-flows.svg') }}" alt="Server security" loading="lazy">
       </div>
     </div>
   </div>
@@ -481,7 +483,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/predictive.svg') }}" alt="Open source transparency">
+        <img src="{{ asset('images/features/predictive.svg') }}" alt="Open source transparency" loading="lazy">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">Open source &mdash; audit the code yourself</h2>
@@ -582,3 +584,14 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Security & GDPR'])
+@include('partials.seo.jsonld-faq', ['faqs' => [
+    ['question' => 'How does AcelleMail protect my data?', 'answer' => 'AcelleMail is self-hosted, meaning all your data stays on your own server. There is no third-party access to your subscriber lists, campaign data, or analytics. You control the server security: SSL/TLS encryption, firewall rules, database encryption, access controls, and backups.'],
+    ['question' => 'Does AcelleMail support GDPR compliance?', 'answer' => 'Yes. AcelleMail includes GDPR compliance tools out of the box: consent checkboxes on signup forms, one-click data export for subscribers, right to erasure, and preference management centers. Since all data is stored on your server, you have direct control over data processing.'],
+    ['question' => 'Is AcelleMail more secure than SaaS email platforms?', 'answer' => 'Self-hosted platforms like AcelleMail eliminate several security risks inherent to SaaS: no shared infrastructure, no third-party data access, no vendor data breaches affecting your data, and no reliance on a provider\'s security practices.'],
+    ['question' => 'How do I set up SPF, DKIM, and DMARC with AcelleMail?', 'answer' => 'AcelleMail provides a built-in domain verification tool that guides you through setting up SPF, DKIM, and DMARC records for your sending domain. This works with any sending service including Amazon SES, SendGrid, Mailgun, or direct SMTP.'],
+    ['question' => 'How often are security updates released?', 'answer' => 'AcelleMail releases regular updates through CodeCanyon that include security patches, bug fixes, and new features. As a license holder, you receive update notifications and can apply them on your own schedule.'],
+]])
+@endpush

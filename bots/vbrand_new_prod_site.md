@@ -36,7 +36,7 @@ Từ DOMAIN, tính ra các biến:
 - `WP_PATH` = `/home/vbrand/sites/${DIR_NAME}`
 - `BRAND_USER_PASS` = `123456`
 - `BRAND_APP_PATH` = `/home/vbrand/app`
-- `BRAND_APP_ENDPOINT` = `https://app.brandviet.vn/api/brand`
+- `BRAND_APP_ENDPOINT` = `https://app.sgconnect.vn/api/brand`
 - `WP_API_ENDPOINT` = `https://${DOMAIN}/wp-json/vbrandsync/v1` (sau khi SSL, nếu SSL fail thì `http://`)
 
 Biến optional:
@@ -524,7 +524,7 @@ require __DIR__.\"/vendor/autoload.php\";
 \$kernel = \$app->make(Illuminate\Contracts\Console\Kernel::class);
 \$kernel->bootstrap();
 
-App\Models\Setting::set(\"vbrand_endpoint\", \"https://app.brandviet.vn/api/brand\");
+App\Models\Setting::set(\"vbrand_endpoint\", \"https://app.sgconnect.vn/api/brand\");
 App\Models\Setting::set(\"vbrand_token\", \"${API_TOKEN}\");
 echo \"Settings saved!\n\";
 echo \"Endpoint: \" . App\Models\Setting::get(\"vbrand_endpoint\") . \"\n\";
@@ -564,7 +564,7 @@ Format mỗi site:
 - WP Pass: aA456321@
 - WP Path: /home/vbrand/sites/${DIR_NAME}
 - WP API: https://${DOMAIN}/wp-json/vbrandsync/v1
-- Brand Endpoint: https://app.brandviet.vn/api/brand
+- Brand Endpoint: https://app.sgconnect.vn/api/brand
 - Brand Token: ${API_TOKEN}
 - Customer Name: ${COMPANY_NAME}
 - Customer Email: ${ADMIN_EMAIL}
@@ -600,7 +600,7 @@ Brand App:
 
 Kết nối:
 - Brand → WP: https://${DOMAIN}/wp-json/vbrandsync/v1
-- WP → Brand: https://app.brandviet.vn/api/brand (token: ${API_TOKEN})
+- WP → Brand: https://app.sgconnect.vn/api/brand (token: ${API_TOKEN})
 
 Registry: đã ghi vào bots/report/sites.md
 

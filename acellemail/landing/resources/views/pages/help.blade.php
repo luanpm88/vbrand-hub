@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Help Center | AcelleMail')
+@section('title', 'Help Center — Documentation, Guides & Support | AcelleMail')
+@section('meta_description', 'Get help with AcelleMail: installation guides, configuration docs, API reference, video tutorials, and community forum. Everything you need to get started.')
+@section('og_title', 'Help & Documentation — AcelleMail')
 
 @section('content')
 
@@ -20,7 +22,7 @@
     </div>
   </div>
   <div class="mc-hero__image">
-    <img src="{{ asset('images/hero/help-hero.png') }}" alt="AcelleMail help center">
+    <img src="{{ asset('images/hero/help-hero.png') }}" alt="AcelleMail help center" fetchpriority="high">
   </div>
 </section>
 
@@ -122,7 +124,7 @@
   <div class="mc-container">
     <div class="mc-feature-row">
       <div class="mc-feature-row__image">
-        <img src="{{ asset('images/help/contact-support.png') }}" alt="Contact our support team">
+        <img src="{{ asset('images/help/contact-support.png') }}" alt="Contact our support team" loading="lazy">
       </div>
       <div class="mc-feature-row__content">
         <h2 class="mc-feature-row__title">Need professional help?</h2>
@@ -284,7 +286,7 @@
   <div class="mc-container">
     <div class="mc-feature-row mc-feature-row--reverse">
       <div class="mc-feature-row__image">
-        <img src="{{ asset('images/help/expert-help.png') }}" alt="Get help from an expert">
+        <img src="{{ asset('images/help/expert-help.png') }}" alt="Get help from an expert" loading="lazy">
       </div>
       <div class="mc-feature-row__content">
         <h2 class="mc-feature-row__title">Get help from an expert</h2>
@@ -322,3 +324,7 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Help Center'])
+@endpush

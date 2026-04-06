@@ -93,3 +93,26 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Timezone: Asia/Ho_Chi_Minh
 - SSL: Yes (expires 2026-06-28)
 - Created: 2026-03-30
+
+## 5. guucoffee.b-teka.com
+- DIR_NAME: guucoffee_b_teka_com
+- DB_NAME: guucoffee_b_teka_com
+- DB_USER: guucoffee_b_teka_com
+- DB_PASS: aA456321@
+- WP Admin: admin
+- WP Pass: aA456321@
+- WP Path: /home/vbrand/sites/guucoffee_b_teka_com
+- WP API: https://guucoffee.b-teka.com/wp-json/vbrandsync/v1
+- Brand Endpoint: https://app.sgconnect.vn/api/brand
+- Brand Token: da709526b662d99eed7166daf07273f2a41a6f45713047843cb68291fdfe
+- Customer Name: GuuCoffee Demo
+- Customer Email: guucoffee@gmail.com
+- Customer Password: 123456
+- First Name: Anh
+- Last Name: Linh
+- Phone:
+- Theme: dreamcafe
+- Timezone: Asia/Ho_Chi_Minh
+- SSL: Yes (expires 2026-07-05)
+- Created: 2026-04-06
+- Note: Clone từ guucoffee.com (site #3) — dùng làm demo, domain b-teka.com

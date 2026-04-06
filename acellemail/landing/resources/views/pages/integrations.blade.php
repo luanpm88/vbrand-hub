@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Integrations | AcelleMail')
+@section('title', 'Integrations — Amazon SES, SendGrid, Mailgun, Stripe & More | AcelleMail')
+@section('meta_description', 'Connect AcelleMail to Amazon SES, SendGrid, SparkPost, Mailgun, Postmark. Accept payments via Stripe, PayPal, Braintree. REST API for custom integrations.')
+@section('og_title', 'Integrations & Sending Services — AcelleMail')
 
 @section('content')
 
@@ -85,7 +87,7 @@
         </div>
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 32px; height: 32px; border-radius: var(--radius-sm);">
+            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 32px; height: 32px; border-radius: var(--radius-sm);" fetchpriority="high">
             <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--mc-purple); background: rgba(107,63,160,0.08); padding: 2px 8px; border-radius: var(--radius-pill);">Payments</span>
           </div>
           <h4 class="mc-card__title" style="font-family: var(--font-serif); font-size: 22px; font-weight: 400; margin-bottom: var(--space-sm);">Stripe</h4>
@@ -232,7 +234,7 @@
       <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 40px; height: 40px; border-radius: var(--radius-sm);">
+            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Stripe</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Process credit card payments and manage subscriptions through Stripe. Supports recurring billing, invoicing, and automatic plan upgrades.</p>
@@ -305,7 +307,7 @@
       <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/wordpress.png') }}" alt="WordPress" style="width: 40px; height: 40px; border-radius: var(--radius-sm);">
+            <img src="{{ asset('images/integrations/wordpress.png') }}" alt="WordPress" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">WordPress</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Add AcelleMail subscription forms to any WordPress site. Embed forms via shortcode or widget, sync subscribers automatically.</p>
@@ -341,7 +343,7 @@
       <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/woocommerce.png') }}" alt="WooCommerce" style="width: 40px; height: 40px; border-radius: var(--radius-sm);">
+            <img src="{{ asset('images/integrations/woocommerce.png') }}" alt="WooCommerce" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">WooCommerce</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Sync WooCommerce customers to AcelleMail lists. Trigger post-purchase emails, abandoned cart reminders, and product recommendations.</p>
@@ -418,7 +420,7 @@
       <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/zapier.png') }}" alt="Zapier" style="width: 40px; height: 40px; border-radius: var(--radius-sm);">
+            <img src="{{ asset('images/integrations/zapier.png') }}" alt="Zapier" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Zapier</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Connect AcelleMail to 5,000+ apps with no code via Zapier. Automate subscriber management and trigger campaigns from any event.</p>
@@ -622,7 +624,7 @@
       <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/google-analytics.png') }}" alt="Google Analytics" style="width: 40px; height: 40px; border-radius: var(--radius-sm);">
+            <img src="{{ asset('images/integrations/google-analytics.png') }}" alt="Google Analytics" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Google Analytics</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Automatically append UTM parameters to all campaign links. Track email-driven traffic and conversions in Google Analytics.</p>
@@ -676,3 +678,7 @@
   </div>
 </section>
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Integrations'])
+@endpush

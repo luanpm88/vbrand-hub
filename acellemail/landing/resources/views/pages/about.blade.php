@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'About | AcelleMail')
+@section('title', 'About AcelleMail — The Story Behind 50,000+ Downloads')
+@section('meta_description', 'AcelleMail is a Laravel-based email marketing platform trusted by 50,000+ businesses. Our mission: make professional email marketing accessible to everyone.')
+@section('og_title', 'About AcelleMail')
 
 @section('content')
 
@@ -8,7 +10,7 @@
      ABOUT — HERO
      ====================================================================== -->
 <section class="mc-about-hero">
-  <img src="{{ asset('images/hero/about-hero.jpg') }}" alt="AcelleMail headquarters" class="mc-about-hero__image">
+  <img src="{{ asset('images/hero/about-hero.jpg') }}" alt="AcelleMail headquarters" class="mc-about-hero__image" fetchpriority="high">
   <div class="mc-about-hero__overlay"></div>
   <div class="mc-about-hero__content">
     <div class="mc-container">
@@ -116,7 +118,7 @@
       <!-- Card 1: Documentation -->
       <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
-          <img src="{{ asset('images/about/newsroom.jpg') }}" alt="AcelleMail Documentation">
+          <img src="{{ asset('images/about/newsroom.jpg') }}" alt="AcelleMail Documentation" loading="lazy">
         </div>
         <div class="mc-card__body">
           <h4 class="mc-card__title">AcelleMail Documentation</h4>
@@ -128,7 +130,7 @@
       <!-- Card 2: Changelog -->
       <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
-          <img src="{{ asset('images/about/why-acellemail.jpg') }}" alt="See what's new in every release">
+          <img src="{{ asset('images/about/why-acellemail.jpg') }}" alt="See what's new in every release" loading="lazy">
         </div>
         <div class="mc-card__body">
           <h4 class="mc-card__title">Changelog &amp; What&rsquo;s New</h4>
@@ -140,7 +142,7 @@
       <!-- Card 3: Community -->
       <a href="https://forum.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
-          <img src="{{ asset('images/about/whats-new.png') }}" alt="AcelleMail Community">
+          <img src="{{ asset('images/about/whats-new.png') }}" alt="AcelleMail Community" loading="lazy">
         </div>
         <div class="mc-card__body">
           <h4 class="mc-card__title">AcelleMail Community</h4>
@@ -153,3 +155,8 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'About'])
+@include('partials.seo.jsonld-organization')
+@endpush

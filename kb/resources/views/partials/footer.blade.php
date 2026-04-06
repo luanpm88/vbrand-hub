@@ -27,6 +27,18 @@
                 </ul>
             </div>
 
+            {{-- Compare --}}
+            <div>
+                <h4 class="kb-footer__heading">Compare</h4>
+                <ul class="kb-footer__list">
+                    <li><a href="{{ route('articles.category', 'migration-comparison') }}">Mailchimp Alternative</a></li>
+                    <li><a href="{{ route('articles.category', 'migration-comparison') }}">SendGrid Alternative</a></li>
+                    <li><a href="{{ route('articles.category', 'migration-comparison') }}">ActiveCampaign Alternative</a></li>
+                    <li><a href="{{ route('articles.category', 'migration-comparison') }}">ClickFunnels Alternative</a></li>
+                    <li><a href="{{ route('articles.category', 'migration-comparison') }}">Sendinblue Alternative</a></li>
+                </ul>
+            </div>
+
             {{-- Community --}}
             <div>
                 <h4 class="kb-footer__heading">Community</h4>

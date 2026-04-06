@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Contact | AcelleMail')
+@section('title', 'Contact AcelleMail — Support, Sales & Partnership Inquiries')
+@section('meta_description', 'Get in touch with AcelleMail for pre-sales questions, technical support, partnership inquiries, or custom solutions. We typically respond within 24 hours.')
+@section('og_title', 'Contact Us — AcelleMail')
 
 @section('content')
 
@@ -123,7 +125,7 @@
         </p>
       </div>
       <div class="mc-feature-row__image">
-        <img src="{{ asset('images/about/office.png') }}" alt="AcelleMail team workspace">
+        <img src="{{ asset('images/about/office.png') }}" alt="AcelleMail team workspace" fetchpriority="high">
       </div>
     </div>
   </div>
@@ -159,3 +161,8 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Contact'])
+@include('partials.seo.jsonld-organization')
+@endpush

@@ -49,6 +49,17 @@
       </div>
 
       <div class="mc-footer__col">
+        <h4 class="mc-footer__col-title">Compare</h4>
+        <nav class="mc-footer__links">
+          <a href="https://knowledge.acellemail.com/category/migration-comparison" class="mc-footer__link" target="_blank">Mailchimp Alternative</a>
+          <a href="https://knowledge.acellemail.com/category/migration-comparison" class="mc-footer__link" target="_blank">SendGrid Alternative</a>
+          <a href="https://knowledge.acellemail.com/category/migration-comparison" class="mc-footer__link" target="_blank">ActiveCampaign Alternative</a>
+          <a href="https://knowledge.acellemail.com/category/migration-comparison" class="mc-footer__link" target="_blank">ClickFunnels Alternative</a>
+          <a href="https://knowledge.acellemail.com/category/migration-comparison" class="mc-footer__link" target="_blank">Sendinblue Alternative</a>
+        </nav>
+      </div>
+
+      <div class="mc-footer__col">
         <h4 class="mc-footer__col-title">Company</h4>
         <nav class="mc-footer__links">
           <a href="{{ route('about') }}" class="mc-footer__link">Our Story</a>

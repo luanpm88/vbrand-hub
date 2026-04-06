@@ -1,6 +1,8 @@
 @extends('layouts.kb')
 
 @section('title', ($query ?? '') ? '"' . $query . '" — Search — AcelleMail KB' : 'Search — AcelleMail KB')
+@section('meta_description', ($query ?? '') ? 'Search results for "' . $query . '" on AcelleMail Knowledge Base.' : 'Search AcelleMail Knowledge Base for email marketing tutorials, guides, and references.')
+@section('robots', 'noindex, follow')
 
 @section('content')
     {{-- Search Form --}}

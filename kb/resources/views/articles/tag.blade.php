@@ -1,7 +1,9 @@
 @extends('layouts.kb')
 
-@section('title', '#' . $tag->name . ' — AcelleMail KB')
-@section('meta_description', 'Articles tagged with "' . $tag->name . '" on AcelleMail Knowledge Base.')
+@section('title', $tag->name . ' — Email Marketing Articles | AcelleMail KB')
+@section('meta_description', 'Articles about ' . $tag->name . ' for email marketing. Tutorials, guides, and best practices on AcelleMail Knowledge Base.')
+@section('og_title', $tag->name . ' — AcelleMail Knowledge Base')
+@section('canonical_url', route('articles.tag', $tag->slug))
 
 @section('content')
     {{-- Breadcrumbs --}}
@@ -34,3 +36,10 @@
         {{ $articles->links() }}
     </div>
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbItems' => [
+    ['name' => 'Home', 'url' => route('home')],
+    ['name' => $tag->name, 'url' => route('articles.tag', $tag->slug)],
+]])
+@endpush

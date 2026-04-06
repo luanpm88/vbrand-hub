@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Features | AcelleMail')
+@section('title', 'Email Marketing Features — Builder, Automation & Analytics | AcelleMail')
+@section('meta_description', 'Explore AcelleMail features: drag & drop email builder, marketing automation, A/B testing, list segmentation, analytics, and 100+ templates. Self-hosted.')
+@section('og_title', 'All Features — AcelleMail Email Marketing Platform')
 
 @section('content')
 
@@ -350,32 +352,32 @@
         </div>
         <div class="mc-features-integrations__grid">
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES" class="mc-features-integrations__img">
+                <img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES" class="mc-features-integrations__img" fetchpriority="high">
                 <h3 class="mc-features-integrations__name">Amazon SES</h3>
                 <p class="mc-features-integrations__desc">Send 100,000 emails for just $10 with Amazon SES integration.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid" class="mc-features-integrations__img">
+                <img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid" class="mc-features-integrations__img" loading="lazy">
                 <h3 class="mc-features-integrations__name">SendGrid</h3>
                 <p class="mc-features-integrations__desc">Reliable delivery with advanced analytics and deliverability tools.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost" class="mc-features-integrations__img">
+                <img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost" class="mc-features-integrations__img" loading="lazy">
                 <h3 class="mc-features-integrations__name">SparkPost</h3>
                 <p class="mc-features-integrations__desc">Enterprise email infrastructure with predictive analytics.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/stripe.svg') }}" alt="Stripe" class="mc-features-integrations__img">
+                <img src="{{ asset('images/services/stripe.svg') }}" alt="Stripe" class="mc-features-integrations__img" loading="lazy">
                 <h3 class="mc-features-integrations__name">Stripe</h3>
                 <p class="mc-features-integrations__desc">Accept payments and manage subscriptions with Stripe integration.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/woocommerce-logo.svg') }}" alt="WooCommerce" class="mc-features-integrations__img">
+                <img src="{{ asset('images/services/woocommerce-logo.svg') }}" alt="WooCommerce" class="mc-features-integrations__img" loading="lazy">
                 <h3 class="mc-features-integrations__name">WooCommerce</h3>
                 <p class="mc-features-integrations__desc">Sync your WooCommerce store customers and orders seamlessly.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/wordpress-logo.svg') }}" alt="WordPress" class="mc-features-integrations__img">
+                <img src="{{ asset('images/services/wordpress-logo.svg') }}" alt="WordPress" class="mc-features-integrations__img" loading="lazy">
                 <h3 class="mc-features-integrations__name">WordPress</h3>
                 <p class="mc-features-integrations__desc">Embed signup forms and manage subscribers from your WordPress site.</p>
             </a>
@@ -491,7 +493,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Landing page and form builder">
+                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Landing page and form builder" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Landing Pages &amp; Forms</span>
@@ -513,7 +515,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="GDPR compliance tools">
+                <img src="{{ asset('images/features/email-sms.svg') }}" alt="GDPR compliance tools" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">GDPR &amp; Compliance</span>
@@ -583,7 +585,7 @@
                 <a href="{{ route('pricing') }}" class="mc-btn mc-btn--secondary">View pricing</a>
             </div>
             <div class="mc-feature-row__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Self-hosted email marketing platform">
+                <img src="{{ asset('images/features/predictive.svg') }}" alt="Self-hosted email marketing platform" loading="lazy">
             </div>
         </div>
     </div>
@@ -637,7 +639,7 @@
         <div class="mc-features-support__grid">
             <div class="mc-features-support__card">
                 <div class="mc-features-support__image">
-                    <img src="{{ asset('images/features/onboarding.png') }}" alt="Documentation">
+                    <img src="{{ asset('images/features/onboarding.png') }}" alt="Documentation" loading="lazy">
                 </div>
                 <h3 class="mc-features-support__name">Documentation</h3>
                 <p class="mc-features-support__desc">Step-by-step guides covering installation, configuration, sending server setup, and campaign creation to get you started fast.</p>
@@ -645,7 +647,7 @@
             </div>
             <div class="mc-features-support__card">
                 <div class="mc-features-support__image">
-                    <img src="{{ asset('images/features/experts.png') }}" alt="Community">
+                    <img src="{{ asset('images/features/experts.png') }}" alt="Community" loading="lazy">
                 </div>
                 <h3 class="mc-features-support__name">Community &amp; Support</h3>
                 <p class="mc-features-support__desc">Join our community forums and get help from experienced AcelleMail users, or contact our support team for priority assistance.</p>
@@ -653,7 +655,7 @@
             </div>
             <div class="mc-features-support__card">
                 <div class="mc-features-support__image">
-                    <img src="{{ asset('images/features/customer-success.png') }}" alt="Installation Service">
+                    <img src="{{ asset('images/features/customer-success.png') }}" alt="Installation Service" loading="lazy">
                 </div>
                 <h3 class="mc-features-support__name">Installation Service</h3>
                 <p class="mc-features-support__desc">Let our team install and configure AcelleMail on your server, set up sending services, and ensure everything runs perfectly.</p>
@@ -664,3 +666,7 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbTitle' => 'Features'])
+@endpush

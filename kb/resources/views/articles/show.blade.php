@@ -2,6 +2,9 @@
 
 @section('title', ($article->meta_title ?: $article->title) . ' — AcelleMail KB')
 @section('meta_description', $article->meta_description ?: $article->excerpt)
+@section('og_title', $article->meta_title ?: $article->title)
+@section('og_type', 'article')
+@section('canonical_url', route('articles.show', $article->slug))
 
 @section('content')
     {{-- Breadcrumbs --}}
@@ -97,6 +100,15 @@
         </aside>
     </div>
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-article', ['article' => $article])
+@include('partials.seo.jsonld-breadcrumb', ['breadcrumbItems' => [
+    ['name' => 'Home', 'url' => route('home')],
+    ['name' => $article->category->name ?? 'Articles', 'url' => $article->category ? route('articles.category', $article->category->slug) : route('home')],
+    ['name' => $article->title, 'url' => route('articles.show', $article->slug)],
+]])
+@endpush
 
 @push('scripts')
 <script>

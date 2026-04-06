@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'AcelleMail | Self-Hosted Email Marketing Platform')
+@section('title', 'AcelleMail — Self-Hosted Email Marketing Platform | No Monthly Fees')
+@section('meta_description', 'Self-hosted email marketing with full source code. Send unlimited emails via Amazon SES, SendGrid, or any SMTP. One-time $64 license. 50,000+ downloads.')
+@section('og_title', 'AcelleMail — Own Your Email Marketing')
 
 @section('content')
 
@@ -14,7 +16,7 @@
                 <p class="mc-hero__subheading">Full source code, no recurring fees. Send unlimited emails with Amazon SES, SendGrid, or any SMTP service.</p>
                 <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg">Buy on CodeCanyon</a>
                 <div class="mc-hero__reviews">
-                    <img src="{{ asset('images/icons/stars-4-5.png') }}" alt="4.6 stars" class="mc-hero__stars">
+                    <img src="{{ asset('images/icons/stars-4-5.png') }}" alt="4.6 stars" class="mc-hero__stars" fetchpriority="high">
                     <span class="mc-hero__reviews-text">Based on 1,200+ reviews on</span>
                     <div class="mc-hero__review-badges">
                         <span style="font-weight: 700; font-size: 14px; color: #82B541; letter-spacing: -0.3px;">envato</span>
@@ -23,7 +25,7 @@
                 </div>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ asset('images/hero/home-hero.svg') }}" alt="AcelleMail email marketing platform">
+                <img src="{{ asset('images/hero/home-hero.svg') }}" alt="AcelleMail email marketing platform" loading="lazy">
             </div>
         </div>
     </div>
@@ -42,7 +44,7 @@
         <div class="mc-feature-cards__grid">
             <div class="mc-feature-cards__item">
                 <div class="mc-feature-cards__image">
-                    <img src="{{ asset('images/features/email-sms.svg') }}" alt="Email marketing">
+                    <img src="{{ asset('images/features/email-sms.svg') }}" alt="Email marketing" loading="lazy">
                 </div>
                 <h3 class="mc-feature-cards__title">Drag &amp; drop email builder</h3>
                 <p class="mc-feature-cards__desc">Create stunning email campaigns with a visual editor. Choose from 100+ templates or build from scratch &mdash; no coding required.</p>
@@ -50,7 +52,7 @@
             </div>
             <div class="mc-feature-cards__item">
                 <div class="mc-feature-cards__image">
-                    <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Marketing automation">
+                    <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Marketing automation" loading="lazy">
                 </div>
                 <h3 class="mc-feature-cards__title">Powerful automation flows</h3>
                 <p class="mc-feature-cards__desc">Set up welcome series, drip campaigns, and triggered emails. Automate your marketing and engage subscribers on autopilot.</p>
@@ -58,7 +60,7 @@
             </div>
             <div class="mc-feature-cards__item">
                 <div class="mc-feature-cards__image">
-                    <img src="{{ asset('images/features/switch-brands.svg') }}" alt="Marketing automation">
+                    <img src="{{ asset('images/features/switch-brands.svg') }}" alt="Marketing automation" loading="lazy">
                 </div>
                 <h3 class="mc-feature-cards__title">Your server, your data</h3>
                 <p class="mc-feature-cards__desc">Install on your own server in minutes. Full source code access, complete data ownership, and no vendor lock-in ever.</p>
@@ -76,12 +78,12 @@
             <p class="mc-services-showcase__desc">Plug in your favorite email provider and start sending in minutes. AcelleMail supports all major delivery services out of the box.</p>
         </div>
         <div class="mc-services-showcase__grid">
-            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES"></div>
-            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid"></div>
-            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost"></div>
-            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/mailgun-logo.svg') }}" alt="Mailgun"></div>
-            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/postmark-logo.svg') }}" alt="Postmark"></div>
-            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/elastic-email-logo.svg') }}" alt="Elastic Email"></div>
+            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES" loading="lazy"></div>
+            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid" loading="lazy"></div>
+            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost" loading="lazy"></div>
+            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/mailgun-logo.svg') }}" alt="Mailgun" loading="lazy"></div>
+            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/postmark-logo.svg') }}" alt="Postmark" loading="lazy"></div>
+            <div class="mc-services-showcase__item"><img src="{{ asset('images/services/elastic-email-logo.svg') }}" alt="Elastic Email" loading="lazy"></div>
         </div>
     </div>
 </section>
@@ -93,7 +95,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder">
+                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Email Template Builder</span>
@@ -112,7 +114,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Marketing automation workflows">
+                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Marketing automation workflows" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Marketing Automations</span>
@@ -137,7 +139,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Email analytics dashboard">
+                <img src="{{ asset('images/features/predictive.svg') }}" alt="Email analytics dashboard" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Analytics &amp; Reporting</span>
@@ -234,7 +236,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/reach-inboxes.png') }}" alt="Marketing automation">
+                <img src="{{ asset('images/features/reach-inboxes.png') }}" alt="Marketing automation" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Deliverability &amp; Verification</span>
@@ -259,7 +261,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="List management and segmentation">
+                <img src="{{ asset('images/features/predictive.svg') }}" alt="List management and segmentation" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">List Management</span>
@@ -322,7 +324,7 @@
         <div class="mc-grid mc-grid--2 mc-grid--gap-lg">
             <a href="{{ route('features') }}" class="mc-card mc-card--bordered">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Multi-tenant SaaS platform">
+                    <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Multi-tenant SaaS platform" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <h4 class="mc-card__title">Multi-Tenant Architecture</h4>
@@ -332,7 +334,7 @@
             </a>
             <a href="{{ route('features') }}" class="mc-card mc-card--bordered">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/features/predictive.svg') }}" alt="Subscription billing and plans">
+                    <img src="{{ asset('images/features/predictive.svg') }}" alt="Subscription billing and plans" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <h4 class="mc-card__title">Built-in Subscription Billing</h4>
@@ -360,7 +362,7 @@
                 </div>
             </div>
             <div class="mc-feature-row__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Laravel PHP source code">
+                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Laravel PHP source code" loading="lazy">
             </div>
         </div>
     </div>
@@ -385,7 +387,7 @@
                 <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-btn mc-btn--primary" target="_blank">View documentation</a>
             </div>
             <div class="mc-feature-row__image">
-                <img src="{{ asset('images/features/installation_setup.svg') }}" alt="Easy installation on any server">
+                <img src="{{ asset('images/features/installation_setup.svg') }}" alt="Easy installation on any server" loading="lazy">
             </div>
         </div>
     </div>
@@ -398,7 +400,7 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study-savings.svg') }}" alt="Savings case study">
+                <img src="{{ asset('images/features/case-study-savings.svg') }}" alt="Savings case study" loading="lazy">
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
@@ -478,12 +480,12 @@
                 <p class="mc-providers-banner__desc">Switch providers anytime. No lock-in, no migration headaches.</p>
             </div>
             <div class="mc-providers-banner__logos">
-                <img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES">
-                <img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid">
-                <img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost">
-                <img src="{{ asset('images/services/mailgun-logo.svg') }}" alt="Mailgun">
-                <img src="{{ asset('images/services/postmark-logo.svg') }}" alt="Postmark">
-                <img src="{{ asset('images/services/elastic-email-logo.svg') }}" alt="Elastic Email">
+                <img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES" loading="lazy">
+                <img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid" loading="lazy">
+                <img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost" loading="lazy">
+                <img src="{{ asset('images/services/mailgun-logo.svg') }}" alt="Mailgun" loading="lazy">
+                <img src="{{ asset('images/services/postmark-logo.svg') }}" alt="Postmark" loading="lazy">
+                <img src="{{ asset('images/services/elastic-email-logo.svg') }}" alt="Elastic Email" loading="lazy">
             </div>
         </div>
     </div>
@@ -501,7 +503,7 @@
         <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
             <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-card mc-card--bordered" target="_blank">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/about/newsroom.jpg') }}" alt="Installation Guide">
+                    <img src="{{ asset('images/about/newsroom.jpg') }}" alt="Installation Guide" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <span class="mc-card__eyebrow">Guide</span>
@@ -512,7 +514,7 @@
             </a>
             <a href="https://demo.acellemail.com" class="mc-card mc-card--bordered">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/about/why-acellemail.jpg') }}" alt="Live Demo">
+                    <img src="{{ asset('images/about/why-acellemail.jpg') }}" alt="Live Demo" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <span class="mc-card__eyebrow">Demo</span>
@@ -523,7 +525,7 @@
             </a>
             <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/about/whats-new.png') }}" alt="Changelog">
+                    <img src="{{ asset('images/about/whats-new.png') }}" alt="Changelog" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <span class="mc-card__eyebrow">Changelog</span>
@@ -534,7 +536,7 @@
             </a>
             <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/about/newsroom.jpg') }}" alt="Knowledge Base">
+                    <img src="{{ asset('images/about/newsroom.jpg') }}" alt="Knowledge Base" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <span class="mc-card__eyebrow">Knowledge</span>
@@ -608,3 +610,9 @@
 </section>
 
 @endsection
+
+@push('jsonld')
+@include('partials.seo.jsonld-organization')
+@include('partials.seo.jsonld-software')
+@include('partials.seo.jsonld-website')
+@endpush
