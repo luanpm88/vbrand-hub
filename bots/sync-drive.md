@@ -58,7 +58,8 @@ rclone ls luanpm88:vBrand_Shared/SGCONNECT/
 
 # Lấy link share (public)
 rclone link luanpm88:vBrand_Shared/SGCONNECT/SALES_HANDOVER_v1.pdf
-rclone link luanpm88:vBrand_Shared/SGCONNECT/USER_GUIDE_v1.pdf
+rclone link luanpm88:vBrand_Shared/SGCONNECT/USER_GUIDE_MOBILE_v1.pdf
+rclone link luanpm88:vBrand_Shared/SGCONNECT/USER_GUIDE_DESKTOP_v1.pdf
 ```
 
 ## Quy trình update PDF + sync
@@ -66,17 +67,25 @@ rclone link luanpm88:vBrand_Shared/SGCONNECT/USER_GUIDE_v1.pdf
 Khi cần update tài liệu:
 
 1. Sửa file `.md` trong `docs/`
-2. Xuất PDF: `cd docs && npx md-to-pdf SALES_HANDOVER.md && npx md-to-pdf USER_GUIDE.md`
-3. Copy vào drive_shared (tăng version):
+2. Xuất PDF:
    ```bash
-   cp docs/SALES_HANDOVER.pdf docs/drive_shared/SALES_HANDOVER_v2.pdf
-   cp docs/USER_GUIDE.pdf docs/drive_shared/USER_GUIDE_v2.pdf
+   cd docs
+   npx md-to-pdf SALES_HANDOVER.md
+   npx md-to-pdf USER_GUIDE_MOBILE.md
+   npx md-to-pdf USER_GUIDE_DESKTOP.md
+   ```
+3. Copy vào drive_shared (luôn đè v1 — KHÔNG tăng version):
+   ```bash
+   cp docs/SALES_HANDOVER.pdf docs/drive_shared/SALES_HANDOVER_v1.pdf
+   cp docs/USER_GUIDE_MOBILE.pdf docs/drive_shared/USER_GUIDE_MOBILE_v1.pdf
+   cp docs/USER_GUIDE_DESKTOP.pdf docs/drive_shared/USER_GUIDE_DESKTOP_v1.pdf
    ```
 4. Sync: `rclone sync docs/drive_shared/ luanpm88:vBrand_Shared/SGCONNECT/ --progress`
 
 ## Files hiện có trong drive_shared/
 
-| File | Version | Date |
-|------|---------|------|
-| SALES_HANDOVER_v1.pdf | v1 | 2026-04-06 |
-| USER_GUIDE_v1.pdf | v1 | 2026-04-06 |
+| File | Date |
+|------|------|
+| SALES_HANDOVER_v1.pdf | 2026-04-06 |
+| USER_GUIDE_MOBILE_v1.pdf | 2026-04-06 |
+| USER_GUIDE_DESKTOP_v1.pdf | 2026-04-06 |

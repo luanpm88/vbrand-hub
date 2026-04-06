@@ -90,14 +90,17 @@ Team dev setup theo yêu cầu khách:
 
 ### Bước 5 — Bàn giao cho khách `>>> Sales làm`
 
-Sales gửi cho khách **3 thứ:**
+Sales gửi cho khách **4 thứ:**
 
 1. **Link webapp:** `https://app.sgconnect.vn/brand/mobile/login`
-2. **Tài khoản:** email + mật khẩu (team dev cung cấp)
-3. **Hướng dẫn sử dụng:** đính kèm file [`USER_GUIDE.md`](USER_GUIDE.md)
+2. **Link desktop:** `https://app.sgconnect.vn/login`
+3. **Tài khoản:** email + mật khẩu (team dev cung cấp)
+4. **Hướng dẫn sử dụng:** đính kèm 2 file:
+   - [`USER_GUIDE_MOBILE.pdf`](USER_GUIDE_MOBILE.md) — hướng dẫn Webapp (điện thoại)
+   - [`USER_GUIDE_DESKTOP.pdf`](USER_GUIDE_DESKTOP.md) — hướng dẫn Desktop (máy tính, đầy đủ hơn)
 
-> Ưu tiên gửi **link webapp** (mobile-friendly) trước — khách mở trên điện thoại dùng ngay được.
-> Link desktop `https://app.sgconnect.vn/login` gửi kèm nếu khách cần dùng trên máy tính.
+> Ưu tiên gửi **link webapp** trước — khách mở trên điện thoại dùng ngay được.
+> Desktop có thêm: cấu hình nội dung, danh mục, thuộc tính, khách hàng, kho hàng, doanh thu.
 
 ### Thường phát sinh thêm
 

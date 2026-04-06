@@ -93,6 +93,21 @@ Khi cần clone 1 WP site sang domain mới:
 - Bật COD: `update_option('woocommerce_cod_settings', array('enabled'=>'yes', ...))`
 - Nên set title tiếng Việt: "Thanh toán khi nhận hàng"
 
+### Sales docs & PDF workflow
+- 3 tài liệu sales: `SALES_HANDOVER.md`, `USER_GUIDE_MOBILE.md`, `USER_GUIDE_DESKTOP.md`
+- User Guide tách riêng Mobile (webapp `/brand/mobile/`) vs Desktop (full app `app.sgconnect.vn/login`) — Desktop có nhiều tính năng hơn (danh mục, thuộc tính, kho, vận chuyển, doanh thu, cấu hình nội dung)
+- PDF gen: `npx md-to-pdf <file>.md` — cần có chromium, chạy trong `docs/`
+- Drive versioning: luôn giữ **v1** — khi update thì đè file v1 luôn, KHÔNG tăng version number
+- `docs/drive_shared/` chỉ chứa 3 file: `SALES_HANDOVER_v1.pdf`, `USER_GUIDE_MOBILE_v1.pdf`, `USER_GUIDE_DESKTOP_v1.pdf`
+- rclone sync đè lên Google Drive — file cũ tự bị replace
+
+### curl test webapp login (không cần browser)
+- Phải lấy session cookie trước (`GET /brand/mobile/login` → extract `Set-Cookie`)
+- Extract CSRF token từ HTML (`grep _token`)
+- POST login KHÔNG follow redirect (`-w "%{http_code}" -o /dev/null`)
+- Sau đó GET dashboard riêng với session cookie
+- Nếu follow redirect từ POST 302 → curl POST lại URL mới → 405 Method Not Allowed
+
 ## Architecture (3-layer API chain)
 
 ```
@@ -199,9 +214,40 @@ User có thể nói ngắn — Claude phải tự hiểu và chạy đúng bot:
 | `clone site giống X` | Tìm site phù hợp → chạy `scraper.md clone` |
 | `update mailchimp fix menu` | Chạy `scraper.md update mailchimp` |
 | `audit mailchimp` | Screenshot + review site mailchimp |
-| `export sales handoff` hoặc `xuất pdf sales` | Gen PDF từ `SALES_HANDOVER.md` + `USER_GUIDE.md` → copy vào `docs/drive_shared/` (tăng version) |
+| `export sales handoff` hoặc `xuất pdf sales` | Gen 3 PDF (xem quy trình bên dưới) → copy vào `docs/drive_shared/` (tăng version) |
 | `sync drive` hoặc `đẩy lên drive` | Chạy `rclone sync docs/drive_shared/ luanpm88:vBrand_Shared/SGCONNECT/ --progress` |
-| `export sales handoff và sync drive` | Gen PDF + copy drive_shared + rclone sync — full pipeline |
+| `export sales handoff và sync drive` | Gen 3 PDF + copy drive_shared + rclone sync — full pipeline |
+
+### Quy trình release 3 PDF sales
+
+Khi user nói `export sales handoff` hoặc tương tự, chạy **đúng 4 bước** sau:
+
+```bash
+# 1. Gen 3 PDF
+cd docs
+npx md-to-pdf SALES_HANDOVER.md
+npx md-to-pdf USER_GUIDE_MOBILE.md
+npx md-to-pdf USER_GUIDE_DESKTOP.md
+
+# 2. Copy vào drive_shared/ (luôn đè v1 — KHÔNG tăng version)
+cp docs/SALES_HANDOVER.pdf docs/drive_shared/SALES_HANDOVER_v1.pdf
+cp docs/USER_GUIDE_MOBILE.pdf docs/drive_shared/USER_GUIDE_MOBILE_v1.pdf
+cp docs/USER_GUIDE_DESKTOP.pdf docs/drive_shared/USER_GUIDE_DESKTOP_v1.pdf
+
+# 3. Sync lên Google Drive
+rclone sync docs/drive_shared/ luanpm88:vBrand_Shared/SGCONNECT/ --progress
+
+# 4. (Nếu user yêu cầu) Commit + push
+```
+
+**3 file PDF:**
+| File MD | PDF output | Nội dung |
+|---------|-----------|----------|
+| `docs/SALES_HANDOVER.md` | `SALES_HANDOVER_v1.pdf` | Tài liệu bàn giao sales |
+| `docs/USER_GUIDE_MOBILE.md` | `USER_GUIDE_MOBILE_v1.pdf` | Hướng dẫn Webapp (điện thoại) |
+| `docs/USER_GUIDE_DESKTOP.md` | `USER_GUIDE_DESKTOP_v1.pdf` | Hướng dẫn Desktop (máy tính) |
+
+**Google Drive:** `luanpm88:vBrand_Shared/SGCONNECT/` (rclone remote `luanpm88`)
 
 ### Label conventions
 

@@ -1,4 +1,4 @@
-# Hướng dẫn sử dụng vBrand — Quản lý shop của bạn
+# Hướng dẫn sử dụng vBrand — Webapp (Điện thoại)
 
 ---
 
