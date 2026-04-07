@@ -221,19 +221,51 @@ export async function forceDeleteOrder(page: Page, id: number | string) {
 }
 
 /**
- * Get the id of any existing product so order tests can seed without first
- * creating one. Returns the first product id from the WP product list.
+ * Find a SIMPLE product id (no variations) so order/checkout tests don't trip
+ * over WC's "missing variation attributes" error. Searches via the WC Store
+ * API `type=simple` filter, then falls back to creating a fresh simple
+ * product via vbrandsync `/product/add` if none exist.
+ *
+ * On local, the seeded products are mostly simple. On prod (logitech etc.)
+ * everything tends to be variable, so the create-fallback path runs.
+ *
+ * The created product has an `e2e-` prefix so it's easy to spot + clean up.
+ * Test code is responsible for deletion via `forceDeleteProduct` in afterEach
+ * if it cares about cleanliness (the helper itself does NOT track ownership).
  */
 export async function anyProductId(page: Page): Promise<number> {
+  // 1. Prefer an existing simple product.
   const res = await page.request.fetch(
-    `${ENV.BASE_SITE}/wp-json/vbrandsync/v1/product/list?per_page=1`,
+    `${ENV.BASE_SITE}/wp-json/wc/store/v1/products?type=simple&per_page=5`,
   );
-  if (!res.ok()) throw new Error(`anyProductId: list failed ${res.status()}`);
-  const items = (await res.json()) as Array<{ id: number }>;
-  if (!items.length) {
-    throw new Error('anyProductId: WP has no products — seed one first');
+  if (res.ok()) {
+    const items = (await res.json()) as Array<{ id: number; type: string }>;
+    const simple = items.find((p) => p.type === 'simple');
+    if (simple) return Number(simple.id);
   }
-  return Number(items[0].id);
+
+  // 2. Create one via vbrandsync /product/add (no auth required — public REST).
+  const created = await page.request.fetch(
+    `${ENV.BASE_SITE}/wp-json/vbrandsync/v1/product/add`,
+    {
+      method: 'POST',
+      form: {
+        title: `e2e-helper-simple-${Date.now()}`,
+        price: '50000',
+        description: 'Simple product seeded by e2e helper',
+      },
+    },
+  );
+  if (!created.ok()) {
+    throw new Error(
+      `anyProductId: failed to create fallback simple product: ${created.status()} ${await created.text()}`,
+    );
+  }
+  const body = (await created.json()) as { id: number };
+  if (!body.id) {
+    throw new Error(`anyProductId: created product missing id: ${JSON.stringify(body)}`);
+  }
+  return Number(body.id);
 }
 
 // ---------- Storefront customer checkout (WC Store API) ----------
