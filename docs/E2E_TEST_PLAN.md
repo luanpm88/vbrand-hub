@@ -465,15 +465,32 @@ The original Phase 7 plan listed sub-items the main spec did not test individual
 
 ---
 
-## Phase 14 — Import Request ☐
+## Phase 14 — Import Request ☑
 
 > Reference: docs/rfq/IMPORT_REQUEST_DESIGN.md, USER_GUIDE_MOBILE §6
+> Spec: `bots/automated/e2e/tests/phase14-import-request.spec.ts` — **4/4 pass** (2 tests × 2 projects).
 
-- ☐ Webapp: Sản phẩm → Import → form
-- ☐ Submit yêu cầu (link Shopee/Lazada dummy)
-- ☐ Trạng thái Mới hiển thị
-- ☐ Admin: process request → Đang xử lý → Hoàn thành
-- ☐ Webapp seller thấy status update
+**Webapp seller (`/brand/mobile/import-requests/...`):**
+- ☑ Index page renders, no PHP error
+- ☑ POST `/store` (`platform=shopee`, `shop_url=...`) → `{status:'success'}` JSON
+- ☑ List partial includes the shop_url + "Mới" status badge
+- ☑ uid extracted from list HTML via the `editRequest('uid')` / `deleteRequest('uid')` Alpine callbacks (the `_list` partial does NOT render `/edit` URLs — uses Alpine modal callbacks instead)
+
+**Admin (`/admin/brand/import-requests/...`):**
+- ☑ Index page renders, no PHP error
+- ☑ List partial contains the new request row
+- ☑ POST `/{uid}/update` (status=processing, imported_count=0) → < 400
+- ☑ POST `/{uid}/update` (status=completed, imported_count=5) → < 400
+
+**Cross-surface status sync:**
+- ☑ Seller create → admin sees in list → admin → processing → seller list shows "Đang xử lý"
+- ☑ Admin → completed → seller list shows "Hoàn thành"
+
+**Cleanup strategy:** the seller-side delete endpoint only allows deletion while `status=new` (`Brand\Webapp\ImportRequestController@delete:65` `->where('status', ImportRequest::STATUS_NEW)`). As soon as the admin moves the request to `processing`, the seller can no longer remove it. Phase 14 cleans up via the **admin** delete endpoint in afterEach (admin delete has no status guard) using a fresh browser context so cleanup never tangles with the test's own cookies.
+
+> **Notes:**
+> - `admin@acm.com` is both seller AND admin on local (same as Phase 4.2). The cross-surface test uses 2 separate browser contexts so the seller and admin sessions don't interfere.
+> - The webapp index page is at `/brand/mobile/import-requests` (not `/brand/mobile/products?action=import` as the user guide §6 might suggest — the form is its own surface).
 
 ---
 
