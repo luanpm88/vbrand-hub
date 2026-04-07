@@ -321,14 +321,21 @@ npx playwright test
 
 ---
 
-## Phase 8 — Tên miền ☐
+## Phase 8 — Tên miền ☑
 
 > Reference: USER_GUIDE_DESKTOP §2
+> Spec: `bots/automated/e2e/tests/phase8-domain.spec.ts` — **6/6 pass** (3 tests × 2 projects).
 
-- ☐ Vào Tên miền → list domain
-- ☐ Mở dialog "Đăng ký tên miền"
-- ☐ Search 1 domain (dummy) → kết quả check
-- ☐ (Skip thanh toán thật trên local — chỉ verify UI flow)
+- ☑ Vào Tên miền (`/brand/domain`) → list page renders, no PHP error, AJAX `/brand/domain/list` < 500
+- ☑ "Đăng ký tên miền mới" CTA (link, not dialog) → click → `/brand/domain/check` form renders (input `#domainname` + Check button)
+- ☑ Search 1 dummy domain → GET `/brand/domain/checkdomain?domain=...` returns a result fragment (with auto-skip if upstream `whois.net.vn` is unreachable from test env — third-party dependency, not a vbrand bug)
+- ☑ Skip thanh toán thật — `Brand\DomainController@buy` requires a real `customer->assignDomainPlan()` → invoice → checkout flow that touches CheckoutController; out of scope for E2E
+
+> ⚠️ **Webapp:** there is no Tên miền surface in the mobile webapp (USER_GUIDE_MOBILE has no §Tên miền — domain management is desktop-only). Phase 8 is desktop-only; mobile project still runs the same specs as a smoke (no viewport-specific assertions).
+
+> **Notes (no fixes required):**
+> - `Brand\DomainController@checkDomain` calls `Domain::checkDomain($domain)` which does `file_get_contents('https://www.whois.net.vn/whois.php?domain=...')` synchronously and the controller compares the raw response against integer `1`. Practical effect: result is **always** the "available" branch unless whois.net.vn returns literally `1`. Left as-is — out of scope, but worth flagging in a future hardening pass.
+> - The list AJAX returns an empty list HTML when the user has no domains (the case on local for `admin@acm.com`). That is the correct behavior.
 
 ---
 
