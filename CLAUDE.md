@@ -195,6 +195,12 @@ Khi cần clone 1 WP site sang domain mới:
 - The dead `setComplated` plumbing in `OrderStatusCatalog`, `routes/brand.php`, and the webapp `setDelivered` controller method is left in place pending a separate decision on whether to delete it or implement Đã giao properly.
 - Lesson: when adding "expected" features to user guides, make sure the wire goes all the way through — controller, model, REST handler, custom WC status registration. A broken intermediate step is invisible until somebody actually clicks the button.
 
+### redirect()->action() with resource routes needs the resource param name
+- `Brand\ArticleCategoryController@store` was doing `redirect()->action('@edit', ['category' => $id])`. The category was successfully created in WP, but the redirect crashed with `UrlGenerationException: Missing parameter article_category` because the resource route registered the URL as `/website/article-category/{article_category}/edit`. Production sellers got a 500 every time they created a blog category, even though the category was actually created.
+- Fix: pass `'article_category' => $category->id` instead of `'category'`. The param key must match the resource binding name (Laravel infers it from the resource segment).
+- Discovered by E2E Phase 16 (blog category create test).
+- **Lesson:** when calling `redirect()->action()` for a controller that's bound via `Route::resource(...)`, the param key in the args array must match the resource segment name (singularized + snake_cased), NOT a friendly alias. If a singular param like `category` gets resolved to `article_category`, the resource binding takes precedence over any explicit GET route registered earlier.
+
 ### OrderStatusCatalog::prefixed silently broke every multi-word status filter
 - `OrderStatusCatalog::prefixed()` was doing `'wc-' . str_replace('_', '-', $normalized)`. WC custom statuses are registered with **underscores** in the vbrandsync plugin (`wc-rfq_pending`, `wc-ready_for_pickup`, `wc-seller_cancelled`, etc — see `site/wp-content/plugins/vbrandsync/plugin.php` `register_post_status` calls). The hyphen variant matched zero orders, so every multi-word status filter (RFQ-pending tab, ready-for-pickup tab, seller-cancelled tab) was silently empty on webapp / desktop / brand-api / admin order lists.
 - Fix: drop the `str_replace` in `app/Support/OrderStatusCatalog.php` `prefixed()`.
