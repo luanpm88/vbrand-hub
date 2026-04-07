@@ -297,27 +297,25 @@ npx playwright test
 
 > **New helpers:** `helpers/api.ts` `listThemes()`, `activeTheme()` — both query `vbrandsync/v1/theme/list` (returns object keyed by theme name, normalised to a `WPTheme[]` array).
 
-> Reference: USER_GUIDE_DESKTOP §3, USER_GUIDE_MOBILE §4
+### Phase 7.1 — Website extras (leftover items) ☑
+
+> Spec: `bots/automated/e2e/tests/phase7_1-website-extras.spec.ts` — **9/10 pass + 1 intentional skip** (5 tests × 2 projects, mobile project skips the desktop-sidebar-only test).
+
+The original Phase 7 plan listed sub-items the main spec did not test individually. Phase 7.1 closes them:
 
 **Desktop:**
-- ☐ Vào Website → Giao diện
-- ☐ List template hiển thị (4 themes: logitech, orgafood, dreamcafe, nikezero)
-- ☐ Preview 1 template
-- ☐ Activate template → success message + theme đổi trên storefront
-- ☐ Vào Website → Cấu hình nội dung
-- ☐ Sửa Thông tin chung (tên shop, mô tả) → Lưu → reload vẫn còn
-- ☐ Sửa Trang chủ (banner)
-- ☐ Sửa Menu
-- ☐ Sửa Giới thiệu
-- ☐ Sửa Footer
-- ☐ Vào Website → Xem trang → mở storefront
-- ☐ Verify storefront có thay đổi vừa lưu
+- ☑ Templates list page renders one card per theme — thumbnail (`<img>`) + "Đang chọn" label on the active theme + "Kích hoạt" form on each inactive theme. The original "4 themes (logitech / orgafood / dreamcafe / nikezero)" assertion was prod-specific; replaced with `themes ≥ 1` + "active count == 1" + "Kích hoạt count == themes - 1" (matches actual local theme set).
+- ☑ Preview — there is **no separate "Preview" button** on the templates page (verified by reading `brand/website_templates/index.blade.php`). The "preview" referenced in the original plan is the iframe inside Cấu hình nội dung (`brand/website/themeOptions.blade.php` line 471: `<iframe id="previewFrame" src="{previewUrl}?vb_builder=1">`). Phase 7.1 verifies the iframe is attached and the src points at the storefront.
+- ☑ Activate template → covered by main Phase 7 (set-active flips active flag in WP).
+- ☑ Cấu hình nội dung page renders → covered by main Phase 7 + iframe assertion above.
+- ☑ Vào Website → Xem trang của bạn → desktop sidebar `<a target="_blank" href="{site_url}">` is asserted (skipped on mobile project — sidebar dropdown not rendered in iPhone 14 Pro viewport).
+- ⚠️ **Sửa Thông tin chung / Trang chủ / Menu / Giới thiệu / Footer + Verify storefront có thay đổi:** depends on the active WP theme exposing a `themeGetMeta()` builder schema. Local active theme (AcelleMail) returns no schema → after Phase 1's null-fix normalisation `schema['sessions']` and `schema['options']` are empty arrays, so there are no fields to fill and no storefront content tied to those fields. Per-field editing is left for theme-specific Dusk tests against a builder-aware theme. The schema-aware machinery itself (page renders, save round-trip, iframe) IS verified.
 
 **Mobile webapp:**
-- ☐ Dashboard → Giao diện → list template
-- ☐ Preview template
-- ☐ Activate template
-- ☐ Tài khoản → Xem website
+- ☑ Templates list renders thumbnails + "Xem website" header link with `target="_blank"`.
+- ⚠️ Preview template — no preview surface on the webapp templates page either (only Activate). Same situation as desktop.
+- ☑ Activate template → covered by main Phase 7.
+- ☑ Tài khoản → Xem website → `webapp/profile/index.blade.php:72` `<a target="_blank">Xem website</a>` link asserted.
 
 ---
 
@@ -356,14 +354,26 @@ npx playwright test
 
 ---
 
-## Phase 10 — Vận chuyển & Doanh thu ☐
+## Phase 10 — Vận chuyển & Doanh thu ☑
 
 > Reference: USER_GUIDE_DESKTOP §7, §8
+> Spec: `bots/automated/e2e/tests/phase10-shipping-revenue.spec.ts` — **8/8 pass** (4 tests × 2 projects).
 
-- ☐ Vào Vận chuyển → Đơn vị vận chuyển
-- ☐ Thống kê vận chuyển hiển thị
-- ☐ Vào Doanh thu → báo cáo doanh số hiển thị
-- ☐ Đổi range thời gian → reload data
+**Doanh thu (§8):**
+- ☑ `/brand/accounting-report` page renders, no PHP error
+- ☑ 3 filter selects (`sort_order`, `transaction_type`, `entry_type`) attached to the form
+- ☑ AJAX `/brand/customers/{uid}/journal-entries` (no filter) → < 500
+- ☑ AJAX with `transaction_type=user_sale_order` → < 500
+- ☑ AJAX with `entry_type=user_cash` → < 500
+
+**Vận chuyển (§7):** ⚠️ **Skipped (not implemented):**
+- The "Vận chuyển" parent menu in `_menu_frontend_brand.blade.php:260` is hidden via `d-none`. Production sellers do not see it.
+- Its only working sub-item "Đơn vị vận chuyển" links to `Store\WarehouseController@index` (i.e. the same Kho hàng page already covered by Phase 9).
+- The "Thống kê vận chuyển" sub-item links to `href="#"` — no route, no controller, no view.
+- **No date-range filter** on the Doanh thu page either — the plan item "Đổi range thời gian → reload data" was aspirational. Filters are sort/transaction_type/entry_type only.
+- **Fix applied:** [USER_GUIDE_DESKTOP §7](docs/USER_GUIDE_DESKTOP.md) now describes Vận chuyển as "vBrand Express là đơn vị mặc định, cấu hình điểm lấy hàng trong Kho hàng" (no separate Vận chuyển page). [USER_GUIDE_DESKTOP §8](docs/USER_GUIDE_DESKTOP.md) now lists the 5 actual accounting metrics + 3 actual filters; the date-range claim was removed.
+
+> **Webapp:** no Vận chuyển / Doanh thu surface in the mobile webapp. Phase 10 is desktop-only; mobile project still runs the same specs as a smoke.
 
 ---
 

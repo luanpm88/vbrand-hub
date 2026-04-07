@@ -182,17 +182,26 @@ Khi vào Dashboard bạn sẽ thấy:
 
 ## 7. Vận chuyển
 
-- Nhấn **Vận chuyển** ở menu trái
-- **Đơn vị vận chuyển** — xem/cấu hình đơn vị giao hàng
-- **Thống kê vận chuyển** — báo cáo giao hàng
+- Đơn vị vận chuyển mặc định: **vBrand Express** (đã cấu hình sẵn cho mọi site).
+- Cấu hình điểm lấy hàng: vào **Kho hàng** (xem §6) — nhập tên liên hệ, số điện thoại, địa chỉ.
+
+> Hiện tại không có trang "Thống kê vận chuyển" riêng — số liệu giao hàng được tổng hợp trong **Đơn hàng** (§5.4) và **Doanh thu bán hàng** (§8).
 
 ---
 
 ## 8. Doanh thu bán hàng
 
-- Nhấn **Doanh thu bán hàng** ở menu trái
-- Xem báo cáo doanh số theo thời gian
-- Theo dõi doanh thu, lợi nhuận
+1. Nhấn **Doanh thu bán hàng** ở menu trái
+2. Xem 5 số liệu kế toán ở phần đầu trang:
+   - **Tiền mặt** (đã thu)
+   - **Phí dịch vụ**
+   - **Doanh thu** (tổng)
+   - **Đã rút** (payout)
+   - **Còn lại** (chờ rút)
+3. Bên dưới là danh sách giao dịch (journal entries). Có 3 bộ lọc:
+   - **Sắp xếp** theo thời gian tạo
+   - **Loại giao dịch** (đơn bán hàng / rút tiền)
+   - **Tài khoản** (Tiền mặt / Thuế / Phí gói / Phí ship / Doanh thu)
 
 ---
 
