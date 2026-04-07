@@ -96,11 +96,10 @@ Nhấn vào đơn bất kỳ để xem:
 
 | Bước | Thao tác | Ý nghĩa |
 |------|----------|---------|
-| 1 | **Xác nhận đơn** | Bạn nhận đơn, bắt đầu xử lý |
-| 2 | **Đóng gói** | Đã đóng gói xong, sẵn sàng giao |
-| 3 | **Đang giao** | Đã giao cho đơn vị vận chuyển |
-| 4 | **Đã giao** | Khách đã nhận hàng |
-| 5 | **Hoàn thành** | Đơn hàng hoàn tất |
+| 1 | **Xác nhận đơn** | Bạn nhận đơn, bắt đầu xử lý (`ordered` → `packaging`) |
+| 2 | **Đóng gói** | Đã đóng gói xong, sẵn sàng giao (`packaging` → `ready_for_pickup`) |
+| 3 | **Đang giao** | Đã giao cho đơn vị vận chuyển (`ready_for_pickup` → `delivering`) |
+| 4 | **Hoàn thành** | Đơn hàng hoàn tất (`delivering` → `completed`) |
 
 **Các thao tác khác:**
 - **Hủy đơn** — nếu không thể xử lý

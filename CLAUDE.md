@@ -144,6 +144,24 @@ Khi cần clone 1 WP site sang domain mới:
 - `Acelle\Wordpress\Product::fillParams` originally only accepted the desktop names → mobile webapp silently dropped description/sale price/categories on save.
 - Fix: accept both names with `?? alias` in fillParams. Don't rename forms — both are user-visible and the controller is the right place to normalize.
 
+### vbrandsync `order/delete` was a no-op
+- `vbrandsync_ajax_order_delete()` was an empty function body. Only the `/order/delete` (no id) route was registered. But brand-app `Acelle\Wordpress\Order::URI_DELETE = 'order/delete/{id}'` calls a different URL entirely.
+- Result: every "delete order" call from the brand-app silently 404'd (or hit the empty handler), orphan WC orders accumulated, and there was no way to clean up after E2E.
+- Fix: implemented the handler (force `wc_get_order($id)->delete(true)`) and registered both `/order/delete` (legacy, id in body) and `/order/delete/(?P<id>\d+)` (path, what brand-app actually calls). See `site/wp-content/plugins/vbrandsync/wordpress/api/order.php`.
+- Discovered by E2E Phase 4 cleanup.
+
+### Order workflow has 4 steps, not 5 — user guides were aspirational
+- `USER_GUIDE_DESKTOP §5.4` and `USER_GUIDE_MOBILE §3` listed 5 status transitions: Xác nhận → Đóng gói → Đang giao → **Đã giao** → Hoàn thành.
+- The "Đã giao" step is **broken end-to-end and never worked**:
+  1. `vbrandsync` `Order` model has no `setDelivered()` method and no `STATUS_DELIVERED` const
+  2. `vbrandsync/plugin.php` does not register `wc-delivered` as a custom WC post status (the others — packaging, ready_for_pickup, delivering, etc — are all registered)
+  3. brand-app `Acelle\Wordpress\Order` has no `setDelivered()` either
+  4. `OrderStatusCatalog::actionUrls['store']['set-delivered']` points at `Store\OrdersController@setComplated` — a method that does not exist (the route is registered as `complated` typo too)
+  5. No "Đã giao" button is rendered in any current store/orders or webapp/orders blade
+- Production sellers go straight from `delivering` → `completed` (the 4-step workflow). Per CLAUDE rule "if 2 docs disagree → find the right one → fix the wrong one", the user guides are wrong; the app is right. **Fixed by updating both user guides** to the 4-step workflow with status names in parens.
+- The dead `setComplated` plumbing in `OrderStatusCatalog`, `routes/brand.php`, and the webapp `setDelivered` controller method is left in place pending a separate decision on whether to delete it or implement Đã giao properly.
+- Lesson: when adding "expected" features to user guides, make sure the wire goes all the way through — controller, model, REST handler, custom WC status registration. A broken intermediate step is invisible until somebody actually clicks the button.
+
 ### Attribute create form name input is readonly
 - `resources/views/store/attributes/_form.blade.php` is shared by create + edit. The `name` input was hardcoded `<input readonly>`, which is correct for edit (WP attribute slugs cannot be renamed) but blocks create entirely — user can't type a name → form fails `name required` validation.
 - Fix: only apply `readonly` when `$attribute->id` exists (edit mode). One-line `@if(!empty($attribute->id)) readonly @endif`.

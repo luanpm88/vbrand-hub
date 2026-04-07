@@ -159,11 +159,10 @@ Khi vào Dashboard bạn sẽ thấy:
 
 | Bước | Thao tác | Ý nghĩa |
 |------|----------|---------|
-| 1 | **Xác nhận đơn** | Nhận đơn, bắt đầu xử lý |
-| 2 | **Đóng gói** | Đã đóng gói, sẵn sàng giao |
-| 3 | **Đang giao** | Đã chuyển cho vận chuyển |
-| 4 | **Đã giao** | Khách đã nhận hàng |
-| 5 | **Hoàn thành** | Đơn hàng hoàn tất |
+| 1 | **Xác nhận đơn** | Nhận đơn, bắt đầu xử lý (`ordered` → `packaging`) |
+| 2 | **Đóng gói** | Đã đóng gói, sẵn sàng giao (`packaging` → `ready_for_pickup`) |
+| 3 | **Đang giao** | Đã chuyển cho vận chuyển (`ready_for_pickup` → `delivering`) |
+| 4 | **Hoàn thành** | Đơn hàng hoàn tất (`delivering` → `completed`) |
 
 ---
 

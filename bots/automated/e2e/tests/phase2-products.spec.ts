@@ -1,6 +1,12 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { ENV } from '../playwright.config';
 import { loginDesktop, loginWebapp, assertNoPageErrors } from '../helpers/auth';
+import {
+  uniqueName,
+  csrfHeaders,
+  findProductIdByTitle,
+  forceDeleteProduct,
+} from '../helpers/api';
 
 /**
  * Phase 2 — Sản phẩm (CRUD)
@@ -16,77 +22,25 @@ import { loginDesktop, loginWebapp, assertNoPageErrors } from '../helpers/auth';
  *  - Verify the product appears on the WP/Woo storefront after create
  *    and disappears after delete (cross-platform sync)
  *
- * Reliability strategy:
- *  - Each test creates a product with a unique title (timestamp + random)
- *  - Each test cleans itself up via afterEach (HTTP DELETE bypassing the UI confirm)
- *  - We submit forms via real UI clicks where the user guide describes a click,
- *    but use direct fetch() for verification/cleanup so the suite stays robust.
+ * Reliability strategy (shared with phase 3+):
+ *  - Each test creates a fixture with a unique name (helpers/api.ts uniqueName)
+ *  - Each test cleans itself up in afterEach via the brand-app delete endpoint
+ *    (helpers/api.ts forceDeleteProduct), bypassing the UI confirm dialog
+ *  - Forms are submitted via real UI clicks where the user guide describes a
+ *    click, but verification uses the WP REST endpoint directly because that
+ *    is the canonical source of truth (same data source the brand-app and
+ *    webapp both read from)
  */
-
-// ---------- helpers ----------
-
-function uniqueTitle(prefix: string): string {
-  return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
-}
-
-/**
- * Read the XSRF token from the current page's cookies and return a header
- * map suitable for Laravel POST/DELETE requests via APIRequestContext.
- */
-async function csrfHeaders(page: Page): Promise<Record<string, string>> {
-  const cookies = await page.context().cookies();
-  const xsrf = cookies.find((c) => c.name === 'XSRF-TOKEN');
-  return {
-    'X-XSRF-TOKEN': xsrf ? decodeURIComponent(xsrf.value) : '',
-    'X-Requested-With': 'XMLHttpRequest',
-    Accept: 'application/json',
-  };
-}
-
-/**
- * Force-delete a product by id via the desktop DELETE endpoint, bypassing the
- * "are you sure?" UI confirmation. Used by afterEach to guarantee cleanup.
- * Uses `page.request` so the browser-context cookies (auth + XSRF) are inherited.
- */
-async function forceDelete(page: Page, productId: number | string) {
-  const headers = await csrfHeaders(page);
-  await page.request
-    .fetch(`${ENV.BASE_APP}/store/products/delete`, {
-      method: 'DELETE',
-      headers,
-      form: { id: String(productId) },
-    })
-    .catch(() => {});
-}
-
-/**
- * Find a product id by title. Hits the WP REST endpoint directly because it
- * is the canonical "is this product really in WP" check — same data source the
- * brand-app and webapp both read from. Avoids flakiness from the brand-app's
- * AJAX list view (keyword filter, paging) and from any HTML caching layers.
- */
-async function findProductIdByTitle(
-  page: Page,
-  title: string,
-): Promise<number | null> {
-  const res = await page.request.fetch(
-    `${ENV.BASE_SITE}/wp-json/vbrandsync/v1/product/list?keyword=${encodeURIComponent(title)}`,
-  );
-  if (!res.ok()) return null;
-  const items = (await res.json()) as Array<{ id: number; title: string }>;
-  const hit = items.find((p) => p.title === title);
-  return hit ? Number(hit.id) : null;
-}
 
 // ---------- Desktop dashboard ----------
 
 test.describe('Phase 2 / Desktop / Sản phẩm', () => {
   let createdId: number | null = null;
-  const title = uniqueTitle('e2e-desk');
+  const title = uniqueName('e2e-desk');
 
   test.afterEach(async ({ page }) => {
     if (createdId != null) {
-      await forceDelete(page, createdId);
+      await forceDeleteProduct(page, createdId);
       createdId = null;
     }
   });
@@ -159,7 +113,7 @@ test.describe('Phase 2 / Mobile webapp / Sản phẩm', () => {
 
   test.afterEach(async ({ page }) => {
     if (createdId != null) {
-      await forceDelete(page, createdId);
+      await forceDeleteProduct(page, createdId);
       createdId = null;
     }
   });
@@ -175,7 +129,7 @@ test.describe('Phase 2 / Mobile webapp / Sản phẩm', () => {
   });
 
   test('create → list → edit → delete', async ({ page }) => {
-    const title = uniqueTitle('e2e-webapp');
+    const title = uniqueName('e2e-webapp');
 
     await loginWebapp(page);
 
@@ -250,11 +204,11 @@ test.describe('Phase 2 / Mobile webapp / Sản phẩm', () => {
 
 test.describe('Phase 2 / Storefront sync', () => {
   let createdId: number | null = null;
-  const title = uniqueTitle('e2e-sync');
+  const title = uniqueName('e2e-sync');
 
   test.afterEach(async ({ page }) => {
     if (createdId != null) {
-      await forceDelete(page, createdId);
+      await forceDeleteProduct(page, createdId);
       createdId = null;
     }
   });

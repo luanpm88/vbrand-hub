@@ -1,6 +1,13 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { ENV } from '../playwright.config';
 import { loginDesktop, assertNoPageErrors } from '../helpers/auth';
+import {
+  uniqueName,
+  findCategoryIdByName,
+  findAttributeByName,
+  forceDeleteCategory,
+  forceDeleteAttribute,
+} from '../helpers/api';
 
 /**
  * Phase 3 — Danh mục & Thuộc tính (Desktop only)
@@ -11,80 +18,10 @@ import { loginDesktop, assertNoPageErrors } from '../helpers/auth';
  * Both features are desktop-only per the user guide ("Tính năng quản lý danh
  * mục/thuộc tính chỉ có trên Desktop"). The mobile webapp does not expose them.
  *
- * Reliability strategy:
- *  - Verify creation against the WP REST endpoints (canonical source of truth),
- *    same approach as Phase 2.
- *  - Each test self-cleans via the brand-app deleteSelected endpoint.
- *  - Drive forms via real UI clicks (the user guide says "click Save").
+ * Shared helpers (csrf, unique fixture names, WP-REST finders, force-delete)
+ * live in helpers/api.ts so every phase spec stays focused on the user-guide
+ * flow it covers.
  */
-
-// ---------- helpers ----------
-
-function uniqueName(prefix: string): string {
-  return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
-}
-
-async function csrfHeaders(page: Page): Promise<Record<string, string>> {
-  const cookies = await page.context().cookies();
-  const xsrf = cookies.find((c) => c.name === 'XSRF-TOKEN');
-  return {
-    'X-XSRF-TOKEN': xsrf ? decodeURIComponent(xsrf.value) : '',
-    'X-Requested-With': 'XMLHttpRequest',
-    Accept: 'application/json',
-  };
-}
-
-/** Find a category by exact name in WP. Returns its id, or null. */
-async function findCategoryIdByName(page: Page, name: string): Promise<number | null> {
-  const res = await page.request.fetch(
-    `${ENV.BASE_SITE}/wp-json/vbrandsync/v1/category/list?per_page=100`,
-  );
-  if (!res.ok()) return null;
-  const body = (await res.json()) as { items?: Array<{ id: number; name: string }> };
-  const hit = (body.items ?? []).find((c) => c.name === name);
-  return hit ? Number(hit.id) : null;
-}
-
-/** Find an attribute by name (case-insensitive — WP normalizes to lowercase). */
-async function findAttributeIdByName(
-  page: Page,
-  name: string,
-): Promise<{ id: number; values: string[] } | null> {
-  const res = await page.request.fetch(
-    `${ENV.BASE_SITE}/wp-json/vbrandsync/v1/attribute/list?per_page=100`,
-  );
-  if (!res.ok()) return null;
-  const body = (await res.json()) as {
-    items?: Array<{ id: number | string; name: string; values?: string[] }>;
-  };
-  const lower = name.toLowerCase();
-  const hit = (body.items ?? []).find((a) => a.name.toLowerCase() === lower);
-  return hit ? { id: Number(hit.id), values: hit.values ?? [] } : null;
-}
-
-/** Force-delete a category via the brand-app deleteSelected endpoint. */
-async function forceDeleteCategory(page: Page, id: number) {
-  const headers = await csrfHeaders(page);
-  await page.request
-    .fetch(`${ENV.BASE_APP}/store/categories/delete-selected`, {
-      method: 'DELETE',
-      headers,
-      form: { 'ids[0]': String(id) },
-    })
-    .catch(() => {});
-}
-
-/** Force-delete an attribute via the brand-app deleteSelected endpoint. */
-async function forceDeleteAttribute(page: Page, id: number) {
-  const headers = await csrfHeaders(page);
-  await page.request
-    .fetch(`${ENV.BASE_APP}/store/attributes/delete-selected`, {
-      method: 'DELETE',
-      headers,
-      form: { 'ids[0]': String(id) },
-    })
-    .catch(() => {});
-}
 
 // ---------- Categories ----------
 
@@ -188,7 +125,7 @@ test.describe('Phase 3 / Desktop / Thuộc tính', () => {
     await assertNoPageErrors(page, 'after attribute create');
 
     // --- Verify in WP ---
-    const found = await findAttributeIdByName(page, name);
+    const found = await findAttributeByName(page, name);
     expect(found, `attribute "${name}" should appear in WP`).not.toBeNull();
     createdId = found!.id;
     expect(found!.values.sort()).toEqual(['L', 'M', 'S']);
@@ -206,13 +143,13 @@ test.describe('Phase 3 / Desktop / Thuộc tính', () => {
     ]);
     await assertNoPageErrors(page, 'after attribute update');
 
-    const stillFound = await findAttributeIdByName(page, name);
+    const stillFound = await findAttributeByName(page, name);
     expect(stillFound, 'attribute should still exist after edit').not.toBeNull();
     expect(stillFound!.id).toBe(createdId);
 
     // --- Delete ---
-    await forceDeleteAttribute(page, createdId);
-    const goneAttr = await findAttributeIdByName(page, name);
+    await forceDeleteAttribute(page, createdId!);
+    const goneAttr = await findAttributeByName(page, name);
     expect(goneAttr, 'attribute should be gone after delete').toBeNull();
     createdId = null;
   });
