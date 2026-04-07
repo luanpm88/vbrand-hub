@@ -224,6 +224,21 @@ Khi cần clone 1 WP site sang domain mới:
 - Fix: controller phải normalize `$schema['sessions'] ?? []` và `$schema['options'] ?? []` trước khi pass vào view
 - Phát hiện qua E2E Phase 1 — đây chính là lý do E2E test cần chạy với seller có WP connection thật (`admin@acm.com` local)
 
+### WooCommerce Coming Soon mode hides every shop page on fresh sites
+- WC 8.x ships with `woocommerce_coming_soon=yes` ON by default on every fresh install. While it's on, `/shop/`, the configured shop page (vd `/thuc-don/`), AND every product detail page get replaced server-side with the WC "Great things are on the horizon" placeholder. The product import API still succeeds and the store API still returns products — only the customer-facing storefront is blanked out, so it looks like the import failed even though it didn't.
+- Affected guucoffee.b-teka.com after the duc-anh-coffee import: 26 products in DB, REST API returned them, but `/thuc-don/` rendered the placeholder. Took longer than it should have to diagnose.
+- Fixes (defense in depth):
+  1. **Preventive:** `bots/automated/enforce-cod-vbrand-express.php` now also writes `woocommerce_coming_soon=no` + `woocommerce_store_pages_only=no`. Idempotent. Every bot that creates a new site already calls this script as the last step → bug cannot recur on new sites.
+  2. **Detective:** `bots/scrape/scripts/import-to-woocommerce.js` post-import sanity check fetches the homepage and warns loudly if the "Great things are on the horizon" placeholder is detected, with the exact `wp option update` commands to fix.
+- **Lesson:** API-level "import succeeded" verification is not enough — always do at least one HTTP fetch of the public storefront after import. Coming-soon mode is invisible to REST checks. Any future site-creation bot must enforce coming-soon=no, not just COD/shipping.
+
+### Lazada DOM-fallback price string is parsed as decimal by WC, losing 1000×
+- When the Lazada API params can't be captured (small shops without Mall pagination), `scripts/scrape-lazada-shop.js` falls back to DOM scraping. DOM-fallback `products.json` has `price` as a localized string like `"₫ 450.000"` instead of an integer.
+- `scripts/import-to-woocommerce.js` was passing `p.price` straight through to `/import/product`. WooCommerce parses `"₫ 450.000"` with `.` as decimal separator (not VND thousand separator) → stores `450` VND instead of `450,000` VND. Every DOM-fallback Lazada import had prices 1000× too small.
+- API-mode scrape was unaffected because it sets `priceRaw` (number) and we used `p.price || p.priceRaw`, but `p.price` short-circuits to the string first.
+- Fix: `toIntPrice()` helper in `import-to-woocommerce.js` strips all non-digits (`/[^\d]/g`) before sending. Handles both number and string inputs.
+- **Lesson:** when a scraper has 2 modes (API vs DOM fallback) the downstream consumer must normalize. Don't trust that "price" means the same type across modes. Even better: scraper itself should always emit a numeric `priceRaw` regardless of mode.
+
 ### curl test webapp login (không cần browser)
 - Phải lấy session cookie trước (`GET /brand/mobile/login` → extract `Set-Cookie`)
 - Extract CSRF token từ HTML (`grep _token`)
