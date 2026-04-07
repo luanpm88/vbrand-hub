@@ -234,32 +234,42 @@ npx playwright test
 
 ---
 
-## Phase 5 — Storefront checkout (COD) ☐
+## Phase 5 — Storefront checkout (COD) ☑ (covered by Phase 4.1 + 4.2)
 
-> Reference: SALES_HANDOVER §1 (COD Production)
+> **Phase 5 đã được Phase 4.1 + 4.2 cover hoàn toàn** — không cần spec riêng.
 
-- ☐ Mở `brand-site.test`
-- ☐ Vào trang shop
-- ☐ Add to cart 1 sản phẩm
-- ☐ Vào cart → đúng item, đúng giá
-- ☐ Checkout → điền name/phone/address/email
-- ☐ Chọn COD
-- ☐ Place order → trang thank-you
-- ☐ Đơn vừa tạo xuất hiện trên dashboard seller
-- ☐ Customer mới được tạo tự động (Phase 6 link)
+- ☑ Cart + checkout pages render → Phase 4.1
+- ☑ Add to cart → Phase 4.1 + 4.2
+- ☑ COD payment + vBrand Express shipping = options duy nhất → Phase 4.1
+- ☑ Place order → order id returned → Phase 4.1
+- ☑ Order findable in WP với billing info → Phase 4.1
+- ☑ Order xuất hiện trên seller desktop, seller webapp, admin → Phase 4.2 Test 1
+
+> Customer auto-create: WC checkout không tạo customer record bên brand-app
+> (chỉ tạo `_billing_*` meta trên order). Brand-app's "Khách hàng" tab quản
+> lý `Brand\Contact` table riêng. Cover trong Phase 6.
 
 ---
 
-## Phase 6 — Khách hàng (Desktop) ☐
+## Phase 6 — Khách hàng (Desktop) ☑
 
 > Reference: USER_GUIDE_DESKTOP §4
+> Spec: `bots/automated/e2e/tests/phase6-contacts.spec.ts` — **4/4 pass** (2 tests × 2 projects).
 
-- ☐ Vào Khách hàng
-- ☐ List hiển thị
-- ☐ Thêm khách hàng thủ công (name/email/phone/address)
-- ☐ Khách hàng từ Phase 5 (auto từ checkout) xuất hiện
-- ☐ Sửa khách hàng
-- ☐ Xóa khách hàng
+- ☑ `/brand/contacts` list page renders, no PHP error
+- ☑ Create contact via `/brand/contacts/create` form (first_name, last_name, email, phone, address_1, country_id=228 VN, city, state)
+- ☑ Find by email via `/brand/contacts/list?keyword=`
+- ☑ Edit contact (`/brand/contacts/{id}/edit`) — change phone → round-trip
+- ☑ Delete via `DELETE /brand/contacts/delete` (id in body)
+- ☑ Verify gone from list
+
+> ⚠️ **Multitenancy concern (not fixed):** `Acelle\Model\Contact` has no `customer_id` column at all — the contacts table is GLOBAL across all sellers. `Brand\ContactController::index` does `Contact::search($keyword)` with no scope. Two sellers logging into the brand app see the same contact list. This is the existing production behavior; left untouched pending a design decision. Tests use unique emails to avoid concurrent-run collisions.
+
+> **Khách hàng "auto-created from checkout" (originally listed in Phase 5):** WC checkout creates `_billing_*` order meta, NOT a `Brand\Contact` row. The dashboard's "Khách hàng" tab is a separate CRM-style list manually maintained by the seller. The two are unrelated tables.
+
+> **New helpers added in this phase:**
+> - `helpers/api.ts` `findContactIdByEmail()`, `forceDeleteContact()`
+> - Pattern: replace cascading-AJAX `<select>` elements with hidden `<input>`s before submit (avoids driving the country/state/city dropdown chooser JS — same approach as Phase 3 attribute values[]).
 
 ---
 

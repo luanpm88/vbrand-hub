@@ -131,6 +131,45 @@ export async function forceDeleteAttribute(page: Page, id: number | string) {
     .catch(() => {});
 }
 
+// ---------- Contacts (Khách hàng) ----------
+
+/**
+ * Find a brand-app contact by exact email by hitting the contacts list
+ * endpoint with `keyword=`. Returns the contact id, or null.
+ *
+ * Note: Acelle\Model\Contact has no `customer_id` column at all, so the
+ * contacts table is GLOBAL across all sellers. Until that's refactored,
+ * tests rely on unique emails to avoid collisions between concurrent runs.
+ */
+export async function findContactIdByEmail(
+  page: Page,
+  email: string,
+): Promise<number | null> {
+  const res = await page.request.fetch(
+    `${ENV.BASE_APP}/brand/contacts/list?keyword=${encodeURIComponent(email)}&perPage=20`,
+  );
+  if (!res.ok()) return null;
+  const html = await res.text();
+  // The list blade renders edit URLs containing the contact id.
+  const m = html.match(/Brand\\?ContactController@edit[^>]*?\/brand\/contacts\/(\d+)\/edit/);
+  if (m) return Number(m[1]);
+  // Fallback regex — the action() helper builds /brand/contacts/{id}/edit
+  const m2 = html.match(/\/brand\/contacts\/(\d+)\/edit/);
+  return m2 ? Number(m2[1]) : null;
+}
+
+/** Force-delete a contact via the brand-app DELETE endpoint. */
+export async function forceDeleteContact(page: Page, id: number | string) {
+  const headers = await csrfHeaders(page);
+  await page.request
+    .fetch(`${ENV.BASE_APP}/brand/contacts/delete`, {
+      method: 'DELETE',
+      headers,
+      form: { id: String(id) },
+    })
+    .catch(() => {});
+}
+
 // ---------- Orders ----------
 
 export type SeedOrderInput = {
