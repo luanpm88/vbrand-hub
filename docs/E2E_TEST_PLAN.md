@@ -339,16 +339,20 @@ npx playwright test
 
 ---
 
-## Phase 9 — Kho hàng ☐
+## Phase 9 — Kho hàng ☑
 
 > Reference: USER_GUIDE_DESKTOP §6
+> Spec: `bots/automated/e2e/tests/phase9-warehouse.spec.ts` — **4/4 pass** (2 tests × 2 projects).
 
-- ☐ Vào Kho hàng
-- ☐ Thông tin kho hàng
-- ☐ Xuất nhập tồn
-- ☐ Nhập hàng — tạo phiếu nhập 1 sản phẩm
-- ☐ Xuất hàng — tạo phiếu xuất
-- ☐ Thống kê sản phẩm hiển thị
+- ☑ Vào `/store/warehouse` → auto-redirect tới `/store/warehouse/{id}/edit` (no PHP error)
+- ☑ Form **Thông tin kho hàng** render với 3 required fields (`contact_name`, `contact_phone`, `address`)
+- ☑ PATCH `/store/warehouse/{id}` round-trip `contact_name` end-to-end (snapshot + restore original)
+
+> ⚠️ **Skipped (not implemented in production):**
+> - **Xuất nhập tồn / Nhập hàng / Xuất hàng / Thống kê sản phẩm** — none of these are wired. `Store\WarehouseController` only implements `index` (redirect), `edit`, `update`. The other resource methods (`list`, `create`, `store`, `show`, `delete`, `destroy`) are empty stubs. There are no routes or models for stock movements, import/export slips, or inventory reports.
+> - **Fix applied:** [docs/USER_GUIDE_DESKTOP.md §6](docs/USER_GUIDE_DESKTOP.md) corrected to reflect actual capability — Kho hàng is the seller's single warehouse contact-info form (địa chỉ lấy hàng), nothing more.
+
+> **Webapp:** no Kho hàng surface in the mobile webapp (USER_GUIDE_MOBILE has no §Kho hàng — desktop-only feature). Phase 9 is desktop-only; mobile project still runs the same specs as a smoke.
 
 ---
 

@@ -169,10 +169,14 @@ Khi vào Dashboard bạn sẽ thấy:
 ## 6. Kho hàng
 
 - Nhấn **Kho hàng** ở menu trái
-- **Thông tin kho hàng** — xem thông tin kho
-- **Xuất nhập tồn** — theo dõi tồn kho
-- **Nhập hàng / Xuất hàng** — ghi nhận xuất nhập
-- **Thống kê sản phẩm** — báo cáo tồn kho
+- Cập nhật **Thông tin kho hàng** — địa chỉ kho lấy hàng:
+  - **Tên liên hệ** (bắt buộc)
+  - **Số điện thoại** (bắt buộc)
+  - **Địa chỉ** (bắt buộc)
+  - **Tỉnh/Thành**, **Quận/Huyện**, **Phường/Xã**
+- Nhấn **Cập nhật** để lưu
+
+> Đây là địa chỉ mặc định mà đơn vị vận chuyển sẽ tới lấy hàng. Mỗi seller có 1 kho duy nhất.
 
 ---
 
