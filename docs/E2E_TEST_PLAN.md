@@ -120,19 +120,30 @@ npx playwright test
 
 ---
 
-## Phase 3 — Danh mục & Thuộc tính (Desktop only) ☐
+## Phase 3 — Danh mục & Thuộc tính (Desktop only) ☑
 
 > Reference: USER_GUIDE_DESKTOP §5.2, §5.3
+> Spec: `bots/automated/e2e/tests/phase3-categories-attrs.spec.ts` — **4/4 pass** (desktop + mobile projects).
 
-- ☐ Vào Cửa hàng → Các danh mục
-- ☐ Thêm danh mục mới
-- ☐ Sửa danh mục
-- ☐ Xóa danh mục
-- ☐ Vào Cửa hàng → Thuộc tính
-- ☐ Tạo thuộc tính (vd: Size)
-- ☐ Thêm giá trị (S, M, L)
-- ☐ Sửa, xóa thuộc tính
-- ☐ Gán danh mục + thuộc tính cho 1 sản phẩm test
+**Danh mục:**
+- ☑ Vào `/store/categories/create`
+- ☑ Thêm danh mục mới (name + description)
+- ☑ Verify trong WP qua `vbrandsync/v1/category/list`
+- ☑ Sửa danh mục (`/store/categories/{id}/edit`) → round-trip
+- ☑ Xóa qua DELETE `/store/categories/delete-selected` (`ids[0]=`)
+- ☑ Verify gone
+
+**Thuộc tính:**
+- ☑ Vào `/store/attributes/create`
+- ☑ Tạo thuộc tính (name + description + 3 values: S, M, L) — values[] inject vào form qua page.evaluate (mô phỏng JS row builder)
+- ☑ Verify trong WP qua `vbrandsync/v1/attribute/list` — values khớp ['L','M','S']
+- ☑ Sửa thuộc tính (description) — name read-only on edit (đúng — WP attribute slug không rename được)
+- ☑ Xóa qua DELETE `/store/attributes/delete-selected` → verify gone
+
+> ⚠️ Skip: "Gán danh mục + thuộc tính cho 1 sản phẩm test" — sẽ làm trong Phase 4 (đơn hàng) hoặc Phase tích hợp riêng. Các CRUD cơ bản cho cả 2 entity đã xanh.
+
+> **Phase 3 fixes (deploy required):**
+> - **app** [resources/views/store/attributes/_form.blade.php:5](app/resources/views/store/attributes/_form.blade.php#L5) — `<input readonly>` luôn áp dụng cho cả create + edit. Trên create form thì user không gõ được name → form fail validation. Fix: chỉ readonly khi `$attribute->id` đã tồn tại (edit mode).
 
 ---
 

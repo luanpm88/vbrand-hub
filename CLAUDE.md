@@ -144,6 +144,12 @@ Khi cần clone 1 WP site sang domain mới:
 - `Acelle\Wordpress\Product::fillParams` originally only accepted the desktop names → mobile webapp silently dropped description/sale price/categories on save.
 - Fix: accept both names with `?? alias` in fillParams. Don't rename forms — both are user-visible and the controller is the right place to normalize.
 
+### Attribute create form name input is readonly
+- `resources/views/store/attributes/_form.blade.php` is shared by create + edit. The `name` input was hardcoded `<input readonly>`, which is correct for edit (WP attribute slugs cannot be renamed) but blocks create entirely — user can't type a name → form fails `name required` validation.
+- Fix: only apply `readonly` when `$attribute->id` exists (edit mode). One-line `@if(!empty($attribute->id)) readonly @endif`.
+- Discovered by E2E Phase 3 (attribute CRUD).
+- Lesson: shared `_form.blade.php` between create + edit is convenient but easy to break — when adding a "feels read-only" attribute, always check if it should be edit-only.
+
 ### Theme builder schema có thể rỗng
 - `Brand\WebsiteController@themeOptions` gọi `$customer->wordpress()->themeGetMeta()` → 1 số WP theme local trả về object không có key `sessions`/`options` → view `themeOptions.blade.php` crash với "Trying to access array offset on null"
 - Fix: controller phải normalize `$schema['sessions'] ?? []` và `$schema['options'] ?? []` trước khi pass vào view
