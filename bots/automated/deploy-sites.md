@@ -79,6 +79,23 @@ wp plugin activate vbrandsync 2>/dev/null || echo 'Plugin already active'
 "
 ```
 
+### Bước 5.5: Enforce COD-only + vBrand Express-only
+
+**BẮT BUỘC** — vBrand sites phải có đúng 1 payment (COD) + 1 shipping (vBrand Express).
+Xem CLAUDE.md §"Site standardization".
+
+```bash
+# Copy script lên server (1 lần) — sau đó tất cả site dùng chung
+scp /Users/luan/apps/vbrand/bots/automated/enforce-cod-vbrand-express.php vbrand@18.141.199.175:/tmp/enforce-cod-vbrand-express.php
+
+ssh vbrand@18.141.199.175 "
+wp --path=/home/vbrand/sites/${DIR_NAME} eval-file /tmp/enforce-cod-vbrand-express.php
+"
+```
+
+Output phải kết thúc bằng `OK — site is COD-only + vBrand Express-only`.
+Nếu FAIL → KHÔNG bàn giao site cho customer, fix trước.
+
 ### Bước 6: Verify
 
 ```bash

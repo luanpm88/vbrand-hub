@@ -376,6 +376,25 @@ echo "============================================"
 
 ---
 
+## BẮT BUỘC sau khi install — Standardize payment + shipping
+
+Mọi vBrand site (mới install hoặc clone) **phải** chạy script enforcement để có
+đúng 1 payment (COD) + 1 shipping (vBrand Express). Xem CLAUDE.md §"Site
+standardization".
+
+```bash
+# Local
+cd /path/to/wp-root && wp eval-file /Users/luan/apps/vbrand/bots/automated/enforce-cod-vbrand-express.php
+
+# Server
+scp /Users/luan/apps/vbrand/bots/automated/enforce-cod-vbrand-express.php vbrand@18.141.199.175:/tmp/enforce-cod-vbrand-express.php
+ssh vbrand@18.141.199.175 "wp --path=/home/vbrand/sites/<DIR_NAME> eval-file /tmp/enforce-cod-vbrand-express.php"
+```
+
+Output kết thúc bằng `OK — site is COD-only + vBrand Express-only` mới được bàn giao.
+
+---
+
 ## Troubleshooting
 
 ### nginx -t fails

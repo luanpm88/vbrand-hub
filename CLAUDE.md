@@ -82,6 +82,25 @@
 
 Mỗi component là 1 git repo riêng → commit/push riêng.
 
+## Site standardization (BẮT BUỘC cho tất cả vBrand sites)
+
+**Quy tắc duy nhất:**
+- **COD là payment method DUY NHẤT.** Mọi gateway khác (BACS, cheque, BaoKimVN, Stripe, ...) phải `enabled=no`.
+- **vBrand Express là shipping method DUY NHẤT.** Phải attach vào "Rest of the world" zone (id=0). Mọi method khác phải xóa khỏi mọi zone.
+- COD title hiển thị tiếng Việt: `Thanh toán khi nhận hàng`.
+
+**Áp dụng tự động:**
+- Script: `bots/automated/enforce-cod-vbrand-express.php` — idempotent, chạy được trên site đã setup hoặc fresh.
+- Local: `wp eval-file bots/automated/enforce-cod-vbrand-express.php`
+- Prod 1 site: `ssh vbrand@server "wp --path=/home/vbrand/sites/<dir> eval-file /tmp/enforce-cod-vbrand-express.php"`
+- Prod tất cả: scp script lên `/tmp/`, loop qua DIR_NAME trong `bots/report/sites.md`.
+- **`deploy-sites.md` phải chạy script này** sau khi sync plugin (xem bot file).
+- **Bất kỳ bot nào tạo site mới** (clone WP, install fresh) **phải gọi script này** ở bước cuối — nếu không, checkout sẽ hiện BACS/cheque/BaoKimVN và customer chọn nhầm.
+
+**Kiểm tra runtime:**
+- E2E `phase4.1-storefront-checkout.spec.ts` verify từ phía customer (storefront → cart → checkout): chỉ thấy COD + vBrand Express.
+- Manual: `wp eval 'foreach (WC()->payment_gateways->payment_gateways() as $id => $g) echo "$id:".$g->enabled."\n";'`
+
 ## Server
 
 - **Production:** `18.141.199.175`
@@ -143,6 +162,20 @@ Khi cần clone 1 WP site sang domain mới:
 - Mobile webapp product form posts `content` / `sale_price` / `categories[]`
 - `Acelle\Wordpress\Product::fillParams` originally only accepted the desktop names → mobile webapp silently dropped description/sale price/categories on save.
 - Fix: accept both names with `?? alias` in fillParams. Don't rename forms — both are user-visible and the controller is the right place to normalize.
+
+### Gateway constructor crashes if settings array is partial
+- `wordpress/payment.php` `BaoKimVN` constructor read `$this->settings['title']/['description']/['merchant_id']/['redirect_page_id']` directly without `??` defaults.
+- The BaoKimVN gateway is registered on every WP request via the `woocommerce_payment_gateways` filter, so its constructor runs on every request — including REST API endpoints.
+- The `enforce-cod-vbrand-express.php` script wrote `{enabled: no}` into the BaoKimVN settings option, blowing away the other keys → constructor crashed → REST API died globally.
+- Fix: defensive `?? ''` defaults in the constructor + the enforce script now seeds defaults from `$gateway->get_form_fields()` instead of writing a partial array.
+- **Lesson:** any class that's instantiated on every WP request must read its own option with null-coalescing. Never trust that a settings option contains all the keys init_form_fields would have populated.
+- Discovered while writing E2E Phase 4.1 (storefront checkout standardization).
+
+### Login helpers must skip when already authenticated
+- `loginDesktop`, `loginWebapp`, `loginAdmin` originally always navigated to `/login` and tried to fill the email input. But once a browser context is authenticated, hitting `/login` redirects to the dashboard → no email input → `locator.fill` times out.
+- Phase 4.2 (customer → seller → admin chain in one test) hit this immediately when calling `loginWebapp` after `loginDesktop` against the same user.
+- Fix: shared `loginVia()` checks if the page redirected away from the login URL after the initial `goto`. If yes → already authenticated, no-op. Added `forceLogout()` for the rare case a test wants to switch users mid-flight.
+- **Lesson:** any "login" helper called more than once per test must be idempotent. Same applies to seeding fixtures — always check current state first.
 
 ### vbrandsync `order/delete` was a no-op
 - `vbrandsync_ajax_order_delete()` was an empty function body. Only the `/order/delete` (no id) route was registered. But brand-app `Acelle\Wordpress\Order::URI_DELETE = 'order/delete/{id}'` calls a different URL entirely.

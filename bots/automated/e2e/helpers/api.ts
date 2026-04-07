@@ -235,3 +235,104 @@ export async function anyProductId(page: Page): Promise<number> {
   }
   return Number(items[0].id);
 }
+
+// ---------- Storefront customer checkout (WC Store API) ----------
+
+/**
+ * Fetch a fresh WC Store API nonce. The Nonce is returned in a response
+ * header on every Store API request, so this is a single GET to /cart.
+ */
+export async function wcStoreNonce(page: Page): Promise<string> {
+  const res = await page.request.fetch(
+    `${ENV.BASE_SITE}/wp-json/wc/store/v1/cart`,
+  );
+  const nonce = res.headers()['nonce'];
+  if (!nonce) throw new Error('wcStoreNonce: response missing Nonce header');
+  return nonce;
+}
+
+/**
+ * Add a product to the customer's cart via the WC Store API. The session
+ * cookie is stored in `page.context()` so subsequent requests share it.
+ * Returns the parsed cart payload after the add.
+ */
+export async function customerAddToCart(
+  page: Page,
+  productId: number | string,
+  quantity = 1,
+): Promise<{ items_count: number; items: Array<{ id: number; quantity: number }> }> {
+  const nonce = await wcStoreNonce(page);
+  const res = await page.request.fetch(
+    `${ENV.BASE_SITE}/wp-json/wc/store/v1/cart/add-item`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Nonce: nonce },
+      data: { id: Number(productId), quantity },
+    },
+  );
+  if (!res.ok()) {
+    throw new Error(`customerAddToCart failed ${res.status()}: ${await res.text()}`);
+  }
+  return res.json();
+}
+
+export type CustomerCheckoutInput = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  postcode?: string;
+  country?: string;
+};
+
+/**
+ * Place an order via the WC Store API checkout endpoint. Assumes the cart
+ * already has at least one item. Hard-codes COD as the only payment method
+ * (which is also the only enabled gateway per CLAUDE.md "Site standardization").
+ *
+ * Returns the new order id.
+ */
+export async function customerCheckout(
+  page: Page,
+  input: CustomerCheckoutInput = {},
+): Promise<number> {
+  const nonce = await wcStoreNonce(page);
+  const billing = {
+    first_name: input.firstName ?? 'E2E',
+    last_name: input.lastName ?? 'Customer',
+    address_1: input.address ?? '123 Test St',
+    address_2: '',
+    city: input.city ?? 'Ho Chi Minh',
+    // VN address validation requires `state` (Tỉnh/Thành phố) — WC uses
+    // 2-digit province codes from the VN dataset (79 = TP. HCM).
+    state: '79',
+    postcode: input.postcode ?? '70000',
+    country: input.country ?? 'VN',
+    email: input.email ?? 'e2e-customer@test.local',
+    phone: input.phone ?? '0900000001',
+  };
+  const res = await page.request.fetch(
+    `${ENV.BASE_SITE}/wp-json/wc/store/v1/checkout`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Nonce: nonce },
+      data: {
+        billing_address: billing,
+        shipping_address: billing,
+        payment_method: 'cod',
+        payment_data: [],
+        customer_note: 'placed by e2e',
+      },
+    },
+  );
+  if (!res.ok()) {
+    throw new Error(`customerCheckout failed ${res.status()}: ${await res.text()}`);
+  }
+  const body = (await res.json()) as { order_id: number };
+  if (!body.order_id) {
+    throw new Error(`customerCheckout: response missing order_id: ${JSON.stringify(body)}`);
+  }
+  return Number(body.order_id);
+}

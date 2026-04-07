@@ -18,8 +18,15 @@ export const ENV = {
   BASE_SITE: process.env.BASE_SITE ?? 'http://brand-site.test',
   SELLER_EMAIL: process.env.SELLER_EMAIL ?? 'admin@acm.com',
   SELLER_PASSWORD: process.env.SELLER_PASSWORD ?? '123456',
-  ADMIN_EMAIL: process.env.ADMIN_EMAIL ?? 'admin@sgconnect.vn',
-  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD ?? 'aA456321@',
+  // On local, admin@acm.com is both a seller AND an admin (same DB user has
+  // customer_id + an admin relation). On staging/prod, override to
+  // admin@sgconnect.vn / aA456321@ via env vars.
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL ?? 'admin@acm.com',
+  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD ?? '123456',
+  // The seller's customer uid (Acelle\Model\Customer::uid) — needed for admin
+  // routes scoped by customer (e.g. /admin/store/{customer_uid}/orders/...).
+  // Default is admin@acm.com on local. For staging/prod, override per env.
+  SELLER_CUSTOMER_UID: process.env.SELLER_CUSTOMER_UID ?? '679906f87e366',
 };
 
 export default defineConfig({

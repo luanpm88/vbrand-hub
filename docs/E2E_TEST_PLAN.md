@@ -182,6 +182,58 @@ npx playwright test
 
 ---
 
+## Phase 4.1 — Storefront customer checkout (COD + vBrand Express) ☑
+
+> Reference: SALES_HANDOVER §1, CLAUDE.md §"Site standardization"
+> Spec: `bots/automated/e2e/tests/phase4_1-storefront-checkout.spec.ts` — **8/8 pass** (4 tests × 2 projects).
+> Setup: `bots/automated/enforce-cod-vbrand-express.php` (already applied to local + 5 prod sites).
+
+- ☑ `/cart/` page renders, no PHP error
+- ☑ `/checkout/` page renders, no PHP error
+- ☑ With a product in cart, WC Store API `/cart` endpoint advertises **only `cod`** in `payment_methods`
+- ☑ With a product in cart, WC Store API `/cart` endpoint advertises **only `vbrand_shipping_method`** ("vBrand Express") in shipping rates on every package
+- ☑ Customer adds product → WC Store API checkout → order id returned → order findable in WP with billing info intact
+
+> **Phase 4.1 fixes (deploy required):**
+> - **vbrandsync** [wordpress/payment.php](site/wp-content/plugins/vbrandsync/wordpress/payment.php#L34) — `BaoKimVN` constructor read `$this->settings['title']/['description']/['merchant_id']/['redirect_page_id']` directly without `??` defaults. When the enforce script (or any admin tool) wrote a partial settings array, the constructor crashed on every WP request — including all REST API endpoints. Defensive `?? ''` defaults added.
+> - **bots** [bots/automated/enforce-cod-vbrand-express.php](bots/automated/enforce-cod-vbrand-express.php) — new wp-cli script that idempotently enforces COD-only payment + vBrand Express-only shipping. Already run on local + all 5 prod sites.
+> - **bots** [bots/automated/deploy-sites.md](bots/automated/deploy-sites.md) — new step 5.5 calls the enforce script after every plugin sync.
+> - **docs** [WP_WOO_SITE_INSTALL.md](docs/WP_WOO_SITE_INSTALL.md) — appended a "BẮT BUỘC sau khi install" section pointing at the script.
+> - **CLAUDE.md** — new top-level §"Site standardization" with the rule + how to apply.
+
+---
+
+## Phase 4.2 — Full E2E order flow (customer → seller → admin) ☑
+
+> Reference: SALES_HANDOVER §1, USER_GUIDE_DESKTOP §5.4, USER_GUIDE_MOBILE §3
+> Spec: `bots/automated/e2e/tests/phase4_2-full-order-flow.spec.ts` — **6/6 pass** (3 tests × 2 projects).
+
+**Test 1 — Full happy-path:**
+- ☑ Customer places order via storefront (Store API: add-to-cart + checkout COD)
+- ☑ Seller (desktop) `/store/orders` list contains the order id
+- ☑ Seller (webapp) `/brand/mobile/orders` list contains the order id
+- ☑ Admin `/admin/brand/{customer_uid}/orders` list contains the order id
+- ☑ Seller walks 4-step workflow on desktop: `ordered → packaging → ready_for_pickup → delivering → completed` (with `normaliseToOrdered` helper to convert WC's default `processing` → `ordered` if needed)
+- ☑ Admin still sees the now-completed order
+
+**Test 2 — Seller cancel edge case:**
+- ☑ Customer places order
+- ☑ Seller cancels via webapp `/brand/mobile/orders/{id}/seller-cancel`
+- ☑ Status → `seller_cancelled`
+- ☑ Admin sees the cancelled order in the admin list
+
+**Test 3 — Admin intervention cancel:**
+- ☑ Customer places order
+- ☑ Admin cancels via `/admin/store/{customer_uid}/orders/{id}/seller-cancel`
+- ☑ Status → `seller_cancelled`
+
+> **New helpers added in this phase:**
+> - `helpers/auth.ts` `loginAdmin()` + `loginVia()` (skip-when-already-authenticated) + `forceLogout()`
+> - `helpers/api.ts` `wcStoreNonce`, `customerAddToCart`, `customerCheckout` (WC Store API)
+> - `playwright.config.ts` `SELLER_CUSTOMER_UID` env var (default `679906f87e366` for local `admin@acm.com`; on prod override to the seller's `customers.uid`, e.g. `69b617af33263` for logitech)
+
+---
+
 ## Phase 5 — Storefront checkout (COD) ☐
 
 > Reference: SALES_HANDOVER §1 (COD Production)
