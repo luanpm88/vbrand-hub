@@ -433,17 +433,35 @@ The original Phase 7 plan listed sub-items the main spec did not test individual
 
 ---
 
-## Phase 13 — Super Buyer ☐
+## Phase 13 — Super Buyer ☑
 
 > Reference: docs/rfq/SUPER_BUYER_DESIGN.md
-> **Lưu ý:** route `/brand/super-buyer/mobile/*` chưa fully implemented — phase này có thể skip nếu chưa có UI.
+> Spec: `bots/automated/e2e/tests/phase13-super-buyer.spec.ts` — **6/6 pass** (3 tests × 2 projects).
+>
+> The route group is fully implemented under `routes/brand_superbuyer.php` with controllers in `app/Http/Controllers/Brand/SuperBuyer/` and views in `resources/views/superbuyer/`. The plan note "có thể skip nếu chưa có UI" is now stale — UI is shipped.
 
-- ☐ GET `/brand/super-buyer/mobile/login` → 200 (nếu route đã đăng ký)
-- ☐ Login Super Buyer (orange theme)
-- ☐ Switch WP connection
-- ☐ Browse products from multiple shops
-- ☐ Checkout cross-shop
-- ☐ Order management
+**Local fixture:** `admin@acm.com` is both a seller AND an active super buyer (`super_buyers.id=1`, `status=active`). The seller customer (`uid=679906f87e366`) is the only customer with a WordPress endpoint on local, so it's the only "shop" the super buyer can browse.
+
+**Auth + smoke:**
+- ☑ GET `/brand/super-buyer/mobile/login` → 200 (orange theme — `meta theme-color="#EA580C"`, `bg-brand-600`)
+- ☑ POST login as `admin@acm.com` → redirect to `/brand/super-buyer/mobile/` dashboard
+- ☑ Dashboard, `/shops`, `/orders`, `/profile` all render < 500 with no PHP errors
+- ☑ `/shops/list` partial includes the seller's customer uid
+- ☑ `/shops/{uid}/products` page + `/shops/{uid}/products/list` partial both < 500 (resolves WP via `WordpressConnectionFacade::setWordpress($customer->wordpress())` per request)
+
+**Checkout + cancel (cross-shop / SuperBuyerOrder lifecycle):**
+- ☑ GET `/shops/{uid}/checkout/{productId}` form renders with hidden `shop_uid` + `product_id`
+- ☑ POST `/checkout/submit` (`order_type=normal`, qty=1, billing fields) → `{status:'success', redirect:/orders/{id}}`
+- ☑ The new SuperBuyerOrder is findable via `/orders/{id}` show + appears in `/orders/list` partial HTML
+- ☑ POST `/orders/{id}/cancel` returns `{status:'success'}`; the WC order (resolved via `WordpressConnectionFacade::setWordpress($sbOrder->customer->wordpress())` then `Order::find($sbOrder->wc_order_id)->sellerCancel()`) is force-deleted in afterEach via `forceDeleteOrder`
+
+> ⚠️ **Skipped (single-shop local fixture):**
+> - **Multi-shop browsing assertions** — only one customer has a wordpress_endpoint on local, so cross-shop browsing collapses to one shop entry. The shop list + per-shop product list paths are verified, but multi-shop comparisons would need a fixture with ≥2 connected customers we don't have on local.
+> - **RFQ checkout via super buyer** — covered indirectly by Phase 12 (which uses the same `vbrandsync /order/add` endpoint with `order_type=rfq` that the super buyer checkout calls). The plain `order_type=normal` path is what Phase 13 verifies end-to-end.
+
+> **Notes:**
+> - "Switch WP connection" — Super Buyer is **not session-scoped** to one shop. Each shop URL prefix carries `{shopUid}` and `WordpressConnectionFacade::setWordpress()` is set per request from that uid (see `ShopController` / `ProductController` / `CheckoutController` / `OrderController`). There is no "switch shop" toggle to test — the URL itself selects the shop.
+> - The cancel endpoint uses `OrderStatusCatalog::resolveActions(...)` to look up an allowed `seller-cancel` action for the current `(base_status, rfq_status)` pair, returns 422 if cancel isn't allowed at the current state. We test the happy path (newly-placed `ordered` → cancellable → `seller_cancelled`).
 
 ---
 
