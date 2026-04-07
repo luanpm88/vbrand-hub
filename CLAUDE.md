@@ -132,6 +132,18 @@ Khi cần clone 1 WP site sang domain mới:
 - `docs/drive_shared/` chỉ chứa 3 file: `SALES_HANDOVER_v1.pdf`, `USER_GUIDE_MOBILE_v1.pdf`, `USER_GUIDE_DESKTOP_v1.pdf`
 - rclone sync đè lên Google Drive — file cũ tự bị replace
 
+### vbrandsync `require_once` returns true on 2nd call
+- `plugin.php` `vbrandsync_getResponse()` was doing `$app = require_once 'bootstrap/app.php'`. PHP semantics: `require_once` returns the file's value **only on first include**, then returns `bool(true)` on subsequent calls. Result: any 2nd caller in the same WP request crashed with `Call to a member function make() on true`.
+- This is hit on EVERY product/order/category create or update because `theme.php → vbrand_load_theme_data()` autoloads Laravel via the same function before the REST handler runs.
+- Fix: cache `$app` and `$beemail_kernel` in static vars on first call, reuse for the rest of the WP request lifecycle. See `site/wp-content/plugins/vbrandsync/plugin.php`.
+- Discovered by E2E Phase 2 (product create flow).
+
+### Webapp form field names diverge from desktop
+- Desktop product form posts `description` / `discount_price` / `category_ids[]`
+- Mobile webapp product form posts `content` / `sale_price` / `categories[]`
+- `Acelle\Wordpress\Product::fillParams` originally only accepted the desktop names → mobile webapp silently dropped description/sale price/categories on save.
+- Fix: accept both names with `?? alias` in fillParams. Don't rename forms — both are user-visible and the controller is the right place to normalize.
+
 ### Theme builder schema có thể rỗng
 - `Brand\WebsiteController@themeOptions` gọi `$customer->wordpress()->themeGetMeta()` → 1 số WP theme local trả về object không có key `sessions`/`options` → view `themeOptions.blade.php` crash với "Trying to access array offset on null"
 - Fix: controller phải normalize `$schema['sessions'] ?? []` và `$schema['options'] ?? []` trước khi pass vào view

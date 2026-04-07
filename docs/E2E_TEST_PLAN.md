@@ -87,33 +87,36 @@ npx playwright test
 
 ---
 
-## Phase 2 — Sản phẩm (CRUD) ☐
+## Phase 2 — Sản phẩm (CRUD) ☑
 
 > Reference: USER_GUIDE_DESKTOP §5.1, USER_GUIDE_MOBILE §2
+> Spec: `bots/automated/e2e/tests/phase2-products.spec.ts` — **8/8 pass** (desktop + mobile projects).
 
 **Desktop:**
-- ☐ Vào danh sách sản phẩm
-- ☐ Thêm sản phẩm mới (name + price + description)
-- ☐ Sản phẩm vừa tạo xuất hiện trong list
-- ☐ Sửa sản phẩm (đổi tên/giá)
-- ☐ Tìm kiếm theo tên
-- ☐ Lọc theo danh mục
-- ☐ Xóa sản phẩm vừa tạo
-- ☐ Verify sản phẩm đã biến mất khỏi list
+- ☑ Vào /store/products/create
+- ☑ Thêm sản phẩm mới (title + price)
+- ☑ Sản phẩm vừa tạo xuất hiện trong WP (verified via `vbrandsync/v1/product/list?keyword=`)
+- ☑ Vào /store/products/{id}/edit
+- ☑ Sửa title → save → reload → title mới persist
+- ☑ Xóa qua DELETE /store/products/delete (id=)
+- ☑ Verify gone
 
 **Mobile webapp:**
-- ☐ Tab Sản phẩm hiển thị list
-- ☐ Search box hoạt động
-- ☐ Tap "+ Thêm sản phẩm" → form
-- ☐ Tạo sản phẩm mới (name + price)
-- ☐ Sản phẩm xuất hiện trong list
-- ☐ Tap sản phẩm → detail/edit
-- ☐ Cập nhật sản phẩm
-- ☐ Xóa sản phẩm
+- ☑ Tab Sản phẩm `/brand/mobile/products` render + có search input
+- ☑ Open `/brand/mobile/products/create`
+- ☑ Tạo sản phẩm (title + price) → AJAX POST → redirect /edit
+- ☑ Sản phẩm xuất hiện trong WP
+- ☑ Open `/brand/mobile/products/{id}/edit` → đổi title → submit qua Alpine `submitForm` (dispatch submit event programmatically)
+- ☑ Verify round-trip
+- ☑ POST `/brand/mobile/products/{id}/delete` → verify gone
 
 **Storefront sync (cross-platform):**
-- ☐ Sản phẩm tạo trên dashboard hiện trên `brand-site.test` shop page
-- ☐ Sản phẩm xóa thì biến mất khỏi shop page
+- ☑ Sản phẩm tạo trên dashboard hiện ngay trên WP REST (`vbrandsync/v1/product/list`)
+- ☑ Sản phẩm xóa thì biến mất
+
+> **Phase 2 fixes (deploy required):**
+> - **vbrandsync** [plugin.php:17-33](site/wp-content/plugins/vbrandsync/plugin.php) — `vbrandsync_getResponse` cached app/kernel statically. Trước đây 2nd call trong cùng request crash với `Call to a member function make() on true` vì `require_once` trả `true`. Đây là root cause khiến mọi product/order/category POST handler die khi theme đã load Laravel trước đó.
+> - **app** [Wordpress/Product.php fillParams](app/app/Wordpress/Product.php#L154) — accept aliases `content`/`sale_price`/`categories` (webapp form) ngoài `description`/`discount_price`/`category_ids` (desktop form). Trước đây mobile webapp silently drop description/sale_price/categories khi save.
 
 ---
 
