@@ -377,19 +377,28 @@ The original Phase 7 plan listed sub-items the main spec did not test individual
 
 ---
 
-## Phase 11 — Tài khoản & đổi mật khẩu ☐
+## Phase 11 — Tài khoản & đổi mật khẩu ☑
 
 > Reference: USER_GUIDE_DESKTOP (header), USER_GUIDE_MOBILE §5
+> Spec: `bots/automated/e2e/tests/phase11-account.spec.ts` — **6/6 pass** (3 tests × 2 projects).
 
-**Desktop:**
-- ☐ Mở profile dropdown
-- ☐ Sửa thông tin cá nhân (họ, tên, sđt) → Lưu → reload còn
+**Desktop (`/account/profile`):**
+- ☑ GET renders form, no PHP error
+- ☑ POST round-trips a `first_name` change end-to-end (snapshot + restore in afterEach)
 
-**Mobile:**
-- ☐ Tab Tài khoản
-- ☐ Chỉnh sửa thông tin
-- ☐ Đổi mật khẩu (đổi rồi đổi lại 123456)
-- ☐ Xem website mở tab mới
+**Webapp profile (`/brand/mobile/profile` + `/edit`):**
+- ☑ Index page renders, no PHP error, has "Thông tin cá nhân" + "Đổi mật khẩu" links
+- ☑ Edit form renders with `first_name` / `last_name` / `phone` inputs
+- ☑ POST `/brand/mobile/profile/update` (JSON) returns success message + value persists on reload (snapshot + restore in afterEach)
+
+**Webapp password (`/brand/mobile/profile/password`):**
+- ☑ Form renders with `current_password` / `new_password` / `new_password_confirmation` inputs
+- ☑ POST changes password to a 12-char temp value → success JSON + a fresh browser context can authenticate with the new password
+- ☑ afterEach restores the original `123456` password via the **desktop** `/account/profile` endpoint (which has no min-length on the password field — see note below). Verified via `Hash::check` after a full mobile-project run.
+
+> ⚠️ **User guide vs reality:** the original plan said "Đổi mật khẩu (đổi rồi đổi lại 123456)" — but `Brand\Webapp\ProfileController@updatePassword` enforces `new_password: required|min:8` ([app/Http/Controllers/Brand/Webapp/ProfileController.php:73](app/Http/Controllers/Brand/Webapp/ProfileController.php#L73)). Local seller password is 6 chars (`123456`), so the webapp endpoint can never restore it. Phase 11 routes the restore through the desktop `AccountController@profile` endpoint which has no min-length validation — that's the only way to revert without a direct DB write. The user guides do not promise being able to set a 6-char password, so no doc fix needed; the plan wording was the only thing wrong.
+
+> **Webapp Tab Tài khoản → Xem website link:** already covered by Phase 7.1 (mobile webapp profile Xem website test).
 
 ---
 
