@@ -263,6 +263,43 @@ export async function seedOrder(
 }
 
 /**
+ * Seed an RFQ order via the vbrandsync `/order/add` endpoint with
+ * `order_type=rfq` and a buyer-proposed `rfq_unit_price`. The new order
+ * lands in WC status `rfq_pending`. Returns the new order id.
+ *
+ * Reference: docs/rfq/RFQ_DESIGN.md §2 (status flow) + §4.2 (createOrder).
+ * The plugin sets `_order_type=rfq`, `_rfq_unit_price`, `_rfq_line_total`,
+ * `_rfq_status=rfq_pending`, then `_rfq_original_total` post-totals-calc.
+ */
+export async function seedRfqOrder(
+  page: Page,
+  input: SeedOrderInput & { rfqUnitPrice: number },
+): Promise<number> {
+  const res = await page.request.fetch(
+    `${ENV.BASE_SITE}/wp-json/vbrandsync/v1/order/add`,
+    {
+      method: 'POST',
+      form: {
+        product_id: String(input.productId),
+        quantity: String(input.quantity ?? 1),
+        first_name: input.firstName ?? 'E2E',
+        last_name: input.lastName ?? 'Buyer',
+        phone: input.phone ?? '0900000000',
+        email: input.email ?? 'e2e-rfq@test.local',
+        address_1: input.address ?? '123 Test St',
+        order_type: 'rfq',
+        rfq_unit_price: String(input.rfqUnitPrice),
+      },
+    },
+  );
+  if (!res.ok()) {
+    throw new Error(`seedRfqOrder failed: ${res.status()} ${await res.text()}`);
+  }
+  const body = (await res.json()) as { id: number };
+  return Number(body.id);
+}
+
+/**
  * Find an order by id via WP `/order/find/{id}`. Returns null if missing
  * (e.g. after a delete).
  */

@@ -195,6 +195,18 @@ Khi cần clone 1 WP site sang domain mới:
 - The dead `setComplated` plumbing in `OrderStatusCatalog`, `routes/brand.php`, and the webapp `setDelivered` controller method is left in place pending a separate decision on whether to delete it or implement Đã giao properly.
 - Lesson: when adding "expected" features to user guides, make sure the wire goes all the way through — controller, model, REST handler, custom WC status registration. A broken intermediate step is invisible until somebody actually clicks the button.
 
+### OrderStatusCatalog::prefixed silently broke every multi-word status filter
+- `OrderStatusCatalog::prefixed()` was doing `'wc-' . str_replace('_', '-', $normalized)`. WC custom statuses are registered with **underscores** in the vbrandsync plugin (`wc-rfq_pending`, `wc-ready_for_pickup`, `wc-seller_cancelled`, etc — see `site/wp-content/plugins/vbrandsync/plugin.php` `register_post_status` calls). The hyphen variant matched zero orders, so every multi-word status filter (RFQ-pending tab, ready-for-pickup tab, seller-cancelled tab) was silently empty on webapp / desktop / brand-api / admin order lists.
+- Fix: drop the `str_replace` in `app/Support/OrderStatusCatalog.php` `prefixed()`.
+- Discovered by E2E Phase 12 (RFQ filter test). Phase 4 didn't catch it because the order workflow tests hit per-id action endpoints, not the status-filter list.
+- **Lesson:** when designing a status normalization layer, the format must round-trip exactly to whatever the storage layer (here: WC `register_post_status`) actually uses. A "prettifying" `_` → `-` translation in the prefix function ≠ a renaming of the underlying status. Always test the filter end-to-end against a fixture in that status.
+
+### resources/views/store/orders/list.blade.php was structurally broken
+- Commit `0a22389ce5` ("graceful WordPress connection error handling") accidentally replaced the inner `@foreach($orders as $order) @php` block with a stray `<script>` tag, dropped the foreach entirely, and left an orphan `@endforeach` plus a duplicate empty-state. Result: every visit to `/store/orders/list` (the AJAX partial used by the desktop orders index) crashed with a Blade syntax error.
+- Phase 4 desktop tests dodged this because they hit per-id action endpoints, not the list partial. Phase 12 surfaced it because the desktop RFQ filter test hits `/store/orders/list?status=rfq-pending`.
+- Fix: restore the `@if(!$ordersIsEmpty) @foreach @php ... @endphp <div>...</div> @endforeach @endif` wrapper from the pre-broken commit `d970d53e73`. Drop the duplicate empty-state.
+- **Lesson:** Blade compile errors don't surface until the view actually renders. A view that's never hit on the happy path can stay broken indefinitely. When refactoring a partial, run a smoke test that hits the AJAX endpoint before considering the change done.
+
 ### Attribute create form name input is readonly
 - `resources/views/store/attributes/_form.blade.php` is shared by create + edit. The `name` input was hardcoded `<input readonly>`, which is correct for edit (WP attribute slugs cannot be renamed) but blocks create entirely — user can't type a name → form fails `name required` validation.
 - Fix: only apply `readonly` when `$attribute->id` exists (edit mode). One-line `@if(!empty($attribute->id)) readonly @endif`.

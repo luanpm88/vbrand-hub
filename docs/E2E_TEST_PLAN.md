@@ -402,16 +402,34 @@ The original Phase 7 plan listed sub-items the main spec did not test individual
 
 ---
 
-## Phase 12 — RFQ flow ☐
+## Phase 12 — RFQ flow ☑
 
 > Reference: docs/rfq/RFQ_DESIGN.md, SALES_HANDOVER §1 (RFQ)
+> Spec: `bots/automated/e2e/tests/phase12-rfq.spec.ts` — **6/6 pass** (3 tests × 2 projects).
 
-- ☐ Storefront: tạo RFQ (gửi yêu cầu báo giá)
-- ☐ Webapp seller: badge RFQ count
-- ☐ Filter tab RFQ trên Đơn hàng webapp
-- ☐ Approve RFQ → đổi sang đơn thường
-- ☐ Reject RFQ
-- ☐ Desktop: tương tự
+**WP REST seed + meta verification:**
+- ☑ `vbrandsync /order/add` with `order_type=rfq` lands an order in `rfq_pending` with `_rfq_unit_price`, `_rfq_line_total = unit × qty`, `_rfq_status = rfq_pending`, `_rfq_original_total > 0`
+
+**Webapp (`/brand/mobile/orders/...`):**
+- ☑ Filter `?status=rfq-pending` returns the RFQ (per-row "RFQ" chip rendered from `webapp/orders/_list.blade.php:96`)
+- ☑ Order show page renders the "Yêu cầu báo giá" pricing card
+- ☑ POST `/{id}/approve-rfq` returns `{status:'success'}` + WP `_rfq_status = rfq_approved` + `total = rfq_unit_price × quantity` + `status = packaging`
+
+**Desktop (`/store/orders/...`):**
+- ☑ Filter `?status=rfq-pending` includes the seeded RFQ in the rendered list HTML
+- ☑ POST `/{id}/approve-rfq` returns `{success: 'Đã duyệt RFQ thành công!'}` + same WP-side state changes verified
+
+> ⚠️ **Skipped (not implemented in production):**
+> - **Storefront RFQ creation** — the WP storefront has no RFQ creation UI. RFQ orders originate from the Super Buyer flow ([docs/rfq/SUPER_BUYER_DESIGN.md](docs/rfq/SUPER_BUYER_DESIGN.md)). Phase 12 seeds RFQs via the same `vbrandsync /order/add` endpoint that Super Buyer checkout uses.
+> - **Webapp seller "RFQ count" badge** — `Brand\Webapp\OrderController@index` only computes `ordersCount / completedCount / failedCount`. There is no `rfqCount` and no header badge surfacing it.
+> - **Reject RFQ** — there is no reject endpoint in any controller. `approveRfq` is the only RFQ action; the order stays `rfq_pending` until either approved or seller-cancelled via the standard cancel path.
+
+> **Phase 12 fixes (deploy required):**
+> - **app** [app/Support/OrderStatusCatalog.php:137-150](app/Support/OrderStatusCatalog.php#L137) — `prefixed()` was doing `str_replace('_', '-', $normalized)` so `rfq_pending` became `wc-rfq-pending`. WC custom statuses are registered with **underscores** ([site/wp-content/plugins/vbrandsync/plugin.php:339](site/wp-content/plugins/vbrandsync/plugin.php#L339) and friends — `wc-rfq_pending`, `wc-ready_for_pickup`, `wc-seller_cancelled`, etc.). The hyphen variant matched zero orders, silently breaking every multi-word status filter end-to-end. Fix: drop the `str_replace`. Affects webapp, desktop, brand-api, and admin order list filters.
+> - **app** [app/resources/views/store/orders/list.blade.php](app/resources/views/store/orders/list.blade.php) — the desktop orders list partial was structurally broken by commit `0a22389ce5` ("graceful WordPress connection error handling"). The edit accidentally replaced the inner `@foreach($orders as $order) @php` with a stray `<script>` tag, dropped the foreach entirely, and left an orphan `@endforeach` + duplicate empty-state block. Result: any visit to `/store/orders/list` (the AJAX partial used by the desktop orders index) crashed with a Blade syntax error. Phase 4 desktop tests dodged this because they hit the per-id action endpoints, not the list partial. Fix: restore the inner `@if(!$ordersIsEmpty) @foreach @php ... @endphp <div>...</div> @endforeach @endif` wrapper from the pre-broken commit `d970d53e73`, remove the duplicate empty-state and orphan `@endforeach`.
+> - **app/db migration** — `2026_03_19_120000_add_rfq_v1_fields_to_super_buyer_orders_table` was Pending on local. Without it, both `Webapp\OrderController@approveRfq` and `Store\OrdersController@approveRfq` crash on the `super_buyer_orders` `update(...rfq_unit_price...)` call (`SQLSTATE[42S22]: Column not found`). Run `php artisan migrate` after deploy.
+
+> **New helpers:** [helpers/api.ts](bots/automated/e2e/helpers/api.ts) `seedRfqOrder()` — POST to vbrandsync `/order/add` with `order_type=rfq` and a buyer-proposed `rfq_unit_price`.
 
 ---
 
