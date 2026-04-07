@@ -273,7 +273,29 @@ npx playwright test
 
 ---
 
-## Phase 7 — Website: Theme & Cấu hình nội dung ☐
+## Phase 7 — Website: Theme & Cấu hình nội dung ☑
+
+> Reference: USER_GUIDE_DESKTOP §3, USER_GUIDE_MOBILE §4
+> Spec: `bots/automated/e2e/tests/phase7-website.spec.ts` — **10/10 pass** (5 tests × 2 projects).
+
+**Desktop:**
+- ☑ `/brand/website-templates` list page renders, no PHP error
+- ☑ WP exposes >1 theme via `vbrandsync/v1/theme/list` (verified ≥2 themes + exactly 1 active)
+- ☑ POST `/brand/website-templates/set-active/{theme}` flips the active flag in WP
+- ☑ `/brand/website/theme/options` (Cấu hình nội dung) page renders
+- ☑ POST `/brand/website/theme/options` with empty payload → status < 500 (no-op round-trip; theme builder schema may be empty for some themes — Phase 1 fixed the null-schema crash)
+
+**Mobile webapp:**
+- ☑ `/brand/mobile/templates` list page renders, no PHP error
+- ☑ POST `/brand/mobile/templates/{theme}/activate` flips the active flag in WP
+
+**Snapshot/restore strategy:** each theme-switching test snapshots the current active theme in `let originalThemeId` and restores it in `afterEach`, so a green Phase 7 leaves the site on the same theme it started.
+
+> ⚠️ **Skipped (deeper UI testing not in scope):**
+> - Editing specific theme builder fields (banner text, menu items, footer) — depends on the active theme exposing a `themeGetMeta()` schema. Local active theme (AcelleMail) has no schema. The render + save round-trip is verified but per-field editing is left for theme-specific Dusk tests.
+> - "Xem trang" → opens storefront in new tab — this is a `target="_blank"` link with no app-side state to verify; covered indirectly by Phase 1 storefront smoke.
+
+> **New helpers:** `helpers/api.ts` `listThemes()`, `activeTheme()` — both query `vbrandsync/v1/theme/list` (returns object keyed by theme name, normalised to a `WPTheme[]` array).
 
 > Reference: USER_GUIDE_DESKTOP §3, USER_GUIDE_MOBILE §4
 

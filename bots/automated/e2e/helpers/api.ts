@@ -170,6 +170,42 @@ export async function forceDeleteContact(page: Page, id: number | string) {
     .catch(() => {});
 }
 
+// ---------- Themes (Website → Giao diện) ----------
+
+export type WPTheme = {
+  id: string;
+  name: string;
+  active: boolean;
+};
+
+/**
+ * List WP themes via the vbrandsync `theme/list` endpoint. The endpoint
+ * returns an OBJECT keyed by theme name (not an array) so we normalise
+ * here.
+ */
+export async function listThemes(page: Page): Promise<WPTheme[]> {
+  const res = await page.request.fetch(
+    `${ENV.BASE_SITE}/wp-json/vbrandsync/v1/theme/list`,
+  );
+  if (!res.ok()) throw new Error(`listThemes failed ${res.status()}`);
+  const body = (await res.json()) as Record<string, { id: string; name: string; active: boolean }>;
+  return Object.values(body).map((t) => ({
+    id: String(t.id),
+    name: String(t.name),
+    active: !!t.active,
+  }));
+}
+
+/**
+ * Find the currently active theme. Useful for snapshot/restore around a
+ * theme-switching test (so the local/prod site doesn't end up on a different
+ * theme than it started).
+ */
+export async function activeTheme(page: Page): Promise<WPTheme | null> {
+  const themes = await listThemes(page);
+  return themes.find((t) => t.active) ?? null;
+}
+
 // ---------- Orders ----------
 
 export type SeedOrderInput = {
