@@ -1,0 +1,17 @@
+{
+  "name": "vbrand-e2e",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Playwright E2E tests for vBrand (Desktop dashboard + Mobile webapp + Storefront).",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "PWDEBUG=1 playwright test",
+    "phase1": "playwright test tests/phase1-auth-smoke.spec.ts",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "typescript": "^5.5.0"
+  }
+}

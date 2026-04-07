@@ -12,6 +12,37 @@
 4. **Minimal changes** — chỉ fix/adjust đúng yêu cầu, không refactor code xung quanh
 5. **Follow existing patterns** — đọc code hiện tại trước, viết theo cùng style
 
+## CLAUDE là owner của docs/ và bots/
+
+`docs/**` và `bots/**` là **source of truth** của project — CLAUDE chịu trách nhiệm giữ chúng đúng và đầy đủ. Đây không phải là "tài liệu phụ", đây là **bộ nhớ dài hạn** của AI cho project này.
+
+### Self-learn & discovery
+
+- **Mỗi lần discover điều gì mới** (route lạ, bug ẩn, pattern khác thường, gotcha về local/server, credential, schema DB, lesson learned từ task) → **ghi ngay** vào file phù hợp trong `docs/` hoặc `bots/`. Không để kiến thức chết trong context window của 1 conversation.
+- **Mỗi lần phát hiện docs sai/cũ/thiếu** → fix luôn trong cùng commit. Không để stale.
+- **Mỗi lần fix bug có root cause đáng nhớ** → update `## Lessons Learned` trong CLAUDE.md hoặc thêm note vào doc liên quan.
+- **Mỗi lần tìm ra route/controller/helper mới** mà chưa được document → bổ sung vào `docs/VBRAND_SYSTEM_DOCUMENTATION.md` hoặc relevant doc.
+
+### Khi nào update docs/bots
+
+| Trigger | Update file nào |
+|---------|----------------|
+| Đổi design/API/pattern | `docs/VBRAND_SYSTEM_DOCUMENTATION.md` + relevant design doc trong `docs/rfq/` |
+| Thêm tính năng mới | Design doc + USER_GUIDE_DESKTOP/MOBILE nếu user-facing + SALES_HANDOVER nếu sales-facing |
+| Fix bug có lesson | `CLAUDE.md ## Lessons Learned` + comment ở chỗ fix |
+| Tìm ra workflow/command hữu ích | `bots/automated/<bot>.md` hoặc tạo bot mới |
+| Discover route/schema chưa biết | `docs/VBRAND_SYSTEM_DOCUMENTATION.md` + nếu liên quan tới test → `docs/E2E_TEST_PLAN.md` |
+| Hoàn thành 1 phase E2E | Mark ☑ trong `docs/E2E_TEST_PLAN.md` + ghi lessons vào CLAUDE.md nếu có |
+| Tìm ra credential/setup mới cho local/staging/prod | `CLAUDE.md ## Server` hoặc relevant env section |
+
+### Nguyên tắc
+
+- **Docs là code** — review, commit, deploy như code
+- **Không trùng lặp** — nếu thông tin đã có ở 1 file, link tới chứ đừng copy
+- **Vietnamese OK** trong docs, code/comment giữ English
+- **Luôn cụ thể** — `app/Http/Controllers/Brand/HomeController.php:42` chứ không phải "controller home"
+- **Nếu thấy 2 docs nói khác nhau** → tìm ra đúng → fix file sai → ghi nhận trong commit message
+
 ## Project Structure
 
 ```
@@ -100,6 +131,11 @@ Khi cần clone 1 WP site sang domain mới:
 - Drive versioning: luôn giữ **v1** — khi update thì đè file v1 luôn, KHÔNG tăng version number
 - `docs/drive_shared/` chỉ chứa 3 file: `SALES_HANDOVER_v1.pdf`, `USER_GUIDE_MOBILE_v1.pdf`, `USER_GUIDE_DESKTOP_v1.pdf`
 - rclone sync đè lên Google Drive — file cũ tự bị replace
+
+### Theme builder schema có thể rỗng
+- `Brand\WebsiteController@themeOptions` gọi `$customer->wordpress()->themeGetMeta()` → 1 số WP theme local trả về object không có key `sessions`/`options` → view `themeOptions.blade.php` crash với "Trying to access array offset on null"
+- Fix: controller phải normalize `$schema['sessions'] ?? []` và `$schema['options'] ?? []` trước khi pass vào view
+- Phát hiện qua E2E Phase 1 — đây chính là lý do E2E test cần chạy với seller có WP connection thật (`admin@acm.com` local)
 
 ### curl test webapp login (không cần browser)
 - Phải lấy session cookie trước (`GET /brand/mobile/login` → extract `Set-Cookie`)
@@ -277,6 +313,71 @@ Mỗi task tạo report: `bots/automated/reports/task-N.md` — chứa root caus
 | Feature/HTTP | Pest PHP | `app/tests/Feature/` | `./vendor/bin/pest tests/Feature/` |
 | Browser (headless) | Laravel Dusk | `app/tests/Browser/` | `php artisan dusk` |
 | Browser (visible) | Laravel Dusk | `app/tests/Browser/` | `DUSK_HEADLESS_DISABLED=true php artisan dusk` |
+| **E2E (cross-platform)** | **Playwright + TS** | `bots/automated/e2e/tests/` | `cd bots/automated/e2e && npm test` |
+
+### E2E Playwright suite (mọi web platform trừ mobile app)
+
+**Mục tiêu:** verify mọi tính năng mô tả trong `docs/SALES_HANDOVER.md` + `docs/USER_GUIDE_DESKTOP.md` + `docs/USER_GUIDE_MOBILE.md` đều chạy đúng — local trước, sau đó staging/prod.
+
+**Plan (single source of truth):** [`docs/E2E_TEST_PLAN.md`](docs/E2E_TEST_PLAN.md) — checklist 17 phases, dùng `☐ pending / ◐ in-progress / ☑ done` để track tiến độ.
+
+**Project layout:**
+```
+bots/automated/e2e/
+├── package.json              # @playwright/test
+├── playwright.config.ts      # 2 projects: desktop 1280×800, mobile iPhone 14 Pro
+├── helpers/auth.ts           # loginDesktop, loginWebapp, assertNoPageErrors
+├── tests/phase1-auth-smoke.spec.ts   # ☑ done
+├── tests/phase2-products.spec.ts     # ☐ todo
+└── README.md
+```
+
+**Targets (env vars, default = local):**
+| Var | Default |
+|-----|---------|
+| `BASE_APP` | `http://brand.test` |
+| `BASE_SITE` | `http://brand-site.test` |
+| `SELLER_EMAIL` | `admin@acm.com` (chỉ user này có WP connection local → `brand-site.test`) |
+| `SELLER_PASSWORD` | `123456` |
+| `ADMIN_EMAIL` | `admin@sgconnect.vn` |
+| `ADMIN_PASSWORD` | `aA456321@` |
+
+**Khi user nói "continue test" / "tiếp tục test e2e" / "làm phase tiếp":**
+1. Đọc `docs/E2E_TEST_PLAN.md`, tìm phase đầu tiên còn `☐` (hoặc `◐`)
+2. Đọc reference docs phase đó nói tới (vd `USER_GUIDE_DESKTOP §5.1`)
+3. Tạo file `bots/automated/e2e/tests/phaseN-<name>.spec.ts`
+4. Follow conventions: `data-testid` > role/text > CSS, dùng helpers `loginDesktop`/`loginWebapp`/`assertNoPageErrors`, mỗi test self-cleanup
+5. Chạy `cd bots/automated/e2e && npx playwright test tests/phaseN-*.spec.ts --project=desktop` rồi `--project=mobile`
+6. Fix tới khi xanh hết:
+   - Nếu test sai → fix test
+   - **Nếu app/site có bug thật → fix luôn** (minimal change), commit riêng `fix:` cho component bị ảnh hưởng, ghi root cause + line number
+7. **Auto-deploy** sau khi xanh hết phase (KHÔNG cần hỏi user — đây là explicit policy):
+   - Có fix trong `app/` → chạy `bots/automated/deploy-app.md`
+   - Có fix trong `site/wp-content/{plugins,themes}/` → chạy `bots/automated/deploy-sites.md sync all`
+   - Sau deploy, re-run phase đó với `BASE_APP=https://app.sgconnect.vn` để verify production xanh
+8. Update `docs/E2E_TEST_PLAN.md`: đổi `☐` → `☑` cho từng check + heading phase. Ghi rõ bug nào đã fix + commit hash
+9. Update `## Lessons Learned` trong CLAUDE.md nếu bug có root cause đáng nhớ (vd: WP theme schema null, missing route, broken middleware)
+10. Commit: `test(e2e): phase N — <summary>` (gồm spec + plan + lessons)
+
+**Khi user nói "run e2e" / "test e2e":**
+- Default chạy local: `cd bots/automated/e2e && npm test`
+- Chạy phase cụ thể: `npx playwright test tests/phaseN-*.spec.ts`
+- Staging: `BASE_APP=https://app.sgconnect.vn BASE_SITE=https://logitech.b-teka.com SELLER_EMAIL=logitech@gmail.com npm test`
+
+**Setup local (one-time):**
+```bash
+cd bots/automated/e2e && npm install && npx playwright install chromium webkit
+# Đảm bảo seller test có WP connection (chỉ admin@acm.com mặc định):
+cd /Users/luan/apps/vbrand/app && php artisan tinker --execute='
+$u=\Acelle\Model\User::where("email","admin@acm.com")->first();
+$u->password=bcrypt("123456"); $u->save(); echo "ok";'
+```
+
+**Convention quan trọng:**
+- Mỗi test phải **độc lập** + tự cleanup fixture (xóa product/order vừa tạo trong same test)
+- Selector ưu tiên `data-testid` > Vietnamese text từ user guide > CSS class
+- 2 viewports: desktop 1280×800 + mobile 430×932 (iPhone 14 Pro) — match Dusk
+- Khi route chưa biết, grep `routes/web.php` + `routes/brand.php` (KHÔNG `php artisan route:list` — broken bởi BaokimController)
 
 ### DuskTestCase helpers (`app/tests/DuskTestCase.php`)
 
