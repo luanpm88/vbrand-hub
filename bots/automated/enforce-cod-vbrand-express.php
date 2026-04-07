@@ -102,6 +102,28 @@ if (!$has_vbrand) {
     echo "✓ vBrand Express already attached to rest-of-world zone\n";
 }
 
+// ----- Storefront visibility -------------------------------------------------
+
+// WooCommerce 8.x ships with "Coming Soon" mode enabled by default on every
+// fresh install. When it's on, /shop/, the configured shop page (e.g.
+// /thuc-don/), and every product detail page get replaced with the WC
+// "Great things are on the horizon" placeholder — even after products are
+// imported. Sellers/auditors then think the import failed.
+// We force it off here so any new site auto-published as soon as it's
+// standardised. Idempotent — no-op if it's already off.
+$coming_soon = get_option('woocommerce_coming_soon');
+if ($coming_soon !== 'no') {
+    update_option('woocommerce_coming_soon', 'no');
+    echo "✓ Disabled WooCommerce coming-soon mode\n";
+} else {
+    echo "✓ Coming-soon already off\n";
+}
+$store_only = get_option('woocommerce_store_pages_only');
+if ($store_only !== 'no') {
+    update_option('woocommerce_store_pages_only', 'no');
+    echo "✓ Disabled store-pages-only restriction\n";
+}
+
 // ----- Verify ---------------------------------------------------------------
 
 // Inspect each gateway's `enabled` flag directly. We can't use

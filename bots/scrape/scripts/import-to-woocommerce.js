@@ -201,8 +201,17 @@ async function main() {
             imageUrl = imageUrl.replace(/_\d+x\d+q\d+/, '_720x720q80'); // Lazada: get higher res
         }
 
-        // Standard format (cross-platform) with Lazada backward-compat fallbacks
-        const regularPrice = p.price || p.originalPriceRaw || p.priceRaw || 0;
+        // Standard format (cross-platform) with Lazada backward-compat fallbacks.
+        // p.price can be a number (API scrape) or a localized string like "₫ 450.000"
+        // (DOM fallback). Strip currency + separators before sending — WC parses "." as
+        // decimal separator and would otherwise turn "450.000" into 450 VND.
+        const toIntPrice = (v) => {
+            if (typeof v === 'number') return v;
+            if (!v) return 0;
+            const digits = String(v).replace(/[^\d]/g, '');
+            return digits ? parseInt(digits, 10) : 0;
+        };
+        const regularPrice = toIntPrice(p.price) || p.originalPriceRaw || p.priceRaw || 0;
         const salePrice = p.salePrice ?? (
             p.priceRaw && p.originalPriceRaw && p.priceRaw < p.originalPriceRaw ? p.priceRaw : null
         );
@@ -255,6 +264,28 @@ async function main() {
     console.log(`   Site: ${finalStatus.site_name} (${finalStatus.site_url})`);
     console.log(`   Products: ${finalStatus.products}`);
     console.log(`   Categories: ${finalStatus.categories}`);
+
+    // Storefront sanity check: WC's "Coming Soon" mode replaces /shop/ and the
+    // shop page with a "Great things are on the horizon" placeholder, so a
+    // successful API import can still leave a site that LOOKS empty to a
+    // customer. Hit the homepage and warn loudly if we see the placeholder.
+    try {
+        const home = await fetch(SITE_URL, { redirect: 'follow' });
+        const html = await home.text();
+        if (/Great things are on the horizon|woocommerce[_-]coming[_-]soon/i.test(html)) {
+            console.log('\n⚠️  WARNING: WooCommerce Coming Soon mode is ENABLED on this site.');
+            console.log('   Imported products will be HIDDEN from /shop/ and product pages.');
+            console.log('   Fix on the server with:');
+            console.log(`     wp --path=/home/vbrand/sites/<DIR_NAME> option update woocommerce_coming_soon no`);
+            console.log(`     wp --path=/home/vbrand/sites/<DIR_NAME> option update woocommerce_store_pages_only no`);
+            console.log(`     wp --path=/home/vbrand/sites/<DIR_NAME> cache flush`);
+            console.log('   Or run bots/automated/enforce-cod-vbrand-express.php which now disables it too.');
+        } else {
+            console.log('   Storefront: visible (coming-soon off) ✓');
+        }
+    } catch (e) {
+        console.log(`   Storefront check skipped: ${e.message}`);
+    }
 
     console.log('\n✅ Done!');
 }
