@@ -2,6 +2,40 @@
 
 > Deploy/update the AcelleMail Laravel landing site to production server.
 
+## Pre-deploy E2E gate (BẮT BUỘC)
+
+**Không được rsync lên prod nếu E2E chưa xanh.** Mọi thay đổi trong
+`acellemail/landing/resources/`, `routes/web.php`, hoặc `public/` (css/js/images)
+phải pass toàn bộ Playwright suite ở `acellemail/docs/e2e/` trước.
+
+```bash
+# 1. Start local Laravel server
+cd acellemail/landing
+php artisan serve --host=127.0.0.1 --port=8765 &
+SERVE_PID=$!
+
+# 2. Run E2E (desktop + mobile)
+cd ../docs/e2e
+BASE_URL=http://127.0.0.1:8765 npm test
+
+# 3. Stop local server
+kill $SERVE_PID
+```
+
+Chỉ khi tất cả specs xanh mới được tiếp tục `rsync` bên dưới.
+
+**Sau deploy** — re-run suite trên URL production để verify:
+
+```bash
+cd acellemail/docs/e2e
+BASE_URL=https://acellemail.com npm test
+```
+
+Nếu prod fail → rollback (git revert + redeploy) hoặc hotfix ngay.
+
+Lần đầu setup: `cd acellemail/docs/e2e && npm install && npx playwright install chromium`.
+Xem `acellemail/docs/e2e/README.md` để biết chi tiết.
+
 ## Architecture
 
 ```

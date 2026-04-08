@@ -258,6 +258,23 @@ Mobile App / Webapp → Laravel API → WordPress REST API (vbrandsync plugin) �
 
 ---
 
+## AcelleMail landing (`acellemail/landing/`)
+
+**Single source of truth:** [`acellemail/docs/LANDING.md`](acellemail/docs/LANDING.md) — đọc TRƯỚC khi làm bất cứ task nào liên quan tới `acellemail.com`. Bao gồm: layout, server config, E2E gate, deploy workflow, design system, pages, lessons learned, self-learn rule.
+
+**Tóm tắt cho session ngoài:**
+- Laravel 12 site, static pages, no DB. Repo riêng: `git@github.com:luanpm88/acellemail-landing.git` (branch `develop`).
+- Mọi change → E2E gate (`acellemail/docs/e2e/`, Playwright, 42 tests) → rsync → re-verify prod.
+- Discovery nào mới về landing → update `LANDING.md` trong cùng commit (xem `## 9. Self-learn rule` trong file đó).
+
+**Khi user nói ngắn:**
+| User nói | Claude làm |
+|----------|-----------|
+| `test acellemail` / `e2e acellemail` | Start artisan serve + `cd acellemail/docs/e2e && npm test` |
+| `deploy acellemail` | Theo §4 trong `LANDING.md`: E2E gate → rsync → optimize → re-run E2E prod |
+
+---
+
 ## Automated Bots System
 
 Hệ thống tự động hóa fix bug + implement feature + tests + deploy.

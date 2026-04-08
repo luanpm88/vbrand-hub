@@ -16,6 +16,17 @@ node design/screenshot-all.js
 OPENAI_API_KEY=sk-xxx node design/generate-images.js
 ```
 
+## E2E tests (Playwright)
+
+BẮT BUỘC chạy xanh trước mỗi deploy — xem `docs/e2e/README.md` và
+`bots/deploy.md` (section `## Pre-deploy E2E gate`).
+
+```bash
+# local — start Laravel + run suite
+cd landing && php artisan serve --port=8765 &
+cd ../docs/e2e && BASE_URL=http://127.0.0.1:8765 npm test
+```
+
 ---
 
 ## Design System
