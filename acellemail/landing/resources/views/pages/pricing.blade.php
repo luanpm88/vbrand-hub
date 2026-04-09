@@ -20,7 +20,21 @@
                 <p class="mc-pricing-hero__subheading">No monthly fees. No per-subscriber charges. Pay once, own forever. Self-hosted on your own server with full source code included &mdash; you control everything.</p>
             </div>
             <div class="mc-pricing-hero__image">
-                <img src="{{ asset('images/features/pricing-hero.svg') }}" alt="Simple, One-Time Pricing" style="width:100%;border-radius:var(--radius-lg);" fetchpriority="high">
+                <div style="background: var(--mc-black); border-radius: var(--radius-lg); padding: var(--space-2xl) var(--space-xl); text-align: center; color: var(--mc-white);">
+                    <h2 style="font-family: var(--font-serif); font-size: clamp(22px, 3vw, 32px); font-weight: 300; margin-bottom: var(--space-xl); line-height: 1.3;">Simple, One-Time<br>Pricing</h2>
+                    <div style="display: flex; justify-content: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                        <div style="background: var(--mc-primary); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); min-width: 100px;">
+                            <div style="font-size: clamp(24px, 3vw, 32px); font-weight: 700;">$64</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Regular</div>
+                        </div>
+                        <div style="background: var(--mc-primary); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); min-width: 100px; transform: scale(1.08);">
+                            <div style="font-size: clamp(24px, 3vw, 32px); font-weight: 700;">$199</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Extended</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; opacity: 0.7; margin-bottom: var(--space-lg);">Pay once. Own forever. No recurring fees.</p>
+                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg" target="_blank" style="width: 80%; display: inline-block;">Buy on CodeCanyon</a>
+                </div>
             </div>
         </div>
     </div>

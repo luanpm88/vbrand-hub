@@ -51,11 +51,135 @@
     mobileNavClose.addEventListener('click', closeMobileNav);
   }
 
-  // Close mobile nav on Escape key
+  // Close mobile nav on Escape key (also closes desktop dropdowns)
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('is-open')) {
-      closeMobileNav();
+    if (e.key === 'Escape') {
+      if (mobileNav && mobileNav.classList.contains('is-open')) {
+        closeMobileNav();
+      }
+      closeAllDropdowns();
     }
+  });
+
+  // ========================================================================
+  // DESKTOP DROPDOWNS
+  // ========================================================================
+
+  var dropdowns = document.querySelectorAll('[data-dropdown]');
+  var hoverTimeout = null;
+  var HOVER_DELAY = 80;
+
+  function openDropdown(dropdown) {
+    dropdowns.forEach(function (other) {
+      if (other !== dropdown) closeDropdown(other);
+    });
+    dropdown.classList.add('is-open');
+    var trigger = dropdown.querySelector('.mc-header__dropdown-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDropdown(dropdown) {
+    dropdown.classList.remove('is-open');
+    var trigger = dropdown.querySelector('.mc-header__dropdown-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function closeAllDropdowns() {
+    dropdowns.forEach(function (d) { closeDropdown(d); });
+  }
+
+  dropdowns.forEach(function (dropdown) {
+    var trigger = dropdown.querySelector('.mc-header__dropdown-trigger');
+
+    // Hover open/close with delay
+    dropdown.addEventListener('mouseenter', function () {
+      clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(function () { openDropdown(dropdown); }, HOVER_DELAY);
+    });
+
+    dropdown.addEventListener('mouseleave', function () {
+      clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(function () { closeDropdown(dropdown); }, HOVER_DELAY);
+    });
+
+    // Click toggle (touch fallback)
+    if (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (dropdown.classList.contains('is-open')) {
+          closeDropdown(dropdown);
+        } else {
+          openDropdown(dropdown);
+        }
+      });
+
+      // Keyboard: Enter/Space toggle, Escape close
+      trigger.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (dropdown.classList.contains('is-open')) {
+            closeDropdown(dropdown);
+          } else {
+            openDropdown(dropdown);
+          }
+        }
+      });
+    }
+
+    // Arrow key navigation within panel
+    dropdown.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        var items = dropdown.querySelectorAll('.mc-header__dropdown-item');
+        var currentIndex = Array.prototype.indexOf.call(items, document.activeElement);
+        var next;
+        if (e.key === 'ArrowDown') {
+          next = currentIndex + 1 < items.length ? currentIndex + 1 : 0;
+        } else {
+          next = currentIndex - 1 >= 0 ? currentIndex - 1 : items.length - 1;
+        }
+        items[next].focus();
+      }
+    });
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-dropdown]')) {
+      closeAllDropdowns();
+    }
+  });
+
+  // ========================================================================
+  // MOBILE NAV ACCORDION
+  // ========================================================================
+
+  var mobileGroups = document.querySelectorAll('[data-mobile-group]');
+
+  mobileGroups.forEach(function (group) {
+    var trigger = group.querySelector('.mc-mobile-nav__group-trigger');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', function () {
+      var isOpen = group.classList.contains('is-open');
+
+      // Close all other groups (single-open mode)
+      mobileGroups.forEach(function (other) {
+        if (other !== group) {
+          other.classList.remove('is-open');
+          var otherTrigger = other.querySelector('.mc-mobile-nav__group-trigger');
+          if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      if (isOpen) {
+        group.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      } else {
+        group.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
   });
 
   // ========================================================================

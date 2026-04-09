@@ -36,6 +36,7 @@
       <a href="#developer" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">API &amp; Developer</a>
       <a href="#verification" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">Verification</a>
       <a href="#storage" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">Storage</a>
+      <a href="#ipwarmup" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">IP Warmup</a>
     </div>
   </div>
 </section>
@@ -202,6 +203,70 @@
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Use your server's built-in PHP mail function for sending. Zero configuration needed &mdash; works out of the box on most hosting.</p>
           <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Configure &rarr;</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     INTEGRATIONS — IP WARMUP (partner section, 4-col grid)
+     ====================================================================== -->
+<section class="mc-section" id="ipwarmup">
+  <div class="mc-container">
+    <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-sm);">
+      <h2 style="font-family: var(--font-serif); font-size: clamp(24px, 3vw, 36px); font-weight: 300;">IP Warmup</h2>
+      <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--mc-teal); background: rgba(0,124,137,0.08); padding: 3px 10px; border-radius: var(--radius-pill);">Partner</span>
+    </div>
+    <p style="color: var(--mc-gray); font-size: 17px; line-height: 1.6; margin-bottom: var(--space-2xl); max-width: 600px;">Maximize your email deliverability with <a href="https://ipwarmup.com" target="_blank" style="color: var(--mc-teal); font-weight: 500;">IPwarmup.com</a> &mdash; AcelleMail's trusted partner for IP and domain reputation management. Warm up your sending infrastructure before going full volume.</p>
+    <div class="mc-grid mc-grid--4 mc-grid--gap-md">
+
+      <!-- Pre-warmed SMTP Server -->
+      <a href="https://ipwarmup.com/pre-warmed-smtp-servers" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#0891B2"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Pre-warmed SMTP Server</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Start sending at high volume right away with pre-warmed SMTP servers. Skip the warm-up period and get straight to your audience's inbox.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Email Warmup Service -->
+      <a href="https://ipwarmup.com/email-warmup-service" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#F59E0B"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">E</text></svg>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Email Warmup Service</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Gradually build your sender reputation with automated email warm-up. Increase engagement signals and improve inbox placement rates over time.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Domain Warmup Service -->
+      <a href="https://ipwarmup.com/domain-warmup-service" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#8B5CF6"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">D</text></svg>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Domain Warmup Service</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Establish domain trust with major email providers before launching campaigns. Protect your brand's domain reputation from day one.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
+        </div>
+      </a>
+
+      <!-- IP Warmup Service -->
+      <a href="https://ipwarmup.com/ip-warmup-service" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#10B981"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">IP</text></svg>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">IP Warmup Service</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Safely ramp up sending volume on new dedicated IPs. Automated scheduling ensures ISPs recognize your IP as a legitimate sender.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
         </div>
       </a>
 

@@ -83,7 +83,8 @@
       <div class="mc-footer__col">
         <h4 class="mc-footer__col-title">Partners</h4>
         <nav class="mc-footer__links">
-          <a href="https://ipwarmup.com/" class="mc-footer__link" target="_blank">IPwarmup</a>
+          <a href="https://emotsy.com/" class="mc-footer__link" target="_blank">Emotsy SIA</a>
+          <a href="https://ipwarmup.com/" class="mc-footer__link" target="_blank">IPwarmup.com</a>
           <a href="https://rencontru.net/" class="mc-footer__link" target="_blank">Rencontru LTD</a>
         </nav>
       </div>

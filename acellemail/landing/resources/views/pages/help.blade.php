@@ -9,20 +9,24 @@
 <!-- ======================================================================
      HELP — HERO
      ====================================================================== -->
-<section class="mc-hero mc-hero--cream mc-hero--split">
-  <div class="mc-hero__content">
-    <h1 class="mc-hero__title">Help &amp; Documentation</h1>
-    <p class="mc-hero__subtitle">
-      Get the most out of AcelleMail with guides, tutorials, and community support.
-      From installation to advanced automation, find everything you need &mdash; or ask the community on our <a href="https://forum.acellemail.com" style="color: var(--mc-teal); font-weight: 600;" target="_blank">forum</a>.
-    </p>
-    <div class="mc-help-search">
-      <svg class="mc-help-search__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" class="mc-input mc-input--lg mc-help-search__input" placeholder="Search help articles...">
+<section class="mc-hero mc-hero--cream">
+  <div class="mc-container">
+    <div class="mc-hero__grid">
+      <div class="mc-hero__content">
+        <h1 class="mc-hero__title">Help &amp; Documentation</h1>
+        <p class="mc-hero__subtitle">
+          Get the most out of AcelleMail with guides, tutorials, and community support.
+          From installation to advanced automation, find everything you need &mdash; or ask the community on our <a href="https://forum.acellemail.com" style="color: var(--mc-teal); font-weight: 600;" target="_blank">forum</a>.
+        </p>
+        <div class="mc-help-search">
+          <svg class="mc-help-search__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="mc-input mc-input--lg mc-help-search__input" placeholder="Search help articles...">
+        </div>
+      </div>
+      <div class="mc-hero__image">
+        <img src="{{ asset('images/hero/help-hero.png') }}" alt="AcelleMail help center" fetchpriority="high">
+      </div>
     </div>
-  </div>
-  <div class="mc-hero__image">
-    <img src="{{ asset('images/hero/help-hero.png') }}" alt="AcelleMail help center" fetchpriority="high">
   </div>
 </section>
 
