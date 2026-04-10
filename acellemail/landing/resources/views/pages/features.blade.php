@@ -640,7 +640,79 @@
 </section>
 
 <!-- ======================================================================
-     15. Stats Section (kept as-is)
+     15. CARDS: SaaS & Multi-Tenancy (6 cards)
+     ====================================================================== -->
+<section class="mc-features-grid">
+    <div class="mc-container">
+
+        <div class="mc-features-grid__section">
+            <h2 class="mc-features-grid__section-title">SaaS Platform &amp; Multi-Tenancy</h2>
+            <div class="mc-features-grid__cards">
+                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                    <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+                    <h3 class="mc-features-grid__name">Multi-Tenant Architecture</h3>
+                    <p class="mc-features-grid__desc">Run AcelleMail as a full SaaS platform. Each customer gets their own workspace with isolated lists, campaigns, automations, and sending servers.</p>
+                    <span class="mc-features-grid__link">Learn more &rarr;</span>
+                </a>
+                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                    <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+                    <h3 class="mc-features-grid__name">Multiple Payment Gateways</h3>
+                    <p class="mc-features-grid__desc">Ships with Stripe, PayPal, Braintree, Paystack, Razorpay, Coinbase Commerce, and offline invoicing. Plugin architecture means you can add any gateway &mdash; no limits.</p>
+                    <span class="mc-features-grid__link">Learn more &rarr;</span>
+                </a>
+                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                    <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                    <h3 class="mc-features-grid__name">Subscription Plans &amp; Quotas</h3>
+                    <p class="mc-features-grid__desc">Create tiered plans with custom limits &mdash; subscriber caps, send quotas, sending server slots, automation rules, and list counts. Customers self-serve upgrades.</p>
+                    <span class="mc-features-grid__link">Learn more &rarr;</span>
+                </a>
+                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                    <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M16 8l-4 4-4-4M8 16l4-4 4 4"/></svg></div>
+                    <h3 class="mc-features-grid__name">Recurring Billing</h3>
+                    <p class="mc-features-grid__desc">Automatic monthly or yearly billing with Stripe and Braintree remote subscriptions. Payment retries, plan changes, and cancellation handled automatically.</p>
+                    <span class="mc-features-grid__link">Learn more &rarr;</span>
+                </a>
+                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                    <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <h3 class="mc-features-grid__name">Admin Panel &amp; Customer Management</h3>
+                    <p class="mc-features-grid__desc">Full admin dashboard to manage customers, subscriptions, payment history, sending servers, and system-wide settings. Impersonate any customer account for support.</p>
+                    <span class="mc-features-grid__link">Learn more &rarr;</span>
+                </a>
+                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                    <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div>
+                    <h3 class="mc-features-grid__name">White-Label &amp; Custom Branding</h3>
+                    <p class="mc-features-grid__desc">Custom themes (dark, light, 7+ colors), custom logo, custom domain. Your customers see your brand, not AcelleMail. Full white-label SaaS experience.</p>
+                    <span class="mc-features-grid__link">Learn more &rarr;</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ======================================================================
+     15b. VIDEO: Set Up Stripe Subscription Payment
+     ====================================================================== -->
+<section class="mc-feature-alt mc-feature-alt--reverse" style="background: var(--mc-cream);">
+    <div class="mc-container">
+        <div class="mc-feature-alt__grid">
+            <div class="mc-feature-alt__image">
+                <div class="mc-feature-alt__embed">
+                    <iframe src="https://www.youtube-nocookie.com/embed/wiHeVHc2DAE" title="Set up Stripe subscription payment gateway in AcelleMail" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="mc-feature-alt__content">
+                <span class="mc-eyebrow">RUN YOUR OWN SAAS</span>
+                <h2 class="mc-feature-alt__heading">Accept payments globally &mdash; with the gateway your customers already use</h2>
+                <p class="mc-feature-alt__text">AcelleMail ships with Stripe, PayPal, Braintree, Paystack, Razorpay, Coinbase Commerce, and more out of the box &mdash; with a plugin architecture that lets you add any payment provider. Direct charges, remote subscriptions, offline invoicing &mdash; mix and match to fit your market.</p>
+                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary" target="_blank">Download AcelleMail</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ======================================================================
+     16. Stats Section
      ====================================================================== -->
 <section class="mc-stats-section">
     <div class="mc-container">

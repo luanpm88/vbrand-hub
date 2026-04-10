@@ -37,8 +37,8 @@ bots/automated/create-theme-from-url.md fix <theme-name> <mô tả issue>
 - KHÔNG clone/copy code từ theme cũ — build from scratch chuẩn WP + WooCommerce
 - Đọc latest theme's `design/HISTORY.md` để tránh lặp lỗi cũ
 
-**Latest theme:** `orgafood` (built 2026-03-30, food delivery restaurant, green/red/orange palette)
-→ Xem `/site/wp-content/themes/orgafood/` để tham khảo patterns
+**Latest theme:** `sattanhung` (built 2026-04-10, decorative ironwork, warm orange palette)
+→ Xem `/site/wp-content/themes/sattanhung/` để tham khảo patterns
 
 ---
 
