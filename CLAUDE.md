@@ -239,6 +239,19 @@ Khi cần clone 1 WP site sang domain mới:
 - Fix: `toIntPrice()` helper in `import-to-woocommerce.js` strips all non-digits (`/[^\d]/g`) before sending. Handles both number and string inputs.
 - **Lesson:** when a scraper has 2 modes (API vs DOM fallback) the downstream consumer must normalize. Don't trust that "price" means the same type across modes. Even better: scraper itself should always emit a numeric `priceRaw` regardless of mode.
 
+### AcelleMail partner backlink exchange — full workflow (2026-04-15)
+- Khi đối tác muốn trao đổi backlink (họ link tới acellemail.com, mình link lại):
+  1. **Scrape site đối tác** bằng Playwright/WebFetch — lấy logo SVG, company name, tagline, services. Không tự bịa content.
+  2. **Tạo design doc** `acellemail/docs/<PARTNER>.md` — plan toàn bộ trước khi code.
+  3. **Integrations page** (`integrations.blade.php`): thêm pill nav + section `id="<slug>"` với Partner badge + logo + 4-card grid. Dùng gradient SVG vector icons thay vì letter squares để phân biệt với section khác.
+  4. **Footer** (`footer.blade.php`): thêm link vào Partners column.
+  5. **E2E** (`footer.spec.ts`): update partner list (exact DOM order).
+  6. **LANDING.md**: update lessons learned trong cùng commit.
+  7. **Audit visual** (Playwright screenshot desktop + mobile) trước khi deploy.
+  8. **Deploy views-only** → E2E prod verify.
+- Pattern reference: IPWarmup (letter squares, flat color) vs Mobile Message (vector icons, gradient bg, logo header) — cùng structure nhưng khác visual.
+- **Lesson:** luôn download logo về local (`public/images/integrations/`) thay vì hotlink — external URL có thể chết.
+
 ### curl test webapp login (không cần browser)
 - Phải lấy session cookie trước (`GET /brand/mobile/login` → extract `Set-Cookie`)
 - Extract CSRF token từ HTML (`grep _token`)
