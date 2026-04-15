@@ -137,3 +137,23 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - SSL: Yes (expires 2026-07-14)
 - Created: 2026-04-15
 - Note: Van công nghiệp — upgraded from vancongnghiepdieuan.com.vn via upgrade-site.md bot
+
+## 7. autotaybac.b-teka.com
+- DIR_NAME: autotaybac_b_teka_com
+- DB_NAME: autotaybac_b_teka_com
+- DB_USER: autotaybac_b_teka_com
+- DB_PASS: aA456321@
+- WP Admin: admin
+- WP Pass: aA456321@
+- WP Path: /home/vbrand/sites/autotaybac_b_teka_com
+- WP API: https://autotaybac.b-teka.com/wp-json/vbrandsync/v1
+- Brand Endpoint: https://app.sgconnect.vn/api/brand
+- Brand Token: 065fa78ae9bffc55dff2fbdd22f9d7512a67e2e4f6bb25314529bb345f57
+- Customer Name: Auto Tây Bắc
+- Customer Email: autotaybac@gmail.com
+- Customer Password: 123456
+- Theme: autotaybac
+- Timezone: Asia/Ho_Chi_Minh
+- SSL: Yes (expires 2026-07-14)
+- Created: 2026-04-15
+- Note: Chăm Sóc & Làm Đẹp Xe Toàn Diện
