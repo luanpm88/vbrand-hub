@@ -117,3 +117,23 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - SSL: Yes (expires 2026-07-05)
 - Created: 2026-04-06
 - Note: Clone từ guucoffee.com (site #3) — dùng làm demo, domain b-teka.com
+
+## 6. dieuan.b-teka.com
+- DIR_NAME: dieuan_b_teka_com
+- DB_NAME: dieuan_b_teka_com
+- DB_USER: dieuan_b_teka_com
+- DB_PASS: aA456321@
+- WP Admin: admin
+- WP Pass: aA456321@
+- WP Path: /home/vbrand/sites/dieuan_b_teka_com
+- WP API: https://dieuan.b-teka.com/wp-json/vbrandsync/v1
+- Brand Endpoint: https://app.sgconnect.vn/api/brand
+- Brand Token: 72499529ad5115fa36ec4faf7b0758cfc7b3654be993263945f5be276659
+- Customer Name: Diệu An
+- Customer Email: dieuan@gmail.com
+- Customer Password: 123456
+- Theme: dieu-an
+- Timezone: Asia/Ho_Chi_Minh
+- SSL: Yes (expires 2026-07-14)
+- Created: 2026-04-15
+- Note: Van công nghiệp — upgraded from vancongnghiepdieuan.com.vn via upgrade-site.md bot
