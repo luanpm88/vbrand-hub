@@ -1,6 +1,6 @@
 # vBrand — Tài liệu bàn giao Sales
 
-> Cập nhật: 2026-04-06
+> Cập nhật: 2026-04-15
 
 ---
 
@@ -12,8 +12,8 @@
 | 2 | **Quy trình build cho khách gồm gì, phát sinh thêm gì?** | 5 bước: (1) Sales thu thập info → (2) Dev tạo site 10-15 phút → (3) Dev chỉnh giao diện 1-2h → (4) Nhập sản phẩm → (5) Sales bàn giao. Phát sinh thường gặp: khách muốn giao diện riêng → cần link website mẫu để clone 100% (+1-2 ngày), import nhiều sản phẩm, đăng ký domain. | [Mục 2](#2-quy-trình-build-site-cho-khách) |
 | 3 | **Cần bổ sung design, content, người thu thập info không?** | Không cần designer, không cần content writer. Chỉ cần **1 Sales biết dùng webapp** là đủ triển khai. Sales thu thập info là khâu quan trọng nhất. | [Mục 3](#3-phân-công-công-việc--sales-vs-team-dev) |
 | 4 | **Khách thiếu thông tin thì xử lý sao?** | Chỉ cần tối thiểu **tên + email** là đủ tạo site demo. Chưa có logo → dùng text, chưa có domain → dùng miễn phí `*.b-teka.com`, chưa có sản phẩm → import từ Shopee hoặc để trống. Tạo demo nhanh → khách tự bổ sung sau. | [Mục 4](#4-checklist-thu-thập-thông-tin-từ-khách) |
-| 5 | **Có mẫu demo hoàn chỉnh gửi khách chưa?** | **Có.** 5 site đang chạy production thật, gửi link cho khách xem ngay. | [Mục 5](#5-demo-sites-hiện-có) |
-| 6 | **Đang có bao nhiêu mẫu?** | **5 site demo** (Logitech, Nike, GuuCoffee Demo, Orgafood, GuuCoffee khách thật) + **4 theme** (logitech, orgafood, dreamcafe, nikezero) phủ các ngành: công nghệ, thời trang, F&B, thực phẩm. | [Mục 5](#5-demo-sites-hiện-có) + [Mục 7](#7-giao-diện-có-sẵn-4-themes) |
+| 5 | **Có mẫu demo hoàn chỉnh gửi khách chưa?** | **Có.** 6 site đang chạy production thật, gửi link cho khách xem ngay. | [Mục 5](#5-demo-sites-hiện-có) |
+| 6 | **Đang có bao nhiêu mẫu?** | **6 site demo** (Logitech, Nike, GuuCoffee Demo, Orgafood, GuuCoffee khách thật, Diệu An) + **5 theme** (logitech, orgafood, dreamcafe, nikezero, dieu-an) phủ các ngành: công nghệ, thời trang, F&B, thực phẩm, công nghiệp. | [Mục 5](#5-demo-sites-hiện-có) + [Mục 7](#7-giao-diện-có-sẵn-5-themes) |
 | 7 | **Mẫu nào thuận tiện nhất để chào khách?** | Gửi demo **theo ngành khách** (F&B → GuuCoffee, Organic → Orgafood, Tech → Logitech, Thời trang → Nike). Chưa rõ ngành → gửi cả 4. Chiến lược tốt nhất: gửi link demo + nói "tạo site riêng cho anh/chị trong 15 phút". | [Mục 8](#8-mẫu-nào-tốt-nhất-để-đi-chào-khách) |
 
 ---
@@ -45,7 +45,8 @@
 - **Thanh toán + vận chuyển:** 100% — COD + vBrand Express hoạt động
 - **Mobile webapp:** 100% — đầy đủ chức năng seller
 - **Tạo site mới:** 100% tự động — từ 0 đến site hoàn chỉnh trong ~10 phút
-- **Theme system:** 4 theme có sẵn, thêm theme mới mất 1-2 ngày (khách gửi link website mẫu → dev clone 100%)
+- **Theme system:** 5 theme có sẵn, thêm theme mới mất 1-2 ngày (khách gửi link website mẫu → dev clone 100%)
+- **Nâng cấp site cũ:** Chuyển đổi website cũ/lỗi thời sang vBrand — giữ nguyên sản phẩm + hình ảnh, thiết kế hoàn toàn mới
 
 ---
 
@@ -177,7 +178,7 @@ Sales gửi cho khách **4 thứ:**
 
 ## 5. Demo sites hiện có
 
-### 5 site đang chạy production
+### 6 site đang chạy production
 
 | # | Site | Link | Theme | Ngành |
 |---|------|------|-------|-------|
@@ -186,8 +187,9 @@ Sales gửi cho khách **4 thứ:**
 | 3 | **GuuCoffee Demo** | https://guucoffee.b-teka.com | dreamcafe | Cafe / F&B |
 | 4 | **Orgafood** | https://orgafood.b-teka.com | orgafood | Thực phẩm sạch / Organic |
 | 5 | **GuuCoffee** *(khách thật)* | https://guucafe.com | dreamcafe | Cafe / F&B |
+| 6 | **Diệu An** | https://dieuan.b-teka.com | dieu-an | Công nghiệp / Van & Phụ kiện |
 
-> Tất cả 5 site đều chạy HTTPS, sẵn sàng demo.
+> Tất cả 6 site đều chạy HTTPS, sẵn sàng demo.
 
 ---
 
@@ -213,12 +215,13 @@ Sales gửi cho khách **4 thứ:**
 | Nike Zero | `john.nikezro.vietnam@nikezero.com` | `123456` |
 | GuuCoffee Demo | `guucoffee@gmail.com` | `123456` |
 | Orgafood | `orgafood@gmail.com` | `123456` |
+| Diệu An | `dieuan@gmail.com` | `123456` |
 
 > Đăng nhập → vào dashboard seller quản lý site: sản phẩm, đơn hàng, giao diện, blog...
 
 ---
 
-## 7. Giao diện có sẵn (4 themes)
+## 7. Giao diện có sẵn (5 themes)
 
 | Theme | Phù hợp cho | Demo |
 |-------|-------------|------|
@@ -226,6 +229,7 @@ Sales gửi cho khách **4 thứ:**
 | **orgafood** | Thực phẩm, organic, nông sản | https://orgafood.b-teka.com |
 | **dreamcafe** | Cafe, nhà hàng, F&B | https://guucoffee.b-teka.com |
 | **nikezero** | Thời trang, giày dép, thể thao | https://nike.b-teka.com |
+| **dieu-an** | Công nghiệp, B2B, van & phụ kiện | https://dieuan.b-teka.com |
 
 ---
 
@@ -239,7 +243,8 @@ Sales gửi cho khách **4 thứ:**
 | Thực phẩm / Organic | https://orgafood.b-teka.com |
 | Công nghệ / Phụ kiện | https://logitech.b-teka.com |
 | Thời trang / Giày dép | https://nike.b-teka.com |
-| Chung / Chưa rõ ngành | Gửi cả 4 link để khách chọn |
+| Công nghiệp / B2B / Vật liệu | https://dieuan.b-teka.com |
+| Chung / Chưa rõ ngành | Gửi cả 5 link để khách chọn |
 
 ### Cách tiếp cận hiệu quả nhất
 
@@ -255,10 +260,11 @@ Sales gửi cho khách **4 thứ:**
 
 ## Tóm tắt nhanh
 
-- **Sản phẩm:** Hoàn thiện, đang chạy production với 5 site thật
+- **Sản phẩm:** Hoàn thiện, đang chạy production với 6 site thật
 - **Tạo site mới:** 10-15 phút, tự động hoàn toàn
+- **Nâng cấp site cũ:** Chuyển đổi website lỗi thời sang vBrand, giữ nguyên sản phẩm + hình ảnh
 - **Cần từ khách:** Tối thiểu 6 thông tin (tên, domain, sản phẩm mẫu, giao diện mẫu, email, SĐT)
-- **Demo:** 4 site demo (b-teka.com) + 4 theme sẵn, gửi link cho khách xem ngay
+- **Demo:** 5 site demo (b-teka.com) + 5 theme sẵn, gửi link cho khách xem ngay
 - **Nhân sự triển khai:** 1 người sales biết dùng dashboard là đủ
 - **Chiến lược chào hàng:** Gửi demo → tạo site riêng 15 phút → chốt
 
@@ -274,3 +280,4 @@ Sales gửi cho khách **4 thứ:**
 | Nike Zero | https://nike.b-teka.com/wp-admin | `admin` | `aA456321@` |
 | GuuCoffee Demo | https://guucoffee.b-teka.com/wp-admin | `admin` | `aA456321@` |
 | Orgafood | https://orgafood.b-teka.com/wp-admin | `admin` | `aA456321@` |
+| Diệu An | https://dieuan.b-teka.com/wp-admin | `admin` | `aA456321@` |
