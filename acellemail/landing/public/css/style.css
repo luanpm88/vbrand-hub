@@ -13,24 +13,26 @@
 */
 
 :root {
-  /* Brand Colors — Warm Orange palette (Zapier-inspired) */
-  --mc-yellow: #E8571A;
-  --mc-black: #241C15;
-  --mc-white: #FFFFFF;
-  --mc-cream: #FEF7F2;
-  --mc-teal: #241C15;
-  --mc-teal-hover: #403B36;
-  --mc-gray: #6E6860;
-  --mc-light-gray: #F6F1EB;
-  --mc-border: #E5E0DA;
+  /* Color aliases — values come from theme-*.css (loaded before this file).
+     These map legacy --mc-* names to the --theme-* system so existing rules
+     keep working while the palette is driven by a single theme file. */
+  --mc-yellow: var(--theme-primary);
+  --mc-black: var(--theme-text);
+  --mc-white: var(--theme-bg);
+  --mc-cream: var(--theme-bg-warm);
+  --mc-teal: var(--theme-dark);
+  --mc-teal-hover: var(--theme-dark-hover);
+  --mc-gray: var(--theme-text-secondary);
+  --mc-light-gray: var(--theme-bg-light);
+  --mc-border: var(--theme-border);
 
   /* Extended Palette */
-  --mc-dark-gray: #403B36;
-  --mc-medium-gray: #928B83;
-  --mc-jasper: #D44332;
-  --mc-green: #241C15;
-  --mc-purple: #6B3FA0;
-  --mc-orange: #E8571A;
+  --mc-dark-gray: var(--theme-dark-hover);
+  --mc-medium-gray: var(--theme-text-tertiary);
+  --mc-jasper: var(--theme-error);
+  --mc-green: var(--theme-dark);
+  --mc-purple: var(--theme-accent-purple);
+  --mc-orange: var(--theme-primary);
 
   /* Typography — Fraunces + IBM Plex Sans */
   --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
@@ -61,10 +63,10 @@
   --radius-btn: 24px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(36, 28, 21, 0.08);
-  --shadow-md: 0 4px 12px rgba(36, 28, 21, 0.1);
-  --shadow-lg: 0 8px 24px rgba(36, 28, 21, 0.12);
-  --shadow-xl: 0 16px 48px rgba(36, 28, 21, 0.16);
+  --shadow-sm: 0 1px 3px rgba(var(--theme-dark-rgb), 0.08);
+  --shadow-md: 0 4px 12px rgba(var(--theme-dark-rgb), 0.1);
+  --shadow-lg: 0 8px 24px rgba(var(--theme-dark-rgb), 0.12);
+  --shadow-xl: 0 16px 48px rgba(var(--theme-dark-rgb), 0.16);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -491,7 +493,7 @@ p:last-child {
 .mc-btn--primary:hover {
   background-color: var(--mc-yellow);
   border-color: var(--mc-yellow);
-  box-shadow: 0 4px 12px rgba(232, 87, 26, 0.35);
+  box-shadow: 0 4px 12px rgba(var(--theme-primary-rgb), 0.35);
   transform: translateY(-1px);
 }
 
@@ -517,7 +519,7 @@ p:last-child {
 .mc-btn--yellow:hover {
   background-color: var(--mc-yellow);
   border-color: var(--mc-yellow);
-  box-shadow: 0 4px 12px rgba(232, 87, 26, 0.35);
+  box-shadow: 0 4px 12px rgba(var(--theme-primary-rgb), 0.35);
   transform: translateY(-1px);
 }
 
@@ -530,7 +532,7 @@ p:last-child {
 .mc-btn--dark:hover {
   background-color: var(--mc-black);
   border-color: var(--mc-black);
-  box-shadow: 0 3px 0 0 rgba(36,28,21,0.4);
+  box-shadow: 0 3px 0 0 rgba(var(--theme-dark-rgb),0.4);
   transform: translateY(-1px);
 }
 
@@ -543,7 +545,7 @@ p:last-child {
 .mc-btn--white:hover {
   background-color: var(--mc-white);
   border-color: var(--mc-white);
-  box-shadow: 0 3px 0 0 rgba(36,28,21,0.15);
+  box-shadow: 0 3px 0 0 rgba(var(--theme-dark-rgb),0.15);
   transform: translateY(-1px);
 }
 
@@ -657,7 +659,7 @@ p:last-child {
    ========================================================================== */
 
 .mc-promo-banner {
-  background-color: var(--mc-yellow);
+  background-color: var(--mc-black);
   padding: 12px 0;
   text-align: center;
   position: relative;
@@ -1568,7 +1570,7 @@ p:last-child {
 
 .mc-input:focus {
   border-color: var(--mc-black);
-  box-shadow: 0 0 0 3px rgba(36, 28, 21, 0.08);
+  box-shadow: 0 0 0 3px rgba(var(--theme-dark-rgb), 0.08);
 }
 
 .mc-input::placeholder {
@@ -1781,7 +1783,7 @@ p:last-child {
 
 .mc-footer__link {
   font-size: 14px;
-  color: #A8A39E;
+  color: var(--theme-text-muted);
   transition: color var(--transition-fast);
   line-height: 1.6;
 }
@@ -1810,7 +1812,7 @@ p:last-child {
 
 .mc-footer__mcp-text {
   font-size: 14px;
-  color: #A8A39E;
+  color: var(--theme-text-muted);
   line-height: 1.5;
 }
 
@@ -1900,7 +1902,7 @@ p:last-child {
 
 .mc-footer__copyright {
   font-size: 12px;
-  color: #A8A39E;
+  color: var(--theme-text-muted);
 }
 
 .mc-footer__legal-links {
@@ -1911,7 +1913,7 @@ p:last-child {
 
 .mc-footer__legal-link {
   font-size: 12px;
-  color: #A8A39E;
+  color: var(--theme-text-muted);
   transition: color var(--transition-fast);
 }
 
@@ -2600,7 +2602,7 @@ p:last-child {
 .mc-about-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(36, 28, 21, 0.55) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(var(--theme-dark-rgb), 0.55) 0%, transparent 60%);
 }
 
 .mc-about-hero__content {
@@ -2667,7 +2669,7 @@ p:last-child {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: rgba(0, 124, 137, 0.1);
+  background-color: rgba(var(--theme-primary-rgb), 0.1);
   color: var(--mc-teal);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -3112,8 +3114,18 @@ p:last-child {
   padding: var(--space-4xl) 0;
 }
 .mc-plan-cta__inner {
-  max-width: 700px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+.mc-plan-cta__image {
+  width: 100%;
+}
+.mc-plan-cta__image img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
 }
 .mc-plan-cta__content { }
 .mc-plan-cta__heading {
@@ -3438,9 +3450,80 @@ p:last-child {
   line-height: 1.2;
 }
 .mc-pricing-hero__subheading {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--mc-gray);
   line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+.mc-pricing-hero__prices {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.mc-pricing-hero__price-card {
+  position: relative;
+  background: var(--mc-white);
+  border: 1.5px solid var(--mc-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  min-width: 155px;
+  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.mc-pricing-hero__price-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--mc-medium-gray);
+}
+.mc-pricing-hero__price-card--featured {
+  border-color: var(--mc-yellow);
+  background: var(--theme-bg-warm);
+}
+.mc-pricing-hero__price-card--featured:hover {
+  border-color: var(--mc-yellow);
+}
+.mc-pricing-hero__price-badge {
+  position: absolute;
+  top: -10px;
+  right: var(--space-md);
+  background: var(--mc-yellow);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.3px;
+}
+.mc-pricing-hero__price-amount-inline {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 300;
+  color: var(--mc-black);
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+.mc-pricing-hero__price-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mc-black);
+  margin-bottom: 2px;
+}
+.mc-pricing-hero__price-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--mc-medium-gray);
+}
+.mc-pricing-hero__trust {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  font-size: 13px;
+  color: var(--mc-gray);
+}
+.mc-pricing-hero__trust svg {
+  color: var(--mc-yellow);
+  flex-shrink: 0;
 }
 .mc-pricing-hero__image img {
   width: 100%;
@@ -3882,7 +3965,7 @@ p:last-child {
 
 /* Promo Banner */
 .mc-promo-banner {
-  background: var(--mc-yellow);
+  background: var(--mc-black);
   padding: 10px 0;
   text-align: center;
   position: relative;
@@ -4561,7 +4644,8 @@ p:last-child {
     grid-template-columns: repeat(3, 1fr);
   }
   .mc-feature-alt__grid,
-  .mc-case-study__inner {
+  .mc-case-study__inner,
+  .mc-plan-cta__inner {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
   }
@@ -4587,6 +4671,17 @@ p:last-child {
   }
   .mc-pricing-plans__card--featured {
     transform: none;
+  }
+  .mc-pricing-hero__prices {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .mc-pricing-hero__price-card {
+    min-width: 0;
+  }
+  .mc-pricing-hero__trust {
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-sm);
   }
   .mc-footer__grid {
     grid-template-columns: repeat(2, 1fr);

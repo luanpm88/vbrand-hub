@@ -23,88 +23,88 @@
             <div>
                 <svg viewBox="0 0 560 420" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;" aria-label="AcelleMail email campaign dashboard">
                   <!-- Laptop body -->
-                  <rect x="40" y="30" width="480" height="310" rx="16" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+                  <rect x="40" y="30" width="480" height="310" rx="16" fill="#fff" stroke="var(--theme-border)" stroke-width="1.5"/>
                   <!-- Title bar -->
-                  <rect x="40" y="30" width="480" height="40" rx="16" fill="#241C15"/>
-                  <rect x="40" y="54" width="480" height="16" fill="#241C15"/>
-                  <circle cx="64" cy="50" r="5" fill="#E8571A"/>
-                  <circle cx="82" cy="50" r="5" fill="#E5E0DA" opacity="0.4"/>
-                  <circle cx="100" cy="50" r="5" fill="#E5E0DA" opacity="0.4"/>
+                  <rect x="40" y="30" width="480" height="40" rx="16" fill="var(--theme-text)"/>
+                  <rect x="40" y="54" width="480" height="16" fill="var(--theme-text)"/>
+                  <circle cx="64" cy="50" r="5" fill="var(--theme-primary)"/>
+                  <circle cx="82" cy="50" r="5" fill="var(--theme-border)" opacity="0.4"/>
+                  <circle cx="100" cy="50" r="5" fill="var(--theme-border)" opacity="0.4"/>
                   <text x="280" y="54" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#fff">AcelleMail — Campaign Dashboard</text>
 
                   <!-- Sidebar -->
-                  <rect x="40" y="70" width="120" height="270" fill="#F6F1EB"/>
-                  <rect x="56" y="88" width="88" height="10" rx="5" fill="#241C15" opacity="0.15"/>
-                  <rect x="56" y="110" width="88" height="28" rx="6" fill="#E8571A"/>
+                  <rect x="40" y="70" width="120" height="270" fill="var(--theme-bg-light)"/>
+                  <rect x="56" y="88" width="88" height="10" rx="5" fill="var(--theme-text)" opacity="0.15"/>
+                  <rect x="56" y="110" width="88" height="28" rx="6" fill="var(--theme-primary)"/>
                   <text x="100" y="128" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="600" fill="#fff">+ Campaign</text>
-                  <rect x="56" y="150" width="72" height="8" rx="4" fill="#241C15" opacity="0.12"/>
-                  <rect x="56" y="168" width="60" height="8" rx="4" fill="#241C15" opacity="0.08"/>
-                  <rect x="56" y="186" width="80" height="8" rx="4" fill="#241C15" opacity="0.08"/>
-                  <rect x="56" y="204" width="52" height="8" rx="4" fill="#241C15" opacity="0.08"/>
-                  <rect x="56" y="230" width="72" height="8" rx="4" fill="#241C15" opacity="0.12"/>
-                  <rect x="56" y="248" width="60" height="8" rx="4" fill="#241C15" opacity="0.08"/>
-                  <rect x="56" y="266" width="44" height="8" rx="4" fill="#241C15" opacity="0.08"/>
+                  <rect x="56" y="150" width="72" height="8" rx="4" fill="var(--theme-text)" opacity="0.12"/>
+                  <rect x="56" y="168" width="60" height="8" rx="4" fill="var(--theme-text)" opacity="0.08"/>
+                  <rect x="56" y="186" width="80" height="8" rx="4" fill="var(--theme-text)" opacity="0.08"/>
+                  <rect x="56" y="204" width="52" height="8" rx="4" fill="var(--theme-text)" opacity="0.08"/>
+                  <rect x="56" y="230" width="72" height="8" rx="4" fill="var(--theme-text)" opacity="0.12"/>
+                  <rect x="56" y="248" width="60" height="8" rx="4" fill="var(--theme-text)" opacity="0.08"/>
+                  <rect x="56" y="266" width="44" height="8" rx="4" fill="var(--theme-text)" opacity="0.08"/>
 
                   <!-- Main content area -->
                   <!-- Stats row -->
                   <g transform="translate(176, 84)">
-                    <rect width="100" height="60" rx="8" fill="#FEF7F2" stroke="#E5E0DA" stroke-width="1"/>
-                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="500" fill="#6E6860">Sent</text>
-                    <text x="14" y="44" font-family="IBM Plex Sans,sans-serif" font-size="18" font-weight="700" fill="#241C15">12,483</text>
+                    <rect width="100" height="60" rx="8" fill="var(--theme-bg-warm)" stroke="var(--theme-border)" stroke-width="1"/>
+                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="500" fill="var(--theme-text-secondary)">Sent</text>
+                    <text x="14" y="44" font-family="IBM Plex Sans,sans-serif" font-size="18" font-weight="700" fill="var(--theme-text)">12,483</text>
                   </g>
                   <g transform="translate(286, 84)">
-                    <rect width="100" height="60" rx="8" fill="#FEF7F2" stroke="#E5E0DA" stroke-width="1"/>
-                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="500" fill="#6E6860">Opened</text>
-                    <text x="14" y="44" font-family="IBM Plex Sans,sans-serif" font-size="18" font-weight="700" fill="#E8571A">4,821</text>
+                    <rect width="100" height="60" rx="8" fill="var(--theme-bg-warm)" stroke="var(--theme-border)" stroke-width="1"/>
+                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="500" fill="var(--theme-text-secondary)">Opened</text>
+                    <text x="14" y="44" font-family="IBM Plex Sans,sans-serif" font-size="18" font-weight="700" fill="var(--theme-primary)">4,821</text>
                   </g>
                   <g transform="translate(396, 84)">
-                    <rect width="100" height="60" rx="8" fill="#FEF7F2" stroke="#E5E0DA" stroke-width="1"/>
-                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="500" fill="#6E6860">Clicked</text>
-                    <text x="14" y="44" font-family="IBM Plex Sans,sans-serif" font-size="18" font-weight="700" fill="#241C15">1,247</text>
+                    <rect width="100" height="60" rx="8" fill="var(--theme-bg-warm)" stroke="var(--theme-border)" stroke-width="1"/>
+                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="500" fill="var(--theme-text-secondary)">Clicked</text>
+                    <text x="14" y="44" font-family="IBM Plex Sans,sans-serif" font-size="18" font-weight="700" fill="var(--theme-text)">1,247</text>
                   </g>
 
                   <!-- Chart area -->
                   <g transform="translate(176, 160)">
-                    <rect width="320" height="130" rx="8" fill="#FEF7F2" stroke="#E5E0DA" stroke-width="1"/>
-                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="600" fill="#241C15">Open Rate — Last 7 Days</text>
+                    <rect width="320" height="130" rx="8" fill="var(--theme-bg-warm)" stroke="var(--theme-border)" stroke-width="1"/>
+                    <text x="14" y="22" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="600" fill="var(--theme-text)">Open Rate — Last 7 Days</text>
                     <!-- Chart bars -->
-                    <rect x="24" y="95" width="28" height="20" rx="3" fill="#E5E0DA"/>
-                    <rect x="62" y="75" width="28" height="40" rx="3" fill="#E5E0DA"/>
-                    <rect x="100" y="55" width="28" height="60" rx="3" fill="#E8571A" opacity="0.3"/>
-                    <rect x="138" y="45" width="28" height="70" rx="3" fill="#E8571A" opacity="0.5"/>
-                    <rect x="176" y="60" width="28" height="55" rx="3" fill="#E8571A" opacity="0.4"/>
-                    <rect x="214" y="38" width="28" height="77" rx="3" fill="#E8571A" opacity="0.7"/>
-                    <rect x="252" y="42" width="28" height="73" rx="3" fill="#E8571A"/>
+                    <rect x="24" y="95" width="28" height="20" rx="3" fill="var(--theme-border)"/>
+                    <rect x="62" y="75" width="28" height="40" rx="3" fill="var(--theme-border)"/>
+                    <rect x="100" y="55" width="28" height="60" rx="3" fill="var(--theme-primary)" opacity="0.3"/>
+                    <rect x="138" y="45" width="28" height="70" rx="3" fill="var(--theme-primary)" opacity="0.5"/>
+                    <rect x="176" y="60" width="28" height="55" rx="3" fill="var(--theme-primary)" opacity="0.4"/>
+                    <rect x="214" y="38" width="28" height="77" rx="3" fill="var(--theme-primary)" opacity="0.7"/>
+                    <rect x="252" y="42" width="28" height="73" rx="3" fill="var(--theme-primary)"/>
                     <!-- Trend line -->
-                    <polyline points="38,90 76,70 114,52 152,40 190,55 228,34 266,38" stroke="#E8571A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polyline points="38,90 76,70 114,52 152,40 190,55 228,34 266,38" stroke="var(--theme-primary)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                   </g>
 
                   <!-- Email preview card -->
                   <g transform="translate(176, 300)">
-                    <rect width="320" height="32" rx="6" fill="#fff" stroke="#E5E0DA" stroke-width="1"/>
-                    <circle cx="20" cy="16" r="8" fill="#E8571A" opacity="0.15"/>
-                    <path d="M16 16l2.5 2 4-4" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <rect x="36" y="10" width="120" height="6" rx="3" fill="#241C15" opacity="0.5"/>
-                    <rect x="36" y="20" width="80" height="4" rx="2" fill="#928B83" opacity="0.4"/>
-                    <text x="290" y="20" text-anchor="end" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="600" fill="#E8571A">38.6%</text>
+                    <rect width="320" height="32" rx="6" fill="#fff" stroke="var(--theme-border)" stroke-width="1"/>
+                    <circle cx="20" cy="16" r="8" fill="var(--theme-primary)" opacity="0.15"/>
+                    <path d="M16 16l2.5 2 4-4" stroke="var(--theme-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="36" y="10" width="120" height="6" rx="3" fill="var(--theme-text)" opacity="0.5"/>
+                    <rect x="36" y="20" width="80" height="4" rx="2" fill="var(--theme-text-tertiary)" opacity="0.4"/>
+                    <text x="290" y="20" text-anchor="end" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="600" fill="var(--theme-primary)">38.6%</text>
                   </g>
 
                   <!-- Laptop base -->
-                  <path d="M20 340 L40 340 Q40 340 40 340 L520 340 Q520 340 520 340 L540 340 L540 355 Q540 365 530 365 L30 365 Q20 365 20 355 Z" fill="#241C15" opacity="0.06"/>
-                  <rect x="200" y="342" width="160" height="8" rx="4" fill="#E5E0DA"/>
+                  <path d="M20 340 L40 340 Q40 340 40 340 L520 340 Q520 340 520 340 L540 340 L540 355 Q540 365 530 365 L30 365 Q20 365 20 355 Z" fill="var(--theme-text)" opacity="0.06"/>
+                  <rect x="200" y="342" width="160" height="8" rx="4" fill="var(--theme-border)"/>
 
                   <!-- Floating elements -->
                   <!-- Notification badge -->
                   <g transform="translate(460, 18)">
-                    <rect width="80" height="32" rx="16" fill="#E8571A" filter="url(#shadow)"/>
+                    <rect width="80" height="32" rx="16" fill="var(--theme-primary)" filter="url(#shadow)"/>
                     <text x="40" y="21" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#fff">Sent &#x2713;</text>
                   </g>
 
                   <!-- Small envelope -->
                   <g transform="translate(8, 260)">
-                    <rect width="44" height="36" rx="8" fill="#E8571A" opacity="0.1"/>
-                    <path d="M10 14l12 8 12-8" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                    <rect x="8" y="10" width="28" height="20" rx="3" stroke="#E8571A" stroke-width="1.2" fill="none"/>
+                    <rect width="44" height="36" rx="8" fill="var(--theme-primary)" opacity="0.1"/>
+                    <path d="M10 14l12 8 12-8" stroke="var(--theme-primary)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                    <rect x="8" y="10" width="28" height="20" rx="3" stroke="var(--theme-primary)" stroke-width="1.2" fill="none"/>
                   </g>
                 </svg>
             </div>
@@ -519,59 +519,59 @@
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
                 <svg viewBox="0 0 520 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-                  <rect width="520" height="400" rx="16" fill="#FEF7F2"/>
-                  <rect x="60" y="50" width="260" height="180" rx="12" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
-                  <rect x="60" y="50" width="260" height="44" rx="12" fill="#241C15"/>
-                  <rect x="60" y="82" width="260" height="12" rx="0" fill="#241C15"/>
-                  <circle cx="82" cy="72" r="6" fill="#E8571A"/>
+                  <rect width="520" height="400" rx="16" fill="var(--theme-bg-warm)"/>
+                  <rect x="60" y="50" width="260" height="180" rx="12" fill="#fff" stroke="var(--theme-border)" stroke-width="1.5"/>
+                  <rect x="60" y="50" width="260" height="44" rx="12" fill="var(--theme-text)"/>
+                  <rect x="60" y="82" width="260" height="12" rx="0" fill="var(--theme-text)"/>
+                  <circle cx="82" cy="72" r="6" fill="var(--theme-primary)"/>
                   <text x="96" y="76" font-family="IBM Plex Sans,sans-serif" font-size="13" font-weight="600" fill="#fff">Inbox</text>
-                  <rect x="76" y="108" width="28" height="28" rx="6" fill="#E8571A" opacity="0.12"/>
-                  <path d="M84 118l3 3 5-5" stroke="#E8571A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <rect x="114" y="112" width="120" height="8" rx="4" fill="#241C15" opacity="0.7"/>
-                  <rect x="114" y="126" width="80" height="6" rx="3" fill="#928B83" opacity="0.5"/>
-                  <circle cx="296" cy="122" r="4" fill="#E8571A"/>
-                  <line x1="76" y1="148" x2="304" y2="148" stroke="#E5E0DA" stroke-width="1"/>
-                  <rect x="76" y="158" width="28" height="28" rx="6" fill="#E8571A" opacity="0.12"/>
-                  <path d="M84 168l3 3 5-5" stroke="#E8571A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <rect x="114" y="162" width="140" height="8" rx="4" fill="#241C15" opacity="0.7"/>
-                  <rect x="114" y="176" width="96" height="6" rx="3" fill="#928B83" opacity="0.5"/>
-                  <circle cx="296" cy="172" r="4" fill="#E8571A"/>
-                  <line x1="76" y1="198" x2="304" y2="198" stroke="#E5E0DA" stroke-width="1"/>
-                  <rect x="76" y="206" width="28" height="28" rx="6" fill="#E8571A" opacity="0.12"/>
-                  <path d="M84 216l3 3 5-5" stroke="#E8571A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <rect x="114" y="210" width="100" height="8" rx="4" fill="#241C15" opacity="0.7"/>
-                  <rect x="114" y="224" width="70" height="6" rx="3" fill="#928B83" opacity="0.5"/>
-                  <circle cx="296" cy="220" r="4" fill="#E8571A"/>
+                  <rect x="76" y="108" width="28" height="28" rx="6" fill="var(--theme-primary)" opacity="0.12"/>
+                  <path d="M84 118l3 3 5-5" stroke="var(--theme-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="114" y="112" width="120" height="8" rx="4" fill="var(--theme-text)" opacity="0.7"/>
+                  <rect x="114" y="126" width="80" height="6" rx="3" fill="var(--theme-text-tertiary)" opacity="0.5"/>
+                  <circle cx="296" cy="122" r="4" fill="var(--theme-primary)"/>
+                  <line x1="76" y1="148" x2="304" y2="148" stroke="var(--theme-border)" stroke-width="1"/>
+                  <rect x="76" y="158" width="28" height="28" rx="6" fill="var(--theme-primary)" opacity="0.12"/>
+                  <path d="M84 168l3 3 5-5" stroke="var(--theme-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="114" y="162" width="140" height="8" rx="4" fill="var(--theme-text)" opacity="0.7"/>
+                  <rect x="114" y="176" width="96" height="6" rx="3" fill="var(--theme-text-tertiary)" opacity="0.5"/>
+                  <circle cx="296" cy="172" r="4" fill="var(--theme-primary)"/>
+                  <line x1="76" y1="198" x2="304" y2="198" stroke="var(--theme-border)" stroke-width="1"/>
+                  <rect x="76" y="206" width="28" height="28" rx="6" fill="var(--theme-primary)" opacity="0.12"/>
+                  <path d="M84 216l3 3 5-5" stroke="var(--theme-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="114" y="210" width="100" height="8" rx="4" fill="var(--theme-text)" opacity="0.7"/>
+                  <rect x="114" y="224" width="70" height="6" rx="3" fill="var(--theme-text-tertiary)" opacity="0.5"/>
+                  <circle cx="296" cy="220" r="4" fill="var(--theme-primary)"/>
                   <g transform="translate(340, 40)">
-                    <rect width="140" height="160" rx="12" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
-                    <path d="M70 30 C70 30 42 42 42 68 C42 94 70 115 70 115 C70 115 98 94 98 68 C98 42 70 30 70 30Z" fill="#E8571A" opacity="0.1" stroke="#E8571A" stroke-width="1.5"/>
-                    <path d="M58 68l8 8 16-16" stroke="#E8571A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <text x="70" y="140" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#241C15">Authenticated</text>
+                    <rect width="140" height="160" rx="12" fill="#fff" stroke="var(--theme-border)" stroke-width="1.5"/>
+                    <path d="M70 30 C70 30 42 42 42 68 C42 94 70 115 70 115 C70 115 98 94 98 68 C98 42 70 30 70 30Z" fill="var(--theme-primary)" opacity="0.1" stroke="var(--theme-primary)" stroke-width="1.5"/>
+                    <path d="M58 68l8 8 16-16" stroke="var(--theme-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="70" y="140" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="var(--theme-text)">Authenticated</text>
                   </g>
                   <g transform="translate(60, 260)">
-                    <rect width="80" height="32" rx="16" fill="#E8571A"/>
+                    <rect width="80" height="32" rx="16" fill="var(--theme-primary)"/>
                     <text x="40" y="21" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#fff">SPF &#x2713;</text>
                   </g>
                   <g transform="translate(152, 260)">
-                    <rect width="86" height="32" rx="16" fill="#E8571A"/>
+                    <rect width="86" height="32" rx="16" fill="var(--theme-primary)"/>
                     <text x="43" y="21" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#fff">DKIM &#x2713;</text>
                   </g>
                   <g transform="translate(250, 260)">
-                    <rect width="100" height="32" rx="16" fill="#E8571A"/>
+                    <rect width="100" height="32" rx="16" fill="var(--theme-primary)"/>
                     <text x="50" y="21" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#fff">DMARC &#x2713;</text>
                   </g>
                   <g transform="translate(60, 310)">
-                    <rect width="420" height="70" rx="12" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
-                    <text x="20" y="28" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#241C15">Sender Reputation</text>
-                    <text x="380" y="28" text-anchor="end" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#E8571A">98.5%</text>
-                    <rect x="20" y="42" width="380" height="10" rx="5" fill="#F6F1EB"/>
-                    <rect x="20" y="42" width="360" height="10" rx="5" fill="#E8571A"/>
+                    <rect width="420" height="70" rx="12" fill="#fff" stroke="var(--theme-border)" stroke-width="1.5"/>
+                    <text x="20" y="28" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="var(--theme-text)">Sender Reputation</text>
+                    <text x="380" y="28" text-anchor="end" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="var(--theme-primary)">98.5%</text>
+                    <rect x="20" y="42" width="380" height="10" rx="5" fill="var(--theme-bg-light)"/>
+                    <rect x="20" y="42" width="360" height="10" rx="5" fill="var(--theme-primary)"/>
                   </g>
                   <g transform="translate(370, 220)">
-                    <rect width="110" height="72" rx="10" fill="#241C15" opacity="0.9"/>
-                    <path d="M16 20l39 24 39-24" stroke="#E8571A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M16 20v36a4 4 0 004 4h70a4 4 0 004-4V20" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                    <circle cx="90" cy="16" r="12" fill="#E8571A"/>
+                    <rect width="110" height="72" rx="10" fill="var(--theme-text)" opacity="0.9"/>
+                    <path d="M16 20l39 24 39-24" stroke="var(--theme-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 20v36a4 4 0 004 4h70a4 4 0 004-4V20" stroke="var(--theme-primary)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                    <circle cx="90" cy="16" r="12" fill="var(--theme-primary)"/>
                     <path d="M85 16l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </g>
                 </svg>
@@ -621,7 +621,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="GDPR compliance tools" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="GDPR compliance tools" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">GDPR &amp; Compliance</span>
@@ -764,56 +764,56 @@
             </div>
             <div class="mc-feature-row__image">
                 <svg viewBox="0 0 480 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;" aria-label="Self-hosted email marketing security">
-                  <rect width="480" height="360" rx="16" fill="#FEF7F2"/>
+                  <rect width="480" height="360" rx="16" fill="var(--theme-bg-warm)"/>
                   <!-- Server rack -->
                   <g transform="translate(60, 40)">
-                    <rect width="160" height="200" rx="12" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
-                    <rect x="16" y="20" width="128" height="36" rx="6" fill="#F6F1EB" stroke="#E5E0DA" stroke-width="1"/>
-                    <circle cx="36" cy="38" r="4" fill="#E8571A"/>
-                    <rect x="50" y="34" width="60" height="4" rx="2" fill="#241C15" opacity="0.2"/>
-                    <rect x="50" y="42" width="40" height="3" rx="1.5" fill="#241C15" opacity="0.1"/>
-                    <rect x="16" y="66" width="128" height="36" rx="6" fill="#F6F1EB" stroke="#E5E0DA" stroke-width="1"/>
-                    <circle cx="36" cy="84" r="4" fill="#E8571A" opacity="0.6"/>
-                    <rect x="50" y="80" width="60" height="4" rx="2" fill="#241C15" opacity="0.2"/>
-                    <rect x="50" y="88" width="40" height="3" rx="1.5" fill="#241C15" opacity="0.1"/>
-                    <rect x="16" y="112" width="128" height="36" rx="6" fill="#F6F1EB" stroke="#E5E0DA" stroke-width="1"/>
-                    <circle cx="36" cy="130" r="4" fill="#E8571A" opacity="0.4"/>
-                    <rect x="50" y="126" width="60" height="4" rx="2" fill="#241C15" opacity="0.2"/>
-                    <rect x="50" y="134" width="40" height="3" rx="1.5" fill="#241C15" opacity="0.1"/>
-                    <text x="80" y="175" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#241C15">Your Server</text>
-                    <text x="80" y="192" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#6E6860">Full control</text>
+                    <rect width="160" height="200" rx="12" fill="#fff" stroke="var(--theme-border)" stroke-width="1.5"/>
+                    <rect x="16" y="20" width="128" height="36" rx="6" fill="var(--theme-bg-light)" stroke="var(--theme-border)" stroke-width="1"/>
+                    <circle cx="36" cy="38" r="4" fill="var(--theme-primary)"/>
+                    <rect x="50" y="34" width="60" height="4" rx="2" fill="var(--theme-text)" opacity="0.2"/>
+                    <rect x="50" y="42" width="40" height="3" rx="1.5" fill="var(--theme-text)" opacity="0.1"/>
+                    <rect x="16" y="66" width="128" height="36" rx="6" fill="var(--theme-bg-light)" stroke="var(--theme-border)" stroke-width="1"/>
+                    <circle cx="36" cy="84" r="4" fill="var(--theme-primary)" opacity="0.6"/>
+                    <rect x="50" y="80" width="60" height="4" rx="2" fill="var(--theme-text)" opacity="0.2"/>
+                    <rect x="50" y="88" width="40" height="3" rx="1.5" fill="var(--theme-text)" opacity="0.1"/>
+                    <rect x="16" y="112" width="128" height="36" rx="6" fill="var(--theme-bg-light)" stroke="var(--theme-border)" stroke-width="1"/>
+                    <circle cx="36" cy="130" r="4" fill="var(--theme-primary)" opacity="0.4"/>
+                    <rect x="50" y="126" width="60" height="4" rx="2" fill="var(--theme-text)" opacity="0.2"/>
+                    <rect x="50" y="134" width="40" height="3" rx="1.5" fill="var(--theme-text)" opacity="0.1"/>
+                    <text x="80" y="175" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="var(--theme-text)">Your Server</text>
+                    <text x="80" y="192" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="var(--theme-text-secondary)">Full control</text>
                   </g>
 
                   <!-- Shield -->
                   <g transform="translate(280, 30)">
-                    <rect width="140" height="180" rx="12" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
-                    <path d="M70 30 C70 30 38 44 38 74 C38 104 70 125 70 125 C70 125 102 104 102 74 C102 44 70 30 70 30Z" fill="#E8571A" opacity="0.08" stroke="#E8571A" stroke-width="1.5"/>
-                    <path d="M56 74l10 10 18-20" stroke="#E8571A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <text x="70" y="150" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#241C15">100% Private</text>
-                    <text x="70" y="166" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#6E6860">Your data, your rules</text>
+                    <rect width="140" height="180" rx="12" fill="#fff" stroke="var(--theme-border)" stroke-width="1.5"/>
+                    <path d="M70 30 C70 30 38 44 38 74 C38 104 70 125 70 125 C70 125 102 104 102 74 C102 44 70 30 70 30Z" fill="var(--theme-primary)" opacity="0.08" stroke="var(--theme-primary)" stroke-width="1.5"/>
+                    <path d="M56 74l10 10 18-20" stroke="var(--theme-primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="70" y="150" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="var(--theme-text)">100% Private</text>
+                    <text x="70" y="166" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="var(--theme-text-secondary)">Your data, your rules</text>
                   </g>
 
                   <!-- Connection lines -->
-                  <line x1="220" y1="140" x2="280" y2="120" stroke="#E5E0DA" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <line x1="220" y1="140" x2="280" y2="120" stroke="var(--theme-border)" stroke-width="1.5" stroke-dasharray="4 3"/>
 
                   <!-- Feature badges bottom -->
                   <g transform="translate(60, 260)">
-                    <rect width="110" height="36" rx="18" fill="#241C15"/>
+                    <rect width="110" height="36" rx="18" fill="var(--theme-text)"/>
                     <text x="55" y="23" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#fff">No Vendor Lock</text>
                   </g>
                   <g transform="translate(185, 260)">
-                    <rect width="110" height="36" rx="18" fill="#E8571A"/>
+                    <rect width="110" height="36" rx="18" fill="var(--theme-primary)"/>
                     <text x="55" y="23" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#fff">Unlimited &#x221E;</text>
                   </g>
                   <g transform="translate(310, 260)">
-                    <rect width="110" height="36" rx="18" fill="#241C15"/>
+                    <rect width="110" height="36" rx="18" fill="var(--theme-text)"/>
                     <text x="55" y="23" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#fff">Open Source</text>
                   </g>
 
                   <!-- Data flow dots -->
-                  <circle cx="250" cy="100" r="3" fill="#E8571A" opacity="0.6"/>
-                  <circle cx="260" cy="130" r="2" fill="#E8571A" opacity="0.4"/>
-                  <circle cx="245" cy="160" r="2.5" fill="#E8571A" opacity="0.3"/>
+                  <circle cx="250" cy="100" r="3" fill="var(--theme-primary)" opacity="0.6"/>
+                  <circle cx="260" cy="130" r="2" fill="var(--theme-primary)" opacity="0.4"/>
+                  <circle cx="245" cy="160" r="2.5" fill="var(--theme-primary)" opacity="0.3"/>
                 </svg>
             </div>
         </div>

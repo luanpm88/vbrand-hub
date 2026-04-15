@@ -17,7 +17,7 @@
                 <a href="{{ route('pricing') }}" class="mc-btn mc-btn--primary mc-btn--lg">Get Started</a>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ asset('images/hero/automation-hero.svg') }}" alt="AcelleMail marketing automation" fetchpriority="high">
+                <img src="{{ $themeImg('images/hero/automation-hero.svg') }}" alt="AcelleMail marketing automation" fetchpriority="high">
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Welcome series automation" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Welcome series automation" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Welcome new subscribers with automated series</h2>
@@ -79,7 +79,7 @@
                 <p class="mc-feature-alt__text">Build automated flows that fire when subscribers open an email, click a link, join a list, or match a custom field condition. Combine event triggers with time-based delays and conditional splits to create journeys that respond to how each person interacts with your emails.</p>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automation-flows.svg') }}" alt="Automation event triggers" loading="lazy">
+                <img src="{{ $themeImg('images/features/automation-flows.svg') }}" alt="Automation event triggers" loading="lazy">
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/integrations-auto.svg') }}" alt="Sending service integrations" loading="lazy">
+                <img src="{{ $themeImg('images/features/integrations-auto.svg') }}" alt="Sending service integrations" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Connect any SMTP or sending service</h2>
@@ -142,7 +142,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Explore automation features <span>&rarr;</span></a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/campaign-manager.svg') }}" alt="Drip campaign automation builder" loading="lazy">
+                <img src="{{ $themeImg('images/features/campaign-manager.svg') }}" alt="Drip campaign automation builder" loading="lazy">
             </div>
         </div>
     </div>
@@ -153,7 +153,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/whats-new.svg') }}" alt="What's new in AcelleMail" loading="lazy">
+                <img src="{{ $themeImg('images/features/whats-new.svg') }}" alt="What's new in AcelleMail" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">What's new in AcelleMail?</h2>
@@ -287,7 +287,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="AcelleMail automation capabilities" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="AcelleMail automation capabilities" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Powerful automation building blocks</h2>
@@ -315,7 +315,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about A/B testing <span>&rarr;</span></a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="A/B testing within automation workflows" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="A/B testing within automation workflows" loading="lazy">
             </div>
         </div>
     </div>
@@ -412,7 +412,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/api-custom.svg') }}" alt="AcelleMail REST API" loading="lazy">
+                <img src="{{ $themeImg('images/features/api-custom.svg') }}" alt="AcelleMail REST API" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Build custom automations with our API</h2>

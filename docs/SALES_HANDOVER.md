@@ -146,7 +146,7 @@ Sales gửi cho khách **4 thứ:**
 | # | Thông tin | Bắt buộc | Ví dụ |
 |---|-----------|----------|-------|
 | 1 | **Tên công ty / thương hiệu** | **Bắt buộc** | GuuCoffee, Orgafood, Nike Zero VN |
-| 2 | **Domain muốn dùng** | **Bắt buộc** | `guucoffee.com` hoặc dùng miễn phí `guucoffee.b-teka.com` |
+| 2 | **Domain muốn dùng** | **Bắt buộc** | `guucafe.com` hoặc dùng miễn phí `thuonghieu.b-teka.com` |
 | 3 | **Sản phẩm mẫu** — link Shopee / Lazada / website cá nhân | **Bắt buộc** | Link shop Shopee để import sản phẩm tự động |
 | 4 | **Link giao diện mẫu** — website khách muốn clone giống | **Bắt buộc** | Link cụ thể (VD: `https://nike.com`). Dev sẽ clone 100% giao diện từ link này. **Không nhận mô tả chung chung** — phải có link. |
 | 5 | **Email liên hệ** | **Bắt buộc** | Dùng làm tài khoản đăng nhập |
@@ -185,10 +185,9 @@ Sales gửi cho khách **4 thứ:**
 | 2 | **Nike Zero Vietnam** | https://nike.b-teka.com | nikezero | Thời trang / Giày dép |
 | 3 | **GuuCoffee Demo** | https://guucoffee.b-teka.com | dreamcafe | Cafe / F&B |
 | 4 | **Orgafood** | https://orgafood.b-teka.com | orgafood | Thực phẩm sạch / Organic |
-| 5 | **GuuCoffee** *(khách thật)* | guucoffee.com ⚠️ | dreamcafe | Cafe / F&B |
+| 5 | **GuuCoffee** *(khách thật)* | https://guucafe.com | dreamcafe | Cafe / F&B |
 
-> ⚠️ **guucoffee.com** — domain chưa trỏ DNS về server, chưa có SSL. Đang chờ khách trỏ domain.
-> Các site #1-#4 dùng domain `*.b-teka.com` — chạy đầy đủ SSL, sẵn sàng demo.
+> Tất cả 5 site đều chạy HTTPS, sẵn sàng demo.
 
 ---
 

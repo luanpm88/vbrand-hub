@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ asset('images/hero/home-hero.svg') }}" alt="AcelleMail email marketing platform" loading="lazy">
+                <img src="{{ $themeImg('images/hero/home-hero.svg') }}" alt="AcelleMail email marketing platform" loading="lazy">
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
         <div class="mc-feature-cards__grid">
             <div class="mc-feature-cards__item">
                 <div class="mc-feature-cards__image">
-                    <img src="{{ asset('images/features/email-sms.svg') }}" alt="Email marketing" loading="lazy">
+                    <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Email marketing" loading="lazy">
                 </div>
                 <h3 class="mc-feature-cards__title">Drag &amp; drop email builder</h3>
                 <p class="mc-feature-cards__desc">Create stunning email campaigns with a visual editor. Choose from 100+ templates or build from scratch &mdash; no coding required.</p>
@@ -52,7 +52,7 @@
             </div>
             <div class="mc-feature-cards__item">
                 <div class="mc-feature-cards__image">
-                    <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Marketing automation" loading="lazy">
+                    <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Marketing automation" loading="lazy">
                 </div>
                 <h3 class="mc-feature-cards__title">Powerful automation flows</h3>
                 <p class="mc-feature-cards__desc">Set up welcome series, drip campaigns, and triggered emails. Automate your marketing and engage subscribers on autopilot.</p>
@@ -60,7 +60,7 @@
             </div>
             <div class="mc-feature-cards__item">
                 <div class="mc-feature-cards__image">
-                    <img src="{{ asset('images/features/switch-brands.svg') }}" alt="Marketing automation" loading="lazy">
+                    <img src="{{ $themeImg('images/features/switch-brands.svg') }}" alt="Marketing automation" loading="lazy">
                 </div>
                 <h3 class="mc-feature-cards__title">Your server, your data</h3>
                 <p class="mc-feature-cards__desc">Install on your own server in minutes. Full source code access, complete data ownership, and no vendor lock-in ever.</p>
@@ -95,7 +95,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Email Template Builder</span>
@@ -114,7 +114,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Marketing automation workflows" loading="lazy">
+                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Marketing automation workflows" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Marketing Automations</span>
@@ -139,7 +139,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Email analytics dashboard" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Email analytics dashboard" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Analytics &amp; Reporting</span>
@@ -236,7 +236,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/reach-inboxes.png') }}" alt="Marketing automation" loading="lazy">
+                <img src="{{ $themeImg('images/features/reach-inboxes.svg') }}" alt="Deliverability and verification" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Deliverability &amp; Verification</span>
@@ -261,7 +261,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="List management and segmentation" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="List management and segmentation" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">List Management</span>
@@ -277,6 +277,9 @@
 <section class="mc-plan-cta" style="background: var(--mc-cream);">
     <div class="mc-container">
         <div class="mc-plan-cta__inner">
+            <div class="mc-plan-cta__image">
+                <img src="{{ $themeImg('images/features/pricing-hero.svg') }}" alt="AcelleMail pricing — one-time purchase" loading="lazy">
+            </div>
             <div class="mc-plan-cta__content">
                 <h2 class="mc-plan-cta__heading">One-time purchase. Lifetime ownership.</h2>
                 <p class="mc-plan-cta__text">Get AcelleMail for just $64 (Regular License) or $199 (Extended License for SaaS). Full source code, free updates, and six months of support included with every purchase.</p>
@@ -324,7 +327,7 @@
         <div class="mc-grid mc-grid--2 mc-grid--gap-lg">
             <a href="{{ route('features') }}" class="mc-card mc-card--bordered">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Multi-tenant SaaS platform" loading="lazy">
+                    <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Multi-tenant SaaS platform" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <h4 class="mc-card__title">Multi-Tenant Architecture</h4>
@@ -334,7 +337,7 @@
             </a>
             <a href="{{ route('features') }}" class="mc-card mc-card--bordered">
                 <div class="mc-card__image mc-card__image--fixed">
-                    <img src="{{ asset('images/features/predictive.svg') }}" alt="Subscription billing and plans" loading="lazy">
+                    <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Subscription billing and plans" loading="lazy">
                 </div>
                 <div class="mc-card__body">
                     <h4 class="mc-card__title">Built-in Subscription Billing</h4>
@@ -362,7 +365,7 @@
                 </div>
             </div>
             <div class="mc-feature-row__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Laravel PHP source code" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Laravel PHP source code" loading="lazy">
             </div>
         </div>
     </div>
@@ -387,7 +390,7 @@
                 <a href="https://knowledge.acellemail.com/category/installation-setup" class="mc-btn mc-btn--primary" target="_blank">View documentation</a>
             </div>
             <div class="mc-feature-row__image">
-                <img src="{{ asset('images/features/installation_setup.svg') }}" alt="Easy installation on any server" loading="lazy">
+                <img src="{{ $themeImg('images/features/installation_setup.svg') }}" alt="Easy installation on any server" loading="lazy">
             </div>
         </div>
     </div>
@@ -400,7 +403,7 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study-savings.svg') }}" alt="Savings case study" loading="lazy">
+                <img src="{{ $themeImg('images/features/case-study-savings.svg') }}" alt="Savings case study" loading="lazy">
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">

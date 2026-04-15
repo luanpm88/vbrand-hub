@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="AcelleMail email marketing platform — design, send, and analyze email campaigns" fetchpriority="high">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="AcelleMail email marketing platform — design, send, and analyze email campaigns" fetchpriority="high">
             </div>
         </div>
     </div>
@@ -35,12 +35,12 @@
     <div class="mc-container">
         <p class="mc-text-center" style="color: var(--mc-gray); font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-lg);">Works with your favorite sending services</p>
         <div class="mc-logo-strip__row">
-            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: #64748B; white-space: nowrap; opacity: 0.7;">Amazon SES</span>
-            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: #64748B; white-space: nowrap; opacity: 0.7;">SendGrid</span>
-            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: #64748B; white-space: nowrap; opacity: 0.7;">SparkPost</span>
-            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: #64748B; white-space: nowrap; opacity: 0.7;">Mailgun</span>
-            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: #64748B; white-space: nowrap; opacity: 0.7;">Postmark</span>
-            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: #64748B; white-space: nowrap; opacity: 0.7;">Elastic Email</span>
+            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: var(--theme-service-gray); white-space: nowrap; opacity: 0.7;">Amazon SES</span>
+            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: var(--theme-service-gray); white-space: nowrap; opacity: 0.7;">SendGrid</span>
+            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: var(--theme-service-gray); white-space: nowrap; opacity: 0.7;">SparkPost</span>
+            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: var(--theme-service-gray); white-space: nowrap; opacity: 0.7;">Mailgun</span>
+            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: var(--theme-service-gray); white-space: nowrap; opacity: 0.7;">Postmark</span>
+            <span class="mc-logo-strip__logo" style="font-weight: 700; font-size: 15px; color: var(--theme-service-gray); white-space: nowrap; opacity: 0.7;">Elastic Email</span>
         </div>
     </div>
 </section>
@@ -52,7 +52,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder interface" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder interface" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Email Builder</span>
@@ -93,7 +93,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Browse all templates &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Professional email templates for every industry" loading="lazy">
+                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Professional email templates for every industry" loading="lazy">
             </div>
         </div>
     </div>
@@ -151,7 +151,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Advanced audience segmentation tools" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Advanced audience segmentation tools" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Segmentation &amp; List Management</span>
@@ -212,7 +212,7 @@
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about testing &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="A/B testing dashboard showing campaign variations and results" loading="lazy">
+                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="A/B testing dashboard showing campaign variations and results" loading="lazy">
             </div>
         </div>
     </div>
@@ -259,7 +259,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/sending-servers.svg') }}" alt="Sending server management" loading="lazy">
+                <img src="{{ $themeImg('images/features/sending-servers.svg') }}" alt="Sending server management" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Deliverability &amp; Sending Servers</span>
@@ -482,7 +482,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/predictive.svg') }}" alt="Email marketing analytics and reporting dashboard" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Email marketing analytics and reporting dashboard" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Analytics &amp; Reporting</span>
@@ -523,7 +523,7 @@
                 <a href="{{ route('automation') }}" class="mc-feature-alt__link">Explore automations &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/automations-ecom.svg') }}" alt="Email automation builder with triggers and workflows" loading="lazy">
+                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Email automation builder with triggers and workflows" loading="lazy">
             </div>
         </div>
     </div>

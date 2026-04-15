@@ -1,22 +1,85 @@
-<svg viewBox="0 0 520 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="520" height="300" rx="12" fill="#241C15"/>
-  <text x="260" y="80" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="32" font-weight="400" fill="#fff">Simple, One-Time</text>
-  <text x="260" y="120" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="32" font-weight="400" fill="#fff">Pricing</text>
-  <g transform="translate(100,150)">
-    <rect width="100" height="60" rx="10" fill="#403B36"/>
-    <text x="50" y="28" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="22" font-weight="700" fill="#E8571A">$64</text>
-    <text x="50" y="44" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#928B83">Regular</text>
+<svg viewBox="0 0 520 400" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans', Arial, sans-serif">
+  <rect width="520" height="400" rx="16" fill="#FEF7F2"/>
+
+  <!-- License badge (top center) -->
+  <rect x="160" y="20" width="200" height="44" rx="22" fill="#E8571A"/>
+  <text x="260" y="46" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">Lifetime License</text>
+
+  <!-- Arrow down -->
+  <line x1="260" y1="64" x2="260" y2="88" stroke="#888" stroke-width="1.5"/>
+  <polygon points="255,85 260,93 265,85" fill="#888"/>
+
+  <!-- License card -->
+  <g transform="translate(80,95)">
+    <rect width="360" height="160" rx="12" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <!-- Header -->
+    <rect x="16" y="16" width="100" height="6" rx="3" fill="#241C15" opacity="0.15"/>
+    <rect x="16" y="30" width="200" height="5" rx="2.5" fill="#F6F1EB"/>
+    <rect x="16" y="42" width="160" height="5" rx="2.5" fill="#F6F1EB"/>
+    <!-- Divider -->
+    <line x1="16" y1="58" x2="344" y2="58" stroke="#F6F1EB" stroke-width="1"/>
+    <!-- Feature checklist -->
+    <g transform="translate(16,70)">
+      <circle cx="8" cy="6" r="7" fill="#E8571A" opacity="0.1"/>
+      <polyline points="4,6 7,9 12,3" fill="none" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="22" y="10" font-size="10" fill="#241C15">Full source code included</text>
+    </g>
+    <g transform="translate(16,92)">
+      <circle cx="8" cy="6" r="7" fill="#E8571A" opacity="0.1"/>
+      <polyline points="4,6 7,9 12,3" fill="none" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="22" y="10" font-size="10" fill="#241C15">Unlimited subscribers &amp; emails</text>
+    </g>
+    <g transform="translate(16,114)">
+      <circle cx="8" cy="6" r="7" fill="#E8571A" opacity="0.1"/>
+      <polyline points="4,6 7,9 12,3" fill="none" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="22" y="10" font-size="10" fill="#241C15">Free lifetime updates</text>
+    </g>
+    <g transform="translate(16,136)">
+      <circle cx="8" cy="6" r="7" fill="#E8571A" opacity="0.1"/>
+      <polyline points="4,6 7,9 12,3" fill="none" stroke="#E8571A" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="22" y="10" font-size="10" fill="#241C15">Install on your own server</text>
+    </g>
+    <!-- Seal badge -->
+    <circle cx="310" cy="38" r="20" fill="#6B3FA0" opacity="0.08"/>
+    <circle cx="310" cy="38" r="14" fill="#fff" stroke="#6B3FA0" stroke-width="1.5"/>
+    <polyline points="304,38 308,42 316,34" fill="none" stroke="#6B3FA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <g transform="translate(210,150)">
-    <rect width="100" height="60" rx="10" fill="#E8571A"/>
-    <text x="50" y="28" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="22" font-weight="700" fill="#fff">$199</text>
-    <text x="50" y="44" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.8)">Extended</text>
+
+  <!-- Arrow down from card -->
+  <line x1="260" y1="255" x2="260" y2="278" stroke="#888" stroke-width="1.5"/>
+  <polygon points="255,275 260,283 265,275" fill="#888"/>
+
+  <!-- Bottom row: 3 concept icons -->
+  <g transform="translate(40,290)">
+    <!-- Key (ownership) -->
+    <rect width="130" height="80" rx="10" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <g transform="translate(20,18)">
+      <circle cx="14" cy="14" r="11" fill="none" stroke="#444" stroke-width="1.5"/>
+      <circle cx="14" cy="14" r="4" fill="none" stroke="#444" stroke-width="1.5"/>
+      <line x1="25" y1="14" x2="55" y2="14" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="45" y1="14" x2="45" y2="20" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="52" y1="14" x2="52" y2="20" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="65" y="62" text-anchor="middle" font-size="9" fill="#888">You own it</text>
   </g>
-  <g transform="translate(320,150)">
-    <rect width="100" height="60" rx="10" fill="#403B36"/>
-    <text x="50" y="28" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="22" font-weight="700" fill="#fff">$49</text>
-    <text x="50" y="44" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#928B83">Install Service</text>
+
+  <g transform="translate(195,290)">
+    <!-- Infinity (forever) -->
+    <rect width="130" height="80" rx="10" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <g transform="translate(30,14)">
+      <path d="M35,20 C35,10 20,6 12,14 C4,22 12,34 22,28 C32,22 38,34 48,28 C58,22 48,10 40,14 C32,18 35,20 35,20Z" fill="none" stroke="#E8571A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </g>
+    <text x="65" y="62" text-anchor="middle" font-size="9" fill="#888">Updates forever</text>
   </g>
-  <text x="260" y="248" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#928B83">Pay once. Own forever. No recurring fees.</text>
-  <g transform="translate(160,262)"><rect width="200" height="24" rx="12" fill="#E8571A"/><text x="100" y="16" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="600" fill="#fff">Buy on CodeCanyon</text></g>
+
+  <g transform="translate(350,290)">
+    <!-- Code brackets (source code) -->
+    <rect width="130" height="80" rx="10" fill="#fff" stroke="#E5E0DA" stroke-width="1.5"/>
+    <g transform="translate(28,12)">
+      <path d="M16,0 L6,0 C3,0 0,3 0,6 L0,30 C0,33 3,36 6,36 L16,36" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+      <path d="M50,0 L60,0 C63,0 66,3 66,6 L66,30 C66,33 63,36 60,36 L50,36" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+      <line x1="42" y1="4" x2="24" y2="32" stroke="#6B3FA0" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="65" y="62" text-anchor="middle" font-size="9" fill="#888">Full source code</text>
+  </g>
 </svg>

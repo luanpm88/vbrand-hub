@@ -16,25 +16,34 @@
         </div>
         <div class="mc-pricing-hero__grid">
             <div class="mc-pricing-hero__content">
-                <h1 class="mc-pricing-hero__heading">Simple, One-Time Pricing</h1>
-                <p class="mc-pricing-hero__subheading">No monthly fees. No per-subscriber charges. Pay once, own forever. Self-hosted on your own server with full source code included &mdash; you control everything.</p>
+                <p class="mc-hero__eyebrow">NO MONTHLY FEES. NO PER-SUBSCRIBER CHARGES.</p>
+                <h1 class="mc-pricing-hero__heading">Pay Once,<br>Own Forever</h1>
+                <p class="mc-pricing-hero__subheading">Self-hosted on your own server with full source code included. You control everything &mdash; no recurring costs, no limits.</p>
+                <div class="mc-pricing-hero__prices">
+                    <div class="mc-pricing-hero__price-card">
+                        <span class="mc-pricing-hero__price-amount-inline">$64</span>
+                        <span class="mc-pricing-hero__price-label">Regular License</span>
+                        <span class="mc-pricing-hero__price-desc">Single domain, full source</span>
+                    </div>
+                    <div class="mc-pricing-hero__price-card mc-pricing-hero__price-card--featured">
+                        <span class="mc-pricing-hero__price-badge">Best Value</span>
+                        <span class="mc-pricing-hero__price-amount-inline">$199</span>
+                        <span class="mc-pricing-hero__price-label">Extended License</span>
+                        <span class="mc-pricing-hero__price-desc">SaaS-ready, white-label</span>
+                    </div>
+                </div>
+                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg" target="_blank">Buy on CodeCanyon</a>
+                <div class="mc-pricing-hero__trust">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Lifetime updates</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>6-month support</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>50,000+ users</span>
+                </div>
             </div>
             <div class="mc-pricing-hero__image">
-                <div style="background: var(--mc-black); border-radius: var(--radius-lg); padding: var(--space-2xl) var(--space-xl); text-align: center; color: var(--mc-white);">
-                    <h2 style="font-family: var(--font-serif); font-size: clamp(22px, 3vw, 32px); font-weight: 300; margin-bottom: var(--space-xl); line-height: 1.3;">Simple, One-Time<br>Pricing</h2>
-                    <div style="display: flex; justify-content: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
-                        <div style="background: var(--mc-primary); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); min-width: 100px;">
-                            <div style="font-size: clamp(24px, 3vw, 32px); font-weight: 700;">$64</div>
-                            <div style="font-size: 12px; opacity: 0.9;">Regular</div>
-                        </div>
-                        <div style="background: var(--mc-primary); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); min-width: 100px; transform: scale(1.08);">
-                            <div style="font-size: clamp(24px, 3vw, 32px); font-weight: 700;">$199</div>
-                            <div style="font-size: 12px; opacity: 0.9;">Extended</div>
-                        </div>
-                    </div>
-                    <p style="font-size: 14px; opacity: 0.7; margin-bottom: var(--space-lg);">Pay once. Own forever. No recurring fees.</p>
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg" target="_blank" style="width: 80%; display: inline-block;">Buy on CodeCanyon</a>
-                </div>
+                <img src="{{ $themeImg('images/features/pricing-hero.svg') }}" alt="AcelleMail lifetime license — full source code, unlimited subscribers, free updates">
             </div>
         </div>
     </div>
@@ -346,7 +355,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ asset('images/features/email-sms.svg') }}" alt="Sending cost comparison chart" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Sending cost comparison chart" loading="lazy">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Cost Comparison</span>
@@ -372,7 +381,7 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study-savings.svg') }}" alt="Save $12,000+ per year" style="width:100%;border-radius:var(--radius-lg);" loading="lazy">
+                <img src="{{ $themeImg('images/features/case-study-savings.svg') }}" alt="Save $12,000+ per year" style="width:100%;border-radius:var(--radius-lg);" loading="lazy">
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
@@ -496,9 +505,9 @@
         <div style="max-width: 600px; margin: 0 auto; text-align: center;">
             <div style="margin-bottom: var(--space-lg);">
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block;">
-                    <circle cx="32" cy="32" r="30" stroke="#241C15" stroke-width="2.5" fill="none"/>
-                    <path d="M32 12C32 12 22 18 22 30C22 42 32 52 32 52C32 52 42 42 42 30C42 18 32 12 32 12Z" stroke="#241C15" stroke-width="2" fill="none"/>
-                    <path d="M26 32L30 36L38 28" stroke="#241C15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <circle cx="32" cy="32" r="30" stroke="var(--theme-text)" stroke-width="2.5" fill="none"/>
+                    <path d="M32 12C32 12 22 18 22 30C22 42 32 52 32 52C32 52 42 42 42 30C42 18 32 12 32 12Z" stroke="var(--theme-text)" stroke-width="2" fill="none"/>
+                    <path d="M26 32L30 36L38 28" stroke="var(--theme-text)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                 </svg>
             </div>
             <h2 style="font-family: var(--font-serif); font-size: clamp(24px, 3vw, 36px); font-weight: 300; color: var(--mc-black); margin-bottom: var(--space-md); line-height: 1.2;">Pay once, own it forever</h2>

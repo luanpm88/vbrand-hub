@@ -30,7 +30,7 @@
 | Nike Zero | https://nike.b-teka.com | OK 200 | Yes (2026-06-13) | Nhiều sản phẩm | OK |
 | GuuCoffee Demo | https://guucoffee.b-teka.com | OK 200 | Yes (2026-07-05) | Theme demo data | OK — mới clone |
 | Orgafood | https://orgafood.b-teka.com | OK 200 | Yes (2026-06-28) | Nhiều sản phẩm | OK |
-| GuuCoffee (khách) | guucoffee.com | OK (HTTP only) | NO — domain chưa trỏ | Theme demo data | Chờ khách trỏ DNS |
+| GuuCoffee (khách) | https://guucafe.com | OK 200 | Yes (2026-07-13) | Theme demo data | OK — domain đã trỏ 2026-04-15 |
 
 ---
 
@@ -101,7 +101,7 @@
 | # | Area | Description | Severity | Fixed | Details |
 |---|------|-------------|----------|-------|---------|
 | 1 | Admin | Admin email sai (`admin@brandviet.vn`) | High | Yes | Đổi thành `admin@sgconnect.vn` trên prod via tinker |
-| 2 | GuuCoffee | guucoffee.com SSL cert sai (hiện cert của `acellemail.b-teka.com`) | Medium | N/A | Domain chưa trỏ — không fix được. Đã clone ra `guucoffee.b-teka.com` thay thế |
+| 2 | GuuCoffee | ~~guucoffee.com SSL cert sai~~ → **FIXED** domain đổi sang `guucafe.com`, SSL OK (2026-04-15) | ~~Medium~~ | Done | Domain trỏ + SSL + WP URL updated |
 | 3 | COD | Logitech + Orgafood COD title bằng tiếng Anh | Low | Yes | Update thành "Thanh toán khi nhận hàng" |
 | 4 | COD | GuuCoffee Demo chưa bật COD | Medium | Yes | Enable COD + set title tiếng Việt |
 | 5 | Server | `BaokimController` class missing — `php artisan route:list` lỗi | Low | N/A | Không ảnh hưởng runtime, chỉ lỗi khi list routes |

@@ -186,7 +186,7 @@
       <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#64748B"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
+            <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="var(--theme-service-gray)"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Any SMTP Server</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Connect any standard SMTP server &mdash; Gmail, Outlook, your own mail server, or any provider that supports SMTP authentication.</p>
@@ -518,17 +518,17 @@
       <div class="mc-feature-row__image">
         <div style="background: var(--mc-black); border-radius: var(--radius-lg); padding: var(--space-2xl); color: var(--mc-white); font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7; overflow: hidden;">
           <div style="margin-bottom: var(--space-md);">
-            <span style="color: #FF6B6B;">POST</span> <span style="color: #4ECDC4;">/api/v1/lists/{list_uid}/subscribers</span>
+            <span style="color: var(--theme-code-method);">POST</span> <span style="color: var(--theme-code-keyword);">/api/v1/lists/{list_uid}/subscribers</span>
           </div>
-          <div style="color: #999; margin-bottom: var(--space-sm);">// Add a subscriber via AcelleMail API</div>
+          <div style="color: var(--theme-code-comment); margin-bottom: var(--space-sm);">// Add a subscriber via AcelleMail API</div>
           <div>{</div>
-          <div>&nbsp;&nbsp;<span style="color: #241C15;">"api_token"</span>: <span style="color: #4ECDC4;">"YOUR_API_TOKEN"</span>,</div>
-          <div>&nbsp;&nbsp;<span style="color: #241C15;">"EMAIL"</span>: <span style="color: #4ECDC4;">"user@example.com"</span>,</div>
-          <div>&nbsp;&nbsp;<span style="color: #241C15;">"FIRST_NAME"</span>: <span style="color: #4ECDC4;">"Jane"</span>,</div>
-          <div>&nbsp;&nbsp;<span style="color: #241C15;">"LAST_NAME"</span>: <span style="color: #4ECDC4;">"Doe"</span>,</div>
-          <div>&nbsp;&nbsp;<span style="color: #241C15;">"tag"</span>: <span style="color: #4ECDC4;">"vip, newsletter"</span></div>
+          <div>&nbsp;&nbsp;<span style="color: var(--theme-text);">"api_token"</span>: <span style="color: var(--theme-code-keyword);">"YOUR_API_TOKEN"</span>,</div>
+          <div>&nbsp;&nbsp;<span style="color: var(--theme-text);">"EMAIL"</span>: <span style="color: var(--theme-code-keyword);">"user@example.com"</span>,</div>
+          <div>&nbsp;&nbsp;<span style="color: var(--theme-text);">"FIRST_NAME"</span>: <span style="color: var(--theme-code-keyword);">"Jane"</span>,</div>
+          <div>&nbsp;&nbsp;<span style="color: var(--theme-text);">"LAST_NAME"</span>: <span style="color: var(--theme-code-keyword);">"Doe"</span>,</div>
+          <div>&nbsp;&nbsp;<span style="color: var(--theme-text);">"tag"</span>: <span style="color: var(--theme-code-keyword);">"vip, newsletter"</span></div>
           <div>}</div>
-          <div style="margin-top: var(--space-md); color: #4ECDC4;">// Response: 200 OK — subscriber added</div>
+          <div style="margin-top: var(--space-md); color: var(--theme-code-keyword);">// Response: 200 OK — subscriber added</div>
         </div>
       </div>
       <div class="mc-feature-row__content">

@@ -32,8 +32,8 @@
       <div class="mc-stats-section__item" style="text-align: center;">
         <div style="margin-bottom: var(--space-md);">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 4L8 12v12c0 11.1 6.8 21.4 16 24 9.2-2.6 16-12.9 16-24V12L24 4z" stroke="#241C15" stroke-width="2.5" fill="none"/>
-            <path d="M18 24l4 4 8-8" stroke="#241C15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 4L8 12v12c0 11.1 6.8 21.4 16 24 9.2-2.6 16-12.9 16-24V12L24 4z" stroke="var(--theme-text)" stroke-width="2.5" fill="none"/>
+            <path d="M18 24l4 4 8-8" stroke="var(--theme-text)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
         <span class="mc-stats-section__label" style="font-size: 18px;">Self-Hosted</span>
@@ -44,9 +44,9 @@
       <div class="mc-stats-section__item" style="text-align: center;">
         <div style="margin-bottom: var(--space-md);">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="18" stroke="#241C15" stroke-width="2.5"/>
-            <path d="M24 14v4M24 30v4M14 24h4M30 24h4" stroke="#241C15" stroke-width="2.5" stroke-linecap="round"/>
-            <circle cx="24" cy="24" r="6" stroke="#241C15" stroke-width="2.5"/>
+            <circle cx="24" cy="24" r="18" stroke="var(--theme-text)" stroke-width="2.5"/>
+            <path d="M24 14v4M24 30v4M14 24h4M30 24h4" stroke="var(--theme-text)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="6" stroke="var(--theme-text)" stroke-width="2.5"/>
           </svg>
         </div>
         <span class="mc-stats-section__label" style="font-size: 18px;">GDPR Tools</span>
@@ -57,10 +57,10 @@
       <div class="mc-stats-section__item" style="text-align: center;">
         <div style="margin-bottom: var(--space-md);">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="10" y="20" width="28" height="20" rx="3" stroke="#241C15" stroke-width="2.5"/>
-            <path d="M16 20v-6a8 8 0 0116 0v6" stroke="#241C15" stroke-width="2.5" stroke-linecap="round"/>
-            <circle cx="24" cy="31" r="3" stroke="#241C15" stroke-width="2.5"/>
-            <path d="M24 34v3" stroke="#241C15" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="10" y="20" width="28" height="20" rx="3" stroke="var(--theme-text)" stroke-width="2.5"/>
+            <path d="M16 20v-6a8 8 0 0116 0v6" stroke="var(--theme-text)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="24" cy="31" r="3" stroke="var(--theme-text)" stroke-width="2.5"/>
+            <path d="M24 34v3" stroke="var(--theme-text)" stroke-width="2.5" stroke-linecap="round"/>
           </svg>
         </div>
         <span class="mc-stats-section__label" style="font-size: 18px;">CAN-SPAM &amp; CASL</span>
@@ -71,8 +71,8 @@
       <div class="mc-stats-section__item" style="text-align: center;">
         <div style="margin-bottom: var(--space-md);">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 4L8 12v12c0 11.1 6.8 21.4 16 24 9.2-2.6 16-12.9 16-24V12L24 4z" stroke="#241C15" stroke-width="2.5" fill="none"/>
-            <path d="M17 24h14M24 17v14" stroke="#241C15" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M24 4L8 12v12c0 11.1 6.8 21.4 16 24 9.2-2.6 16-12.9 16-24V12L24 4z" stroke="var(--theme-text)" stroke-width="2.5" fill="none"/>
+            <path d="M17 24h14M24 17v14" stroke="var(--theme-text)" stroke-width="2.5" stroke-linecap="round"/>
           </svg>
         </div>
         <span class="mc-stats-section__label" style="font-size: 18px;">Open Source</span>
@@ -90,7 +90,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/security-control.svg') }}" alt="Self-hosted security control" fetchpriority="high">
+        <img src="{{ $themeImg('images/features/security-control.svg') }}" alt="Self-hosted security control" fetchpriority="high">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">Self-hosted means full control</h2>
@@ -155,7 +155,7 @@
         </ul>
       </div>
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/predictive.svg') }}" alt="GDPR compliance tools" loading="lazy">
+        <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="GDPR compliance tools" loading="lazy">
       </div>
     </div>
   </div>
@@ -204,7 +204,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/integrations-auto.svg') }}" alt="Email authentication and deliverability" loading="lazy">
+        <img src="{{ $themeImg('images/features/integrations-auto.svg') }}" alt="Email authentication and deliverability" loading="lazy">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">SPF, DKIM &amp; DMARC Support</h2>
@@ -256,8 +256,8 @@
         <div class="mc-card__body mc-card__body--lg">
           <div style="margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 3L6 10v10c0 9.2 5.7 17.8 14 20 8.3-2.2 14-10.8 14-20V10L20 3z" stroke="#241C15" stroke-width="2" fill="none"/>
-              <path d="M14 20l4 4 8-8" stroke="#241C15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20 3L6 10v10c0 9.2 5.7 17.8 14 20 8.3-2.2 14-10.8 14-20V10L20 3z" stroke="var(--theme-text)" stroke-width="2" fill="none"/>
+              <path d="M14 20l4 4 8-8" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <h4 class="mc-card__title">GDPR Compliant</h4>
@@ -274,9 +274,9 @@
         <div class="mc-card__body mc-card__body--lg">
           <div style="margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="15" stroke="#241C15" stroke-width="2"/>
-              <path d="M20 11v4M20 25v4M11 20h4M25 20h4" stroke="#241C15" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="20" cy="20" r="5" stroke="#241C15" stroke-width="2"/>
+              <circle cx="20" cy="20" r="15" stroke="var(--theme-text)" stroke-width="2"/>
+              <path d="M20 11v4M20 25v4M11 20h4M25 20h4" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="20" cy="20" r="5" stroke="var(--theme-text)" stroke-width="2"/>
             </svg>
           </div>
           <h4 class="mc-card__title">CAN-SPAM</h4>
@@ -293,10 +293,10 @@
         <div class="mc-card__body mc-card__body--lg">
           <div style="margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="8" y="17" width="24" height="16" rx="3" stroke="#241C15" stroke-width="2"/>
-              <path d="M13 17v-4a7 7 0 0114 0v4" stroke="#241C15" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="20" cy="26" r="2.5" stroke="#241C15" stroke-width="2"/>
-              <path d="M20 28.5v2" stroke="#241C15" stroke-width="2" stroke-linecap="round"/>
+              <rect x="8" y="17" width="24" height="16" rx="3" stroke="var(--theme-text)" stroke-width="2"/>
+              <path d="M13 17v-4a7 7 0 0114 0v4" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="20" cy="26" r="2.5" stroke="var(--theme-text)" stroke-width="2"/>
+              <path d="M20 28.5v2" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <h4 class="mc-card__title">CASL</h4>
@@ -313,8 +313,8 @@
         <div class="mc-card__body mc-card__body--lg">
           <div style="margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="28" height="28" rx="4" stroke="#241C15" stroke-width="2"/>
-              <path d="M16 14v12M24 14v12M16 20h8" stroke="#241C15" stroke-width="2" stroke-linecap="round"/>
+              <rect x="6" y="6" width="28" height="28" rx="4" stroke="var(--theme-text)" stroke-width="2"/>
+              <path d="M16 14v12M24 14v12M16 20h8" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <h4 class="mc-card__title">Role-Based Access</h4>
@@ -331,10 +331,10 @@
         <div class="mc-card__body mc-card__body--lg">
           <div style="margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="10" width="28" height="20" rx="3" stroke="#241C15" stroke-width="2"/>
-              <path d="M6 17h28" stroke="#241C15" stroke-width="2"/>
-              <path d="M11 24h8" stroke="#241C15" stroke-width="2" stroke-linecap="round"/>
-              <path d="M11 27h5" stroke="#241C15" stroke-width="2" stroke-linecap="round"/>
+              <rect x="6" y="10" width="28" height="20" rx="3" stroke="var(--theme-text)" stroke-width="2"/>
+              <path d="M6 17h28" stroke="var(--theme-text)" stroke-width="2"/>
+              <path d="M11 24h8" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M11 27h5" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <h4 class="mc-card__title">IP Whitelisting &amp; Rate Limiting</h4>
@@ -350,8 +350,8 @@
         <div class="mc-card__body mc-card__body--lg">
           <div style="margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="15" stroke="#241C15" stroke-width="2"/>
-              <path d="M13 20l4 4 10-10" stroke="#241C15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="20" cy="20" r="15" stroke="var(--theme-text)" stroke-width="2"/>
+              <path d="M13 20l4 4 10-10" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <h4 class="mc-card__title">Open Source Transparency</h4>
@@ -404,7 +404,7 @@
         </ul>
       </div>
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/automation-flows.svg') }}" alt="Server security" loading="lazy">
+        <img src="{{ $themeImg('images/features/automation-flows.svg') }}" alt="Server security" loading="lazy">
       </div>
     </div>
   </div>
@@ -427,7 +427,7 @@
       <!-- Collection -->
       <div style="padding: var(--space-xl); background: var(--mc-white); border-radius: var(--radius-md); border: 1px solid var(--mc-border);">
         <div style="margin-bottom: var(--space-md);">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4v24M4 16h24" stroke="#241C15" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4v24M4 16h24" stroke="var(--theme-text)" stroke-width="2.5" stroke-linecap="round"/></svg>
         </div>
         <h4 style="font-family: var(--font-sans); font-size: 18px; font-weight: 600; margin-bottom: var(--space-sm); color: var(--mc-black);">Data Collection</h4>
         <p style="font-size: 14px; line-height: 1.6; color: var(--mc-gray); margin: 0;">
@@ -439,7 +439,7 @@
       <!-- Storage -->
       <div style="padding: var(--space-xl); background: var(--mc-white); border-radius: var(--radius-md); border: 1px solid var(--mc-border);">
         <div style="margin-bottom: var(--space-md);">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="8" rx="12" ry="4" stroke="#241C15" stroke-width="2"/><path d="M4 8v16c0 2.2 5.4 4 12 4s12-1.8 12-4V8" stroke="#241C15" stroke-width="2"/><path d="M4 16c0 2.2 5.4 4 12 4s12-1.8 12-4" stroke="#241C15" stroke-width="2"/></svg>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="8" rx="12" ry="4" stroke="var(--theme-text)" stroke-width="2"/><path d="M4 8v16c0 2.2 5.4 4 12 4s12-1.8 12-4V8" stroke="var(--theme-text)" stroke-width="2"/><path d="M4 16c0 2.2 5.4 4 12 4s12-1.8 12-4" stroke="var(--theme-text)" stroke-width="2"/></svg>
         </div>
         <h4 style="font-family: var(--font-sans); font-size: 18px; font-weight: 600; margin-bottom: var(--space-sm); color: var(--mc-black);">Data Storage</h4>
         <p style="font-size: 14px; line-height: 1.6; color: var(--mc-gray); margin: 0;">
@@ -451,7 +451,7 @@
       <!-- Processing -->
       <div style="padding: var(--space-xl); background: var(--mc-white); border-radius: var(--radius-md); border: 1px solid var(--mc-border);">
         <div style="margin-bottom: var(--space-md);">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="#241C15" stroke-width="2"/><path d="M16 10v6l4 2" stroke="#241C15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="var(--theme-text)" stroke-width="2"/><path d="M16 10v6l4 2" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h4 style="font-family: var(--font-sans); font-size: 18px; font-weight: 600; margin-bottom: var(--space-sm); color: var(--mc-black);">Data Processing</h4>
         <p style="font-size: 14px; line-height: 1.6; color: var(--mc-gray); margin: 0;">
@@ -463,7 +463,7 @@
       <!-- Deletion -->
       <div style="padding: var(--space-xl); background: var(--mc-white); border-radius: var(--radius-md); border: 1px solid var(--mc-border);">
         <div style="margin-bottom: var(--space-md);">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M6 10h20M12 10V7a1 1 0 011-1h6a1 1 0 011 1v3M10 10v16a2 2 0 002 2h8a2 2 0 002-2V10" stroke="#241C15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M6 10h20M12 10V7a1 1 0 011-1h6a1 1 0 011 1v3M10 10v16a2 2 0 002 2h8a2 2 0 002-2V10" stroke="var(--theme-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h4 style="font-family: var(--font-sans); font-size: 18px; font-weight: 600; margin-bottom: var(--space-sm); color: var(--mc-black);">Data Deletion</h4>
         <p style="font-size: 14px; line-height: 1.6; color: var(--mc-gray); margin: 0;">
@@ -483,7 +483,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ asset('images/features/predictive.svg') }}" alt="Open source transparency" loading="lazy">
+        <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Open source transparency" loading="lazy">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">Open source &mdash; audit the code yourself</h2>
