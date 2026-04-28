@@ -189,8 +189,9 @@ Sales gửi cho khách **4 thứ:**
 | 5 | **GuuCoffee** *(khách thật)* | https://guucafe.com | dreamcafe | Cafe / F&B |
 | 6 | **Diệu An** | https://dieuan.b-teka.com | dieu-an | Công nghiệp / Van & Phụ kiện |
 | 7 | **Auto Tây Bắc** | https://autotaybac.b-teka.com | autotaybac | Ô tô / Chăm sóc xe |
+| 8 | **Cà phê Danh Phát** | https://cafedanhphat.b-teka.com | cafedanhphat | Cafe phân phối / B2B |
 
-> Tất cả 7 site đều chạy HTTPS, sẵn sàng demo.
+> Tất cả 8 site đều chạy HTTPS, sẵn sàng demo.
 
 ---
 
@@ -218,18 +219,20 @@ Sales gửi cho khách **4 thứ:**
 | Orgafood | `orgafood@gmail.com` | `123456` |
 | Diệu An | `dieuan@gmail.com` | `123456` |
 | Auto Tây Bắc | `autotaybac@gmail.com` | `123456` |
+| Cà phê Danh Phát | `cafedanhanphat@gmail.com` | `123456` |
 
 > Đăng nhập → vào dashboard seller quản lý site: sản phẩm, đơn hàng, giao diện, blog...
 
 ---
 
-## 7. Giao diện có sẵn (6 themes)
+## 7. Giao diện có sẵn (7 themes)
 
 | Theme | Phù hợp cho | Demo |
 |-------|-------------|------|
 | **logitech** | Công nghệ, điện tử, phụ kiện | https://logitech.b-teka.com |
 | **orgafood** | Thực phẩm, organic, nông sản | https://orgafood.b-teka.com |
 | **dreamcafe** | Cafe, nhà hàng, F&B | https://guucoffee.b-teka.com |
+| **cafedanhphat** | Cafe phân phối, B2B + B2C, đại lý | https://cafedanhphat.b-teka.com |
 | **nikezero** | Thời trang, giày dép, thể thao | https://nike.b-teka.com |
 | **dieu-an** | Công nghiệp, B2B, van & phụ kiện | https://dieuan.b-teka.com |
 | **autotaybac** | Ô tô, dịch vụ, chăm sóc xe | https://autotaybac.b-teka.com |

@@ -252,6 +252,17 @@ Khi cần clone 1 WP site sang domain mới:
 - Pattern reference: IPWarmup (letter squares, flat color) vs Mobile Message (vector icons, gradient bg, logo header) — cùng structure nhưng khác visual.
 - **Lesson:** luôn download logo về local (`public/images/integrations/`) thay vì hotlink — external URL có thể chết.
 
+### Copy + customize existing theme thay vì build from scratch (cafedanhphat 2026-04-28)
+- Khi user yêu cầu "copy theme X ra theme Y rồi customize cho client Z", workflow nhanh hơn nhiều so với build from scratch:
+  1. `cp -r theme-X theme-Y` → rename CSS prefix (`sed`), function names, theme metadata trong style.css header + functions.php
+  2. Scrape client site cho content + images (puppeteer + cheerio)
+  3. Batch Edit schema.php defaults với content client (giữ structure, đổi text)
+  4. Audit English placeholder text trong page templates (page-aboutus.php, page-contact.php, archive-product.php, header.php) — dreamcafe legacy có nhiều English defaults trong PHP fallback
+  5. Hero font-size cần giảm cho Vietnamese title (60px → 56px + accent 0.85em với `display:block`)
+- Time saved: ~3-4 giờ so với build CSS + templates from scratch
+- **Lesson:** Khi copy theme, sau khi grep replace prefix CSS xong, vẫn phải audit English text hardcoded trong PHP templates — schema defaults + PHP fallback defaults là 2 nguồn khác nhau, schema customize không cover hết.
+- Reference: `/site/wp-content/themes/cafedanhphat/design/HISTORY.md`
+
 ### curl test webapp login (không cần browser)
 - Phải lấy session cookie trước (`GET /brand/mobile/login` → extract `Set-Cookie`)
 - Extract CSRF token từ HTML (`grep _token`)

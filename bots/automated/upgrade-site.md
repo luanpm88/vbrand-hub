@@ -38,10 +38,15 @@ bots/automated/upgrade-site.md review <theme-name>
 
 # SELF-IMPROVE RULE — ĐỌC TRƯỚC KHI LÀM GÌ
 
-**Sau mỗi lần upgrade site, bot PHẢI tự cập nhật file này với:**
+**Sau mỗi lần upgrade site, bot PHẢI tự cập nhật:**
 1. Mọi lỗi mới gặp → thêm vào `KNOWN PITFALLS` bên dưới
 2. Pattern mới hiệu quả → thêm vào section phù hợp
 3. Checklist mới → thêm vào Audit Checklist
+4. Update `docs/SALES_HANDOVER.md` — thêm site mới vào demo sites table + FAQ count
+5. Update `bots/report/sites.md` — thêm site registry entry
+6. Update `Latest theme` reference ở trên nếu theme mới tốt hơn
+7. Regenerate 3 PDFs (`npx md-to-pdf`) + sync Google Drive (`rclone sync`)
+8. **KHÔNG để kiến thức chết trong context window** — ghi ra file trong cùng commit
 
 **Khi upgrade site:**
 - Reference latest theme để học patterns
@@ -49,10 +54,10 @@ bots/automated/upgrade-site.md review <theme-name>
 - Đọc latest theme's `design/HISTORY.md` để tránh lặp lỗi cũ
 - Đọc `create-theme-from-url.md` KNOWN PITFALLS — tất cả đều áp dụng
 
-**Latest theme:** `dieu-an` (built 2026-04-15, industrial valves, blue + orange palette)
-→ Xem `/site/wp-content/themes/dieu-an/` để tham khảo patterns
+**Latest theme:** `cafedanhphat` (built 2026-04-28, cafe distribution B2B+B2C, warm coffee brown + đỏ accent)
+→ Xem `/site/wp-content/themes/cafedanhphat/` — copy from dreamcafe approach (saved 3-4 hours)
 
-**Previous themes:** `sattanhung` (2026-04-10, decorative ironwork, warm orange palette)
+**Previous themes:** `autotaybac` (2026-04-15, auto detailing, dark navy + amber), `dieu-an` (2026-04-15, industrial valves, blue + orange), `sattanhung` (2026-04-10, decorative ironwork, warm orange)
 
 ---
 
@@ -89,6 +94,44 @@ WC loop phụ thuộc vào query vars, dễ bị conflict. `wc_get_products()` e
 1. Trong prompt cho agent, PHẢI cung cấp bảng text mẫu với dấu đầy đủ
 2. Sau khi build, grep check: `grep -c "[àáảãạ]" schema.php` — nếu = 0 → chắc chắn thiếu dấu
 3. Fix TOÀN BỘ PHP files (schema + templates) — không chỉ schema
+
+### KHÔNG double-nest CSS grid classes trên section + inner div
+**Bài học autotaybac:** `<section class="atb-categories">` chứa `<div class="atb-categories">` → CSS `.atb-categories { display: grid; grid-template-columns: repeat(3,1fr) }` apply 2 lần → inner grid bị constrain thành 1/3 width → cards render cực nhỏ. Tương tự xảy ra với `.atb-blog`, `.atb-partners`, `.atb-about-preview`.
+**Fix:** Section wrapper dùng generic class (`atb-section`), chỉ inner div mới dùng grid class. LUÔN grep check sau khi build:
+```bash
+# Tìm double-nesting
+for cls in categories blog partners about-preview; do
+  count=$(grep -c "atb-${cls}" page-homepage.php)
+  if [ "$count" -gt 1 ]; then echo "⚠️  Double-nest: atb-${cls} appears $count times"; fi
+done
+```
+
+### Service/category cards PHẢI có overlay div trong PHP
+**Bài học autotaybac:** CSS `.atb-categories__card-overlay` defines gradient overlay cho text readability, nhưng PHP template không render `<div class="atb-categories__card-overlay"></div>` → text trắng trên ảnh sáng không đọc được.
+**Fix:** LUÔN thêm overlay div giữa image div và content div trong card structure.
+
+### Blog page PHẢI set `page_for_posts` trong WP
+**Bài học autotaybac:** Tạo blog page template nhưng không set `wp option update page_for_posts <ID>` → `/tin-tuc/` hiện "Chưa có bài viết nào" dù có posts.
+**Fix:** Sau khi tạo site, PHẢI:
+```bash
+BLOG_ID=$(wp post create --post_type=page --post_status=publish --post_title='Tin Tức' --post_name='tin-tuc' --porcelain)
+wp option update page_for_posts $BLOG_ID
+```
+
+### Blog posts PHẢI có featured image — ALL posts
+**Bài học autotaybac:** 3/4 bài blog có ảnh từ original, 1 bài thiếu → homepage blog grid bị lệch 1 card không hình.
+**Fix:** Nếu original không có ảnh cho 1 bài → scrape ảnh từ bài content (`curl page | grep img src`) hoặc dùng hero image làm fallback. KHÔNG để post nào thiếu featured image.
+
+### Mobile nav KHÔNG duplicate text khi có logo image
+**Bài học autotaybac:** Mobile nav always rendered `<span class="logo-text">Site Name</span>` bên cạnh `<img>` logo → hiện "Auto TÂY BẮC Auto Tây Bắc" duplicate.
+**Fix:** Dùng `if/else` — chỉ show text span khi KHÔNG có logo image:
+```php
+<?php if ($logo): ?>
+  <img src="..." alt="...">
+<?php else: ?>
+  <span class="logo-text"><?php echo $site_name; ?></span>
+<?php endif; ?>
+```
 
 ## 🟡 MAJOR
 
@@ -222,11 +265,12 @@ ssh vbrand@server "cd /path/wp-content/plugins/vbrandsync && \
 # PHASE 0: Đọc latest theme + learn patterns
 
 Trước khi bắt đầu:
-1. Đọc `/site/wp-content/themes/dieu-an/design/HISTORY.md`
-2. Đọc `/site/wp-content/themes/dieu-an/functions.php` — đặc biệt `dieuan_template_for_type()` + `dieuan_activate()`
-3. Đọc `/site/wp-content/themes/dieu-an/header.php` — menu resolution pattern + FABs
-4. Đọc `/site/wp-content/themes/dieu-an/woocommerce/archive-product.php` — product grid
+1. Đọc `/site/wp-content/themes/autotaybac/` — latest theme, service business, nhiều page templates
+2. Đọc `/site/wp-content/themes/autotaybac/functions.php` — `autotaybac_template_for_type()` + `autotaybac_activate()`
+3. Đọc `/site/wp-content/themes/autotaybac/header.php` — menu resolution + mobile nav (no duplicate text)
+4. Đọc `/site/wp-content/themes/autotaybac/page-homepage.php` — no double-nesting pattern
 5. Đọc `bots/automated/create-theme-from-url.md` — full KNOWN PITFALLS + SCHEMA REFERENCE
+6. Đọc `/site/wp-content/themes/dieu-an/` — previous theme, product shop, reference cho WC integration
 
 ---
 
@@ -739,3 +783,15 @@ Xem `create-theme-from-url.md` — SCHEMA REFERENCE section. Áp dụng y hệt.
 - **Production:** dieuan.b-teka.com (SSL expires 2026-07-14)
 - **Key discoveries:** CSS↔PHP class mismatch, display:block on card image, template_for_type mapping, WC shop page conflict, product ordering by image, FABs standard
 - **Duration:** ~4 hours total (scrape → build → audit → deploy)
+
+## cafedanhphat (2026-04-28) — cafedanhphat.vn → cafedanhphat.b-teka.com
+- **Company:** Công ty TNHH Danh An Phát Đạt — Cà phê phân phối Đà Nẵng / miền Trung
+- **Approach:** Copy + customize dreamcafe theme (KHÔNG build from scratch)
+- **Palette:** giữ dreamcafe warm coffee/cream + accent đỏ #c8201f, prefix `cdp-`
+- **Products:** 12 sản phẩm (8 từ site cũ + 4 chế thêm dòng hạt/hòa tan), 4 categories, all 12 with images
+- **Blog:** 6 bài (từ 14 bài site cũ — chọn bài có thumb + content chất lượng)
+- **gpt-image-1:** SKIPPED — dùng real coffee shop photos từ original/images/site/
+- **Audit rounds:** 3 (audit_1: English text in PHP fallbacks → audit_2: fixed + FABs → final: blog imported)
+- **Production:** cafedanhphat.b-teka.com (SSL expires 2026-07-27)
+- **Key discoveries:** Copy theme + customize là 3-4x nhanh hơn build from scratch. Audit English placeholder trong PHP templates riêng biệt với schema defaults.
+- **Duration:** ~2.5 hours total (scrape → copy → schema → deploy → import → audit → fix)
