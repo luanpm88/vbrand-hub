@@ -157,7 +157,7 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - SSL: Yes (expires 2026-07-14)
 - Created: 2026-04-15
 - Note: Chăm Sóc & Làm Đẹp Xe Toàn Diện
-## 8. cafedanhphat.b-teka.com
+## 8. cafedanhphat.vn
 - DIR_NAME: cafedanhphat_b_teka_com
 - DB_NAME: cafedanhphat_b_teka_com
 - DB_USER: cafedanhphat_b_teka_com
@@ -165,7 +165,7 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - WP Admin: admin
 - WP Pass: aA456321@
 - WP Path: /home/vbrand/sites/cafedanhphat_b_teka_com
-- WP API: https://cafedanhphat.b-teka.com/wp-json/vbrandsync/v1
+- WP API: https://cafedanhphat.vn/wp-json/vbrandsync/v1
 - Brand Endpoint: https://app.sgconnect.vn/api/brand
 - Brand Token: Lu4I6W6O7H3WMwE8cSGf2RtHJYjsPMDNfr6E59yvVyM0mQw1RtJvFRtDBo9v
 - Customer Name: Cà phê Danh Phát
@@ -176,6 +176,8 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Phone: 0772 62 64 68
 - Theme: cafedanhphat
 - Timezone: Asia/Ho_Chi_Minh
-- SSL: Yes (expires 2026-07-27)
+- SSL: Yes (expires 2026-07-27) — covers cafedanhphat.vn + www.cafedanhphat.vn
 - Created: 2026-04-28
-- Note: Cà phê phân phối Đà Nẵng & miền Trung — upgraded from cafedanhphat.vn, copied dreamcafe theme + customized
+- Domain switched: 2026-04-28 (cafedanhphat.b-teka.com → cafedanhphat.vn — official domain)
+- Aliases: cafedanhphat.b-teka.com → 301 redirect to cafedanhphat.vn (legacy)
+- Note: Cà phê phân phối Đà Nẵng & miền Trung — upgraded from old cafedanhphat.vn HTML site, copied dreamcafe theme + customized
