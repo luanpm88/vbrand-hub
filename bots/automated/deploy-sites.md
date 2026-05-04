@@ -2,6 +2,12 @@
 
 Sync vbrandsync plugin + themes từ local lên tất cả production WordPress sites.
 
+## Self-learn rule (BẮT BUỘC sau mỗi deploy)
+1. Permission/storage issue mới → update bước chmod/mkdir trong flow
+2. Plugin conflict hoặc PHP error → thêm vào `CLAUDE.md ## Lessons Learned`
+3. Thêm site mới → update `bots/report/sites.md` + `docs/SALES_HANDOVER.md`
+4. **KHÔNG để kiến thức chết trong context window** — ghi ra file trong cùng commit
+
 ## Cách dùng
 
 ```

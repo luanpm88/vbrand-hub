@@ -2,6 +2,13 @@
 
 Lấy 1 task từ GitHub Issues, phân loại, fix, commit, push, deploy tự động, tạo report.
 
+## Self-learn rule (BẮT BUỘC sau mỗi task)
+1. Bug có root cause đáng nhớ → thêm `CLAUDE.md ## Lessons Learned`
+2. Discover route/pattern/gotcha mới → update `docs/VBRAND_SYSTEM_DOCUMENTATION.md`
+3. Thay đổi user-facing flow → update `docs/USER_GUIDE_*.md` + `SALES_HANDOVER.md`
+4. Workflow/command hữu ích → ghi vào bot file liên quan
+5. **KHÔNG để kiến thức chết trong context window** — ghi ra file trong cùng commit
+
 ## Cách dùng
 
 ```

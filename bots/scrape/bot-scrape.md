@@ -2,6 +2,12 @@
 
 Master scraper — hỗ trợ nhiều nguồn, tất cả output vào cùng `shops/` format.
 
+## Self-learn rule (BẮT BUỘC sau mỗi scrape)
+1. Scrape pattern mới (DOM structure thay đổi, anti-bot) → update bot file + scraper script
+2. Price format mới → update `import-to-woocommerce.js` `toIntPrice()`
+3. Gotcha về source (Lazada API thay đổi, Shopee blocked) → update `scrape-lazada-shop.md` / `scrape-shopee-shop.md`
+4. **KHÔNG để kiến thức chết trong context window** — ghi ra file trong cùng commit
+
 ## Usage
 
 ```bash

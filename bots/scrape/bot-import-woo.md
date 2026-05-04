@@ -3,6 +3,13 @@
 Import data từ `shops/<SHOP>/` vào WooCommerce site qua vbrandsync REST API.
 Đọc **standard format** — hoạt động với data từ bất kỳ scraper nào (lazada, shopee, ...).
 
+## Self-learn rule (BẮT BUỘC sau mỗi import)
+1. Price parse bug → update `toIntPrice()` trong `import-to-woocommerce.js`
+2. Image download fail pattern → update retry/fallback logic
+3. WC Coming Soon hoặc storefront issue → update `enforce-cod-vbrand-express.php`
+4. Sau import thành công, nếu site mới → **update `docs/SALES_HANDOVER.md`** (thêm vào demo sites) + **update `bots/report/sites.md`**
+5. **KHÔNG để kiến thức chết trong context window** — ghi ra file trong cùng commit
+
 ## Usage
 
 ```bash

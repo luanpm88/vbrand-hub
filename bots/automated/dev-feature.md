@@ -4,6 +4,13 @@ Lấy feature issue từ vbrand-hub, implement đầy đủ theo design doc, vi�
 
 **Khác với do-one-task.md:** Bot này dành riêng cho `type:feature` — đọc design doc kỹ, implement từng bước, viết tests ngay trong cùng session, commit từng component.
 
+## Self-learn rule (BẮT BUỘC sau mỗi feature)
+1. Bug/gotcha gặp khi implement → thêm `CLAUDE.md ## Lessons Learned`
+2. Pattern/architecture mới → update `docs/VBRAND_SYSTEM_DOCUMENTATION.md`
+3. Feature user-facing → update `docs/USER_GUIDE_*.md` + `SALES_HANDOVER.md`
+4. Test pattern mới → update `bots/automated/write-tests.md`
+5. **KHÔNG để kiến thức chết trong context window** — ghi ra file trong cùng commit
+
 ## Cách dùng
 
 ```
