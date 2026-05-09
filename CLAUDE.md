@@ -79,6 +79,7 @@
 | vbrandsync | `/Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync` | `origin` (luanpm88/vbrandsync) | `main` | rsync |
 | themes | `/Users/luan/apps/vbrand/site/wp-content/themes` | `origin` (luanpm88/vbrand-themes) | `main` | rsync |
 | mobile | `/Users/luan/apps/vbrand/mobile` | `origin` (luanpm88/vbrand-mobile) | `main` | EAS build (manual) |
+| ~~kb~~ | ~~`/Users/luan/apps/vbrand/kb`~~ | **Consolidated 2026-05-09** into `acellemail/landing/` (subfolder `acellemail.com/kb/*`). Standalone `kb/` folder removed; remote repo `luanpm88/acelle-knowledge-base` archived. KB content lives in `acellemail/landing/database/seeders/Article*Seeder.php`. See [`acellemail/docs/SEO_PLAN_KB.md`](acellemail/docs/SEO_PLAN_KB.md). | — | — |
 
 Mỗi component là 1 git repo riêng → commit/push riêng.
 
@@ -296,6 +297,13 @@ Mobile App / Webapp → Laravel API → WordPress REST API (vbrandsync plugin) �
 |----------|-----------|
 | `test acellemail` / `e2e acellemail` | Start artisan serve + `cd acellemail/docs/e2e && npm test` |
 | `deploy acellemail` | Theo §4 trong `LANDING.md`: E2E gate → rsync → optimize → re-run E2E prod |
+| `seo loop` / `tiếp seo` / `next seo wave` | Đọc `acellemail/bots/seo-loop.md` → chạy wave kế tiếp trong `acellemail/docs/SEO_PLAN.md ## Wave Progress` (E2E gate → deploy → verify → mark ☑ → commit + push). Auto cho 🟢; STOP & ask cho 🟡 / 🟥 |
+| `seo loop status` | Print Wave Progress table only, không thay đổi gì |
+| `maintain` / `MAINTENANCE.md run` / `health check` / `audit acellemail` / `kiểm tra prod` / `top notch check` | Đọc `acellemail/docs/MAINTENANCE.md` → chạy `cd acellemail && ./scripts/maintain/run.sh standard` (~5 min: 8 phases — health/SEO/perf/content/tests/deps against prod). Surface report + fix any new findings + update "Known issues" table in MAINTENANCE.md |
+| `maintain quick` / `daily check` | `./acellemail/scripts/maintain/run.sh quick` — 30s smoke (health + SEO), cron-friendly |
+| `maintain deep` | `./acellemail/scripts/maintain/run.sh deep` — standard + Lighthouse + link integrity (~20 min) |
+| `maintain full` | `./acellemail/scripts/maintain/run.sh full` — deep + SSH server-side via brandnew (~30 min) |
+| `maintain server` | `./acellemail/scripts/maintain/run.sh server` — SSH-only checks (disk, logs, certbot, nginx, php-fpm) |
 
 ---
 
@@ -399,25 +407,31 @@ User có thể nói ngắn — Claude phải tự hiểu và chạy đúng bot:
 
 ### Quy trình release 3 PDF sales
 
-Khi user nói `export sales handoff` hoặc tương tự, chạy **đúng 4 bước** sau:
+Khi user nói `export sales handoff` hoặc tương tự, chạy **đúng 5 bước** sau:
 
 ```bash
-# 1. Gen 3 PDF
+# 1. Bump "Cập nhật: <today>" line trong cả 3 MD (BẮT BUỘC trước khi gen PDF)
+#    - SALES_HANDOVER.md / USER_GUIDE_MOBILE.md / USER_GUIDE_DESKTOP.md
+#    - Mỗi file có 1 dòng `> Cập nhật: YYYY-MM-DD` ngay sau `# <title>`
+#    - Update sang ngày hôm nay TRƯỚC khi gen PDF (để PDF có ngày đúng)
+
+# 2. Gen 3 PDF (cần Chrome — set PUPPETEER_EXECUTABLE_PATH nếu .cache/puppeteer rỗng)
 cd docs
-npx md-to-pdf SALES_HANDOVER.md
-npx md-to-pdf USER_GUIDE_MOBILE.md
-npx md-to-pdf USER_GUIDE_DESKTOP.md
+PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  npx md-to-pdf SALES_HANDOVER.md USER_GUIDE_MOBILE.md USER_GUIDE_DESKTOP.md
 
-# 2. Copy vào drive_shared/ (luôn đè v1 — KHÔNG tăng version)
-cp docs/SALES_HANDOVER.pdf docs/drive_shared/SALES_HANDOVER_v1.pdf
-cp docs/USER_GUIDE_MOBILE.pdf docs/drive_shared/USER_GUIDE_MOBILE_v1.pdf
-cp docs/USER_GUIDE_DESKTOP.pdf docs/drive_shared/USER_GUIDE_DESKTOP_v1.pdf
+# 3. Copy vào drive_shared/ (luôn đè v1 — KHÔNG tăng version số trong filename)
+cp SALES_HANDOVER.pdf drive_shared/SALES_HANDOVER_v1.pdf
+cp USER_GUIDE_MOBILE.pdf drive_shared/USER_GUIDE_MOBILE_v1.pdf
+cp USER_GUIDE_DESKTOP.pdf drive_shared/USER_GUIDE_DESKTOP_v1.pdf
 
-# 3. Sync lên Google Drive
-rclone sync docs/drive_shared/ luanpm88:vBrand_Shared/SGCONNECT/ --progress
+# 4. Sync lên Google Drive
+rclone sync drive_shared/ luanpm88:vBrand_Shared/SGCONNECT/ --progress
 
-# 4. (Nếu user yêu cầu) Commit + push
+# 5. (Nếu user yêu cầu) Commit + push
 ```
+
+**Quan trọng:** filename giữ `_v1` cố định, nhưng "version" thực sự nằm ở dòng `> Cập nhật: <date>` trong từng MD. Mỗi lần regen → bump date trong cả 3 MD trước, không skip.
 
 **3 file PDF:**
 | File MD | PDF output | Nội dung |
