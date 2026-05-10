@@ -1,5 +1,7 @@
 # Hướng dẫn sử dụng vBrand — Desktop (Máy tính)
 
+> Cập nhật: 2026-05-10
+
 ---
 
 ## Đăng nhập

@@ -1,5 +1,7 @@
 # Hướng dẫn sử dụng vBrand — Webapp (Điện thoại)
 
+> Cập nhật: 2026-05-10
+
 ---
 
 ## Đăng nhập

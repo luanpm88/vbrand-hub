@@ -119,12 +119,27 @@ Khi cần clone 1 WP site sang domain mới:
 1. `mysqldump` DB cũ → `mysql` DB mới
 2. `cp -r` thư mục WP
 3. Sửa `wp-config.php` (DB_NAME, DB_USER, DB_PASSWORD)
-4. `wp search-replace 'old-url' 'new-url' --all-tables` (chạy 2 lần: http→https rồi domain→domain)
-5. Copy nginx config từ site đang chạy, sed đổi domain/path — **KHÔNG viết từ heredoc** (dễ lỗi escape `$`)
-6. SSL: `certbot --nginx -d domain --non-interactive --agree-tos`
-7. Sau SSL: `wp option update siteurl/home` thành https
-8. Tạo customer trên brand app: Customer → User (user.customer_id = customer.id)
-9. Generate API token trên WP: `wp eval` với `update_option('vbrandsync_api_token', ...)`
+4. **Sửa `wp-content/plugins/vbrandsync/.env`** (DB_DATABASE, DB_USERNAME, DB_PASSWORD) — vbrandsync là Laravel micro-app riêng, có `.env` độc lập với wp-config. Nếu skip, mọi REST endpoint vbrandsync sẽ 500.
+5. `wp search-replace 'old-url' 'new-url' --skip-columns=guid --all-tables` (chạy 2-3 lần: https://old → http://new, http://old → http://new, rồi domain-only — vì siteurl chưa SSL)
+6. **Set tạm `wp option update siteurl/home http://newdomain`** trước khi cài SSL — certbot cần HTTP để pass challenge
+7. Copy nginx config từ site đang chạy, sed đổi domain/path — **KHÔNG viết từ heredoc** (dễ lỗi escape `$`). Initial config dùng `listen 80` only — certbot sẽ tự thêm 443 + redirect.
+8. SSL: `certbot --nginx -d domain --non-interactive --agree-tos --email <email> --redirect`. **Bỏ `-d www.<domain>`** nếu DNS www chưa trỏ — sẽ fail NXDOMAIN, kill cả cert. Add www sau khi DNS sẵn sàng.
+9. Sau SSL: `wp option update siteurl/home https://...` + `wp search-replace http://new https://new --skip-columns=guid --all-tables`
+10. **Reset vbrandsync settings cho customer mới** — DB clone copy luôn `wp_vbs_settings.vbrand_token` của customer cũ. Phải tạo customer mới trên brand app rồi `Setting::set('vbrand_token', $newApiToken)` qua tinker bên trong vbrandsync plugin.
+11. Tạo customer trên brand app: `Customer::createCustomerWithDefaultUser(...)` (Vietnamese language id, role = default admin) → set `customer->wordpress_endpoint = "https://newdomain/wp-json/vbrandsync/v1"`
+12. Run `enforce-cod-vbrand-express.php` (COD only + vBrand Express + coming-soon=no) — bắt buộc
+13. Update `bots/report/sites.md` registry — thêm entry mới full credentials
+
+### Clone WP site + đổi theme (rebrand mạnh)
+Khi clone 1 site sang brand mới (ví dụ orgafood → voducfoods):
+- **Theme options keyed by theme name** trong `wp_vbs_settings` JSON (key = `wp_get_theme()->get('Name')`). Nếu theme mới có `Theme Name` khác → customizer values từ theme cũ KHÔNG load. Hai lựa chọn:
+  1. **Đè theme name + dựa vào schema defaults** (đã update qua sed) — đơn giản nhất khi schema đã chứa Vietnamese defaults
+  2. **Migrate JSON key**: `UPDATE wp_vbs_settings SET value = REPLACE(value, '"OldName":', '"NewName":') WHERE name='theme.options';`
+- **Copy theme local trước, rồi rsync** — KHÔNG copy theme trên server. Local là source-of-truth (commit vào `vbrand-themes` repo).
+- Bulk rename CSS prefix với sed cẩn thận: `--of-` → `--vd-` cho CSS vars, `\.of-` / `"of-` / `'of-` / ` of-` cho class names. Sau đó audit lại `grep -rE "of-|--of-|orgafood"` để soi sót.
+- **Brand strings cần đổi cả uppercase**: e.g. `ORGAFOOD20` (coupon code), `OrgaFood` (display name). Chạy `grep -rinE "orga[a-z]*food|ORGAFOOD"` cuối cùng.
+- **SVG logo**: viết tay vào `assets/images/logo/logo.svg` (full wordmark + icon) + `logo-mark.svg` (icon-only / favicon). Set qua `ThemeData::updateThemeOptions(['logo' => get_template_directory_uri() . '/assets/images/logo/logo.svg', 'favicon' => ...])`.
+- **WP duplicate pages khi đổi theme**: vbrandsync's `vbrand_setfrontPageByTemplate` tự tạo page mới khi activate theme — nếu page cùng template đã tồn tại trong DB clone từ theme cũ, sẽ ra 2 bản (Trang chủ, Trang chủ-2, ...). Acceptable cho demo, có thể dọn sau bằng `wp post delete` nếu cần.
 
 ### Nginx config
 - **LUÔN copy từ site đang chạy** (`cp + sed`) thay vì viết heredoc qua SSH — tránh lỗi escape `$uri`, `$args`

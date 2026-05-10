@@ -181,3 +181,27 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Domain switched: 2026-04-28 (cafedanhphat.b-teka.com → cafedanhphat.vn — official domain)
 - Aliases: cafedanhphat.b-teka.com → 301 redirect to cafedanhphat.vn (legacy)
 - Note: Cà phê phân phối Đà Nẵng & miền Trung — upgraded from old cafedanhphat.vn HTML site, copied dreamcafe theme + customized
+
+## 9. voducfoods.b-teka.com
+- DIR_NAME: voducfoods_b_teka_com
+- DB_NAME: voducfoods_b_teka_com
+- DB_USER: voducfoods_b_teka_com
+- DB_PASS: aA456321@
+- WP Admin: admin
+- WP Pass: aA456321@
+- WP Path: /home/vbrand/sites/voducfoods_b_teka_com
+- WP API: https://voducfoods.b-teka.com/wp-json/vbrandsync/v1
+- Brand Endpoint: https://app.sgconnect.vn/api/brand
+- Brand Token: LjhNYZk6wCjg1QoSicYvgJ0vwAWuIuLyu7dE1MkfYVtNsSsyLuDhWmLQM06T
+- Customer Name: Võ Đức FOOD
+- Customer Email: voducfoods@gmail.com
+- Customer Password: 123456
+- First Name: Admin
+- Last Name: Shop
+- Phone:
+- Theme: voducfoods
+- Timezone: Asia/Ho_Chi_Minh
+- SSL: Yes (expires 2026-08-08) — apex only (www CNAME chưa trỏ)
+- Created: 2026-05-10
+- Cloned from: orgafood.b-teka.com (mysqldump + cp -r WP folder + wp search-replace + new theme `voducfoods` cloned từ `orgafood`)
+- Note: Thực phẩm sạch / Vietnamese organic food — kế thừa 38 products, theme rebrand bằng custom SVG logo (wordmark + leaf icon) tại `assets/images/logo/logo.svg`
