@@ -14,7 +14,7 @@
 | 4 | **Khách thiếu thông tin thì xử lý sao?** | Chỉ cần tối thiểu **tên + email** là đủ tạo site demo. Chưa có logo → dùng text, chưa có domain → dùng miễn phí `*.b-teka.com`, chưa có sản phẩm → import từ Shopee hoặc để trống. Tạo demo nhanh → khách tự bổ sung sau. | [Mục 4](#4-checklist-thu-thập-thông-tin-từ-khách) |
 | 5 | **Có mẫu demo hoàn chỉnh gửi khách chưa?** | **Có.** 9 site đang chạy production thật, gửi link cho khách xem ngay. | [Mục 5](#5-demo-sites-hiện-có) |
 | 6 | **Đang có bao nhiêu mẫu?** | **9 site demo** + **8 theme** phủ các ngành: công nghệ, thời trang, F&B, thực phẩm sạch (Vietnamese organic), công nghiệp, ô tô/dịch vụ. | [Mục 5](#5-demo-sites-hiện-có) + [Mục 7](#7-giao-diện-có-sẵn-8-themes) |
-| 7 | **Mẫu nào thuận tiện nhất để chào khách?** | Gửi demo **theo ngành khách** (F&B → GuuCoffee, Organic → Orgafood / Võ Đức FOOD, Tech → Logitech, Thời trang → Nike). Chưa rõ ngành → gửi cả 4. Chiến lược tốt nhất: gửi link demo + nói "tạo site riêng cho anh/chị trong 15 phút". | [Mục 8](#8-mẫu-nào-tốt-nhất-để-đi-chào-khách) |
+| 7 | **Mẫu nào thuận tiện nhất để chào khách?** | Gửi demo **theo ngành khách** (Cafe → GuuCoffee / CafeDanhPhát, F&B đặc sản → Võ Đức Vịt Da Giòn, Organic/thực phẩm → Orgafood, Tech → Logitech, Thời trang → Nike). Chưa rõ ngành → gửi cả 4. Chiến lược tốt nhất: gửi link demo + nói "tạo site riêng cho anh/chị trong 15 phút". | [Mục 8](#8-mẫu-nào-tốt-nhất-để-đi-chào-khách) |
 
 ---
 
@@ -190,7 +190,7 @@ Sales gửi cho khách **4 thứ:**
 | 6 | **Diệu An** | https://dieuan.b-teka.com | dieu-an | Công nghiệp / Van & Phụ kiện |
 | 7 | **Auto Tây Bắc** | https://autotaybac.b-teka.com | autotaybac | Ô tô / Chăm sóc xe |
 | 8 | **Cà phê Danh Phát** *(khách thật)* | https://cafedanhphat.vn | cafedanhphat | Cafe phân phối / B2B |
-| 9 | **Võ Đức FOOD** | https://voducfoods.b-teka.com | voducfoods | Thực phẩm sạch / Vietnamese organic |
+| 9 | **Võ Đức — Vịt Da Giòn** | https://voducfoods.b-teka.com | voducfoods | Vịt nướng / F&B đặc sản (Giòn · Ngon · Chất) |
 
 > Tất cả 9 site đều chạy HTTPS, sẵn sàng demo.
 
@@ -221,7 +221,7 @@ Sales gửi cho khách **4 thứ:**
 | Diệu An | `dieuan@gmail.com` | `123456` |
 | Auto Tây Bắc | `autotaybac@gmail.com` | `123456` |
 | Cà phê Danh Phát | `cafedanhanphat@gmail.com` | `123456` |
-| Võ Đức FOOD | `voducfoods@gmail.com` | `123456` |
+| Võ Đức — Vịt Da Giòn | `voducfoods@gmail.com` | `123456` |
 
 > Đăng nhập → vào dashboard seller quản lý site: sản phẩm, đơn hàng, giao diện, blog...
 
@@ -233,7 +233,7 @@ Sales gửi cho khách **4 thứ:**
 |-------|-------------|------|
 | **logitech** | Công nghệ, điện tử, phụ kiện | https://logitech.b-teka.com |
 | **orgafood** | Thực phẩm, organic, nông sản | https://orgafood.b-teka.com |
-| **voducfoods** | Thực phẩm sạch tiếng Việt, rau củ, đặc sản (cousin của orgafood — wordmark + leaf icon) | https://voducfoods.b-teka.com |
+| **voducfoods** | F&B đặc sản (Vịt nướng, vịt da giòn, đặc sản miền Trung — cousin của orgafood, custom badge logo) | https://voducfoods.b-teka.com |
 | **dreamcafe** | Cafe, nhà hàng, F&B | https://guucoffee.b-teka.com |
 | **cafedanhphat** | Cafe phân phối, B2B + B2C, đại lý | https://cafedanhphat.vn |
 | **nikezero** | Thời trang, giày dép, thể thao | https://nike.b-teka.com |

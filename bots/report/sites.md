@@ -200,8 +200,11 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Last Name: Shop
 - Phone:
 - Theme: voducfoods
+- Site title: "Võ Đức — Vịt Da Giòn"
+- Site tagline: "Giòn · Ngon · Chất"
+- Logo: custom JPG badge mascot (vịt cosplay võ thuật + Pickelhaube helmet) tại `assets/images/logo/VoDuc_Logo.jpg` — provided by client 2026-05-10
 - Timezone: Asia/Ho_Chi_Minh
 - SSL: Yes (expires 2026-08-08) — apex only (www CNAME chưa trỏ)
 - Created: 2026-05-10
 - Cloned from: orgafood.b-teka.com (mysqldump + cp -r WP folder + wp search-replace + new theme `voducfoods` cloned từ `orgafood`)
-- Note: Thực phẩm sạch / Vietnamese organic food — kế thừa 38 products, theme rebrand bằng custom SVG logo (wordmark + leaf icon) tại `assets/images/logo/logo.svg`
+- Note: F&B đặc sản — Vịt da giòn / vịt nướng — kế thừa 38 products từ orgafood (cần sau này import lại products thật của Võ Đức). Theme name "Võ Đức FOOD" giữ trong style.css, brand display dùng "Võ Đức — Vịt Da Giòn".
