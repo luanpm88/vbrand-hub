@@ -200,9 +200,14 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Last Name: Shop
 - Phone:
 - Theme: voducfoods
-- Site title: "Võ Đức — Vịt Da Giòn"
-- Site tagline: "Giòn · Ngon · Chất"
+- Site title: "Võ Đức — Vịt Quay Da Giòn"
+- Site tagline: "Giòn · Ngon · Chất — Sỉ & Lẻ + Đào tạo nghề"
+- Hotline: 0379 901 887 — Email: voducquay@gmail.com — Khu vực: Đồng Nai
+- Brand model (dual revenue): (1) Sỉ & Lẻ vịt quay/heo quay/gà nướng (2) Đào tạo nghề — cam kết học viên thành nghề
+- Đặc sản: Vịt quay da giòn / Vịt quay truyền thống / Heo quay / Gà nướng mắm nhĩ
 - Logo: custom JPG badge mascot (vịt cosplay võ thuật + Pickelhaube helmet) tại `assets/images/logo/VoDuc_Logo.jpg` — provided by client 2026-05-10
+- Brand banners (reference only, KHÔNG dùng trên web): `assets/images/banner.jpg` + `banner_info.jpg` — lưu để giữ ý tưởng nội dung + bảng màu
+- Palette: lacquer red (#B5251D) + gold (#F4D44A) + roasted brown (#4A2C1F) + cream (#FFF8EC) — match banner 100%
 - Timezone: Asia/Ho_Chi_Minh
 - SSL: Yes (expires 2026-08-08) — apex only (www CNAME chưa trỏ)
 - Created: 2026-05-10
