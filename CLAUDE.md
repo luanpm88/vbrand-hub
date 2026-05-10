@@ -130,6 +130,21 @@ Khi cần clone 1 WP site sang domain mới:
 12. Run `enforce-cod-vbrand-express.php` (COD only + vBrand Express + coming-soon=no) — bắt buộc
 13. Update `bots/report/sites.md` registry — thêm entry mới full credentials
 
+### PHP-FPM `vbrandwww` pool capacity (2026-05-10)
+- Pool ban đầu: `pm.max_children=5`, không có `request_terminate_timeout`. Khi 1 outbound HTTP call từ WP/vbrandsync hang (e.g. brand-app slow, DNS chậm), worker block trên `poll()` syscall vô thời hạn → 5 worker exhausted → cả 9 sites trên server timeout.
+- FPM log warn `server reached pm.max_children setting (5), consider raising it` xuất hiện đều đặn vài giờ/lần trong ngày 2026-05-10. Sau khi add site #9 (voducfoods), tần suất tăng đến mức blocking.
+- Fix: `/etc/php/8.3/fpm/pool.d/vbrand.conf`:
+  ```
+  pm.max_children = 15      # was 5
+  pm.start_servers = 4      # was 2
+  pm.min_spare_servers = 2  # was 1
+  pm.max_spare_servers = 6  # was 3
+  request_terminate_timeout = 60s   # NEW — kill workers hung > 60s
+  ```
+  Backup giữ tại `vbrand.conf.bak-2026-05-10`. `sudo systemctl restart php8.3-fpm` để apply.
+- **Lesson:** mỗi lần thêm site mới vào `/home/vbrand/sites/` → check `pm.max_children` đã đủ chưa. Quy ước hiện tại: ~1.5× số sites đang chạy. Server có 1.9GB RAM nên cap ở 15 (mỗi worker ~80MB peak).
+- **Lesson:** WP/vbrandsync gọi outbound HTTP (brand-app webhook, font CDN, ...) ở init time. Nếu không có `request_terminate_timeout`, 1 endpoint chậm = downtime toàn server. Luôn set timeout ≤ 60s cho mọi pool serving WP.
+
 ### Clone WP site + đổi theme (rebrand mạnh)
 Khi clone 1 site sang brand mới (ví dụ orgafood → voducfoods):
 - **Theme options keyed by theme name** trong `wp_vbs_settings` JSON (key = `wp_get_theme()->get('Name')`). Nếu theme mới có `Theme Name` khác → customizer values từ theme cũ KHÔNG load. Hai lựa chọn:
