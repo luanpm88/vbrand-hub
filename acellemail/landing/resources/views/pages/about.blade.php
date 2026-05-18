@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'About AcelleMail — The Story Behind 50,000+ Downloads')
-@section('meta_description', 'AcelleMail is a Laravel-based email marketing platform trusted by 50,000+ businesses. Our mission: make professional email marketing accessible to everyone.')
+@section('title', 'About AcelleMail — Self-Hosted Email Marketing Since 2016')
+@section('meta_description', 'AcelleMail is a Laravel-based email marketing platform trusted by thousands of businesses worldwide. Our mission: make professional email marketing accessible to everyone.')
 @section('og_title', 'About AcelleMail')
 
 @section('content')
@@ -10,7 +10,7 @@
      ABOUT — HERO
      ====================================================================== -->
 <section class="mc-about-hero">
-  <img src="{{ asset('images/hero/about-hero.jpg') }}" alt="AcelleMail headquarters" class="mc-about-hero__image" fetchpriority="high">
+  <img src="{{ asset('images/hero/about-hero.jpg') }}" alt="AcelleMail headquarters" class="mc-about-hero__image" fetchpriority="high" width="960" height="619" decoding="async">
   <div class="mc-about-hero__overlay"></div>
   <div class="mc-about-hero__content">
     <div class="mc-container">
@@ -56,9 +56,9 @@
       </p>
       <p>
         Over the years, AcelleMail has grown from a humble open-source project into a trusted platform
-        with over 50,000 downloads and a 4.6-star rating on Envato. Now at version 4.1.5 LTS, it has
-        become the go-to self-hosted alternative to costly SaaS platforms&mdash;proving that powerful
-        email marketing doesn&rsquo;t have to come with a recurring price tag.
+        with thousands of customers worldwide and a 4.8-star rating on Envato. Now at version 4.2.0 LTS,
+        it has become the go-to self-hosted alternative to costly SaaS platforms&mdash;proving that
+        powerful email marketing doesn&rsquo;t have to come with a recurring price tag.
       </p>
     </div>
   </div>
@@ -75,8 +75,9 @@
         Our approach is open source, developer-first, and community-driven. We believe the best software
         is built transparently, so we ship full source code with every release&mdash;no encoded files, no
         hidden dependencies. Whether you&rsquo;re customizing the platform for a client or extending it
-        with your own plugins, you have complete freedom to make it yours. And by the
-        way&mdash;<a href="https://forum.acellemail.com" class="mc-link" target="_blank">we&rsquo;d love your feedback</a>.
+        with your own plugins, you have complete freedom to make it yours.
+        <a href="{{ route('for.developers') }}" class="mc-link"><strong>See the plugin SDK &rarr;</strong></a><span style="display: none;"> And by the
+        way&mdash;<a href="https://forum.acellemail.com" class="mc-link" target="_blank">we&rsquo;d love your feedback</a>.</span>
       </p>
       <p>
         Community feedback is central to how we build and improve. Every feature request, bug report,
@@ -102,8 +103,8 @@
       growing your business instead of managing subscriptions.
     </p>
     <div class="mc-about-stat">
-      <span class="mc-stat__number mc-stat__number--teal">50,000+</span>
-      <span class="mc-about-stat__label">downloads by developers and businesses worldwide</span>
+      <span class="mc-stat__number mc-stat__number--teal">Since 2016</span>
+      <span class="mc-about-stat__label">trusted by thousands of developers and businesses worldwide</span>
     </div>
   </div>
 </section>
@@ -116,9 +117,9 @@
     <h2 class="mc-text-center" style="margin-bottom: var(--space-2xl);">Learn more about AcelleMail</h2>
     <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
       <!-- Card 1: Documentation -->
-      <a href="https://knowledge.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
+      <a href="/kb" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
-          <img src="{{ asset('images/about/newsroom.jpg') }}" alt="AcelleMail Documentation" loading="lazy">
+          <img src="{{ asset('images/about/newsroom.jpg') }}" alt="AcelleMail Documentation" loading="lazy" width="540" height="304" decoding="async">
         </div>
         <div class="mc-card__body">
           <h4 class="mc-card__title">AcelleMail Documentation</h4>
@@ -128,9 +129,9 @@
       </a>
 
       <!-- Card 2: Changelog -->
-      <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
+      <a href="/kb/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
         <div class="mc-card__image mc-card__image--fixed">
-          <img src="{{ asset('images/about/why-acellemail.jpg') }}" alt="See what's new in every release" loading="lazy">
+          <img src="{{ asset('images/about/why-acellemail.jpg') }}" alt="See what's new in every release" loading="lazy" width="1024" height="1024" decoding="async">
         </div>
         <div class="mc-card__body">
           <h4 class="mc-card__title">Changelog &amp; What&rsquo;s New</h4>
@@ -139,10 +140,10 @@
         </div>
       </a>
 
-      <!-- Card 3: Community -->
-      <a href="https://forum.acellemail.com" class="mc-card mc-card--bordered" target="_blank">
+      <!-- Card 3: Community — TEMP hidden until forum.acellemail.com reopens -->
+      <a href="https://forum.acellemail.com" class="mc-card mc-card--bordered" target="_blank" style="display: none;">
         <div class="mc-card__image mc-card__image--fixed">
-          <img src="{{ asset('images/about/whats-new.png') }}" alt="AcelleMail Community" loading="lazy">
+          <img src="{{ asset('images/about/whats-new.png') }}" alt="AcelleMail Community" loading="lazy" width="540" height="304" decoding="async">
         </div>
         <div class="mc-card__body">
           <h4 class="mc-card__title">AcelleMail Community</h4>

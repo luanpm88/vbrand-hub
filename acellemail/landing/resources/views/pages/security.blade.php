@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Security & GDPR Compliance — Your Data on Your Server | AcelleMail')
-@section('meta_description', 'AcelleMail is self-hosted: subscriber data never leaves your server. Full GDPR compliance, encryption at rest, role-based access, and audit logging built in.')
+@section('title', 'GDPR-Compliant Email Marketing on Your Server — AcelleMail')
+@section('meta_description', 'Self-hosted email marketing — your subscriber data never leaves your server. GDPR-compliant by design. Encryption at rest, RBAC, audit logs built in.')
 @section('og_title', 'Security & GDPR — AcelleMail')
 
 @section('content')
@@ -17,7 +17,7 @@
       AcelleMail is self-hosted&mdash;meaning your subscriber data, campaigns, and analytics never leave your server.
       No third-party access, no shared infrastructure. You own everything.
     </p>
-    <a href="{{ route('security') }}" class="mc-btn mc-btn--primary mc-btn--lg">Learn about our practices</a>
+    <a href="#practices" class="mc-btn mc-btn--primary mc-btn--lg">Learn about our practices</a>
   </div>
 </section>
 
@@ -86,11 +86,11 @@
 <!-- ======================================================================
      SECURITY — SELF-HOSTED = FULL CONTROL
      ====================================================================== -->
-<section class="mc-feature-alt">
+<section class="mc-feature-alt" id="practices">
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ $themeImg('images/features/security-control.svg') }}" alt="Self-hosted security control" fetchpriority="high">
+        <img src="{{ $themeImg('images/features/security-control.svg') }}" alt="Self-hosted security control" fetchpriority="high" width="520" height="300" decoding="async">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">Self-hosted means full control</h2>
@@ -155,7 +155,7 @@
         </ul>
       </div>
       <div class="mc-feature-alt__image">
-        <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="GDPR compliance tools" loading="lazy">
+        <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="GDPR compliance tools" loading="lazy" width="520" height="400" decoding="async">
       </div>
     </div>
   </div>
@@ -204,7 +204,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ $themeImg('images/features/integrations-auto.svg') }}" alt="Email authentication and deliverability" loading="lazy">
+        <img src="{{ $themeImg('images/features/integrations-auto.svg') }}" alt="Email authentication and deliverability" loading="lazy" width="520" height="400" decoding="async">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">SPF, DKIM &amp; DMARC Support</h2>
@@ -404,7 +404,7 @@
         </ul>
       </div>
       <div class="mc-feature-alt__image">
-        <img src="{{ $themeImg('images/features/automation-flows.svg') }}" alt="Server security" loading="lazy">
+        <img src="{{ $themeImg('images/features/automation-flows.svg') }}" alt="Server security" loading="lazy" width="520" height="400" decoding="async">
       </div>
     </div>
   </div>
@@ -483,7 +483,7 @@
   <div class="mc-container">
     <div class="mc-feature-alt__grid">
       <div class="mc-feature-alt__image">
-        <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Open source transparency" loading="lazy">
+        <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Open source transparency" loading="lazy" width="520" height="400" decoding="async">
       </div>
       <div class="mc-feature-alt__content">
         <h2 class="mc-feature-alt__heading">Open source &mdash; audit the code yourself</h2>
@@ -496,7 +496,7 @@
           Security updates are released regularly through CodeCanyon. Apply patches on your own schedule
           after reviewing changes&mdash;you&rsquo;re never forced into an update you haven&rsquo;t tested.
         </p>
-        <a href="{{ route('pricing') }}" class="mc-feature-alt__link" style="margin-top: var(--space-lg); display: inline-block;">Get AcelleMail on CodeCanyon <span>&rarr;</span></a>
+        <a href="{{ route('pricing') }}" class="mc-feature-alt__link" style="margin-top: var(--space-lg); display: inline-block;">See Pricing <span>&rarr;</span></a>
       </div>
     </div>
   </div>

@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 48" fill="none">
-  <!-- Elastic Email circle icon -->
-  <circle cx="20" cy="24" r="18" fill="#2BAC76"/>
-  <rect x="8" y="16" width="24" height="16" rx="3" fill="none" stroke="#fff" stroke-width="2"/>
-  <path d="M10 18l10 7 10-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <!-- Text with space -->
-  <text x="44" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" font-weight="700" fill="#2BAC76">Elastic</text>
-  <text x="120" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" font-weight="700" fill="#333">Email</text>
-</svg>

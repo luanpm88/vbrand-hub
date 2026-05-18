@@ -37,6 +37,7 @@
       <a href="#verification" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">Verification</a>
       <a href="#storage" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">Storage</a>
       <a href="#ipwarmup" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">IP Warmup</a>
+      <a href="#sms" style="display: inline-block; padding: 8px 20px; border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 14px; font-weight: 500; white-space: nowrap; text-decoration: none; background: var(--mc-light-gray); color: var(--mc-black); transition: all var(--transition-fast);">SMS</a>
     </div>
   </div>
 </section>
@@ -50,7 +51,7 @@
     <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
 
       <!-- Amazon SES -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__image mc-card__image--fixed" style="height: 200px; overflow: hidden;">
           <div style="width:100%;height:100%;background:linear-gradient(135deg,#FF9900,#FFB84D);display:flex;align-items:center;justify-content:center;"><svg width="64" height="64" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="rgba(255,255,255,0.2)"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">SES</text></svg></div>
         </div>
@@ -66,7 +67,7 @@
       </a>
 
       <!-- SendGrid -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__image mc-card__image--fixed" style="height: 200px; overflow: hidden;">
           <div style="width:100%;height:100%;background:linear-gradient(135deg,#1A82E2,#4DA6F0);display:flex;align-items:center;justify-content:center;"><svg width="64" height="64" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="rgba(255,255,255,0.2)"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">SG</text></svg></div>
         </div>
@@ -82,13 +83,13 @@
       </a>
 
       <!-- Stripe -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.payment-gateways') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__image mc-card__image--fixed" style="height: 200px; overflow: hidden;">
           <div style="width:100%;height:100%;background:linear-gradient(135deg,#635BFF,#8B85FF);display:flex;align-items:center;justify-content:center;"><svg width="64" height="64" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="rgba(255,255,255,0.2)"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg></div>
         </div>
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 32px; height: 32px; border-radius: var(--radius-sm);" fetchpriority="high">
+            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 32px; height: 32px; border-radius: var(--radius-sm);" fetchpriority="high" width="120" height="120" decoding="async">
             <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--mc-purple); background: rgba(107,63,160,0.08); padding: 2px 8px; border-radius: var(--radius-pill);">Payments</span>
           </div>
           <h4 class="mc-card__title" style="font-family: var(--font-serif); font-size: 22px; font-weight: 400; margin-bottom: var(--space-sm);">Stripe</h4>
@@ -111,7 +112,7 @@
     <div class="mc-grid mc-grid--4 mc-grid--gap-md">
 
       <!-- Amazon SES -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#FF9900"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
@@ -123,7 +124,7 @@
       </a>
 
       <!-- SendGrid -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1A82E2"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
@@ -135,7 +136,7 @@
       </a>
 
       <!-- SparkPost -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#FA6423"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
@@ -147,7 +148,7 @@
       </a>
 
       <!-- Elastic Email -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#2BAC76"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">E</text></svg>
@@ -159,7 +160,7 @@
       </a>
 
       <!-- Mailgun -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#F44336"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">M</text></svg>
@@ -171,7 +172,7 @@
       </a>
 
       <!-- Postmark -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#FFCC00"/><text x="20" y="26" text-anchor="middle" fill="black" font-family="Inter,sans-serif" font-weight="700" font-size="18">P</text></svg>
@@ -183,7 +184,7 @@
       </a>
 
       <!-- Custom SMTP -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="var(--theme-service-gray)"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
@@ -195,7 +196,7 @@
       </a>
 
       <!-- PHP Mail -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#777BB4"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">P</text></svg>
@@ -275,6 +276,100 @@
 </section>
 
 <!-- ======================================================================
+     INTEGRATIONS — SMS MESSAGING (partner section)
+     ====================================================================== -->
+<section class="mc-section" id="sms">
+  <div class="mc-container">
+
+    {{-- Header row: logo + partner badge --}}
+    <div style="display: flex; align-items: center; gap: var(--space-lg); margin-bottom: var(--space-md); flex-wrap: wrap;">
+      <a href="https://mobilemessage.com.au" target="_blank" style="display: inline-flex; align-items: center; flex-shrink: 0;">
+        <img src="{{ asset('images/integrations/mobilemessage.svg') }}" alt="Mobile Message" style="height: 32px; width: auto;" width="262" height="37" decoding="async">
+      </a>
+      <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--mc-teal); background: rgba(0,124,137,0.08); padding: 3px 10px; border-radius: var(--radius-pill);">Partner</span>
+    </div>
+
+    <h2 style="font-family: var(--font-serif); font-size: clamp(24px, 3vw, 36px); font-weight: 300; margin-bottom: var(--space-sm);">SMS Messaging</h2>
+    <p style="color: var(--mc-gray); font-size: 17px; line-height: 1.6; margin-bottom: var(--space-2xl); max-width: 600px;">Extend your email campaigns with SMS messaging powered by <a href="https://mobilemessage.com.au" target="_blank" style="color: var(--mc-teal); font-weight: 500;">Mobile Message</a> &mdash; Australia's leading bulk SMS platform. Send timely SMS notifications alongside your email campaigns for higher engagement and response rates.</p>
+
+    <div class="mc-grid mc-grid--4 mc-grid--gap-md">
+
+      <!-- Bulk SMS Messaging -->
+      <a href="https://mobilemessage.com.au" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #2563EB, #3B82F6); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 10h.01M12 10h.01M16 10h.01" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Bulk SMS Messaging</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Send thousands of SMS messages with direct carrier delivery. Import contacts, personalize messages, and schedule sends &mdash; all from one platform.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
+        </div>
+      </a>
+
+      <!-- SMS API Integration -->
+      <a href="https://mobilemessage.com.au" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #F59E0B, #FBBF24); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 18l6-6-6-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 6l-6 6 6 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14.5 4l-5 16" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">SMS API Integration</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Trigger SMS notifications from your email automations via API. Real-time delivery receipts and custom sender IDs for branded messaging.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Email-to-SMS -->
+      <a href="https://mobilemessage.com.au" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #8B5CF6, #A78BFA); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.8"/>
+                <path d="M2 7l7 4.5L16 7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 10l5 3-5 3v-6z" fill="white" opacity="0.9"/>
+                <path d="M17 13h5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Email-to-SMS</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Convert email campaign alerts to SMS notifications. Reach customers who don't open emails with a direct text message follow-up.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Two-Way SMS -->
+      <a href="https://mobilemessage.com.au" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" target="_blank">
+        <div class="mc-card__body" style="padding: var(--space-lg);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #10B981, #34D399); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 0 1 9-9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.5 15l2 2 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Two-Way SMS</h4>
+          </div>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Receive replies from customers and manage conversations. Automatic opt-out handling and compliance built in for hassle-free messaging.</p>
+          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Learn more &rarr;</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
      INTEGRATIONS — PAYMENT GATEWAYS (4-col grid)
      ====================================================================== -->
 <section class="mc-section" id="payments">
@@ -284,7 +379,7 @@
     <div class="mc-grid mc-grid--4 mc-grid--gap-md">
 
       <!-- PayPal -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.payment-gateways') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#003087"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">P</text></svg>
@@ -296,10 +391,10 @@
       </a>
 
       <!-- Stripe -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.payment-gateways') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
+            <img src="{{ asset('images/integrations/stripe.png') }}" alt="Stripe" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy" width="120" height="120" decoding="async">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Stripe</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Process credit card payments and manage subscriptions through Stripe. Supports recurring billing, invoicing, and automatic plan upgrades.</p>
@@ -308,7 +403,7 @@
       </a>
 
       <!-- Braintree -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.payment-gateways') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#4B3263"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">B</text></svg>
@@ -320,7 +415,7 @@
       </a>
 
       <!-- Paddle -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.payment-gateways') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#3B3B3B"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">P</text></svg>
@@ -332,7 +427,7 @@
       </a>
 
       <!-- Razorpay -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.payment-gateways') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #2B84EA; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">R</div>
@@ -344,7 +439,7 @@
       </a>
 
       <!-- Coinbase -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.payment-gateways') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #0052FF; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">C</div>
@@ -369,10 +464,10 @@
     <div class="mc-grid mc-grid--4 mc-grid--gap-md">
 
       <!-- WordPress -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.developers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/wordpress.png') }}" alt="WordPress" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
+            <img src="{{ asset('images/integrations/wordpress.png') }}" alt="WordPress" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy" width="120" height="120" decoding="async">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">WordPress</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Add AcelleMail subscription forms to any WordPress site. Embed forms via shortcode or widget, sync subscribers automatically.</p>
@@ -381,19 +476,22 @@
       </a>
 
       <!-- Laravel -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      {{-- Wrapper is a div (not anchor) because the body has an inner link
+           pointing at /for/developers — nested anchors are invalid HTML5.
+           The bottom Connect CTA is the primary anchor for the card. --}}
+      <div class="mc-card mc-card--bordered" style="color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #FF2D20; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">L</div>
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Laravel</h4>
           </div>
-          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">AcelleMail is built on Laravel. Integrate directly with your Laravel app via the API, or extend AcelleMail with custom plugins.</p>
-          <span style="color: var(--mc-teal); font-size: 14px; font-weight: 500;">Connect &rarr;</span>
+          <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">AcelleMail is built on Laravel. Integrate directly with your Laravel app via the API, or extend AcelleMail with custom plugins. <a href="{{ route('for.developers') }}" style="color: var(--theme-primary); font-weight: 600;">Read the developer guide &rarr;</a></p>
+          <a href="{{ route('for.developers') }}" style="color: var(--mc-teal); font-size: 14px; font-weight: 500; text-decoration: none;">Connect &rarr;</a>
         </div>
-      </a>
+      </div>
 
       <!-- Any PHP App -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.developers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #777BB4; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">P</div>
@@ -405,10 +503,10 @@
       </a>
 
       <!-- WooCommerce -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.ecommerce') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/woocommerce.png') }}" alt="WooCommerce" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
+            <img src="{{ asset('images/integrations/woocommerce.png') }}" alt="WooCommerce" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy" width="120" height="120" decoding="async">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">WooCommerce</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Sync WooCommerce customers to AcelleMail lists. Trigger post-purchase emails, abandoned cart reminders, and product recommendations.</p>
@@ -417,7 +515,7 @@
       </a>
 
       <!-- Joomla -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.developers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #5091CD; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">J</div>
@@ -429,7 +527,7 @@
       </a>
 
       <!-- Drupal -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.developers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #0678BE; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">D</div>
@@ -454,7 +552,7 @@
     <div class="mc-grid mc-grid--4 mc-grid--gap-md">
 
       <!-- REST API -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.developers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--mc-teal); display: flex; align-items: center; justify-content: center;">
@@ -468,7 +566,7 @@
       </a>
 
       <!-- Webhooks -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.developers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--mc-dark-gray); display: flex; align-items: center; justify-content: center;">
@@ -482,10 +580,10 @@
       </a>
 
       <!-- Zapier -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="https://zapier.com" target="_blank" rel="noopener" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/zapier.png') }}" alt="Zapier" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
+            <img src="{{ asset('images/integrations/zapier.png') }}" alt="Zapier" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy" width="120" height="120" decoding="async">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Zapier</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Connect AcelleMail to 5,000+ apps with no code via Zapier. Automate subscriber management and trigger campaigns from any event.</p>
@@ -494,7 +592,7 @@
       </a>
 
       <!-- Embed Forms -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.developers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #52BD94; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">E</div>
@@ -572,7 +670,7 @@
     </div>
     <div class="mc-stats-section__grid">
       <div class="mc-stats-section__item">
-        <span class="mc-stats-section__number">50K+</span>
+        <span class="mc-stats-section__number">6,000+</span>
         <span class="mc-stats-section__label">Installations</span>
         <p class="mc-stats-section__desc">Self-hosted AcelleMail instances running on servers around the world.</p>
       </div>
@@ -626,7 +724,7 @@
     <div class="mc-grid mc-grid--4 mc-grid--gap-md">
 
       <!-- Email Verification -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#10B981"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">V</text></svg>
@@ -638,7 +736,7 @@
       </a>
 
       <!-- AWS S3 Storage -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" id="storage">
+      <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;" id="storage">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#569A31"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">S</text></svg>
@@ -650,7 +748,7 @@
       </a>
 
       <!-- reCAPTCHA -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#4285F4"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">R</text></svg>
@@ -662,7 +760,7 @@
       </a>
 
       <!-- DKIM/SPF -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.sending-drivers') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#F59E0B"/><text x="20" y="26" text-anchor="middle" fill="black" font-family="Inter,sans-serif" font-weight="700" font-size="18">D</text></svg>
@@ -674,7 +772,7 @@
       </a>
 
       <!-- Tracking Domain -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#6366F1"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700" font-size="18">T</text></svg>
@@ -686,10 +784,10 @@
       </a>
 
       <!-- Google Analytics -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
-            <img src="{{ asset('images/integrations/google-analytics.png') }}" alt="Google Analytics" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy">
+            <img src="{{ asset('images/integrations/google-analytics.png') }}" alt="Google Analytics" style="width: 40px; height: 40px; border-radius: var(--radius-sm);" loading="lazy" width="120" height="120" decoding="async">
             <h4 style="font-family: var(--font-sans); font-size: 16px; font-weight: 600;">Google Analytics</h4>
           </div>
           <p style="color: var(--mc-gray); font-size: 14px; line-height: 1.5; margin-bottom: var(--space-md);">Automatically append UTM parameters to all campaign links. Track email-driven traffic and conversions in Google Analytics.</p>
@@ -698,7 +796,7 @@
       </a>
 
       <!-- Multi-Tenant -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('for.saas') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #000000; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">M</div>
@@ -710,7 +808,7 @@
       </a>
 
       <!-- Cron Jobs -->
-      <a href="{{ route('integrations') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
+      <a href="{{ route('developers.getting-started') }}" class="mc-card mc-card--bordered" style="text-decoration: none; color: inherit;">
         <div class="mc-card__body" style="padding: var(--space-lg);">
           <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
             <div style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: #00C4CC; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-sans);">C</div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Self-Hosted Email Marketing Software — Send Unlimited Emails | AcelleMail')
+@section('title', 'Send Unlimited Email Campaigns From Your Server — AcelleMail')
 @section('meta_description', 'Send unlimited email campaigns from your own server. Drag & drop builder, 100+ templates, real-time analytics. No per-subscriber fees. Full data ownership.')
 @section('og_title', 'Email Marketing That You Own — AcelleMail')
 
@@ -17,12 +17,12 @@
                 <h1 class="mc-hero__heading">Email Marketing That You Own</h1>
                 <p class="mc-hero__subheading">Send unlimited emails from your server with a beautiful drag &amp; drop builder. AcelleMail gives you complete control over your email marketing &mdash; no per-subscriber fees, no sending limits, and full data ownership. Install on your own server and start sending professional campaigns in minutes.</p>
                 <div class="mc-hero__actions" style="display: flex; gap: var(--space-md); align-items: center; flex-wrap: wrap;">
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg">Buy on CodeCanyon</a>
-                    <a href="https://demo.acellemail.com" class="mc-btn mc-btn--secondary mc-btn--lg">Try Live Demo</a>
+                    <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary mc-btn--lg">Get AcelleMail — $74 one-time</a>
+                    <a href="https://acellemail.com/demo" class="mc-btn mc-btn--secondary mc-btn--lg">Try Live Demo</a>
                 </div>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="AcelleMail email marketing platform — design, send, and analyze email campaigns" fetchpriority="high">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="AcelleMail email marketing platform — design, send, and analyze email campaigns" fetchpriority="high" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder interface" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Drag-and-drop email builder interface" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Email Builder</span>
@@ -66,7 +66,7 @@
                     <li class="mc-feature-list__item">Real-time preview across desktop, tablet, and mobile</li>
                     <li class="mc-feature-list__item">Full HTML editor for advanced users who want complete control</li>
                 </ul>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Explore the email builder &rarr;</a>
+                <a href="{{ route('features') }}#email-campaigns" class="mc-feature-alt__link">Explore the email builder &rarr;</a>
             </div>
         </div>
     </div>
@@ -90,10 +90,10 @@
                     <li class="mc-feature-list__item">Upload and manage your own custom templates</li>
                     <li class="mc-feature-list__item">Save templates for reuse across future campaigns</li>
                 </ul>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Browse all templates &rarr;</a>
+                <a href="{{ route('features') }}#email-campaigns" class="mc-feature-alt__link">Browse all templates &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Professional email templates for every industry" loading="lazy">
+                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Professional email templates for every industry" loading="lazy" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
@@ -110,36 +110,36 @@
             <p class="mc-text-lg" style="margin-top: var(--space-md);">AcelleMail gives you the tools to send the right message to the right person at the right time &mdash; from dynamic personalization to A/B testing and intelligent scheduling.</p>
         </div>
         <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
-            <div class="mc-card mc-card--bordered">
+            <a href="{{ route('features') }}#email-campaigns" class="mc-card mc-card--bordered">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     </div>
                     <h4 class="mc-card__title">Personalization</h4>
                     <p class="mc-card__desc">Use merge tags to insert subscriber names, custom fields, and dynamic content into every email. Create conditional content blocks that show different content based on subscriber attributes, making each email feel personally crafted for the recipient.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
-            </div>
-            <div class="mc-card mc-card--bordered">
+            </a>
+            <a href="{{ route('features') }}#email-campaigns" class="mc-card mc-card--bordered">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                     </div>
                     <h4 class="mc-card__title">A/B Testing</h4>
                     <p class="mc-card__desc">Test subject lines, sender names, and email content to find what resonates with your audience. AcelleMail automatically splits your list, tracks results, and can send the winning version to the remaining subscribers for maximum engagement.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
-            </div>
-            <div class="mc-card mc-card--bordered">
+            </a>
+            <a href="{{ route('features') }}#email-campaigns" class="mc-card mc-card--bordered">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                     </div>
                     <h4 class="mc-card__title">Smart Scheduling</h4>
                     <p class="mc-card__desc">Schedule campaigns to send at the optimal time for your audience. Set up recurring campaigns, drip sequences, and time-zone-aware scheduling to reach subscribers when they are most likely to engage. Queue campaigns for hands-off delivery.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </section>
@@ -151,7 +151,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Advanced audience segmentation tools" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Advanced audience segmentation tools" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Segmentation &amp; List Management</span>
@@ -166,7 +166,7 @@
                     <li class="mc-feature-list__item">Blacklisting by email address or domain</li>
                     <li class="mc-feature-list__item">Automatic bounce handling and list hygiene</li>
                 </ul>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Explore list management &rarr;</a>
+                <a href="{{ route('features') }}#lists" class="mc-feature-alt__link">Explore list management &rarr;</a>
             </div>
         </div>
     </div>
@@ -184,35 +184,17 @@
                 <p class="mc-feature-alt__text">Stop guessing what works. AcelleMail&rsquo;s A/B testing lets you test subject lines, email content, and sender names to discover what drives the best results. Run controlled experiments and let the platform automatically send the winning version to the rest of your audience.</p>
                 <p class="mc-feature-alt__text">With detailed analytics on every campaign, you can track opens, clicks, bounces, and unsubscribes in real time. Use click maps to see exactly where subscribers engage, and compare campaigns side by side to continuously improve your email performance.</p>
                 <ul class="mc-feature-list">
-                    <li class="mc-feature-list__item">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--mc-teal)" stroke-width="2.5" style="flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Test subject lines, sender names, and email content
-                    </li>
-                    <li class="mc-feature-list__item">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--mc-teal)" stroke-width="2.5" style="flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Automatic winner selection based on open or click rates
-                    </li>
-                    <li class="mc-feature-list__item">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--mc-teal)" stroke-width="2.5" style="flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Configurable test sample size and duration
-                    </li>
-                    <li class="mc-feature-list__item">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--mc-teal)" stroke-width="2.5" style="flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Real-time results tracking during test period
-                    </li>
-                    <li class="mc-feature-list__item">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--mc-teal)" stroke-width="2.5" style="flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Campaign comparison reports across all metrics
-                    </li>
-                    <li class="mc-feature-list__item">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--mc-teal)" stroke-width="2.5" style="flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Click map heatmaps for every campaign
-                    </li>
+                    <li class="mc-feature-list__item">Test subject lines, sender names, and email content</li>
+                    <li class="mc-feature-list__item">Automatic winner selection based on open or click rates</li>
+                    <li class="mc-feature-list__item">Configurable test sample size and duration</li>
+                    <li class="mc-feature-list__item">Real-time results tracking during test period</li>
+                    <li class="mc-feature-list__item">Campaign comparison reports across all metrics</li>
+                    <li class="mc-feature-list__item">Click map heatmaps for every campaign</li>
                 </ul>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about testing &rarr;</a>
+                <a href="{{ route('features') }}#email-campaigns" class="mc-feature-alt__link">Learn about testing &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="A/B testing dashboard showing campaign variations and results" loading="lazy">
+                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="A/B testing dashboard showing campaign variations and results" loading="lazy" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
@@ -259,7 +241,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/sending-servers.svg') }}" alt="Sending server management" loading="lazy">
+                <img src="{{ $themeImg('images/features/sending-servers.svg') }}" alt="Sending server management" loading="lazy" width="520" height="300" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Deliverability &amp; Sending Servers</span>
@@ -275,7 +257,7 @@
                     <li class="mc-feature-list__item">Automatic bounce handling and feedback loop integration</li>
                     <li class="mc-feature-list__item">Real-time sending logs and delivery status tracking</li>
                 </ul>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about sending servers &rarr;</a>
+                <a href="{{ route('features') }}#integrations-features" class="mc-feature-alt__link">Learn about sending servers &rarr;</a>
             </div>
         </div>
     </div>
@@ -289,7 +271,7 @@
         <div class="mc-hero__content--center" style="margin-bottom: var(--space-3xl);">
             <span class="mc-eyebrow">How We Compare</span>
             <h2>Why AcelleMail vs SaaS platforms</h2>
-            <p class="mc-text-lg" style="margin-top: var(--space-md);">See how self-hosted AcelleMail compares to SaaS email marketing platforms on the features that matter most.</p>
+            <p class="mc-text-lg" style="margin-top: var(--space-md);">See how self-hosted AcelleMail compares to SaaS email marketing platforms on the features that matter most. For a detailed competitor comparison, read the <a href="{{ route('compare.show', ['slug' => 'mailchimp']) }}" style="color: var(--mc-teal); text-decoration: underline;">Mailchimp alternative breakdown</a>.</p>
         </div>
         <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <table style="width: 100%; border-collapse: collapse; min-width: 600px; font-family: var(--font-sans); font-size: 15px;">
@@ -358,7 +340,7 @@
             </table>
         </div>
         <p class="mc-text-center" style="margin-top: var(--space-xl);">
-            <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary">Buy on CodeCanyon</a>
+            <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary">Get AcelleMail — $74 one-time</a>
         </p>
     </div>
 </section>
@@ -370,7 +352,31 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study.png') }}" alt="Cost savings case study — self-hosted email marketing" loading="lazy">
+                {{-- Case-study photo — responsive AVIF + WebP via assets:build pipeline.
+                     Source PNG ~1.9 MB; AVIF 1200w ≈ 50 KB. PNG kept only as final fallback. --}}
+                <picture>
+                    <source
+                        type="image/avif"
+                        srcset="{{ asset('images/features/case-study-480.avif') }} 480w,
+                                {{ asset('images/features/case-study-768.avif') }} 768w,
+                                {{ asset('images/features/case-study-1200.avif') }} 1200w,
+                                {{ asset('images/features/case-study-1536.avif') }} 1536w"
+                        sizes="(max-width: 900px) 90vw, 640px">
+                    <source
+                        type="image/webp"
+                        srcset="{{ asset('images/features/case-study-480.webp') }} 480w,
+                                {{ asset('images/features/case-study-768.webp') }} 768w,
+                                {{ asset('images/features/case-study-1200.webp') }} 1200w,
+                                {{ asset('images/features/case-study-1536.webp') }} 1536w"
+                        sizes="(max-width: 900px) 90vw, 640px">
+                    <img
+                        src="{{ asset('images/features/case-study-1200.webp') }}"
+                        alt="Cost savings case study — self-hosted email marketing"
+                        loading="lazy"
+                        width="640"
+                        height="443"
+                        decoding="async">
+                </picture>
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
@@ -411,64 +417,64 @@
             <p class="mc-text-lg" style="margin-top: var(--space-md);">Beyond core email campaigns, AcelleMail includes a full suite of tools to help you reach, engage, and convert your audience.</p>
         </div>
         <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
-            <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
+            <a href="{{ route('features') }}#email-campaigns" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                     </div>
                     <h4 class="mc-card__title">Transactional Emails</h4>
                     <p class="mc-card__desc">Send password resets, order confirmations, and account notifications through your AcelleMail installation. Use the same templates and tracking as your marketing campaigns for a consistent brand experience.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
             </a>
-            <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
+            <a href="{{ route('features') }}#automation-features" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
                     </div>
                     <h4 class="mc-card__title">RSS-to-Email</h4>
                     <p class="mc-card__desc">Automatically turn your blog posts and content feeds into beautifully formatted email campaigns. Set your schedule and let AcelleMail pull new content and send it to your subscribers without any manual effort.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
             </a>
-            <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
+            <a href="{{ route('features') }}#deliverability" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                     </div>
                     <h4 class="mc-card__title">Email Verification</h4>
                     <p class="mc-card__desc">Built-in email verification service checks your list for invalid, disposable, and catch-all addresses before you send. Reduce bounces, protect your sender reputation, and improve deliverability across all campaigns.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
             </a>
-            <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
+            <a href="{{ route('features') }}#lists" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg>
                     </div>
                     <h4 class="mc-card__title">Landing Pages</h4>
                     <p class="mc-card__desc">Build subscription landing pages with a drag-and-drop builder. Capture leads with embedded forms and pop-ups, and automatically add subscribers to your mailing lists with tags and custom field mapping.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
             </a>
-            <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
+            <a href="{{ route('features') }}#lists" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                     </div>
                     <h4 class="mc-card__title">Signup Forms</h4>
                     <p class="mc-card__desc">Grow your audience with embedded forms, pop-ups, and hosted signup pages. Customize every field, add tags automatically, and trigger welcome emails instantly. GDPR-compliant with double opt-in and consent tracking built in.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
             </a>
-            <a href="{{ route('features') }}" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
+            <a href="{{ route('features') }}#saas-platform" class="mc-card mc-card--bordered" style="background: var(--mc-white);">
                 <div class="mc-card__body mc-card__body--lg">
                     <div style="font-size: 40px; margin-bottom: var(--space-md);">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--mc-teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
                     </div>
                     <h4 class="mc-card__title">Multi-Tenant Support</h4>
                     <p class="mc-card__desc">Run AcelleMail as a SaaS business for your clients. Create sub-accounts with their own sending limits, mailing lists, and billing plans. Perfect for agencies and resellers who want to offer white-label email marketing.</p>
-                    <span class="mc-card__link">Learn more</span>
+                    <span class="mc-card__link">Learn more &rarr;</span>
                 </div>
             </a>
         </div>
@@ -482,7 +488,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Email marketing analytics and reporting dashboard" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Email marketing analytics and reporting dashboard" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Analytics &amp; Reporting</span>
@@ -496,7 +502,7 @@
                     <li class="mc-feature-list__item">Geographic and device breakdown reports</li>
                     <li class="mc-feature-list__item">Campaign comparison reports across time periods</li>
                 </ul>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Explore analytics &rarr;</a>
+                <a href="{{ route('features') }}#deliverability" class="mc-feature-alt__link">Explore analytics &rarr;</a>
             </div>
         </div>
     </div>
@@ -523,7 +529,7 @@
                 <a href="{{ route('automation') }}" class="mc-feature-alt__link">Explore automations &rarr;</a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Email automation builder with triggers and workflows" loading="lazy">
+                <img src="{{ $themeImg('images/features/automations-ecom.svg') }}" alt="Email automation builder with triggers and workflows" loading="lazy" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
@@ -535,6 +541,116 @@
 <section class="mc-plan-cta" style="background: var(--mc-light-gray);">
     <div class="mc-container">
         <div class="mc-plan-cta__inner">
+            {{-- Right-side banner — inline SVG, theme-aware via CSS vars.
+                 Visual: price-comparison story that reinforces the H2.
+                 Left stack = ascending SaaS monthly bills (struck through).
+                 Right card = AcelleMail one-time license badge. "vs" connector.
+                 Aligned with the existing pricing-hero.svg design idiom. --}}
+            <div class="mc-plan-cta__image" style="order: 2;">
+                <svg viewBox="0 0 540 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 100%; height: auto;" role="img" aria-label="AcelleMail pricing comparison — recurring SaaS monthly fees stack growing on the left versus a single $74 one-time license card on the right">
+                    <defs>
+                        <filter id="cta-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.08"/>
+                        </filter>
+                    </defs>
+
+                    {{-- Background card --}}
+                    <rect width="540" height="400" rx="16" fill="var(--theme-bg-warm)"/>
+
+                    {{-- LEFT — SaaS monthly fees stack (ascending, faded, struck-through) --}}
+                    <g transform="translate(40, 60)">
+                        <text x="0" y="0" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" letter-spacing="1.4" fill="var(--theme-text-tertiary)">SAAS &nbsp;·&nbsp; MONTHLY FEES</text>
+
+                        @php
+                            // 5 ascending bills — ALL SHAPE, NO RECURRING TEXT (per user feedback).
+                            // The cycle is conveyed by a small loop icon on the right of each row.
+                            // Bar widths grow each month to imply accumulation over time.
+                            $bills = [
+                                ['y' => 14, 'h' => 32, 'opacity' => 0.32, 'label' => 'Mo 1   $299', 'bar' => 24],
+                                ['y' => 50, 'h' => 36, 'opacity' => 0.42, 'label' => 'Mo 2   $299', 'bar' => 32],
+                                ['y' => 90, 'h' => 40, 'opacity' => 0.55, 'label' => 'Mo 3   $299', 'bar' => 40],
+                                ['y' => 134, 'h' => 44, 'opacity' => 0.7,  'label' => 'Mo 4   $299', 'bar' => 48],
+                                ['y' => 182, 'h' => 50, 'opacity' => 0.88, 'label' => 'Mo 5   $299', 'bar' => 56],
+                            ];
+                        @endphp
+                        @foreach($bills as $b)
+                            <g transform="translate(0, {{ $b['y'] }})" opacity="{{ $b['opacity'] }}">
+                                <rect width="180" height="{{ $b['h'] }}" rx="6" fill="#FFFFFF" stroke="var(--theme-border)" stroke-width="1"/>
+                                {{-- Left accent bar — primary color, grows each month --}}
+                                <rect x="0" y="0" width="3" height="{{ $b['h'] }}" rx="1.5" fill="var(--theme-primary)"/>
+                                {{-- Month + amount label --}}
+                                <text x="16" y="{{ $b['h'] / 2 + 4 }}" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--theme-text)" opacity="0.85">{{ $b['label'] }}</text>
+                                {{-- Cycle/repeat icon — pure shape, no text. Tinted circle background +
+                                     two curved arrows forming a loop (universally read as "recurring"). --}}
+                                <g transform="translate(160, {{ $b['h'] / 2 }})" fill="none" stroke="var(--theme-text)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="0" cy="0" r="9" fill="var(--theme-text)" fill-opacity="0.06" stroke="none"/>
+                                    {{-- Top arc, clockwise, with arrowhead at right --}}
+                                    <path d="M -4 -1.5 A 5 5 0 0 1 4 -1.5"/>
+                                    <polyline points="2 -3.5, 4 -1.5, 6 -2.5"/>
+                                    {{-- Bottom arc, clockwise (continuing the loop), arrowhead at left --}}
+                                    <path d="M 4 1.5 A 5 5 0 0 1 -4 1.5"/>
+                                    <polyline points="-2 3.5, -4 1.5, -6 2.5"/>
+                                </g>
+                            </g>
+                        @endforeach
+
+                        {{-- "..forever" hint at bottom --}}
+                        <text x="0" y="252" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="var(--theme-text-tertiary)" font-style="italic">…and every month after that.</text>
+                    </g>
+
+                    {{-- CENTER — "vs" pill --}}
+                    <g transform="translate(248, 200)">
+                        <circle cx="22" cy="0" r="22" fill="var(--theme-bg)" stroke="var(--theme-border)" stroke-width="1.5"/>
+                        <text x="22" y="5" text-anchor="middle" font-family="var(--font-serif), Georgia, serif" font-size="14" font-weight="500" font-style="italic" fill="var(--theme-text-secondary)">vs</text>
+                    </g>
+
+                    {{-- RIGHT — AcelleMail one-time license card, highlighted --}}
+                    <g transform="translate(310, 56)" filter="url(#cta-shadow)">
+                        <rect width="200" height="288" rx="14" fill="#FFFFFF" stroke="var(--theme-primary)" stroke-width="1.5"/>
+
+                        {{-- License pill at top --}}
+                        <rect x="20" y="22" width="160" height="26" rx="13" fill="var(--theme-primary)"/>
+                        <text x="100" y="39" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="700" letter-spacing="0.8" fill="var(--theme-text)">ACELLEMAIL LICENSE</text>
+
+                        {{-- Strikethrough fake recurring price --}}
+                        <text x="100" y="74" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--theme-text-tertiary)" text-decoration="line-through">$299 / month</text>
+
+                        {{-- Big price --}}
+                        <text x="100" y="116" text-anchor="middle" font-family="var(--font-serif), Georgia, serif" font-size="56" font-weight="400" fill="var(--theme-text)" letter-spacing="-0.02em">$74</text>
+                        <text x="100" y="138" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="700" letter-spacing="2" fill="var(--theme-primary)">ONE-TIME</text>
+
+                        {{-- Divider --}}
+                        <line x1="20" y1="156" x2="180" y2="156" stroke="var(--theme-border)" stroke-width="1"/>
+
+                        {{-- Feature checklist --}}
+                        @php
+                            $checks = [
+                                ['y' => 174, 'label' => 'Lifetime updates'],
+                                ['y' => 198, 'label' => 'Unlimited subscribers'],
+                                ['y' => 222, 'label' => 'Full source code'],
+                                ['y' => 246, 'label' => '6 months support'],
+                            ];
+                        @endphp
+                        @foreach($checks as $c)
+                            <g transform="translate(20, {{ $c['y'] }})">
+                                <circle cx="8" cy="0" r="8" fill="var(--theme-primary)" opacity="0.18"/>
+                                <polyline points="4,0 7,3 12,-3" fill="none" stroke="var(--theme-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="24" y="4" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="var(--theme-text)">{{ $c['label'] }}</text>
+                            </g>
+                        @endforeach
+
+                        {{-- "PAID FOREVER" stamp, rotated --}}
+                        <g transform="translate(160, 268) rotate(-8)">
+                            <rect x="-44" y="-12" width="88" height="22" rx="3" fill="none" stroke="var(--theme-primary)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                            <text x="0" y="3" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="700" letter-spacing="0.6" fill="var(--theme-primary)">PAID · FOREVER</text>
+                        </g>
+                    </g>
+
+                    {{-- Bottom tagline --}}
+                    <text x="270" y="378" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="500" fill="var(--theme-text-secondary)" letter-spacing="0.3">Pay once. Send forever.</text>
+                </svg>
+            </div>
+
             <div class="mc-plan-cta__content">
                 <h2 class="mc-plan-cta__heading">One-time purchase. No monthly fees.</h2>
                 <p class="mc-plan-cta__text">Get AcelleMail from CodeCanyon with a one-time license fee. Install on your own server and connect any sending service &mdash; Amazon SES, SendGrid, SparkPost, Mailgun, or your own SMTP. No per-subscriber fees, no sending limits, and lifetime updates included.</p>
@@ -565,8 +681,8 @@
                     </li>
                 </ul>
                 <div style="display: flex; gap: var(--space-md); align-items: center; flex-wrap: wrap;">
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg">Buy on CodeCanyon</a>
-                    <a href="https://demo.acellemail.com" class="mc-btn mc-btn--secondary mc-btn--lg">Try Live Demo</a>
+                    <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary mc-btn--lg">Get AcelleMail — $74 one-time</a>
+                    <a href="https://acellemail.com/demo" class="mc-btn mc-btn--secondary mc-btn--lg">Try Live Demo</a>
                 </div>
             </div>
         </div>

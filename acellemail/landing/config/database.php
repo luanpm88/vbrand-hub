@@ -38,9 +38,16 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'busy_timeout' => null,
-            'journal_mode' => null,
-            'synchronous' => null,
+            // WAL mode lets concurrent reads happen while a single writer
+            // proceeds — needed once we add comment + like + cta_impression
+            // writes alongside KB page reads. 'NORMAL' synchronous is the
+            // documented WAL companion: durable across crashes, ~10× faster
+            // than 'FULL'. busy_timeout 5s prevents transient SQLITE_BUSY
+            // when two writers collide on a hot row (e.g. counting likes
+            // while someone else inserts one). See COMMENT_LIKE_KB_CTA_PLAN.md §10.
+            'busy_timeout' => 5000,
+            'journal_mode' => 'WAL',
+            'synchronous' => 'NORMAL',
             'transaction_mode' => 'DEFERRED',
         ],
 

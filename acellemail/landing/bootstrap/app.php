@@ -11,7 +11,26 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // The `auth` middleware redirects guests to a 'login' route by
+        // default; our auth surface (Wave 0) uses `auth.login`. Set the
+        // redirect target explicitly so /admin and other auth-gated
+        // pages 302 instead of crashing with RouteNotFoundException.
+        $middleware->redirectGuestsTo(fn () => route('auth.login'));
+
+        // `admin` alias — gate routes that require `users.is_admin = 1`.
+        // Used by the /admin/* group in routes/web.php.
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        ]);
+
+        // Wave 3 — `cta_dismissed` is written by client-side JS in
+        // public/js/script.js (it has no access to Laravel's app key
+        // and shouldn't), so Laravel's EncryptCookies middleware must
+        // skip it on read — otherwise the decrypt fails silently and
+        // request()->cookie('cta_dismissed') returns null, defeating
+        // the 7-day dismissal-stickiness contract documented in
+        // CTA_VARIANT_COPY.md.
+        $middleware->encryptCookies(except: ['cta_dismissed']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

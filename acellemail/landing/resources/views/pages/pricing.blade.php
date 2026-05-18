@@ -1,17 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Pricing — $64 One-Time License, No Monthly Fees | AcelleMail')
-@section('meta_description', 'AcelleMail starts at $64 — one-time payment, lifetime updates, full source code. No monthly fees, no per-subscriber charges. Compare Regular vs Extended.')
+@section('title', 'AcelleMail Pricing — From $74 One-Time, No Monthly Fees')
+@section('meta_description', 'AcelleMail starts at $74 — one-time payment, lifetime updates, full source code. No monthly fees, no per-subscriber charges. Buy today on CodeCanyon.')
 @section('og_title', 'Simple, One-Time Pricing — AcelleMail')
 
 @section('content')
+
+<style>
+  /* Hero price cards — clickable scroll-anchors to #pricing-plans */
+  a.mc-pricing-hero__price-card { cursor: pointer; }
+</style>
 
 <!-- Hero / Tab Section -->
 <section class="mc-pricing-hero" style="background-color: var(--mc-cream);">
     <div class="mc-container">
         <div class="mc-pricing-hero__tabs">
-            <a href="{{ route('pricing') }}" class="mc-pricing-hero__tab mc-pricing-hero__tab--active">One-Time Pricing</a>
-            <a href="{{ route('features') }}" class="mc-pricing-hero__tab">All Features</a>
+            <a href="{{ route('pricing') }}" class="mc-pricing-hero__tab mc-pricing-hero__tab--active">Web platform</a>
+            <a href="{{ route('aurius') }}" class="mc-pricing-hero__tab">Add-ons &amp; subscription</a>
             <a href="{{ route('contact') }}" class="mc-pricing-hero__tab">Custom Solutions</a>
         </div>
         <div class="mc-pricing-hero__grid">
@@ -20,56 +25,39 @@
                 <h1 class="mc-pricing-hero__heading">Pay Once,<br>Own Forever</h1>
                 <p class="mc-pricing-hero__subheading">Self-hosted on your own server with full source code included. You control everything &mdash; no recurring costs, no limits.</p>
                 <div class="mc-pricing-hero__prices">
-                    <div class="mc-pricing-hero__price-card">
-                        <span class="mc-pricing-hero__price-amount-inline">$64</span>
+                    <a href="#pricing-plans" class="mc-pricing-hero__price-card" style="display:block;text-decoration:none;color:inherit;">
+                        <span class="mc-pricing-hero__price-amount-inline">$74</span>
                         <span class="mc-pricing-hero__price-label">Regular License</span>
                         <span class="mc-pricing-hero__price-desc">Single domain, full source</span>
-                    </div>
-                    <div class="mc-pricing-hero__price-card mc-pricing-hero__price-card--featured">
+                    </a>
+                    <a href="#pricing-plans" class="mc-pricing-hero__price-card mc-pricing-hero__price-card--featured" style="display:block;text-decoration:none;color:inherit;">
                         <span class="mc-pricing-hero__price-badge">Best Value</span>
                         <span class="mc-pricing-hero__price-amount-inline">$199</span>
                         <span class="mc-pricing-hero__price-label">Extended License</span>
                         <span class="mc-pricing-hero__price-desc">SaaS-ready, white-label</span>
-                    </div>
+                    </a>
                 </div>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg" target="_blank">Buy on CodeCanyon</a>
+                <div style="display: flex; gap: var(--space-md); align-items: center; flex-wrap: wrap;">
+                    <a href="https://acellemail.com/demo" class="mc-btn mc-btn--secondary mc-btn--lg">Try Live Demo</a>
+                </div>
                 <div class="mc-pricing-hero__trust">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <span>Lifetime updates</span>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <span>6-month support</span>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>50,000+ users</span>
+                    <span>Trusted since 2016</span>
                 </div>
             </div>
             <div class="mc-pricing-hero__image">
-                <img src="{{ $themeImg('images/features/pricing-hero.svg') }}" alt="AcelleMail lifetime license — full source code, unlimited subscribers, free updates">
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Promotional Cards -->
-<section class="mc-promo-cards">
-    <div class="mc-container">
-        <div class="mc-promo-cards__grid">
-            <div class="mc-promo-cards__item">
-                <h3 class="mc-promo-cards__title">Regular License &mdash; Just $64</h3>
-                <p class="mc-promo-cards__price">One-time payment, lifetime updates</p>
-                <span class="mc-promo-cards__badge">Full Source Code / Single Domain</span>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary">Buy on CodeCanyon</a>
-            </div>
-            <div class="mc-promo-cards__item">
-                <h3 class="mc-promo-cards__title">Extended License &mdash; Best Value</h3>
-                <p class="mc-promo-cards__desc">Save thousands vs monthly SaaS tools &mdash; build your own email platform</p>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary">Buy Now</a>
+                <img src="{{ $themeImg('images/features/pricing-hero.svg') }}" alt="AcelleMail lifetime license — full source code, unlimited subscribers, free updates" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
 </section>
 
 <!-- Pricing Plans -->
-<section class="mc-pricing-plans">
+<section class="mc-pricing-plans" id="pricing-plans">
     <div class="mc-container">
         <div class="mc-pricing-plans__grid">
 
@@ -81,7 +69,7 @@
                 </div>
                 <div class="mc-pricing-plans__card-body">
                     <div class="mc-pricing-plans__price">
-                        <span class="mc-pricing-plans__price-amount">$64.00</span>
+                        <span class="mc-pricing-plans__price-amount">$74.00</span>
                         <span class="mc-pricing-plans__price-period">one-time</span>
                     </div>
                     <ul class="mc-pricing-plans__features">
@@ -116,7 +104,7 @@
                     </ul>
                 </div>
                 <div class="mc-pricing-plans__card-footer">
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary">Buy Now</a>
+                    <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary">Buy Regular License — $74</a>
                     <a href="{{ route('features') }}" class="mc-btn mc-btn--outline">See All Features</a>
                 </div>
             </div>
@@ -152,96 +140,42 @@
                         </li>
                         <li class="mc-pricing-plans__feature">
                             <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Full PHP source code included
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            6 months of technical support
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Lifetime free updates included
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             White-label ready out of the box
                         </li>
                     </ul>
+                    <p style="font-size: 13px; color: var(--theme-text-tertiary); margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px dashed var(--theme-border);">Building plugins for SaaS resale? <a href="{{ route('for.developers') }}" style="color: var(--theme-primary); font-weight: 600;">See what developers can build &rarr;</a></p>
                 </div>
                 <div class="mc-pricing-plans__card-footer">
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary">Buy Extended</a>
+                    <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary">Buy Extended License — $199</a>
                     <a href="{{ route('features') }}" class="mc-btn mc-btn--outline">Compare Licenses</a>
                 </div>
             </div>
 
-            <!-- Installation Service -->
+            <!-- Free 6-month support (included with every license) -->
             <div class="mc-pricing-plans__card">
                 <div class="mc-pricing-plans__card-header">
-                    <h3 class="mc-pricing-plans__plan-name">Installation Service</h3>
+                    <h3 class="mc-pricing-plans__plan-name">Free 6-month support</h3>
+                    <p class="mc-pricing-plans__sends">Included with every license</p>
                 </div>
                 <div class="mc-pricing-plans__card-body">
-                    <div class="mc-pricing-plans__price">
-                        <span class="mc-pricing-plans__price-amount">$49.00</span>
-                        <span class="mc-pricing-plans__price-period">one-time</span>
-                    </div>
+                    <p class="mc-pricing-plans__limits">No extra cost &mdash; starts the day you buy</p>
                     <ul class="mc-pricing-plans__features">
                         <li class="mc-pricing-plans__feature">
                             <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Professional setup on your server
+                            Email ticket support
                         </li>
                         <li class="mc-pricing-plans__feature">
                             <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            SMTP &amp; sending domain configured
+                            Installation &amp; setup guidance
                         </li>
                         <li class="mc-pricing-plans__feature">
                             <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            SSL certificate setup included
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Cron jobs &amp; queue workers set up
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Done by our expert team, hassle-free
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Typically completed within 24 hours
+                            Bug fixes &amp; product updates
                         </li>
                     </ul>
                 </div>
                 <div class="mc-pricing-plans__card-footer">
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary">Add to Order</a>
-                    <a href="{{ route('contact') }}" class="mc-btn mc-btn--outline">Ask a Question</a>
-                </div>
-            </div>
-
-            <!-- Annual Support -->
-            <div class="mc-pricing-plans__card">
-                <div class="mc-pricing-plans__card-header">
-                    <h3 class="mc-pricing-plans__plan-name">Annual Support</h3>
-                    <p class="mc-pricing-plans__sends">Extended priority support package</p>
-                </div>
-                <div class="mc-pricing-plans__card-body">
-                    <p class="mc-pricing-plans__limits">Renews yearly, cancel anytime you want</p>
-                    <ul class="mc-pricing-plans__features">
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Priority ticket support
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Server migration assistance
-                        </li>
-                        <li class="mc-pricing-plans__feature">
-                            <svg class="mc-pricing-plans__check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Custom configuration help
-                        </li>
-                    </ul>
-                </div>
-                <div class="mc-pricing-plans__card-footer">
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--outline">Learn More</a>
+                    <a href="{{ route('contact') }}" class="mc-btn mc-btn--outline">Contact support</a>
                 </div>
             </div>
 
@@ -287,7 +221,7 @@
                 <thead>
                     <tr>
                         <th>Feature</th>
-                        <th>Regular ($64)</th>
+                        <th>Regular ($74)</th>
                         <th>Extended ($199)</th>
                     </tr>
                 </thead>
@@ -355,7 +289,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Sending cost comparison chart" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="Sending cost comparison chart" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">Cost Comparison</span>
@@ -369,6 +303,9 @@
                     <li class="mc-feature-list__item">No per-subscriber fees &mdash; grow without limits</li>
                 </ul>
                 <a href="{{ route('features') }}" class="mc-feature-alt__link">See all supported sending services &rarr;</a>
+                <p style="margin-top: var(--space-md); font-size: 14px; color: var(--mc-gray);">
+                    Comparing email marketing tools? See the full <a href="{{ route('compare.show', ['slug' => 'mailchimp']) }}" style="color: var(--mc-teal); text-decoration: underline;">AcelleMail vs Mailchimp side-by-side breakdown</a>.
+                </p>
             </div>
         </div>
     </div>
@@ -381,13 +318,13 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ $themeImg('images/features/case-study-savings.svg') }}" alt="Save $12,000+ per year" style="width:100%;border-radius:var(--radius-lg);" loading="lazy">
+                <img src="{{ $themeImg('images/features/case-study-savings.svg') }}" alt="Save $12,000+ per year" style="width:100%;border-radius:var(--radius-lg);" loading="lazy" width="520" height="300" decoding="async">
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
-                    &ldquo;We switched from paying $500/month on Mailchimp to AcelleMail with a one-time $199 Extended License. Now we run our own email marketing SaaS and the only recurring cost is $15/month for Amazon SES &mdash; saving us thousands every single year.&rdquo;
+                    Trade $500/month on Mailchimp for a one-time $199 Extended License. Run your own email marketing SaaS, charge end users, and pay only $15/month for Amazon SES &mdash; saving thousands every year.
                 </blockquote>
-                <p class="mc-case-study__attribution">&mdash; David Chen, Founder of CloudReach Marketing Agency</p>
+                <p class="mc-case-study__attribution">&mdash; The math behind AcelleMail&rsquo;s SaaS framework, used by agencies worldwide</p>
                 <div class="mc-case-study__stats">
                     <div class="mc-case-study__stat">
                         <span class="mc-case-study__stat-number">97%</span>
@@ -404,9 +341,26 @@
                         <span class="mc-case-study__stat-label">Emails sent per month</span>
                     </div>
                 </div>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-case-study__link">Get AcelleMail on CodeCanyon &rarr;</a>
+                <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-case-study__link">Get AcelleMail on CodeCanyon &rarr;</a>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- ======================================================================
+     NEWSLETTER BAND (mid-page) — between pricing table and enterprise
+     CTA. Visitor compared plans, isn't ready to checkout — staying in
+     touch via newsletter is the next-best step. Source = pricing-band.
+     ====================================================================== -->
+<section class="mc-section mc-newsletter-band">
+    <div class="mc-container mc-container--narrow">
+        <x-newsletter.inline
+            source="pricing-band"
+            variant="band"
+            title="Not ready to buy yet?"
+            subtitle="Subscribe and we'll send you release notes, deliverability tips, and self-hosting playbooks once a month."
+            cta="Stay in touch"
+        />
     </div>
 </section>
 
@@ -479,7 +433,7 @@
                     <svg class="mc-faq__icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
                 <div class="mc-faq__answer">
-                    <p>You can extend support directly through CodeCanyon, or purchase our Annual Support package ($149/year) for priority ticket support, server migration assistance, and custom configuration help. Our community forum is always free and our documentation covers most common setup and usage questions.</p>
+                    <p>Every license includes 6 months of free support out of the box. After that, you can extend support directly through CodeCanyon, or reach out to us via the contact form for one-off assistance. Our documentation covers most common setup and usage questions, and our community forum is always free.</p>
                 </div>
             </div>
 
@@ -512,7 +466,7 @@
             </div>
             <h2 style="font-family: var(--font-serif); font-size: clamp(24px, 3vw, 36px); font-weight: 300; color: var(--mc-black); margin-bottom: var(--space-md); line-height: 1.2;">Pay once, own it forever</h2>
             <p style="font-size: 17px; color: var(--mc-gray); line-height: 1.7; margin-bottom: var(--space-lg);">No monthly subscriptions, no per-email fees, no subscriber limits. Buy AcelleMail once and run your email marketing platform on your own terms &mdash; with full source code, lifetime updates, and complete control over your data and infrastructure.</p>
-            <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg">Buy on CodeCanyon</a>
+            <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary mc-btn--lg">Get AcelleMail — $74 one-time</a>
         </div>
     </div>
 </section>
@@ -527,7 +481,7 @@
     ['question' => 'Can I modify the source code?', 'answer' => 'Yes, absolutely. You receive the full unencrypted PHP source code and are free to modify, customize, and extend it to fit your exact needs. The only restriction is redistribution of the source code itself.'],
     ['question' => 'Can I build a SaaS with AcelleMail?', 'answer' => 'Yes — with the Extended License ($199). The Extended License allows you to charge end users for access to your email marketing platform. It includes built-in multi-tenant management, subscription plans with Stripe/PayPal billing, and white-label branding.'],
     ['question' => 'How do updates work after purchase?', 'answer' => 'All updates are free for life — no recurring fee required. When we release a new version, you can download it from CodeCanyon and update your installation.'],
-    ['question' => 'What if I need support after 6 months?', 'answer' => 'You can extend support directly through CodeCanyon, or purchase our Annual Support package ($149/year) for priority ticket support, server migration assistance, and custom configuration help.'],
+    ['question' => 'What if I need support after 6 months?', 'answer' => 'Every license includes 6 months of free support out of the box. After that, you can extend support directly through CodeCanyon, or reach out via the contact form for one-off assistance. Our documentation covers most common setup and usage questions, and our community forum is always free.'],
     ['question' => 'Is there a refund policy?', 'answer' => 'Purchases are covered by Envato\'s refund policy. If the item is significantly different from its description or doesn\'t work as advertised, you can request a refund through CodeCanyon.'],
 ]])
 @endpush

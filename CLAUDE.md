@@ -322,6 +322,8 @@ Mobile App / Webapp → Laravel API → WordPress REST API (vbrandsync plugin) �
 - Mọi change → E2E gate (`acellemail/docs/e2e/`, Playwright, 42 tests) → rsync → re-verify prod.
 - Discovery nào mới về landing → update `LANDING.md` trong cùng commit (xem `## 9. Self-learn rule` trong file đó).
 
+**Marketing operations:** [`acellemail/docs/marketing/`](acellemail/docs/marketing/) — toàn bộ kế hoạch marketing (paid ads, SEO ad-side, content, lead capture, direct sales infra cho 2026-07-01 deadline). Persona [`Marketer.bot`](acellemail/docs/marketing/Marketer.bot) phải đọc TRƯỚC mỗi session marketing-related. Mỗi session phải append entry vào [`marketing/LESSONS_LEARNED.md`](acellemail/docs/marketing/LESSONS_LEARNED.md). North Star: combined revenue (CodeCanyon + Direct) = 2-3× current trong 6-12 tháng.
+
 **Khi user nói ngắn:**
 | User nói | Claude làm |
 |----------|-----------|

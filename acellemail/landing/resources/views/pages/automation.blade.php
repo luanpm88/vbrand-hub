@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Marketing Automation — Trigger-Based Emails & Workflows | AcelleMail')
+@section('title', 'Email Marketing Automation — Self-Hosted Workflows | AcelleMail')
 @section('meta_description', 'Build automated email workflows with triggers, delays, and conditions. Welcome series, drip campaigns, and customer journeys — all self-hosted on your server.')
 @section('og_title', 'Marketing Automation — AcelleMail')
 
@@ -17,7 +17,7 @@
                 <a href="{{ route('pricing') }}" class="mc-btn mc-btn--primary mc-btn--lg">Get Started</a>
             </div>
             <div class="mc-hero__image">
-                <img src="{{ $themeImg('images/hero/automation-hero.svg') }}" alt="AcelleMail marketing automation" fetchpriority="high">
+                <img src="{{ $themeImg('images/hero/automation-hero.svg') }}" alt="AcelleMail marketing automation" fetchpriority="high" width="600" height="450" decoding="async">
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Welcome series automation" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="Welcome series automation" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Welcome new subscribers with automated series</h2>
@@ -79,7 +79,7 @@
                 <p class="mc-feature-alt__text">Build automated flows that fire when subscribers open an email, click a link, join a list, or match a custom field condition. Combine event triggers with time-based delays and conditional splits to create journeys that respond to how each person interacts with your emails.</p>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/automation-flows.svg') }}" alt="Automation event triggers" loading="lazy">
+                <img src="{{ $themeImg('images/features/automation-flows.svg') }}" alt="Automation event triggers" loading="lazy" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/integrations-auto.svg') }}" alt="Sending service integrations" loading="lazy">
+                <img src="{{ $themeImg('images/features/integrations-auto.svg') }}" alt="Sending service integrations" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Connect any SMTP or sending service</h2>
@@ -106,7 +106,31 @@
     <div class="mc-container">
         <div class="mc-case-study__inner">
             <div class="mc-case-study__image">
-                <img src="{{ asset('images/features/case-study.png') }}" alt="AcelleMail automation success story" loading="lazy">
+                {{-- Case-study photo — responsive AVIF + WebP via assets:build pipeline.
+                     Source PNG ~1.9 MB; AVIF 1200w ≈ 50 KB. PNG kept only as final fallback. --}}
+                <picture>
+                    <source
+                        type="image/avif"
+                        srcset="{{ asset('images/features/case-study-480.avif') }} 480w,
+                                {{ asset('images/features/case-study-768.avif') }} 768w,
+                                {{ asset('images/features/case-study-1200.avif') }} 1200w,
+                                {{ asset('images/features/case-study-1536.avif') }} 1536w"
+                        sizes="(max-width: 900px) 90vw, 640px">
+                    <source
+                        type="image/webp"
+                        srcset="{{ asset('images/features/case-study-480.webp') }} 480w,
+                                {{ asset('images/features/case-study-768.webp') }} 768w,
+                                {{ asset('images/features/case-study-1200.webp') }} 1200w,
+                                {{ asset('images/features/case-study-1536.webp') }} 1536w"
+                        sizes="(max-width: 900px) 90vw, 640px">
+                    <img
+                        src="{{ asset('images/features/case-study-1200.webp') }}"
+                        alt="AcelleMail automation success story"
+                        loading="lazy"
+                        width="640"
+                        height="443"
+                        decoding="async">
+                </picture>
             </div>
             <div class="mc-case-study__content">
                 <blockquote class="mc-case-study__quote">
@@ -139,10 +163,10 @@
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Build drip campaigns that nurture leads over time</h2>
                 <p class="mc-feature-alt__text">Design multi-step drip sequences with precise time delays between each email. Educate prospects, onboard new users, or run course-style email sequences that deliver the right content at the right time &mdash; automatically.</p>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Explore automation features <span>&rarr;</span></a>
+                <a href="{{ route('features') }}#automation-features" class="mc-feature-alt__link">Explore automation features <span>&rarr;</span></a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/campaign-manager.svg') }}" alt="Drip campaign automation builder" loading="lazy">
+                <img src="{{ $themeImg('images/features/campaign-manager.svg') }}" alt="Drip campaign automation builder" loading="lazy" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
@@ -153,12 +177,12 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/whats-new.svg') }}" alt="What's new in AcelleMail" loading="lazy">
+                <img src="{{ $themeImg('images/features/whats-new.svg') }}" alt="What's new in AcelleMail" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">What's new in AcelleMail?</h2>
                 <p class="mc-feature-alt__text">Discover the latest automation features, sending service integrations, and platform improvements. AcelleMail is open-source and actively developed &mdash; new capabilities ship regularly.</p>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Check out what's new <span>&rarr;</span></a>
+                <a href="{{ route('features') }}#whats-new" class="mc-feature-alt__link">Check out what's new <span>&rarr;</span></a>
             </div>
         </div>
     </div>
@@ -287,7 +311,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="AcelleMail automation capabilities" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="AcelleMail automation capabilities" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Powerful automation building blocks</h2>
@@ -312,10 +336,10 @@
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Optimize every step with A/B testing</h2>
                 <p class="mc-feature-alt__text">Don't just set it and forget it &mdash; improve it. Test subject lines, send times, and content variations within your automation workflows. AcelleMail's built-in A/B testing lets you experiment so every automated message performs at its peak.</p>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about A/B testing <span>&rarr;</span></a>
+                <a href="{{ route('features') }}#email-campaigns" class="mc-feature-alt__link">Learn about A/B testing <span>&rarr;</span></a>
             </div>
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="A/B testing within automation workflows" loading="lazy">
+                <img src="{{ $themeImg('images/features/predictive.svg') }}" alt="A/B testing within automation workflows" loading="lazy" width="520" height="400" decoding="async">
             </div>
         </div>
     </div>
@@ -412,12 +436,12 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/api-custom.svg') }}" alt="AcelleMail REST API" loading="lazy">
+                <img src="{{ $themeImg('images/features/api-custom.svg') }}" alt="AcelleMail REST API" loading="lazy" width="520" height="300" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <h2 class="mc-feature-alt__heading">Build custom automations with our API</h2>
                 <p class="mc-feature-alt__text">Go beyond pre-built workflows with AcelleMail's RESTful API. Trigger automations from your app, sync subscriber data programmatically, and build custom integrations with any system. Whether you're connecting a Laravel app, a WordPress site, or a custom SaaS product &mdash; the API gives you full control.</p>
-                <a href="{{ route('integrations') }}" class="mc-btn mc-btn--primary">View API docs</a>
+                <a href="{{ route('api') }}" class="mc-btn mc-btn--primary">View API docs</a>
             </div>
         </div>
     </div>

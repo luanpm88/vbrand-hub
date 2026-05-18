@@ -1,30 +1,35 @@
-<svg viewBox="0 0 520 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="520" height="300" rx="12" fill="#241C15"/>
-  <!-- Big savings number -->
-  <text x="260" y="60" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="14" font-weight="500" fill="#928B83">Annual savings</text>
-  <text x="260" y="110" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="56" font-weight="700" fill="#E8571A">$12,000+</text>
-  <text x="260" y="135" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" fill="#928B83">saved per year vs SaaS platforms</text>
-  <!-- Comparison bars -->
-  <g transform="translate(60,160)">
-    <text x="0" y="14" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#928B83">Before (SaaS)</text>
-    <rect x="110" y="2" width="280" height="16" rx="4" fill="#403B36"/>
-    <text x="396" y="14" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="600" fill="#928B83">$1,200/mo</text>
+<svg viewBox="0 0 520 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cost comparison: self-hosted vs SaaS email marketing">
+  <rect width="520" height="300" rx="12" fill="#FEF7F2"/>
+
+  <!-- Eyebrow -->
+  <text x="260" y="60" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="14" font-weight="500" fill="#6E6860">Lower sending costs</text>
+
+  <!-- Headline (no specific $ amount — abstract claim) -->
+  <text x="260" y="110" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="44" font-weight="700" fill="#E8571A">Pay once.</text>
+  <text x="260" y="148" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="44" font-weight="700" fill="#241C15">Send unlimited.</text>
+
+  <!-- Visual cost comparison bars (relative, NO specific $) -->
+  <g transform="translate(60,180)">
+    <text x="0" y="14" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#6E6860">Typical SaaS</text>
+    <rect x="110" y="2" width="280" height="16" rx="4" fill="#E5E0DA"/>
+    <text x="396" y="14" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="600" fill="#6E6860">recurring</text>
   </g>
-  <g transform="translate(60,190)">
-    <text x="0" y="14" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#E8571A">After (Acelle)</text>
-    <rect x="110" y="2" width="16" height="16" rx="4" fill="#E8571A"/>
-    <text x="134" y="14" font-family="IBM Plex Sans,sans-serif" font-size="10" font-weight="700" fill="#E8571A">$50/mo</text>
+  <g transform="translate(60,210)">
+    <text x="0" y="14" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#241C15">AcelleMail + SES</text>
+    <rect x="110" y="2" width="32" height="16" rx="4" fill="#E8571A"/>
+    <text x="150" y="14" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" fill="#241C15">SMTP cost only</text>
   </g>
-  <!-- Stats row -->
-  <g transform="translate(60,240)">
-    <rect width="400" height="40" rx="8" fill="#403B36"/>
-    <text x="70" y="26" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" fill="#fff">500K</text>
-    <text x="70" y="14" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" fill="#928B83">Emails/month</text>
-    <line x1="140" y1="8" x2="140" y2="32" stroke="#403B36" stroke-width="1"/>
-    <text x="200" y="14" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" fill="#928B83">Sending via</text>
-    <text x="200" y="26" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" fill="#E8571A">Amazon SES</text>
-    <line x1="265" y1="8" x2="265" y2="32" stroke="#403B36" stroke-width="1"/>
-    <text x="330" y="14" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" fill="#928B83">ROI</text>
-    <text x="330" y="26" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" fill="#E8571A">6,000%</text>
+
+  <!-- Stats row (factual external pricing + abstract claims, no product-stat numbers) -->
+  <g transform="translate(60,250)">
+    <rect width="400" height="40" rx="8" fill="#E5E0DA" opacity="0.6"/>
+    <text x="80" y="14" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#6E6860">License</text>
+    <text x="80" y="28" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" fill="#241C15">One-time</text>
+    <line x1="155" y1="8" x2="155" y2="32" stroke="#E5E0DA" stroke-width="1"/>
+    <text x="200" y="14" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#6E6860">Sending via</text>
+    <text x="200" y="28" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" fill="#241C15">Amazon SES</text>
+    <line x1="270" y1="8" x2="270" y2="32" stroke="#E5E0DA" stroke-width="1"/>
+    <text x="335" y="14" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" fill="#6E6860">Subscribers</text>
+    <text x="335" y="28" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="700" fill="#E8571A">Unlimited</text>
   </g>
 </svg>

@@ -16,7 +16,7 @@
                 <p class="mc-features-hero__eyebrow">ACELLEMAIL FEATURES</p>
                 <h1 class="mc-features-hero__heading" style="text-align:left;">Everything you need to run professional email marketing campaigns from your own server</h1>
                 <div style="display:flex;gap:var(--space-md);flex-wrap:wrap;">
-                    <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary mc-btn--lg" target="_blank">Download AcelleMail</a>
+                    <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary mc-btn--lg" target="_blank">Get AcelleMail — $74</a>
                     <a href="#video-campaign" class="mc-btn mc-btn--secondary mc-btn--lg">Watch demo &darr;</a>
                 </div>
             </div>
@@ -118,16 +118,16 @@
 <section class="mc-features-grid">
     <div class="mc-container">
 
-        <div class="mc-features-grid__section">
+        <div id="email-campaigns" class="mc-features-grid__section">
             <h2 class="mc-features-grid__section-title">Email Campaign Management</h2>
             <div class="mc-features-grid__cards">
-                <a href="https://knowledge.acellemail.com/category/email-marketing" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/email-marketing" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div>
                     <h3 class="mc-features-grid__name">Drag &amp; Drop Builder</h3>
                     <p class="mc-features-grid__desc">Visual email editor with content blocks for images, text, buttons, videos, and social links. No coding needed &mdash; design like a pro.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/email-marketing" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/email-marketing" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
                     <h3 class="mc-features-grid__name">A/B Split Testing</h3>
                     <p class="mc-features-grid__desc">Test subject lines, content variations, and send times. AcelleMail picks the winner automatically and sends it to the rest of your list.</p>
@@ -145,7 +145,7 @@
                     <p class="mc-features-grid__desc">Schedule campaigns for the perfect moment or let auto-scheduling pick the best time based on subscriber timezone and engagement patterns.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com" class="mc-features-grid__card" target="_blank">
+                <a href="/kb" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
                     <h3 class="mc-features-grid__name">Dynamic Content &amp; Spintax</h3>
                     <p class="mc-features-grid__desc">Personalize every email with merge tags, conditional content blocks, and Spintax variations. Each subscriber sees content tailored to them.</p>
@@ -171,14 +171,14 @@
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
                 <div class="mc-feature-alt__embed">
-                    <iframe src="https://www.youtube-nocookie.com/embed/wRlfC-jccys" title="Create and send an email campaign in 3 minutes" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <lite-youtube videoid="wRlfC-jccys" playlabel="Create and send an email campaign in 3 minutes"></lite-youtube>
                 </div>
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">SEE IT IN ACTION</span>
                 <h2 class="mc-feature-alt__heading">Create and send a campaign in 3 minutes</h2>
                 <p class="mc-feature-alt__text">From template selection to delivery &mdash; watch how AcelleMail makes it simple to design beautiful emails, target your audience, and hit send. No coding required.</p>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary" target="_blank">Download AcelleMail</a>
+                <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary" target="_blank">Get AcelleMail — $74</a>
             </div>
         </div>
     </div>
@@ -190,7 +190,7 @@
 <section class="mc-features-grid">
     <div class="mc-container">
 
-        <div class="mc-features-grid__section">
+        <div id="automation-features" class="mc-features-grid__section">
             <h2 class="mc-features-grid__section-title">Marketing Automation</h2>
             <div class="mc-features-grid__cards">
                 <a href="{{ route('automation') }}" class="mc-features-grid__card">
@@ -243,14 +243,14 @@
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
                 <div class="mc-feature-alt__embed">
-                    <iframe src="https://www.youtube-nocookie.com/embed/UDdCn8ITn1c" title="A/B test your email campaigns" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <lite-youtube videoid="UDdCn8ITn1c" playlabel="A/B test your email campaigns"></lite-youtube>
                 </div>
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">OPTIMIZE EVERY SEND</span>
                 <h2 class="mc-feature-alt__heading">A/B test your campaigns for better results</h2>
                 <p class="mc-feature-alt__text">Test subject lines, content, and sending times to find what resonates. AcelleMail picks the winner automatically and sends it to the rest of your list.</p>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary" target="_blank">Download AcelleMail</a>
+                <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary" target="_blank">Get AcelleMail — $74</a>
             </div>
         </div>
     </div>
@@ -262,40 +262,40 @@
 <section class="mc-features-grid">
     <div class="mc-container">
 
-        <div class="mc-features-grid__section">
+        <div id="lists" class="mc-features-grid__section">
             <h2 class="mc-features-grid__section-title">List Management</h2>
             <div class="mc-features-grid__cards">
-                <a href="https://knowledge.acellemail.com/category/list-management" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/list-management" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
                     <h3 class="mc-features-grid__name">Mass Import &amp; Export</h3>
                     <p class="mc-features-grid__desc">Bulk import from CSV, Excel, or copy-paste. Map columns to fields, handle duplicates automatically, and export your full list anytime.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/list-management" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/list-management" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
                     <h3 class="mc-features-grid__name">Advanced Segmentation</h3>
                     <p class="mc-features-grid__desc">Create segments by combining tags, custom fields, engagement scores, open/click history, subscription date, and any custom criteria. Segments update in real time.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/list-management" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/list-management" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
                     <h3 class="mc-features-grid__name">Tags &amp; Custom Fields</h3>
                     <p class="mc-features-grid__desc">Unlimited custom fields (text, date, number, dropdown) plus tag-based organization. Use fields in merge tags, segments, and automation conditions.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com" class="mc-features-grid__card" target="_blank">
+                <a href="/kb" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div>
                     <h3 class="mc-features-grid__name">Embeddable Sign-Up Forms</h3>
                     <p class="mc-features-grid__desc">Generate HTML forms with custom fields and embed on any website. Supports single and double opt-in with custom confirmation pages.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/security-compliance" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/security-compliance" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8m-4-4h8"/></svg></div>
                     <h3 class="mc-features-grid__name">Double Opt-In &amp; Consent</h3>
                     <p class="mc-features-grid__desc">GDPR-ready double opt-in with customizable confirmation emails and landing pages. Maintain clean, permission-based lists from day one.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/list-management" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/list-management" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M12 2a5 5 0 015 5c0 2.76-2.24 5-5 5s-5-2.24-5-5a5 5 0 015-5zM3 20c0-3 4-5.5 9-5.5s9 2.5 9 5.5"/></svg></div>
                     <h3 class="mc-features-grid__name">Subscriber Profiles &amp; Activity</h3>
                     <p class="mc-features-grid__desc">Full subscriber timeline showing opens, clicks, bounces, and automation history. Track engagement scores and contact activity over time.</p>
@@ -315,14 +315,14 @@
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
                 <div class="mc-feature-alt__embed">
-                    <iframe src="https://www.youtube-nocookie.com/embed/1u-D6LJSk80" title="Create a mail list and add subscribers in 2 minutes" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <lite-youtube videoid="1u-D6LJSk80" playlabel="Create a mail list and add subscribers in 2 minutes"></lite-youtube>
                 </div>
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">LIST BUILDING</span>
                 <h2 class="mc-feature-alt__heading">Build your subscriber list in minutes</h2>
                 <p class="mc-feature-alt__text">Import from CSV, paste from Excel, or let subscribers sign up through embedded forms. Organize with tags, segments, and custom fields &mdash; all from one dashboard.</p>
-                <a href="https://demo.acellemail.com" class="mc-btn mc-btn--primary" target="_blank">Try Live Demo</a>
+                <a href="https://acellemail.com/demo" class="mc-btn mc-btn--primary" target="_blank">Try Live Demo</a>
             </div>
         </div>
     </div>
@@ -334,40 +334,40 @@
 <section class="mc-features-grid">
     <div class="mc-container">
 
-        <div class="mc-features-grid__section">
+        <div id="deliverability" class="mc-features-grid__section">
             <h2 class="mc-features-grid__section-title">Deliverability &amp; Analytics</h2>
             <div class="mc-features-grid__cards">
-                <a href="https://knowledge.acellemail.com/category/sending-deliverability" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/sending-deliverability" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
                     <h3 class="mc-features-grid__name">SPF, DKIM &amp; DMARC</h3>
                     <p class="mc-features-grid__desc">Built-in domain authentication setup with step-by-step DNS guidance. Verify your sending domain to maximize inbox placement and sender reputation.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/sending-deliverability" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/sending-deliverability" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
                     <h3 class="mc-features-grid__name">Email Verification</h3>
                     <p class="mc-features-grid__desc">Verify email addresses before sending using built-in checks or integrations with Emailable, Kickbox, ZeroBounce, and debounce.io. Reduce bounces automatically.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/sending-deliverability" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/sending-deliverability" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/></svg></div>
                     <h3 class="mc-features-grid__name">IP Warmup Management</h3>
                     <p class="mc-features-grid__desc">Linear or exponential warmup strategies with automatic daily quota calculation. Safely build IP reputation on new dedicated IPs without getting throttled.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/analytics-reporting" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/analytics-reporting" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
                     <h3 class="mc-features-grid__name">Real-Time Campaign Analytics</h3>
                     <p class="mc-features-grid__desc">Live dashboards tracking opens, clicks, bounces, complaints, and unsubscribes. Interactive charts with click-to-open ratio and per-link performance.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/analytics-reporting" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/analytics-reporting" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
                     <h3 class="mc-features-grid__name">Click Maps &amp; Geo Reports</h3>
                     <p class="mc-features-grid__desc">Visual heatmaps of where subscribers click in your emails. Geographic and device reports showing opens by country, browser, and email client.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/analytics-reporting" class="mc-features-grid__card" target="_blank">
+                <a href="/kb/category/analytics-reporting" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div>
                     <h3 class="mc-features-grid__name">Spam Score &amp; Preview</h3>
                     <p class="mc-features-grid__desc">Check your emails against SpamAssassin filters before sending. Preview rendering across Gmail, Outlook, Apple Mail, and mobile clients.</p>
@@ -377,7 +377,7 @@
         </div>
 
         <!-- Section: Integrations (6 cards — kept as-is) -->
-        <div class="mc-features-grid__section">
+        <div id="integrations-features" class="mc-features-grid__section">
             <h2 class="mc-features-grid__section-title">Integrations</h2>
             <div class="mc-features-grid__cards">
                 <a href="{{ route('integrations') }}" class="mc-features-grid__card">
@@ -454,32 +454,32 @@
         </div>
         <div class="mc-features-integrations__grid">
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES" class="mc-features-integrations__img" loading="lazy">
+                <img src="{{ asset('images/services/amazon-ses-logo.svg') }}" alt="Amazon SES" class="mc-features-integrations__img" loading="lazy" width="180" height="48" decoding="async">
                 <h3 class="mc-features-integrations__name">Amazon SES</h3>
                 <p class="mc-features-integrations__desc">Send 100,000 emails for just $10 with Amazon SES integration.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid" class="mc-features-integrations__img" loading="lazy">
+                <img src="{{ asset('images/services/sendgrid-logo.svg') }}" alt="SendGrid" class="mc-features-integrations__img" loading="lazy" width="160" height="48" decoding="async">
                 <h3 class="mc-features-integrations__name">SendGrid</h3>
                 <p class="mc-features-integrations__desc">Reliable delivery with advanced analytics and deliverability tools.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost" class="mc-features-integrations__img" loading="lazy">
+                <img src="{{ asset('images/services/sparkpost-logo.svg') }}" alt="SparkPost" class="mc-features-integrations__img" loading="lazy" width="170" height="48" decoding="async">
                 <h3 class="mc-features-integrations__name">SparkPost</h3>
                 <p class="mc-features-integrations__desc">Enterprise email infrastructure with predictive analytics.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/stripe.svg') }}" alt="Stripe" class="mc-features-integrations__img" loading="lazy">
+                <img src="{{ asset('images/services/stripe.svg') }}" alt="Stripe" class="mc-features-integrations__img" loading="lazy" width="24" height="24" decoding="async">
                 <h3 class="mc-features-integrations__name">Stripe</h3>
                 <p class="mc-features-integrations__desc">Accept payments and manage subscriptions with Stripe integration.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/woocommerce-logo.svg') }}" alt="WooCommerce" class="mc-features-integrations__img" loading="lazy">
+                <img src="{{ asset('images/services/woocommerce-logo.svg') }}" alt="WooCommerce" class="mc-features-integrations__img" loading="lazy" width="24" height="24" decoding="async">
                 <h3 class="mc-features-integrations__name">WooCommerce</h3>
                 <p class="mc-features-integrations__desc">Sync your WooCommerce store customers and orders seamlessly.</p>
             </a>
             <a href="{{ route('integrations') }}" class="mc-features-integrations__card">
-                <img src="{{ asset('images/services/wordpress-logo.svg') }}" alt="WordPress" class="mc-features-integrations__img" loading="lazy">
+                <img src="{{ asset('images/services/wordpress-logo.svg') }}" alt="WordPress" class="mc-features-integrations__img" loading="lazy" width="24" height="24" decoding="async">
                 <h3 class="mc-features-integrations__name">WordPress</h3>
                 <p class="mc-features-integrations__desc">Embed signup forms and manage subscribers from your WordPress site.</p>
             </a>
@@ -498,7 +498,7 @@
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
                 <div class="mc-feature-alt__embed">
-                    <iframe src="https://www.youtube-nocookie.com/embed/RR6aoLYwx34" title="Connect SMTP and sending servers" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <lite-youtube videoid="uqMyS9tEZnw" playlabel="Connect SMTP and sending servers"></lite-youtube>
                 </div>
             </div>
             <div class="mc-feature-alt__content">
@@ -601,14 +601,14 @@
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
                 <div class="mc-feature-alt__embed">
-                    <iframe src="https://www.youtube-nocookie.com/embed/uqMyS9tEZnw" title="Install self-hosted email marketing in 5 minutes" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <lite-youtube videoid="uqMyS9tEZnw" playlabel="Install self-hosted email marketing in 5 minutes"></lite-youtube>
                 </div>
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">SELF-HOSTED</span>
                 <h2 class="mc-feature-alt__heading">Install on your server in 5 minutes</h2>
                 <p class="mc-feature-alt__text">Full data ownership, no monthly fees, unlimited subscribers. AcelleMail runs on your own infrastructure &mdash; you control everything.</p>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary" target="_blank">Download AcelleMail</a>
+                <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary" target="_blank">Get AcelleMail — $74</a>
             </div>
         </div>
     </div>
@@ -621,7 +621,7 @@
     <div class="mc-container">
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
-                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="GDPR compliance tools" loading="lazy">
+                <img src="{{ $themeImg('images/features/email-sms.svg') }}" alt="GDPR compliance tools" loading="lazy" width="520" height="400" decoding="async">
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">GDPR &amp; Compliance</span>
@@ -633,7 +633,7 @@
                     <li class="mc-feature-list__item">Data portability and export tools</li>
                     <li class="mc-feature-list__item">Right to deletion &mdash; remove subscriber data completely</li>
                 </ul>
-                <a href="{{ route('features') }}" class="mc-feature-alt__link">Learn about compliance &rarr;</a>
+                <a href="{{ route('security') }}" class="mc-feature-alt__link">Learn about compliance &rarr;</a>
             </div>
         </div>
     </div>
@@ -645,40 +645,47 @@
 <section class="mc-features-grid">
     <div class="mc-container">
 
-        <div class="mc-features-grid__section">
+        <div id="saas-platform" class="mc-features-grid__section">
             <h2 class="mc-features-grid__section-title">SaaS Platform &amp; Multi-Tenancy</h2>
             <div class="mc-features-grid__cards">
-                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                <a href="/kb" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
                     <h3 class="mc-features-grid__name">Multi-Tenant Architecture</h3>
                     <p class="mc-features-grid__desc">Run AcelleMail as a full SaaS platform. Each customer gets their own workspace with isolated lists, campaigns, automations, and sending servers.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                {{-- Card wrapper is a <div> (NOT <a>) because the body
+                     contains an inner <a> for "Plugin architecture". Nesting
+                     <a> inside <a> is invalid HTML5 — the browser
+                     auto-closes the outer anchor at the inner one's open
+                     tag, breaking this card AND every card that follows it
+                     in the DOM. The "Learn more →" span is upgraded to a
+                     real <a> so the card still has a primary CTA. --}}
+                <div class="mc-features-grid__card">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
                     <h3 class="mc-features-grid__name">Multiple Payment Gateways</h3>
-                    <p class="mc-features-grid__desc">Ships with Stripe, PayPal, Braintree, Paystack, Razorpay, Coinbase Commerce, and offline invoicing. Plugin architecture means you can add any gateway &mdash; no limits.</p>
-                    <span class="mc-features-grid__link">Learn more &rarr;</span>
-                </a>
-                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                    <p class="mc-features-grid__desc">Ships with Stripe, PayPal, Braintree, Paystack, Razorpay, Coinbase Commerce, and offline invoicing. <a href="{{ route('for.developers') }}#hello-world" style="color: var(--theme-primary); font-weight: 600;">Plugin architecture</a> means you can add any gateway &mdash; no limits.</p>
+                    <a href="/kb" class="mc-features-grid__link" target="_blank" rel="noopener" style="text-decoration: none;">Learn more &rarr;</a>
+                </div>
+                <a href="/kb" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
                     <h3 class="mc-features-grid__name">Subscription Plans &amp; Quotas</h3>
                     <p class="mc-features-grid__desc">Create tiered plans with custom limits &mdash; subscriber caps, send quotas, sending server slots, automation rules, and list counts. Customers self-serve upgrades.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                <a href="/kb" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M16 8l-4 4-4-4M8 16l4-4 4 4"/></svg></div>
                     <h3 class="mc-features-grid__name">Recurring Billing</h3>
                     <p class="mc-features-grid__desc">Automatic monthly or yearly billing with Stripe and Braintree remote subscriptions. Payment retries, plan changes, and cancellation handled automatically.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                <a href="/kb" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                     <h3 class="mc-features-grid__name">Admin Panel &amp; Customer Management</h3>
                     <p class="mc-features-grid__desc">Full admin dashboard to manage customers, subscriptions, payment history, sending servers, and system-wide settings. Impersonate any customer account for support.</p>
                     <span class="mc-features-grid__link">Learn more &rarr;</span>
                 </a>
-                <a href="https://knowledge.acellemail.com/category/admin-guide" class="mc-features-grid__card" target="_blank">
+                <a href="/kb" class="mc-features-grid__card" target="_blank">
                     <div class="mc-features-grid__icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--mc-black)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div>
                     <h3 class="mc-features-grid__name">White-Label &amp; Custom Branding</h3>
                     <p class="mc-features-grid__desc">Custom themes (dark, light, 7+ colors), custom logo, custom domain. Your customers see your brand, not AcelleMail. Full white-label SaaS experience.</p>
@@ -698,14 +705,14 @@
         <div class="mc-feature-alt__grid">
             <div class="mc-feature-alt__image">
                 <div class="mc-feature-alt__embed">
-                    <iframe src="https://www.youtube-nocookie.com/embed/wiHeVHc2DAE" title="Set up Stripe subscription payment gateway in AcelleMail" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <lite-youtube videoid="wiHeVHc2DAE" playlabel="Set up Stripe subscription payment gateway in AcelleMail"></lite-youtube>
                 </div>
             </div>
             <div class="mc-feature-alt__content">
                 <span class="mc-eyebrow">RUN YOUR OWN SAAS</span>
                 <h2 class="mc-feature-alt__heading">Accept payments globally &mdash; with the gateway your customers already use</h2>
                 <p class="mc-feature-alt__text">AcelleMail ships with Stripe, PayPal, Braintree, Paystack, Razorpay, Coinbase Commerce, and more out of the box &mdash; with a plugin architecture that lets you add any payment provider. Direct charges, remote subscriptions, offline invoicing &mdash; mix and match to fit your market.</p>
-                <a href="https://codecanyon.net/item/acelle-email-marketing-web-application/17796082" class="mc-btn mc-btn--primary" target="_blank">Download AcelleMail</a>
+                <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary" target="_blank">Get AcelleMail — $74</a>
             </div>
         </div>
     </div>
@@ -721,7 +728,7 @@
         </div>
         <div class="mc-stats-section__grid">
             <div class="mc-stats-section__item">
-                <span class="mc-stats-section__number">50K+</span>
+                <span class="mc-stats-section__number">6,000+</span>
                 <span class="mc-stats-section__label">Installations</span>
                 <p class="mc-stats-section__desc">Businesses and agencies run AcelleMail on their own servers.</p>
             </div>
@@ -823,14 +830,14 @@
 <!-- ======================================================================
      17. What's New (kept as-is)
      ====================================================================== -->
-<section class="mc-section mc-section--cream">
+<section class="mc-section mc-section--cream" id="whats-new">
     <div class="mc-container">
         <div class="mc-hero__content--center" style="margin-bottom: var(--space-2xl);">
             <h2>What&rsquo;s new in AcelleMail</h2>
             <p class="mc-text-lg" style="margin-top: var(--space-md);">We&rsquo;re always shipping new features to help you grow. Here are some of our latest releases.</p>
         </div>
         <div class="mc-grid mc-grid--3 mc-grid--gap-lg">
-            <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
+            <a href="/kb/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
                 <div class="mc-card__body mc-card__body--lg">
                     <span class="mc-badge mc-badge--new" style="margin-bottom: var(--space-md);">NEW</span>
                     <h4 class="mc-card__title">Enhanced Automation Builder</h4>
@@ -846,7 +853,7 @@
                     <span class="mc-card__link">Learn more</span>
                 </div>
             </a>
-            <a href="https://knowledge.acellemail.com/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
+            <a href="/kb/category/acellemail-updates" class="mc-card mc-card--bordered" target="_blank">
                 <div class="mc-card__body mc-card__body--lg">
                     <span class="mc-badge mc-badge--new" style="margin-bottom: var(--space-md);">NEW</span>
                     <h4 class="mc-card__title">Advanced Segmentation</h4>
@@ -865,32 +872,140 @@
     <div class="mc-container">
         <div class="mc-features-support__header">
             <h2 class="mc-features-support__heading">Get help getting started</h2>
-            <p class="mc-features-support__subheading">We offer documentation, community support, and professional services to help you get the most out of AcelleMail.</p>
+            <p class="mc-features-support__subheading">Comprehensive documentation, a developer plugin SDK, and direct support &mdash; three ways to get the most out of AcelleMail.</p>
         </div>
         <div class="mc-features-support__grid">
+            {{-- Card 1 — Documentation: KB articles + setup guides --}}
             <div class="mc-features-support__card">
                 <div class="mc-features-support__image">
-                    <img src="{{ asset('images/features/onboarding.png') }}" alt="Documentation" loading="lazy">
+                    {{-- onboarding.png — responsive AVIF+WebP via assets:build pipeline.
+                         Source PNG ~1.86 MB; AVIF 1200w ≈ 30 KB. --}}
+                    <picture>
+                        <source
+                            type="image/avif"
+                            srcset="{{ asset('images/features/onboarding-480.avif') }} 480w,
+                                    {{ asset('images/features/onboarding-768.avif') }} 768w,
+                                    {{ asset('images/features/onboarding-1200.avif') }} 1200w,
+                                    {{ asset('images/features/onboarding-1536.avif') }} 1536w"
+                            sizes="(max-width: 900px) 90vw, 360px">
+                        <source
+                            type="image/webp"
+                            srcset="{{ asset('images/features/onboarding-480.webp') }} 480w,
+                                    {{ asset('images/features/onboarding-768.webp') }} 768w,
+                                    {{ asset('images/features/onboarding-1200.webp') }} 1200w,
+                                    {{ asset('images/features/onboarding-1536.webp') }} 1536w"
+                            sizes="(max-width: 900px) 90vw, 360px">
+                        <img
+                            src="{{ asset('images/features/onboarding-1200.webp') }}"
+                            alt="Onboarding documentation — installation, configuration and sending-server setup guides"
+                            loading="lazy"
+                            width="540"
+                            height="303"
+                            decoding="async">
+                    </picture>
                 </div>
                 <h3 class="mc-features-support__name">Documentation</h3>
                 <p class="mc-features-support__desc">Step-by-step guides covering installation, configuration, sending server setup, and campaign creation to get you started fast.</p>
-                <a href="https://knowledge.acellemail.com" class="mc-btn mc-btn--outline" target="_blank">Read the docs</a>
+                <a href="/kb" class="mc-btn mc-btn--outline" target="_blank">Read the docs</a>
             </div>
+
+            {{-- Card 2 — Developer resources: Plugin SDK + REST API + Hook system.
+                 Replaces the previous Community card (forum closed; see FORUM_CLOSED.md).
+                 Visual is an inline SVG so it picks up the active theme via CSS vars
+                 (works on theme-orange/blue/teal/pleo without re-encoding rasters). --}}
+            <div class="mc-features-support__card">
+                <div class="mc-features-support__image" style="background: var(--theme-bg-warm); display: flex; align-items: center; justify-content: center; padding: 0; overflow: hidden;">
+                    <svg viewBox="0 0 540 303" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 100%; height: 100%;" preserveAspectRatio="xMidYMid slice" role="img" aria-label="AcelleMail developer resources — plugin source code on the left, the AcelleMail core platform with mounted hook points on the right, connected via the Hook system">
+                        <defs>
+                            <filter id="dev-card-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#000" flood-opacity="0.07"/>
+                            </filter>
+                        </defs>
+
+                        {{-- Background --}}
+                        <rect width="540" height="303" fill="var(--theme-bg-warm)"/>
+
+                        {{-- Left card: floating plugin source, slight tilt for depth --}}
+                        <g transform="translate(36, 56) rotate(-2.5)" filter="url(#dev-card-shadow)">
+                            <rect width="200" height="190" rx="11" fill="#FFFFFF" stroke="var(--theme-border)" stroke-width="1"/>
+                            {{-- Window chrome --}}
+                            <rect x="0" y="0" width="200" height="28" rx="11" fill="var(--theme-bg-light)"/>
+                            <rect x="0" y="14" width="200" height="14" fill="var(--theme-bg-light)"/>
+                            <circle cx="14" cy="14" r="4" fill="#E5E0DA"/>
+                            <circle cx="28" cy="14" r="4" fill="#E5E0DA"/>
+                            <circle cx="42" cy="14" r="4" fill="#E5E0DA"/>
+                            <text x="100" y="18" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="var(--theme-text-tertiary)">ServiceProvider.php</text>
+
+                            {{-- Code snippet --}}
+                            <text x="14" y="52" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--theme-text-tertiary)">// 4 hook patterns</text>
+                            <text x="14" y="72" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--theme-primary)" font-weight="600">Hook::add(</text>
+                            <text x="14" y="88" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--theme-text)">  'layout.head.assets',</text>
+                            <text x="14" y="104" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--theme-text)">  fn() =&gt; '...'</text>
+                            <text x="14" y="120" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="var(--theme-primary)" font-weight="600">);</text>
+
+                            {{-- Pattern pills --}}
+                            <rect x="14" y="140" width="60" height="18" rx="4" fill="var(--theme-bg-light)" stroke="var(--theme-border)" stroke-width="0.6"/>
+                            <text x="44" y="153" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" font-weight="700" fill="var(--theme-text-secondary)" letter-spacing="0.5">REGISTRY</text>
+                            <rect x="78" y="140" width="46" height="18" rx="4" fill="var(--theme-bg-light)" stroke="var(--theme-border)" stroke-width="0.6"/>
+                            <text x="101" y="153" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" font-weight="700" fill="var(--theme-text-secondary)" letter-spacing="0.5">EVENT</text>
+                            <rect x="128" y="140" width="48" height="18" rx="4" fill="var(--theme-primary)"/>
+                            <text x="152" y="153" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" font-weight="700" fill="var(--theme-text)" letter-spacing="0.5">FILTER</text>
+                            <rect x="14" y="164" width="64" height="18" rx="4" fill="var(--theme-bg-light)" stroke="var(--theme-border)" stroke-width="0.6"/>
+                            <text x="46" y="177" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" font-weight="700" fill="var(--theme-text-secondary)" letter-spacing="0.5">BEHAVIOR</text>
+                        </g>
+
+                        {{-- Center: connecting beam labeled HOOK SYSTEM --}}
+                        <g transform="translate(248, 152)">
+                            <text x="22" y="-14" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="9" font-weight="700" fill="var(--theme-primary)" letter-spacing="1.4">HOOK SYSTEM</text>
+                            <line x1="0" y1="0" x2="44" y2="0" stroke="var(--theme-primary)" stroke-width="2" stroke-linecap="round"/>
+                            <polyline points="36,-6 44,0 36,6" stroke="var(--theme-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <text x="22" y="20" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8.5" fill="var(--theme-text-tertiary)" font-style="italic">no core touches</text>
+                        </g>
+
+                        {{-- Right card: AcelleMail core platform with mount points --}}
+                        <g transform="translate(310, 50)" filter="url(#dev-card-shadow)">
+                            <rect width="194" height="200" rx="11" fill="var(--theme-text)"/>
+                            <text x="97" y="32" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" letter-spacing="1" fill="var(--theme-bg)">ACELLEMAIL</text>
+                            <line x1="20" y1="46" x2="174" y2="46" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="1"/>
+                            <text x="97" y="62" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#FFFFFF" opacity="0.5">Laravel 11+ · PHP 8.3+</text>
+
+                            {{-- Mount-point pills --}}
+                            <rect x="20" y="76" width="154" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.08"/>
+                            <circle cx="32" cy="86" r="2.6" fill="var(--theme-primary)"/>
+                            <text x="44" y="91" font-family="IBM Plex Mono,monospace" font-size="9" fill="#FFFFFF">layout.head.assets</text>
+
+                            <rect x="20" y="102" width="154" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.08"/>
+                            <circle cx="32" cy="112" r="2.6" fill="var(--theme-primary)"/>
+                            <text x="44" y="117" font-family="IBM Plex Mono,monospace" font-size="9" fill="#FFFFFF">register_sending_*</text>
+
+                            <rect x="20" y="128" width="154" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.08"/>
+                            <circle cx="32" cy="138" r="2.6" fill="var(--theme-primary)"/>
+                            <text x="44" y="143" font-family="IBM Plex Mono,monospace" font-size="9" fill="#FFFFFF">customer_added</text>
+
+                            <rect x="20" y="154" width="154" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.08"/>
+                            <circle cx="32" cy="164" r="2.6" fill="var(--theme-primary)"/>
+                            <text x="44" y="169" font-family="IBM Plex Mono,monospace" font-size="9" fill="#FFFFFF">page.{ctrl}.{slot}</text>
+
+                            <text x="97" y="190" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8.5" fill="#FFFFFF" opacity="0.5" font-style="italic">+ many more</text>
+                        </g>
+
+                        {{-- Bottom strap --}}
+                        <text x="270" y="284" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" font-weight="500" fill="var(--theme-text-secondary)" letter-spacing="0.4">Plugin SDK &nbsp;·&nbsp; REST API &nbsp;·&nbsp; Hook System</text>
+                    </svg>
+                </div>
+                <h3 class="mc-features-support__name">Developer resources</h3>
+                <p class="mc-features-support__desc">Plugin SDK, four-pattern Hook system, and a token-authenticated REST API. Build sending drivers, payment gateways, AI integrations or custom UI without forking core.</p>
+                <a href="{{ route('for.developers') }}" class="mc-btn mc-btn--outline">Browse developer docs</a>
+            </div>
+
+            {{-- Card 3 — Direct support: free 6-month email support included --}}
             <div class="mc-features-support__card">
                 <div class="mc-features-support__image">
-                    <img src="{{ asset('images/features/experts.png') }}" alt="Community" loading="lazy">
+                    <img src="{{ asset('images/features/customer-success.png') }}" alt="Free 6-month support" loading="lazy" width="540" height="303" decoding="async">
                 </div>
-                <h3 class="mc-features-support__name">Community &amp; Support</h3>
-                <p class="mc-features-support__desc">Join our community forums and get help from experienced AcelleMail users, or contact our support team for priority assistance.</p>
-                <a href="https://forum.acellemail.com" class="mc-btn mc-btn--outline" target="_blank">Join community</a>
-            </div>
-            <div class="mc-features-support__card">
-                <div class="mc-features-support__image">
-                    <img src="{{ asset('images/features/customer-success.png') }}" alt="Installation Service" loading="lazy">
-                </div>
-                <h3 class="mc-features-support__name">Installation Service</h3>
-                <p class="mc-features-support__desc">Let our team install and configure AcelleMail on your server, set up sending services, and ensure everything runs perfectly.</p>
-                <a href="{{ route('contact') }}" class="mc-btn mc-btn--outline">Talk with us</a>
+                <h3 class="mc-features-support__name">Free 6-month support</h3>
+                <p class="mc-features-support__desc">Every license comes with 6 months of free email support &mdash; installation guidance, setup help, bug fixes and product updates included.</p>
+                <a href="{{ route('contact') }}" class="mc-btn mc-btn--outline">Contact support</a>
             </div>
         </div>
     </div>
