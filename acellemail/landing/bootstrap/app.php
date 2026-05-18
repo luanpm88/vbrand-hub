@@ -11,6 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // i18n: detect locale from URL prefix on every web request.
+        // 404s when the URL prefix matches a locale that is not enabled
+        // and when the URL hits an unpublished locale route (per-route gate).
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
+
         // The `auth` middleware redirects guests to a 'login' route by
         // default; our auth surface (Wave 0) uses `auth.login`. Set the
         // redirect target explicitly so /admin and other auth-gated

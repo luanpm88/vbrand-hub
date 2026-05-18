@@ -729,16 +729,17 @@ p:last-child {
   align-items: center;
   gap: 4px;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--mc-white);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
   text-decoration: none;
-  padding: 4px 12px 4px 12px;
-  border-radius: var(--radius-pill, 999px);
-  transition: background var(--transition-fast);
+  padding: 4px 6px;
+  border-radius: 0;
+  transition: color var(--transition-fast);
 }
 
 .mc-topbar__signin:hover {
-  background: rgba(255, 255, 255, 0.12);
+  color: var(--mc-white);
+  background: transparent;
 }
 
 .mc-topbar__signin svg {
@@ -767,22 +768,22 @@ p:last-child {
   display: inline-flex !important;
   align-items: center;
   gap: 8px;
-  padding: 3px 12px 3px 3px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid transparent;
-  border-radius: 999px;
+  padding: 3px 6px 3px 3px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   font: inherit;
   font-size: 13px;
   font-weight: 500;
-  color: var(--mc-white);
+  color: rgba(255, 255, 255, 0.78);
   cursor: pointer;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
 .mc-topbar .mc-topbar__user-trigger:hover,
 .mc-topbar .mc-header__dropdown.is-open .mc-topbar__user-trigger {
-  background: rgba(255, 255, 255, 0.20);
-  border-color: rgba(255, 255, 255, 0.20);
+  background: transparent;
+  border-color: transparent;
   color: var(--mc-white);
 }
 
@@ -856,6 +857,127 @@ p:last-child {
     margin-left: 0;
   }
 }
+
+/* ==========================================================================
+   7b. LOCALE SWITCHER — topbar placement
+   --------------------------------------------------------------------------
+   Wave 4-pre re-introduces the locale switcher into the right zone of the
+   topbar after Wave 3.5 merged develop's deletion of the promo-banner
+   partial (which previously hosted it). Styled as a pill that visually
+   matches the neighboring user / sign-in pill on the same dark surface.
+
+   The dropdown menu opens via the existing data-locale-switcher JS handler
+   (script.js sets data-open="true" on click); CSS toggles visibility off
+   that attribute. Light-bg panel anchored to the right of the trigger so
+   the menu never clips off the viewport edge.
+   ========================================================================== */
+
+.mc-locale-switcher--topbar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.mc-locale-switcher__trigger--topbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.78);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.mc-locale-switcher__trigger--topbar:hover,
+.mc-locale-switcher--topbar[data-open="true"] .mc-locale-switcher__trigger--topbar,
+.mc-locale-switcher__trigger--topbar[aria-expanded="true"] {
+  color: var(--mc-white);
+  background: transparent;
+}
+
+.mc-locale-switcher__trigger--topbar .mc-locale-switcher__globe {
+  opacity: 0.8;
+  flex: 0 0 14px;
+  transition: opacity var(--transition-fast);
+}
+
+.mc-locale-switcher__trigger--topbar:hover .mc-locale-switcher__globe,
+.mc-locale-switcher--topbar[data-open="true"] .mc-locale-switcher__globe {
+  opacity: 1;
+}
+
+.mc-locale-switcher__trigger--topbar .mc-locale-switcher__caret {
+  opacity: 0.7;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.mc-locale-switcher__trigger--topbar:hover .mc-locale-switcher__caret {
+  opacity: 1;
+}
+
+.mc-locale-switcher--topbar[data-open="true"] .mc-locale-switcher__caret {
+  transform: rotate(180deg);
+}
+
+/* Light-bg dropdown panel — matches .mc-topbar__user-panel visually so the
+   two right-zone dropdowns read as a set. Right-anchored to avoid viewport
+   clipping; z-index above the sticky header. */
+.mc-locale-switcher__menu--topbar {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: auto;
+  min-width: 160px;
+  background: var(--mc-white);
+  border: 1px solid var(--mc-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 6px 0;
+  margin: 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+  z-index: var(--z-overlay);
+}
+
+.mc-locale-switcher--topbar[data-open="true"] .mc-locale-switcher__menu--topbar {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mc-locale-switcher__menu--topbar .mc-locale-switcher__item {
+  display: block;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--mc-black);
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.mc-locale-switcher__menu--topbar .mc-locale-switcher__item:hover {
+  background: var(--mc-light-gray);
+}
+
+.mc-locale-switcher__menu--topbar .mc-locale-switcher__item--current {
+  font-weight: 600;
+  color: var(--mc-yellow);
+}
+
+/* Mobile (<768px) — the topbar utility zone is hidden via the .mc-topbar
+   media query above, so the switcher disappears too. Mobile users get the
+   in-drawer switcher (placement="mobile") via the hamburger menu. */
 
 /* ==========================================================================
    8. MAIN NAVIGATION / HEADER

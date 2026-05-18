@@ -391,6 +391,110 @@
     }
   }
 
+  // ========================================================================
+  // LOCALE SWITCHER — header dropdown toggle (PLAN §11 Wave 2)
+  // ========================================================================
+  document.querySelectorAll('[data-locale-switcher]').forEach(function (switcher) {
+    var trigger = switcher.querySelector('.mc-locale-switcher__trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = switcher.getAttribute('data-open') === 'true';
+      switcher.setAttribute('data-open', open ? 'false' : 'true');
+      trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('[data-locale-switcher][data-open="true"]').forEach(function (s) {
+      if (!s.contains(e.target)) {
+        s.setAttribute('data-open', 'false');
+        var trigger = s.querySelector('.mc-locale-switcher__trigger');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  // Persist last-chosen locale (acelle_locale cookie). Cookie writes happen
+  // on the client (Q#3 + Lock #12 — server must NEVER vary by Accept-Language).
+  document.querySelectorAll('[data-locale]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var locale = link.getAttribute('data-locale');
+      if (locale) {
+        document.cookie = 'acelle_locale=' + locale + ';path=/;max-age=' + (60 * 60 * 24 * 365) + ';samesite=lax';
+      }
+    });
+  });
+
+  // ========================================================================
+  // ACCEPT-LANGUAGE BANNER (Q#3) — client-side suggestion only.
+  // Shown on EN pages when navigator.languages indicates a different enabled
+  // locale and the user hasn't already dismissed or accepted it. Server NEVER
+  // varies its response — full-page cache is preserved.
+  // ========================================================================
+  (function () {
+    var html = document.documentElement;
+    if (!html) return;
+    var pageLang = (html.getAttribute('lang') || 'en').toLowerCase();
+    if (pageLang !== 'en') return; // only suggest on EN pages
+
+    // Read locales metadata from window.__i18nLocales (rendered by layout).
+    var locales = (window.__i18nLocales || []).filter(function (l) {
+      return l.enabled && l.iso639 !== 'en';
+    });
+    if (!locales.length) return;
+
+    // Already chose or dismissed?
+    if (document.cookie.indexOf('acelle_al_seen=1') !== -1) return;
+    if (document.cookie.indexOf('acelle_locale=') !== -1) return;
+
+    // Pick the first browser preference matching an enabled non-EN locale.
+    var browserLangs = (navigator.languages || [navigator.language || ''])
+      .map(function (l) { return String(l).toLowerCase().split('-')[0]; });
+    var match = null;
+    for (var i = 0; i < browserLangs.length && !match; i++) {
+      for (var j = 0; j < locales.length && !match; j++) {
+        if (browserLangs[i] === locales[j].iso639) {
+          match = locales[j];
+        }
+      }
+    }
+    if (!match) return;
+
+    function setSeen() {
+      document.cookie = 'acelle_al_seen=1;path=/;max-age=' + (60 * 60 * 24 * 30) + ';samesite=lax';
+    }
+
+    var banner = document.createElement('div');
+    banner.className = 'mc-acl-banner';
+    banner.setAttribute('role', 'status');
+    banner.setAttribute('data-testid', 'al-banner');
+    banner.innerHTML =
+      '<div class="mc-acl-banner__inner">' +
+        '<p class="mc-acl-banner__text">' +
+          (match.al_question || ('View this site in ' + match.native + '?')) +
+        '</p>' +
+        '<a class="mc-acl-banner__yes" href="' + match.url + '" data-testid="al-banner-yes" lang="' + match.iso639 + '">' +
+          (match.al_yes || ('Yes, switch to ' + match.native)) +
+        '</a>' +
+        '<button type="button" class="mc-acl-banner__no" data-testid="al-banner-no">' +
+          (match.al_no || 'Stay in English') +
+        '</button>' +
+        '<button type="button" class="mc-acl-banner__close" aria-label="' + (match.al_close || 'Dismiss') + '" data-testid="al-banner-close">&times;</button>' +
+      '</div>';
+    document.body.insertBefore(banner, document.body.firstChild);
+
+    banner.querySelector('[data-testid="al-banner-yes"]').addEventListener('click', setSeen);
+    banner.querySelector('[data-testid="al-banner-no"]').addEventListener('click', function () {
+      setSeen();
+      banner.remove();
+    });
+    banner.querySelector('[data-testid="al-banner-close"]').addEventListener('click', function () {
+      setSeen();
+      banner.remove();
+    });
+  })();
+
 })();
 
 // ============================================================

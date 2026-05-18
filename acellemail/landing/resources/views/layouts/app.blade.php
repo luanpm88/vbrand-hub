@@ -1,5 +1,9 @@
+@php
+  $appLocale = app()->getLocale();
+  $localeDef = config('i18n.locales.'.$appLocale, config('i18n.locales.en'));
+@endphp
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ $localeDef['html_lang'] ?? 'en' }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +15,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', 'AcelleMail | Self-Hosted Email Marketing Platform')</title>
   <link rel="canonical" href="@yield('canonical_url', url()->current())">
+  @include('partials.seo.hreflang')
   {{-- Blog RSS feed (SEO_PLAN.md §4.4 wave 22) — advertised on every page so
        readers + feed readers + crawlers can discover it from anywhere. --}}
   <link rel="alternate" type="application/rss+xml" title="AcelleMail Blog" href="{{ url('/blog/rss.xml') }}">
@@ -26,7 +31,7 @@
   <meta property="og:image" content="@yield('og_image', $themeImg('images/og/og-default.svg'))">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="en_US">
+  <meta property="og:locale" content="{{ $localeDef['og_locale'] ?? 'en_US' }}">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -62,10 +67,26 @@
   <!-- Self-hosted fonts (variable WOFF2, ~50KB each, all weights from 1 file).
        Inter is the active font under theme-pleo; Fraunces + IBM Plex Sans
        are kept for theme-orange/blue/teal so theme switching still works.
-       See SEO_PLAN.md §3.3. -->
+       Each family declares TWO @font-face blocks discriminated by
+       unicode-range — `latin` (Wave 1) + `vietnamese` (Wave 3). The browser
+       picks the correct file per glyph; without the Vietnamese subset the
+       diacritic-rich code points (U+1EA0–U+1EF9 ặ ậ ử ữ ự ỗ ổ ỹ etc.) fall
+       back to system fonts and render with broken combining marks.
+       See SEO_PLAN.md §3.3. Subset ranges mirror Google Fonts' standard
+       split so the woff2 files we host are byte-identical to upstream. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin
         href="{{ asset('fonts/inter-latin-variable.woff2') }}">
+  @if(in_array(app()->getLocale(), ['vi'], true))
+  {{-- VI pages: also preload the Vietnamese subset so the diacritic glyphs
+       paint without a swap flash. EN/JA pages skip this — no Vietnamese
+       characters on the page, no need to fetch the extra 12 KB. --}}
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="{{ asset('fonts/inter-vietnamese-variable.woff2') }}">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="{{ asset('fonts/fraunces-vietnamese-variable.woff2') }}">
+  @endif
   <style>
+    /* Inter — latin */
     @font-face {
       font-family: 'Inter';
       font-style: normal;
@@ -74,6 +95,16 @@
       src: url('{{ asset('fonts/inter-latin-variable.woff2') }}') format('woff2-variations'),
            url('{{ asset('fonts/inter-latin-variable.woff2') }}') format('woff2');
     }
+    /* Inter — vietnamese (PLAN §14 Wave 3) */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url('{{ asset('fonts/inter-vietnamese-variable.woff2') }}') format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+    }
+    /* Fraunces — latin */
     @font-face {
       font-family: 'Fraunces';
       font-style: normal;
@@ -82,6 +113,16 @@
       src: url('{{ asset('fonts/fraunces-latin-variable.woff2') }}') format('woff2-variations'),
            url('{{ asset('fonts/fraunces-latin-variable.woff2') }}') format('woff2');
     }
+    /* Fraunces — vietnamese (PLAN §14 Wave 3) */
+    @font-face {
+      font-family: 'Fraunces';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url('{{ asset('fonts/fraunces-vietnamese-variable.woff2') }}') format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+    }
+    /* IBM Plex Sans — latin */
     @font-face {
       font-family: 'IBM Plex Sans';
       font-style: normal;
@@ -89,6 +130,15 @@
       font-display: swap;
       src: url('{{ asset('fonts/plex-latin-400.woff2') }}') format('woff2-variations'),
            url('{{ asset('fonts/plex-latin-400.woff2') }}') format('woff2');
+    }
+    /* IBM Plex Sans — vietnamese (PLAN §14 Wave 3) */
+    @font-face {
+      font-family: 'IBM Plex Sans';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url('{{ asset('fonts/plex-vietnamese-400.woff2') }}') format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
     }
   </style>
 
@@ -172,6 +222,40 @@
 <x-auth.modal />
 
 <!-- Scripts -->
+@php
+  // i18n locale metadata for client-side switcher + Accept-Language banner.
+  // Emits only enabled locales + their alt-page URLs (computed via
+  // HreflangRegistry's switcher fallback rule). Server NEVER varies its
+  // response by Accept-Language — banner display is purely client-side
+  // (PLAN §11 lock #12, Q#3 — resolved 2026-05-15).
+  $i18nClientLocales = [];
+  $i18nCurrentRouteName = \Illuminate\Support\Facades\Route::currentRouteName();
+  // Strip locale prefix if present (vi.features → features).
+  foreach (config('i18n.locales', []) as $_lk => $_def) {
+      $_p = $_lk . '.';
+      if ($i18nCurrentRouteName && str_starts_with($i18nCurrentRouteName, $_p)) {
+          $i18nCurrentRouteName = substr($i18nCurrentRouteName, strlen($_p));
+          break;
+      }
+  }
+  $_route = \Illuminate\Support\Facades\Route::current();
+  $_params = $_route ? array_filter($_route->parameters(), fn($k) => $k !== 'locale', ARRAY_FILTER_USE_KEY) : [];
+  foreach (config('i18n.locales', []) as $_lk => $_def) {
+      if (! ($_def['enabled'] ?? false)) continue;
+      $i18nClientLocales[] = [
+          'locale'      => $_lk,
+          'native'      => $_def['native'],
+          'iso639'      => $_def['iso639'] ?? $_lk,
+          'enabled'     => true,
+          'url'         => \App\Helpers\LocaleRoute::url($i18nCurrentRouteName ?? 'home', $_lk, $_params),
+          'al_question' => trans('banner.al_question', ['native' => $_def['native']], $_lk),
+          'al_yes'      => trans('banner.al_yes', ['native' => $_def['native']], $_lk),
+          'al_no'       => trans('banner.al_no', [], 'en'),
+          'al_close'    => trans('banner.al_close', [], 'en'),
+      ];
+  }
+@endphp
+<script>window.__i18nLocales = @json($i18nClientLocales);</script>
 <script src="{{ asset($jsMain) }}?v={{ $vJs }}"></script>
 @if($useLiteYt ?? false)
 <script defer src="{{ asset($liteYtJs) }}?v={{ $vLiteJs }}"></script>

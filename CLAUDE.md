@@ -79,7 +79,7 @@
 | vbrandsync | `/Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync` | `origin` (luanpm88/vbrandsync) | `main` | rsync |
 | themes | `/Users/luan/apps/vbrand/site/wp-content/themes` | `origin` (luanpm88/vbrand-themes) | `main` | rsync |
 | mobile | `/Users/luan/apps/vbrand/mobile` | `origin` (luanpm88/vbrand-mobile) | `main` | EAS build (manual) |
-| ~~kb~~ | ~~`/Users/luan/apps/vbrand/kb`~~ | **Consolidated 2026-05-09** into `acellemail/landing/` (subfolder `acellemail.com/kb/*`). Standalone `kb/` folder removed; remote repo `luanpm88/acelle-knowledge-base` archived. KB content lives in `acellemail/landing/database/seeders/Article*Seeder.php`. See [`acellemail/docs/SEO_PLAN_KB.md`](acellemail/docs/SEO_PLAN_KB.md). | — | — |
+| ~~kb~~ | ~~`/Users/luan/apps/vbrand/kb`~~ | **Consolidated 2026-05-09** into `acellemail/landing/` (subfolder `acellemail.com/kb/*`). Standalone `kb/` folder removed; remote repo `luanpm88/acelle-knowledge-base` archived. KB content lives in `acellemail/landing/database/seeders/Article*Seeder.php`. See [`acellemail/landing/docs/SEO_PLAN_KB.md`](acellemail/landing/docs/SEO_PLAN_KB.md). | — | — |
 
 Mỗi component là 1 git repo riêng → commit/push riêng.
 
@@ -273,7 +273,7 @@ Khi clone 1 site sang brand mới (ví dụ orgafood → voducfoods):
 ### AcelleMail partner backlink exchange — full workflow (2026-04-15)
 - Khi đối tác muốn trao đổi backlink (họ link tới acellemail.com, mình link lại):
   1. **Scrape site đối tác** bằng Playwright/WebFetch — lấy logo SVG, company name, tagline, services. Không tự bịa content.
-  2. **Tạo design doc** `acellemail/docs/<PARTNER>.md` — plan toàn bộ trước khi code.
+  2. **Tạo design doc** `acellemail/landing/docs/<PARTNER>.md` — plan toàn bộ trước khi code.
   3. **Integrations page** (`integrations.blade.php`): thêm pill nav + section `id="<slug>"` với Partner badge + logo + 4-card grid. Dùng gradient SVG vector icons thay vì letter squares để phân biệt với section khác.
   4. **Footer** (`footer.blade.php`): thêm link vào Partners column.
   5. **E2E** (`footer.spec.ts`): update partner list (exact DOM order).
@@ -315,27 +315,27 @@ Mobile App / Webapp → Laravel API → WordPress REST API (vbrandsync plugin) �
 
 ## AcelleMail landing (`acellemail/landing/`)
 
-**Single source of truth:** [`acellemail/docs/LANDING.md`](acellemail/docs/LANDING.md) — đọc TRƯỚC khi làm bất cứ task nào liên quan tới `acellemail.com`. Bao gồm: layout, server config, E2E gate, deploy workflow, design system, pages, lessons learned, self-learn rule.
+**Single source of truth:** [`acellemail/landing/docs/LANDING.md`](acellemail/landing/docs/LANDING.md) — đọc TRƯỚC khi làm bất cứ task nào liên quan tới `acellemail.com`. Bao gồm: layout, server config, E2E gate, deploy workflow, design system, pages, lessons learned, self-learn rule.
 
 **Tóm tắt cho session ngoài:**
 - Laravel 12 site, static pages, no DB. Repo riêng: `git@github.com:luanpm88/acellemail-landing.git` (branch `develop`).
-- Mọi change → E2E gate (`acellemail/docs/e2e/`, Playwright, 42 tests) → rsync → re-verify prod.
+- Mọi change → E2E gate (`acellemail/landing/tests/e2e/`, Playwright, 42 tests) → rsync → re-verify prod.
 - Discovery nào mới về landing → update `LANDING.md` trong cùng commit (xem `## 9. Self-learn rule` trong file đó).
 
-**Marketing operations:** [`acellemail/docs/marketing/`](acellemail/docs/marketing/) — toàn bộ kế hoạch marketing (paid ads, SEO ad-side, content, lead capture, direct sales infra cho 2026-07-01 deadline). Persona [`Marketer.bot`](acellemail/docs/marketing/Marketer.bot) phải đọc TRƯỚC mỗi session marketing-related. Mỗi session phải append entry vào [`marketing/LESSONS_LEARNED.md`](acellemail/docs/marketing/LESSONS_LEARNED.md). North Star: combined revenue (CodeCanyon + Direct) = 2-3× current trong 6-12 tháng.
+**Marketing operations:** [`acellemail/landing/docs/marketing/`](acellemail/landing/docs/marketing/) — toàn bộ kế hoạch marketing (paid ads, SEO ad-side, content, lead capture, direct sales infra cho 2026-07-01 deadline). Persona [`Marketer.bot`](acellemail/landing/docs/marketing/Marketer.bot) phải đọc TRƯỚC mỗi session marketing-related. Mỗi session phải append entry vào [`marketing/LESSONS_LEARNED.md`](acellemail/landing/docs/marketing/LESSONS_LEARNED.md). North Star: combined revenue (CodeCanyon + Direct) = 2-3× current trong 6-12 tháng.
 
 **Khi user nói ngắn:**
 | User nói | Claude làm |
 |----------|-----------|
-| `test acellemail` / `e2e acellemail` | Start artisan serve + `cd acellemail/docs/e2e && npm test` |
+| `test acellemail` / `e2e acellemail` | Start artisan serve + `cd acellemail/landing/tests/e2e && npm test` |
 | `deploy acellemail` | Theo §4 trong `LANDING.md`: E2E gate → rsync → optimize → re-run E2E prod |
-| `seo loop` / `tiếp seo` / `next seo wave` | Đọc `acellemail/bots/seo-loop.md` → chạy wave kế tiếp trong `acellemail/docs/SEO_PLAN.md ## Wave Progress` (E2E gate → deploy → verify → mark ☑ → commit + push). Auto cho 🟢; STOP & ask cho 🟡 / 🟥 |
+| `seo loop` / `tiếp seo` / `next seo wave` | Đọc `acellemail/landing/docs/SEO_PLAN.md ## Wave loop runner` → chạy wave kế tiếp trong `acellemail/landing/docs/SEO_PLAN.md ## Wave Progress` (E2E gate → deploy → verify → mark ☑ → commit + push). Auto cho 🟢; STOP & ask cho 🟡 / 🟥 |
 | `seo loop status` | Print Wave Progress table only, không thay đổi gì |
-| `maintain` / `MAINTENANCE.md run` / `health check` / `audit acellemail` / `kiểm tra prod` / `top notch check` | Đọc `acellemail/docs/MAINTENANCE.md` → chạy `cd acellemail && ./scripts/maintain/run.sh standard` (~5 min: 8 phases — health/SEO/perf/content/tests/deps against prod). Surface report + fix any new findings + update "Known issues" table in MAINTENANCE.md |
-| `maintain quick` / `daily check` | `./acellemail/scripts/maintain/run.sh quick` — 30s smoke (health + SEO), cron-friendly |
-| `maintain deep` | `./acellemail/scripts/maintain/run.sh deep` — standard + Lighthouse + link integrity (~20 min) |
-| `maintain full` | `./acellemail/scripts/maintain/run.sh full` — deep + SSH server-side via brandnew (~30 min) |
-| `maintain server` | `./acellemail/scripts/maintain/run.sh server` — SSH-only checks (disk, logs, certbot, nginx, php-fpm) |
+| `maintain` / `MAINTENANCE.md run` / `health check` / `audit acellemail` / `kiểm tra prod` / `top notch check` | Đọc `acellemail/landing/docs/MAINTENANCE.md` → chạy `cd acellemail/landing && ./docs/scripts/maintain/run.sh standard` (~5 min: 8 phases — health/SEO/perf/content/tests/deps against prod). Surface report + fix any new findings + update "Known issues" table in MAINTENANCE.md |
+| `maintain quick` / `daily check` | `./acellemail/landing/docs/scripts/maintain/run.sh quick` — 30s smoke (health + SEO), cron-friendly |
+| `maintain deep` | `./acellemail/landing/docs/scripts/maintain/run.sh deep` — standard + Lighthouse + link integrity (~20 min) |
+| `maintain full` | `./acellemail/landing/docs/scripts/maintain/run.sh full` — deep + SSH server-side via brandnew (~30 min) |
+| `maintain server` | `./acellemail/landing/docs/scripts/maintain/run.sh server` — SSH-only checks (disk, logs, certbot, nginx, php-fpm) |
 
 ---
 

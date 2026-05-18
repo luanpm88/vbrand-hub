@@ -4,126 +4,126 @@
      so non-developer visitors find them at first glance. Developers is last
      so the dev-flavoured language doesn't dominate the menu. --}}
 <div class="mc-mobile-nav" id="mobileNav" aria-hidden="true">
-  <button class="mc-mobile-nav__close" id="mobileNavClose" aria-label="Close menu">&times;</button>
+  <button class="mc-mobile-nav__close" id="mobileNavClose" aria-label="{{ __('nav.aria_close_menu') }}">&times;</button>
 
-  <nav class="mc-mobile-nav__links" aria-label="Mobile navigation">
+  <nav class="mc-mobile-nav__links" aria-label="{{ __('nav.aria_mobile') }}">
 
     {{-- Home — re-added per user request, sits first --}}
-    <a href="{{ route('home') }}" class="mc-mobile-nav__link">Home</a>
+    <a href="@lroute('home')" class="mc-mobile-nav__link">{{ __('nav.home') }}</a>
 
     {{-- Features accordion — 6 jump-links into /features sections --}}
     <div class="mc-mobile-nav__group" data-mobile-group>
       <button class="mc-mobile-nav__group-trigger" aria-expanded="false">
-        Features
+        {{ __('nav.features') }}
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 4 10 8 6 12"/></svg>
       </button>
       <div class="mc-mobile-nav__group-panel"><div class="mc-mobile-nav__group-panel-inner">
-        <a href="{{ route('features') }}" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">All features overview</span>
-          <span class="mc-mobile-nav__group-link-desc">Everything AcelleMail does &mdash; one page</span>
+        <a href="@lroute('features')" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.all') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.all_desc') }}</span>
         </a>
-        <a href="{{ route('features') }}#email-campaigns" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Email campaigns</span>
-          <span class="mc-mobile-nav__group-link-desc">Drag-and-drop, A/B testing, templates, scheduling</span>
+        <a href="@lroute('features')#email-campaigns" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.email') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.email_desc') }}</span>
         </a>
-        <a href="{{ route('features') }}#automation-features" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Marketing automation</span>
-          <span class="mc-mobile-nav__group-link-desc">Triggers, drip series, behavioral targeting</span>
+        <a href="@lroute('features')#automation-features" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.auto') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.auto_desc') }}</span>
         </a>
-        <a href="{{ route('features') }}#lists" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">List management</span>
-          <span class="mc-mobile-nav__group-link-desc">Import, segmentation, tags, sign-up forms</span>
+        <a href="@lroute('features')#lists" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.lists') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.lists_desc') }}</span>
         </a>
-        <a href="{{ route('features') }}#deliverability" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Deliverability &amp; analytics</span>
-          <span class="mc-mobile-nav__group-link-desc">SPF / DKIM / DMARC, IP warmup, click maps</span>
+        <a href="@lroute('features')#deliverability" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.deliv') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.deliv_desc') }}</span>
         </a>
-        <a href="{{ route('features') }}#integrations-features" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Sending services &amp; integrations</span>
-          <span class="mc-mobile-nav__group-link-desc">Amazon SES, SendGrid, REST API, WordPress</span>
+        <a href="@lroute('features')#integrations-features" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.integ') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.integ_desc') }}</span>
         </a>
-        <a href="{{ route('features') }}#saas-platform" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">SaaS &amp; multi-tenancy</span>
-          <span class="mc-mobile-nav__group-link-desc">Multi-tenant, billing, white-label</span>
+        <a href="@lroute('features')#saas-platform" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.saas') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.saas_desc') }}</span>
         </a>
-        <a href="{{ route('aurius') }}" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Aurius 4.0 &mdash; AI plugin</span>
-          <span class="mc-mobile-nav__group-link-desc">Install the Acelle AI plugin to add chatbox, sparkle, coach personas, observability. Aurius powers it. Not built into Acelle core.</span>
+        <a href="@lroute('aurius')" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.features_mega.aurius_name') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.features_mega.aurius_mobile_desc') }}</span>
         </a>
       </div></div>
     </div>
 
     {{-- Flat top-level: Integrations · Pricing
          (Email + Automation moved INTO Features accordion above) --}}
-    <a href="{{ route('integrations') }}" class="mc-mobile-nav__link">Integrations</a>
-    <a href="{{ route('pricing') }}" class="mc-mobile-nav__link">Pricing</a>
+    <a href="@lroute('integrations')" class="mc-mobile-nav__link">{{ __('nav.integrations') }}</a>
+    <a href="@lroute('pricing')" class="mc-mobile-nav__link">{{ __('nav.pricing') }}</a>
 
     {{-- Resources slim --}}
     <div class="mc-mobile-nav__group" data-mobile-group>
       <button class="mc-mobile-nav__group-trigger" aria-expanded="false">
-        Resources
+        {{ __('nav.resources') }}
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 4 10 8 6 12"/></svg>
       </button>
       <div class="mc-mobile-nav__group-panel"><div class="mc-mobile-nav__group-panel-inner">
-        <a href="{{ route('blog.index') }}" class="mc-mobile-nav__group-link">Blog</a>
-        <a href="{{ route('help') }}" class="mc-mobile-nav__group-link">Help</a>
-        <a href="{{ route('security') }}" class="mc-mobile-nav__group-link">Security &amp; GDPR</a>
-        <a href="{{ route('glossary.index') }}" class="mc-mobile-nav__group-link">Glossary</a>
-        <a href="{{ route('compare.show', ['slug' => 'mailchimp']) }}" class="mc-mobile-nav__group-link">Mailchimp Comparison</a>
-        <a href="{{ route('compare.show', ['slug' => 'listmonk']) }}" class="mc-mobile-nav__group-link">listmonk Comparison</a>
-        <a href="{{ route('compare.show', ['slug' => 'mautic']) }}" class="mc-mobile-nav__group-link">Mautic Comparison</a>
-        <a href="{{ route('compare.show', ['slug' => 'sendgrid']) }}" class="mc-mobile-nav__group-link">SendGrid Comparison</a>
-        <a href="{{ route('compare.show', ['slug' => 'brevo']) }}" class="mc-mobile-nav__group-link">Brevo Comparison</a>
-        <a href="{{ route('compare.show', ['slug' => 'klaviyo']) }}" class="mc-mobile-nav__group-link">Klaviyo Comparison</a>
-        <a href="/kb" class="mc-mobile-nav__group-link">Knowledge Base &nearr;</a>
+        <a href="@lroute('blog.index')" class="mc-mobile-nav__group-link">{{ __('nav.blog') }}</a>
+        <a href="@lroute('help')" class="mc-mobile-nav__group-link">{{ __('nav.help') }}</a>
+        <a href="@lroute('security')" class="mc-mobile-nav__group-link">{{ __('nav.security') }}</a>
+        <a href="@lroute('glossary.index')" class="mc-mobile-nav__group-link">{{ __('nav.glossary') }}</a>
+        <a href="@lroute('compare.show', ['slug' => 'mailchimp'])" class="mc-mobile-nav__group-link">{{ __('nav.compare.mailchimp') }}</a>
+        <a href="@lroute('compare.show', ['slug' => 'listmonk'])" class="mc-mobile-nav__group-link">{{ __('nav.compare.listmonk') }}</a>
+        <a href="@lroute('compare.show', ['slug' => 'mautic'])" class="mc-mobile-nav__group-link">{{ __('nav.compare.mautic') }}</a>
+        <a href="@lroute('compare.show', ['slug' => 'sendgrid'])" class="mc-mobile-nav__group-link">{{ __('nav.compare.sendgrid') }}</a>
+        <a href="@lroute('compare.show', ['slug' => 'brevo'])" class="mc-mobile-nav__group-link">{{ __('nav.compare.brevo') }}</a>
+        <a href="@lroute('compare.show', ['slug' => 'klaviyo'])" class="mc-mobile-nav__group-link">{{ __('nav.compare.klaviyo') }}</a>
+        <a href="@lroute('kb.index')" class="mc-mobile-nav__group-link">{{ __('nav.kb_external') }}</a>
       </div></div>
     </div>
 
     {{-- Company slim --}}
     <div class="mc-mobile-nav__group" data-mobile-group>
       <button class="mc-mobile-nav__group-trigger" aria-expanded="false">
-        Company
+        {{ __('nav.company') }}
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 4 10 8 6 12"/></svg>
       </button>
       <div class="mc-mobile-nav__group-panel"><div class="mc-mobile-nav__group-panel-inner">
-        <a href="{{ route('about') }}" class="mc-mobile-nav__group-link">About</a>
-        <a href="{{ route('contact') }}" class="mc-mobile-nav__group-link">Contact</a>
+        <a href="@lroute('about')" class="mc-mobile-nav__group-link">{{ __('nav.about') }}</a>
+        <a href="@lroute('contact')" class="mc-mobile-nav__group-link">{{ __('nav.contact') }}</a>
       </div></div>
     </div>
 
     {{-- Developers — last (deprioritized for non-dev users) --}}
     <div class="mc-mobile-nav__group" data-mobile-group>
       <button class="mc-mobile-nav__group-trigger" aria-expanded="false">
-        Developers
+        {{ __('nav.developers') }}
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 4 10 8 6 12"/></svg>
       </button>
       <div class="mc-mobile-nav__group-panel"><div class="mc-mobile-nav__group-panel-inner">
-        <a href="{{ route('for.developers') }}" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Developer overview</span>
-          <span class="mc-mobile-nav__group-link-desc">Plugin SDK, Hook system, REST API landing</span>
+        <a href="@lroute('for.developers')" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.developers_mega.overview') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.mobile_developers.overview_mobile_desc') }}</span>
         </a>
-        <a href="{{ route('developers.index') }}" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Plugin Documentation</span>
-          <span class="mc-mobile-nav__group-link-desc">11-page deep-dive reference, source-grounded</span>
+        <a href="@lroute('developers.index')" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.developers_mega.docs') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.developers_mega.docs_desc') }}</span>
         </a>
-        <a href="{{ route('developers.getting-started') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Getting started</a>
-        <a href="{{ route('developers.plugin-architecture') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Plugin architecture</a>
-        <a href="{{ route('developers.hook-system') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Hook system &mdash; 4 patterns</a>
-        <a href="{{ route('developers.ui-injection') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">UI injection</a>
-        <a href="{{ route('developers.database-models') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Database &amp; models</a>
-        <a href="{{ route('developers.translations') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Translations</a>
-        <a href="{{ route('developers.lifecycle') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Plugin lifecycle</a>
-        <a href="{{ route('developers.testing') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Testing</a>
-        <a href="{{ route('developers.sending-drivers') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Sending drivers</a>
-        <a href="{{ route('developers.payment-gateways') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Payment gateways</a>
-        <a href="{{ route('developers.showcase') }}" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">Plugin showcase</a>
-        <a href="{{ route('api') }}" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">REST API reference</span>
-          <span class="mc-mobile-nav__group-link-desc">Token auth, 8 resources, webhooks</span>
+        <a href="@lroute('developers.getting-started')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_getting_started') }}</a>
+        <a href="@lroute('developers.plugin-architecture')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_plugin_arch') }}</a>
+        <a href="@lroute('developers.hook-system')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_hook') }}</a>
+        <a href="@lroute('developers.ui-injection')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_ui') }}</a>
+        <a href="@lroute('developers.database-models')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_database') }}</a>
+        <a href="@lroute('developers.translations')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_translations') }}</a>
+        <a href="@lroute('developers.lifecycle')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_lifecycle') }}</a>
+        <a href="@lroute('developers.testing')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_testing') }}</a>
+        <a href="@lroute('developers.sending-drivers')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_sending') }}</a>
+        <a href="@lroute('developers.payment-gateways')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_payment') }}</a>
+        <a href="@lroute('developers.showcase')" class="mc-mobile-nav__group-link mc-mobile-nav__group-link--sub">{{ __('nav.developers_mega.doc_showcase') }}</a>
+        <a href="@lroute('api')" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.developers_mega.api') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.mobile_developers.api_mobile_desc') }}</span>
         </a>
-        <a href="/kb" class="mc-mobile-nav__group-link">
-          <span class="mc-mobile-nav__group-link-name">Knowledge Base &nearr;</span>
-          <span class="mc-mobile-nav__group-link-desc">Operations, setup, deliverability</span>
+        <a href="@lroute('kb.index')" class="mc-mobile-nav__group-link">
+          <span class="mc-mobile-nav__group-link-name">{{ __('nav.developers_mega.kb') }}</span>
+          <span class="mc-mobile-nav__group-link-desc">{{ __('nav.mobile_developers.kb_mobile_desc') }}</span>
         </a>
       </div>
     </div>
@@ -141,22 +141,23 @@
       <div class="mc-mobile-nav__auth">
         <div class="mc-mobile-nav__auth-greeting">
           <span class="mc-topbar__user-avatar" style="background: {{ $authColor }};">{{ $authInitials }}</span>
-          <span>Signed in as <strong>{{ $authGreeting }}</strong></span>
+          <span>{{ __('auth.signed_in_as') }} <strong>{{ $authGreeting }}</strong></span>
         </div>
         <form method="POST" action="{{ route('auth.logout') }}">
           @csrf
-          <button type="submit" class="mc-btn mc-btn--secondary mc-btn--full" data-testid="mobile-logout">Sign out</button>
+          <button type="submit" class="mc-btn mc-btn--secondary mc-btn--full" data-testid="mobile-logout">{{ __('auth.sign_out') }}</button>
         </form>
       </div>
     @else
       <div class="mc-mobile-nav__auth">
         <a href="{{ route('auth.login') }}" class="mc-btn mc-btn--secondary mc-btn--full" data-testid="mobile-signin"
-           data-auth-modal-open data-auth-tab="login">Sign in</a>
+           data-auth-modal-open data-auth-tab="login">{{ __('auth.sign_in') }}</a>
         <a href="{{ route('auth.register') }}" class="mc-mobile-nav__link" style="text-align:center; padding-top:8px;" data-testid="mobile-signup"
-           data-auth-modal-open data-auth-tab="register">Create an account</a>
+           data-auth-modal-open data-auth-tab="register">{{ __('auth.create_account') }}</a>
       </div>
     @endauth
-    <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary mc-btn--full">Get AcelleMail — $74</a>
-    <a href="{{ route('demo') }}" class="mc-btn mc-btn--secondary mc-btn--full">Try Demo</a>
+    <x-locale-switcher placement="mobile" />
+    <a href="https://codecanyon.net/cart/add_items?item_ids=17796082" class="mc-btn mc-btn--primary mc-btn--full">{{ __('cta.get_acellemail') }}</a>
+    <a href="@lroute('demo')" class="mc-btn mc-btn--secondary mc-btn--full">{{ __('cta.try_demo') }}</a>
   </div>
 </div>

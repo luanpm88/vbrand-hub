@@ -389,3 +389,96 @@ Route::get('/sitemap.xml', function () {
         ->view('sitemap', ['entries' => $entries])
         ->header('Content-Type', 'application/xml');
 })->name('sitemap');
+
+// i18n route mirrors (PLAN §11 Wave 1).
+//
+// These groups register every EN route's counterpart under the locale prefix.
+// Locale gating is enforced by the SetLocale middleware: when a locale's
+// `enabled` flag is false (Wave 1 baseline for both VI and JA), any hit on
+// /vi/* or /ja/* aborts with 404 — the route is bound but unreachable.
+//
+// The controller methods are reused as-is. Wave 3+ teaches each method how
+// to pick the per-locale blade (e.g. `view('pages.vi.home')` when
+// `app()->getLocale() === 'vi'`). Wave 1 only needs the URI surface.
+//
+// Slug map: config/i18n.php → 'slugs' (single source of truth). Drift between
+// this file and the slug map is caught by `php artisan i18n:sync-routes`
+// (see App\Console\Commands\I18nSyncRoutes).
+
+$_i18nSlugs = config('i18n.slugs', []);
+foreach (['vi' => 'vi.', 'ja' => 'ja.'] as $localePrefix => $namePrefix) {
+    Route::prefix($localePrefix)->name($namePrefix)->group(function () use ($localePrefix, $_i18nSlugs) {
+        // Dot-keyed slug names (e.g. 'kb.search') would be interpreted as
+        // nested config paths by Laravel's config() helper, so we read the
+        // whole map once and index by literal string key.
+        $slug = fn(string $key) => $_i18nSlugs[$key][$localePrefix] ?? $_i18nSlugs[$key]['en'] ?? '';
+
+        Route::get('/'.$slug('home'),              [PageController::class, 'home'])->name('home');
+        Route::get('/'.$slug('features'),          [PageController::class, 'features'])->name('features');
+        Route::get('/'.$slug('email-marketing'),   [PageController::class, 'emailMarketing'])->name('email-marketing');
+        Route::get('/'.$slug('automation'),        [PageController::class, 'automation'])->name('automation');
+        Route::get('/'.$slug('integrations'),      [PageController::class, 'integrations'])->name('integrations');
+        Route::get('/'.$slug('pricing'),           [PageController::class, 'pricing'])->name('pricing');
+        Route::get('/'.$slug('aurius'),            [PageController::class, 'aurius'])->name('aurius');
+        Route::get('/'.$slug('security'),          [PageController::class, 'security'])->name('security');
+        Route::get('/'.$slug('about'),             [PageController::class, 'about'])->name('about');
+        Route::get('/'.$slug('help'),              [PageController::class, 'help'])->name('help');
+        Route::get('/'.$slug('contact'),           [PageController::class, 'contact'])->name('contact');
+        Route::get('/'.$slug('privacy'),           [PageController::class, 'privacy'])->name('privacy');
+        Route::get('/'.$slug('terms'),             [PageController::class, 'terms'])->name('terms');
+        Route::get('/'.$slug('cookies'),           [PageController::class, 'cookies'])->name('cookies');
+        Route::get('/'.$slug('api'),               [PageController::class, 'api'])->name('api');
+
+        Route::get('/'.$slug('for.developers'),    [PageController::class, 'forDevelopers'])->name('for.developers');
+        Route::get('/'.$slug('for.saas'),          [PageController::class, 'forSaas'])->name('for.saas');
+        Route::get('/'.$slug('for.agencies'),      [PageController::class, 'forAgencies'])->name('for.agencies');
+        Route::get('/'.$slug('for.ecommerce'),     [PageController::class, 'forEcommerce'])->name('for.ecommerce');
+        Route::get('/'.$slug('for.newsletters'),   [PageController::class, 'forNewsletters'])->name('for.newsletters');
+        Route::get('/'.$slug('for.enterprise'),    [PageController::class, 'forEnterprise'])->name('for.enterprise');
+
+        Route::get('/'.$slug('guide.self-hosted'),    [PageController::class, 'guideSelfHosted'])->name('guide.self-hosted');
+        Route::get('/'.$slug('guide.cost-savings'),   [PageController::class, 'guideCostSavings'])->name('guide.cost-savings');
+        Route::get('/'.$slug('guide.deliverability'), [PageController::class, 'guideDeliverability'])->name('guide.deliverability');
+
+        Route::get('/'.$slug('developers.index'),                [PageController::class, 'developersIndex'])->name('developers.index');
+        Route::get('/'.$slug('developers.getting-started'),      [PageController::class, 'developersGettingStarted'])->name('developers.getting-started');
+        Route::get('/'.$slug('developers.plugin-architecture'),  [PageController::class, 'developersPluginArchitecture'])->name('developers.plugin-architecture');
+        Route::get('/'.$slug('developers.hook-system'),          [PageController::class, 'developersHookSystem'])->name('developers.hook-system');
+        Route::get('/'.$slug('developers.ui-injection'),         [PageController::class, 'developersUiInjection'])->name('developers.ui-injection');
+        Route::get('/'.$slug('developers.database-models'),      [PageController::class, 'developersDatabaseModels'])->name('developers.database-models');
+        Route::get('/'.$slug('developers.translations'),         [PageController::class, 'developersTranslations'])->name('developers.translations');
+        Route::get('/'.$slug('developers.lifecycle'),            [PageController::class, 'developersLifecycle'])->name('developers.lifecycle');
+        Route::get('/'.$slug('developers.testing'),              [PageController::class, 'developersTesting'])->name('developers.testing');
+        Route::get('/'.$slug('developers.sending-drivers'),      [PageController::class, 'developersSendingDrivers'])->name('developers.sending-drivers');
+        Route::get('/'.$slug('developers.payment-gateways'),     [PageController::class, 'developersPaymentGateways'])->name('developers.payment-gateways');
+        Route::get('/'.$slug('developers.showcase'),             [PageController::class, 'developersShowcase'])->name('developers.showcase');
+
+        Route::get('/'.$slug('compare.show').'/{slug}', [CompareController::class, 'show'])
+            ->where('slug', '[a-z0-9-]+')->name('compare.show');
+
+        Route::get('/'.$slug('glossary.index'),                  [GlossaryController::class, 'index'])->name('glossary.index');
+        Route::get('/'.$slug('glossary.show').'/{slug}',         [GlossaryController::class, 'show'])
+            ->where('slug', '[a-z0-9-]+')->name('glossary.show');
+
+        Route::get('/'.$slug('blog.index'),                      [BlogController::class, 'index'])->name('blog.index');
+        Route::get('/'.$slug('blog.rss'),                        [BlogController::class, 'rss'])->name('blog.rss');
+        Route::get('/'.$slug('blog.show').'/{slug}',             [BlogController::class, 'show'])
+            ->where('slug', '[a-z0-9-]+')->name('blog.show');
+
+        $kbBase = $slug('kb.index');
+        Route::prefix($kbBase)->name('kb.')->group(function () use ($slug, $kbBase) {
+            Route::get('/',                              [KbArticleController::class, 'index'])->name('index');
+            $searchTail   = ltrim(str_replace($kbBase.'/', '', $slug('kb.search')), '/');
+            $categoryTail = ltrim(str_replace($kbBase.'/', '', $slug('kb.category')), '/');
+            $tagTail      = ltrim(str_replace($kbBase.'/', '', $slug('kb.tag')), '/');
+            $articleTail  = ltrim(str_replace($kbBase.'/', '', $slug('kb.articles.show')), '/');
+            Route::get('/'.$searchTail,                  [KbArticleController::class, 'search'])->name('search');
+            Route::get('/'.$categoryTail.'/{slug}',      [KbArticleController::class, 'category'])
+                ->where('slug', '[a-z0-9-]+')->name('category');
+            Route::get('/'.$tagTail.'/{slug}',           [KbArticleController::class, 'tag'])
+                ->where('slug', '[a-z0-9-]+')->name('tag');
+            Route::get('/'.$articleTail.'/{slug}',       [KbArticleController::class, 'show'])
+                ->where('slug', '[a-z0-9-]+')->name('articles.show');
+        });
+    });
+}
