@@ -128,7 +128,9 @@ Khi cần clone 1 WP site sang domain mới:
 10. **Reset vbrandsync settings cho customer mới** — DB clone copy luôn `wp_vbs_settings.vbrand_token` của customer cũ. Phải tạo customer mới trên brand app rồi `Setting::set('vbrand_token', $newApiToken)` qua tinker bên trong vbrandsync plugin.
 11. Tạo customer trên brand app: `Customer::createCustomerWithDefaultUser(...)` (Vietnamese language id, role = default admin) → set `customer->wordpress_endpoint = "https://newdomain/wp-json/vbrandsync/v1"`
 12. Run `enforce-cod-vbrand-express.php` (COD only + vBrand Express + coming-soon=no) — bắt buộc
-13. Update `bots/report/sites.md` registry — thêm entry mới full credentials
+13. **Set `show_on_front=page`** trước khi public — fresh DB clones default `posts` → homepage hiện blog index thay vì template page. Kèm `wp option update page_on_front <id>` (page id của Trang Chủ).
+14. **Dọn duplicate pages**: khi activate theme mới, vbrandsync auto tạo lại page mới với slug `-2` (Trang Chủ-2 etc) — keep originals (id 10/11/12/13), delete duplicates, set `_wp_page_template` đúng.
+15. Update `bots/report/sites.md` registry — thêm entry mới full credentials
 
 ### PHP-FPM `vbrandwww` pool capacity (2026-05-10)
 - Pool ban đầu: `pm.max_children=5`, không có `request_terminate_timeout`. Khi 1 outbound HTTP call từ WP/vbrandsync hang (e.g. brand-app slow, DNS chậm), worker block trên `poll()` syscall vô thời hạn → 5 worker exhausted → cả 9 sites trên server timeout.
@@ -293,6 +295,34 @@ Khi clone 1 site sang brand mới (ví dụ orgafood → voducfoods):
 - Time saved: ~3-4 giờ so với build CSS + templates from scratch
 - **Lesson:** Khi copy theme, sau khi grep replace prefix CSS xong, vẫn phải audit English text hardcoded trong PHP templates — schema defaults + PHP fallback defaults là 2 nguồn khác nhau, schema customize không cover hết.
 - Reference: `/site/wp-content/themes/cafedanhphat/design/HISTORY.md`
+
+### WooCommerce Store API scraper (2026-05-20 — khomaynenkhi launch)
+- Khi nguồn import là WooCommerce site có **WC Store API public** (`/wp-json/wc/store/v1/products` + `/products/categories`) → KHÔNG cần Lazada/Shopee scraper (puppeteer + stealth + browser session). Pure HTTP fetch là đủ.
+- New scraper: `bots/scrape/scripts/scrape-woocommerce-store.js` — output cùng standard format như Lazada/Shopee scraper, drop-in cho `import-to-woocommerce.js`.
+- Detection: `curl -s https://target.com/wp-json/wc/store/v1/products?per_page=1` → 200 + JSON product array = OK. (404/401 = bị disable, fallback sang scraper khác.)
+- Speed: 67 sản phẩm + 67 ảnh + 25 categories trong ~5s (vs ~2-3 phút với headless browser).
+- Output mới: thêm field `images[]` (tất cả ảnh), `slug`, `short_description`, `in_stock` — import script hiện chỉ dùng primary image.
+- **Lesson:** Trước khi reach cho headless scraper, luôn thử WC Store API endpoint — 60% các site B2B Vietnamese đều có nó open. Tiết kiệm 99% thời gian + 0 risk bị block IP.
+
+### `import-to-woocommerce.js` `SITE_URL` typo bug (2026-05-20)
+- Line 273 dùng `SITE_URL` (undefined) thay vì `siteUrl` → crash ở Step 6 "Storefront sanity check" sau khi import xong. Products vẫn được import thành công nhưng coming-soon check không chạy. Lỗi `Storefront check skipped: SITE_URL is not defined` ở cuối log.
+- Fix: line 273 đổi sang `siteUrl`.
+- **Lesson:** Khi tách step verification ra cuối script, dùng cùng tên biến với phần đầu — đừng nhầm UPPER_SNAKE vs camelCase.
+
+### `show_on_front` mặc định `posts` trên fresh DB clones (2026-05-20)
+- Sau khi clone DB từ site khác (`wp db export` → `mysql import` → search-replace), `show_on_front` có thể là `"posts"` ngay cả khi `page_on_front` đã set đúng. Result: homepage hiện blog index (latest posts) thay vì template page-homepage.
+- Triệu chứng: homepage HTML ngắn (~460 dòng), không có `kmnk-hero` section, chỉ có `kmnk-page-hero--small` (page template fallback).
+- Fix: `wp option update show_on_front page` — bắt buộc sau khi clone. Đã thêm vào "Clone WP site" checklist (bước 13).
+- **Lesson:** `page_on_front=<id>` ≠ "hiện page này". Phải pair với `show_on_front=page`.
+
+### Theme PHP fallback defaults vs schema defaults (2026-05-20)
+- Khi clone theme A → B (dieu-an → khomaynenkhi), audit phải cover **3 nơi** chứa brand strings, không phải chỉ 1:
+  1. `schema.php` — defaults dùng khi user mở Theme Customizer (DB lưu vào `wp_vbs_settings.theme.options`)
+  2. **`page-*.php` PHP fallback** trong `$g('key', [<<default here>>])` — defaults dùng khi DB **chưa có** giá trị (fresh site, hoặc khi key chưa được customize)
+  3. Hardcoded HTML/text inline trong templates
+- Lesson kỳ trước (cafedanhphat) đã catch (3). Lesson kỳ này: (2) là class riêng — nếu chỉ update schema.php mà bỏ qua PHP fallback, fresh sites sẽ hiện stale defaults ngay (vì DB chưa lưu gì).
+- Workflow: sau `sed` rename CSS prefix → `grep -nE "\\\$g\(" page-*.php` → audit từng fallback array với content brand mới.
+- **Lesson:** Mỗi `$g('key', [<<default>>])` là 1 fallback. Schema chỉ kick in khi user click Save trong Customizer. PHP fallback là first render. Audit cả 2.
 
 ### curl test webapp login (không cần browser)
 - Phải lấy session cookie trước (`GET /brand/mobile/login` → extract `Set-Cookie`)

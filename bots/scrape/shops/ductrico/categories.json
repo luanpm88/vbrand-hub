@@ -1,0 +1,227 @@
+[
+  {
+    "id": 182,
+    "name": "MÁY NÉN KHÍ ĐỒNG TRỤC – MOTOR GIẢI NHIỆT DẦU",
+    "slug": "may-nen-khi-dong-truc-motor-giai-nhiet-dau",
+    "parent": 166,
+    "count": 11,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 183,
+    "name": "MÁY NÉN KHÍ TRỤC VÍT ĐỒNG TRỤC – MOTOR GIẢI NHIỆT NƯỚC",
+    "slug": "may-nen-khi-truc-vit-dong-truc-motor-giai-nhiet-nuoc",
+    "parent": 166,
+    "count": 7,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 184,
+    "name": "MÁY NÉN KHÍ TRỤC VÍT – TRUYỀN ĐỘNG KHỚP NỐI",
+    "slug": "may-nen-khi-truc-vit-truyen-dong-khop-noi",
+    "parent": 166,
+    "count": 5,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 185,
+    "name": "MÁY NÉN KHÍ TRỤC VÍT BIẾN TẦN 2 CẤP",
+    "slug": "may-nen-khi-truc-vit-bien-tan-2-cap",
+    "parent": 166,
+    "count": 4,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 186,
+    "name": "MÁY NÉN KHÍ TRỤC VÍT JAGUAR ÁP THẤP",
+    "slug": "may-nen-khi-truc-vit-jaguar-ap-thap",
+    "parent": 166,
+    "count": 2,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 187,
+    "name": "MÁY NÉN KHÍ TRỤC VÍT JAGUAR ÁP CAO – CẮT LASER",
+    "slug": "may-nen-khi-truc-vit-jaguar-ap-cao-cat-laser",
+    "parent": 166,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 190,
+    "name": "MÁY NÉN KHÍ KHÔNG DẦU",
+    "slug": "may-nen-khi-khong-dau",
+    "parent": 0,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 163,
+    "name": "DẦU BÔI TRƠN MÁY NÉN KHÍ",
+    "slug": "dau-boi-tron-may-nen-khi",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 76,
+    "name": "JAGUAR",
+    "slug": "jaguar",
+    "parent": 166,
+    "count": 32,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 166,
+    "name": "MÁY NÉN KHÍ TRỤC VÍT",
+    "slug": "may-nen-khi-truc-vit",
+    "parent": 0,
+    "count": 32,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 167,
+    "name": "MÁY NÉN KHÍ PISTON",
+    "slug": "may-nen-khi-piston",
+    "parent": 0,
+    "count": 6,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 127,
+    "name": "JAGUAR",
+    "slug": "jaguar-2",
+    "parent": 77,
+    "count": 5,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 168,
+    "name": "MÁY SẤY KHÍ",
+    "slug": "may-say-khi",
+    "parent": 0,
+    "count": 12,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 128,
+    "name": "SULLAIR",
+    "slug": "sullair-2",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 129,
+    "name": "HANBELL",
+    "slug": "hanbell-2",
+    "parent": 77,
+    "count": 4,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 154,
+    "name": "BÌNH CHỨA KHÍ",
+    "slug": "binh-chua-khi",
+    "parent": 0,
+    "count": 1,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 160,
+    "name": "LỌC KHÍ",
+    "slug": "loc-khi",
+    "parent": 0,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 130,
+    "name": "ATLASCOPCO",
+    "slug": "atlascopco",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 131,
+    "name": "FUSHENG",
+    "slug": "fusheng",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 155,
+    "name": "MÁY LÀM LẠNH NƯỚC",
+    "slug": "may-lam-lanh-nuoc",
+    "parent": 0,
+    "count": 1,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 77,
+    "name": "PHỤ TÙNG",
+    "slug": "phu-tung",
+    "parent": 0,
+    "count": 16,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 132,
+    "name": "HITACHI",
+    "slug": "hitachi",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 133,
+    "name": "KOBELCO",
+    "slug": "kobelco",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 134,
+    "name": "DYNA",
+    "slug": "dyna",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  },
+  {
+    "id": 151,
+    "name": "AIR MAN",
+    "slug": "air-man",
+    "parent": 77,
+    "count": 3,
+    "description": "",
+    "image": ""
+  }
+]

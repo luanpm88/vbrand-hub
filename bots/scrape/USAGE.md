@@ -7,9 +7,10 @@ Hệ thống 2 layer: **Scrape** (lấy data) → **Import** (đẩy vào WooCom
 ## Kiến trúc
 
 ```
-bot-scrape.md          ← entry point — chọn nguồn (lazada / shopee / ...)
-  ├── scrape-lazada-shop.md  →  scripts/scrape-lazada-shop.js
-  └── scrape-shopee-shop.md  →  scripts/scrape-shopee-shop.js
+bot-scrape.md          ← entry point — chọn nguồn (lazada / shopee / woocommerce / ...)
+  ├── scrape-lazada-shop.md          →  scripts/scrape-lazada-shop.js
+  ├── scrape-shopee-shop.md          →  scripts/scrape-shopee-shop.js
+  └── scrape-woocommerce-store.md    →  scripts/scrape-woocommerce-store.js  (NEW)
          │
          ▼
   shops/<SHOP_NAME>/   ← standard format (xem bot-scrape.md)
@@ -79,6 +80,7 @@ node scripts/import-to-woocommerce.js http://brand-site.test shops/nike-flagship
 |------|--------|----------|------|------|
 | nike-flagship-store | Lazada | 741 | 2026-03-17 | nike.b-teka.com |
 | logitech_official_store | Shopee | 61 | 2026-03-22 | logitech.b-teka.com |
+| ductrico | WooCommerce Store API | 67 | 2026-05-20 | khomaynenkhi.com |
 
 ---
 
@@ -92,6 +94,10 @@ cd /private/tmp && node /path/to/scrape-lazada-shop.js <lazada_url>
 
 # Shopee (HTML file — user copy từ DevTools)
 cd /private/tmp && node /path/to/scrape-shopee-shop.js <shop_name> --html <file.html>
+
+# WooCommerce Store API (pure HTTP — no browser) — works on any WC site with public Store API
+cd /private/tmp && node /Users/luan/apps/vbrand/bots/scrape/scripts/scrape-woocommerce-store.js <site_url>
+# Detect first: curl -s <site>/wp-json/wc/store/v1/products?per_page=1 → 200 = OK
 
 # === IMPORT ===
 

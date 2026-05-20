@@ -62,16 +62,18 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Brand Endpoint: https://app.sgconnect.vn/api/brand
 - Brand Token: BZPSmpdy1vSUlF77OaFlqa2ytgdgR9mdoOKvg7lsD1Tg86IelHFi4kXSHfLQ
 - Customer Name: GuuCoffee
-- Customer Email: Marketingmientrung@gmail.com
+- Customer Email: marketingmientrung@gmail.com
 - Customer Password: Aa456321$
 - First Name: Anh
 - Last Name: Linh
-- Phone:
+- Phone: 0888 755 468
+- Address: Tổ 47, An Khê, TP. Đà Nẵng
 - Theme: dreamcafe
 - Timezone: Asia/Ho_Chi_Minh
 - SSL: Yes (expires 2026-07-13)
 - Created: 2026-03-22
 - Domain changed: 2026-04-15 (guucoffee.com → guucafe.com)
+- Contact updated: 2026-05-20 (phone/email/address synced to theme.options + admin_email + WC store)
 
 ## 4. orgafood.b-teka.com
 - DIR_NAME: orgafood_b_teka_com
@@ -213,3 +215,37 @@ Danh sách tất cả WordPress sites đã deploy trên server `18.141.199.175`.
 - Created: 2026-05-10
 - Cloned from: orgafood.b-teka.com (mysqldump + cp -r WP folder + wp search-replace + new theme `voducfoods` cloned từ `orgafood`)
 - Note: F&B đặc sản — Vịt da giòn / vịt nướng — kế thừa 38 products từ orgafood (cần sau này import lại products thật của Võ Đức). Theme name "Võ Đức FOOD" giữ trong style.css, brand display dùng "Võ Đức — Vịt Da Giòn".
+
+## 10. khomaynenkhi.com
+- DIR_NAME: khomaynenkhi_com
+- DB_NAME: khomaynenkhi_com
+- DB_USER: khomaynenkhi_com
+- DB_PASS: aA456321@
+- WP Admin: admin
+- WP Pass: aA456321@
+- WP Path: /home/vbrand/sites/khomaynenkhi_com
+- WP API: https://khomaynenkhi.com/wp-json/vbrandsync/v1
+- Brand Endpoint: https://app.sgconnect.vn/api/brand
+- Brand Token: 6FiEPK0CwveFIMsrcJ7M3U4YKTXEjbYGtzDm4qKdOeEHBZfRQbGekhMSdgQg
+- Customer ID: 17
+- Customer Name: Kho Máy Nén Khí
+- Customer Email: khomaynenkhi@gmail.com
+- Customer Password: 123456
+- First Name: Admin
+- Last Name: Shop
+- Phone:
+- Theme: khomaynenkhi
+- Site title: "Kho Máy Nén Khí"
+- Site tagline: "Thiết bị nén khí công nghiệp — Trục vít / Piston / Sấy khí / Phụ tùng"
+- Hotline: 0901 234 567 — Email: contact@khomaynenkhi.com — Khu vực: TP.HCM + Bình Dương
+- Brand model: B2B máy nén khí công nghiệp đa thương hiệu (Jaguar, Atlas Copco, Hanbell, Sullair, Fusheng, Hitachi, Kobelco) — nhà máy / xưởng cơ khí / dệt may / thực phẩm / dược phẩm / hóa chất
+- Categories: Máy Nén Khí Trục Vít / Piston / Không Dầu / Máy Sấy Khí / Bình Chứa / Lọc Khí / Phụ Tùng / Dầu Bôi Trơn
+- Palette: industrial blue `#1B4D89` + accent orange `#E8792B` — inherited from dieu-an base
+- Logo: custom SVG `assets/images/logo.svg` — air-tank icon + KHO MÁY NÉN KHÍ wordmark (gradient blue + orange accent dot)
+- Timezone: Asia/Ho_Chi_Minh
+- SSL: Yes (expires 2026-08-18) — apex only (www CNAME chưa trỏ)
+- Created: 2026-05-20
+- Cloned from: dieuan.b-teka.com (wp db export + rsync WP files + theme `dieu-an` → `khomaynenkhi` với sed prefix `da-` → `kmnk-`)
+- Products: 67 sản phẩm scrape từ ductrico.com qua **bot mới `scrape-woocommerce-store.js`** (WooCommerce Store API, không cần browser) — máy nén khí Jaguar trục vít / piston / không dầu + máy sấy khí + bình chứa + phụ tùng đa hãng. Categories: 24.
+- Pricing: "Liên hệ" (price=0, B2B inquiry) — match nguồn ductrico.com
+- Note: Site đầu tiên dùng new WC Store API scraper. Server PHP-FPM `pm.max_children` hiện 15 — đủ cho 10 sites; theo dõi nếu tăng tải.

@@ -270,7 +270,7 @@ async function main() {
     // successful API import can still leave a site that LOOKS empty to a
     // customer. Hit the homepage and warn loudly if we see the placeholder.
     try {
-        const home = await fetch(SITE_URL, { redirect: 'follow' });
+        const home = await fetch(siteUrl, { redirect: 'follow' });
         const html = await home.text();
         if (/Great things are on the horizon|woocommerce[_-]coming[_-]soon/i.test(html)) {
             console.log('\n⚠️  WARNING: WooCommerce Coming Soon mode is ENABLED on this site.');
