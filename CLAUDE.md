@@ -309,6 +309,22 @@ Khi clone 1 site sang brand mới (ví dụ orgafood → voducfoods):
 - Fix: line 273 đổi sang `siteUrl`.
 - **Lesson:** Khi tách step verification ra cuối script, dùng cùng tên biến với phần đầu — đừng nhầm UPPER_SNAKE vs camelCase.
 
+### `woocommerce_shop_page_id` bị orphan sau clone + theme activate (2026-05-20)
+- Khi clone DB + activate theme mới, vbrandsync auto tạo page mới cho mỗi menu type=shop → set `woocommerce_shop_page_id` = ID của page mới đó. Nếu sau đó page bị delete (vd cleanup duplicates), `wc_get_page_permalink('shop')` fall back về home URL.
+- Triệu chứng: click menu "Sản Phẩm" trên storefront → ra trang chủ thay vì shop archive. /shop/ vẫn 200 (vì WP route resolution), nhưng menu link sai.
+- Fix: `wp option update woocommerce_shop_page_id <id>` trỏ tới page có slug Vietnamese (vd `/san-pham/`) + xóa `_wp_page_template` meta để WC tự render archive thay vì page-homepage.php template.
+- **Lesson:** sau khi cleanup duplicate pages, audit lại `woocommerce_shop_page_id`, `woocommerce_cart_page_id`, `woocommerce_checkout_page_id`, `woocommerce_myaccount_page_id`. Bất kỳ ID nào trỏ tới deleted page sẽ làm storefront break im lặng.
+
+### SVG illustrations thay placeholder duplicate banner (2026-05-20)
+- Khi 1 page có nhiều section dùng cùng 1 image fallback (vd page-aboutus.php `$img = !empty($section['image']) ? $section['image'] : $theme_url . '/assets/images/hero/hero-1.png';`), về visual cảm giác lặp lại, mất max-effort vibe.
+- Fix: cycle through different SVG defaults theo `$i` index: `$defaultImages = ['story.svg', 'quality.svg', 'service.svg']; $img = $defaultImages[$i] ?? $fallback;`.
+- Custom SVG illustrations cho B2B industrial site (compressor industry):
+  * About sections: 1 hero scene + 3 narrative scenes (story / quality / service)
+  * Categories: 1 SVG per category card (screw / piston / oil-free / dryer / tank-filter / parts)
+  * Brand logos: 1 SVG wordmark per brand (Jaguar / Atlas Copco / Hitachi etc.) — text-only wordmark trong brand color, KHÔNG dùng official logo files (copyright)
+- Time investment: ~15 phút per illustration × 14 illustrations = 3.5h, nhưng kết quả top-notch + 0 image rights issues + scale infinitely.
+- **Lesson:** Khi user phàn nàn "hình bị lặp banner" thay vì download stock photos hoặc tìm royalty-free, vẽ thẳng SVG illustration cho từng section. Vector → 1 file vài KB → responsive perfect → reuse được.
+
 ### `show_on_front` mặc định `posts` trên fresh DB clones (2026-05-20)
 - Sau khi clone DB từ site khác (`wp db export` → `mysql import` → search-replace), `show_on_front` có thể là `"posts"` ngay cả khi `page_on_front` đã set đúng. Result: homepage hiện blog index (latest posts) thay vì template page-homepage.
 - Triệu chứng: homepage HTML ngắn (~460 dòng), không có `kmnk-hero` section, chỉ có `kmnk-page-hero--small` (page template fallback).
