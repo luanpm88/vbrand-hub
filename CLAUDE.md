@@ -45,11 +45,22 @@
 
 ## Project Structure
 
+After 2026-06-03 cutover, local workspace structure:
 ```
-/app     → Laravel 12 (PHP) — brand app, admin, webapp, API
-/site    → WordPress + WooCommerce — customer-facing sites
-  /wp-content/plugins/vbrandsync/  → sync plugin (Laravel micro-app trong WP)
-  /wp-content/themes/              → WP themes (logitech, vbrand-developer, ...)
+~/apps/acelle/          → mainline acelle codebase (/rui UI, brand plugin loaded)
+~/apps/acelle_brand/    → brand plugin source (symlinked → acelle/storage/app/plugins/acelle/brand)
+~/apps/vbrand/          → LEGACY — only kept for rollback reference (do not edit)
+~/apps/vbrand_sites/    → WordPress customer sites (WooCommerce + vbrandsync plugin)
+```
+
+Old layout (pre-cutover, retired — kept here for historical reference of the legacy fork):
+```
+/acelle  → Laravel 12 (mainline acelle codebase, ~/apps/acelle)
+  /storage/app/plugins/acelle/brand  → brand plugin (symlink from ~/apps/acelle_brand)
+  /resources/views/rui/brand/*       → brand customer UI (/rui/brand/home, connection, etc.)
+/wp-sites → WordPress + WooCommerce (customer sites)
+  /wp-content/plugins/vbrandsync/    → sync plugin (unchanged, talks to acelle/brand)
+  /wp-content/themes/                → WP themes (logitech, vbrand-developer, ...)
 /mobile  → React Native + Expo (TypeScript) — seller mobile app
 /docs    → System documentation
 /bots    → Automated task bots (xem phần Bots bên dưới)
@@ -75,7 +86,8 @@
 
 | Component | Local path | Git remote | Branch | Deploy |
 |-----------|-----------|------------|--------|--------|
-| app | `/Users/luan/apps/vbrand/app` | `origin` (louisitvn/acellemail) | `brand` | SSH git pull |
+| acelle (mainline) | `/Users/luan/apps/acelle` | `origin` (upstream acelle repo) | `develop` or release branch | deploy as app-new → symlink |
+| brand plugin | `/Users/luan/apps/acelle_brand` | `origin` (brand plugin repo) | relevant branch | rsync into storage/app/plugins/acelle/brand |
 | vbrandsync | `/Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync` | `origin` (luanpm88/vbrandsync) | `main` | rsync |
 | themes | `/Users/luan/apps/vbrand/site/wp-content/themes` | `origin` (luanpm88/vbrand-themes) | `main` | rsync |
 | mobile | `/Users/luan/apps/vbrand/mobile` | `origin` (luanpm88/vbrand-mobile) | `main` | EAS build (manual) |
@@ -93,7 +105,7 @@ Mỗi component là 1 git repo riêng → commit/push riêng.
 **Áp dụng tự động:**
 - Script: `bots/automated/enforce-cod-vbrand-express.php` — idempotent, chạy được trên site đã setup hoặc fresh.
 - Local: `wp eval-file bots/automated/enforce-cod-vbrand-express.php`
-- Prod 1 site: `ssh vbrand@server "wp --path=/home/vbrand/sites/<dir> eval-file /tmp/enforce-cod-vbrand-express.php"`
+- Prod 1 site: `ssh vbrand@server "wp --path=/home/<DIR_NAME>/wordpress eval-file /tmp/enforce-cod-vbrand-express.php"`
 - Prod tất cả: scp script lên `/tmp/`, loop qua DIR_NAME trong `bots/report/sites.md`.
 - **`deploy-sites.md` phải chạy script này** sau khi sync plugin (xem bot file).
 - **Bất kỳ bot nào tạo site mới** (clone WP, install fresh) **phải gọi script này** ở bước cuối — nếu không, checkout sẽ hiện BACS/cheque/BaoKimVN và customer chọn nhầm.
@@ -104,13 +116,21 @@ Mỗi component là 1 git repo riêng → commit/push riêng.
 
 ## Server
 
-- **Production:** `18.141.199.175`
-- **SSH:** `vbrand@` (app ops, rsync), `ubuntu@` (sudo)
-- **App path:** `/home/vbrand/app` (branch: `brand`)
-- **Sites path:** `/home/vbrand/sites/*/` — mỗi site = 1 WP instance
-- **Sites registry:** `bots/report/sites.md` — danh sách tất cả sites
-- **PHP-FPM socket:** `/var/run/php/php8.3-fpm.vbrand.sock` (dùng cho nginx)
+- **Production:** `54.169.34.13` (Lightsail Singapore, Ubuntu 24.04.4 LTS, 1 vCPU / 911 MiB RAM + 4 GiB swap / 38 GB disk)
+- **Migrated 2026-05-24** từ `52.220.55.112` (old) — see [`docs/SERVER_MOVE_PLAN.md`](docs/SERVER_MOVE_PLAN.md)
+- **Old server:** `52.220.55.112` (trước là `18.141.199.175` — đổi IP trên AWS Lightsail). Giữ chạy ~14 ngày làm rollback. Acelle Mail stack (`/home/acelle`) chưa di chuyển — separate decision.
+- **SSH:** `ubuntu@` (sudo, system ops, deploy-sites), `vbrand@` (brand app deploy — symlink swap, no git pull). Customer WP sites: mỗi site = 1 Linux user riêng (group `vbrand`); `vbrand` đọc được nhưng **không ghi** được vào `/home/<DIR_NAME>/wordpress` → WP write-ops chạy qua `ubuntu@` + `sudo -u <DIR_NAME>` (per-site users không có SSH key trực tiếp).
+- **App path:** `/home/vbrand/app` → symlink to `/home/vbrand/app-new` (acelle mainline release). Legacy `/home/vbrand/app-legacy` preserved for rollback. Owner `vbrand:vbrand`, php-fpm pool `vbrand` = `/run/php/php8.3-fpm.vbrand.sock`
+- **DB:** after 2026-06-03 cutover, the app uses the `brand` database. Legacy DB `vbrand` preserved for rollback. (The 'vbrand' mysql user has ALL PRIVILEGES on both `vbrand` and `brand`; it CANNOT create new databases). Rollback: switch app symlink + restore DB from backup.
+- **Sites path:** `/home/<DIR_NAME>/wordpress` — mỗi customer = 1 Linux user riêng (group `vbrand`), 1 php-fpm pool socket `/run/php/php8.3-fpm.<DIR_NAME>.sock`
+- **Sites registry:** `bots/report/sites.md` — danh sách đầy đủ (14 sites + brand app)
+- **Stack:** nginx 1.24 + PHP 8.3.6-FPM + MySQL 8.0 + certbot (Let's Encrypt auto-renew). MySQL tuned: `innodb_buffer_pool_size=256M`, `max_connections=100`.
+- **Pool mode:** brand app `dynamic` (max 8 workers, 2 spare). Per-site `ondemand` (max 4 workers, idle timeout 60s) — fits 14 sites in 911 MB.
+- **Security:** `iptables` drop scanner IPs (45.88.138.44 blocked). nginx rate-limit hostile paths (`/.env`, `/.git`, ...). `request_terminate_timeout=60s` mỗi pool.
 - **Admin account:** `admin@sgconnect.vn` / `aA456321@`
+- **App updates (after 2026-06-03 cutover):** vbrand runs on acelle mainline + brand plugin. Refer user to `acelle/CLAUDE.md` for mainline app updates; `acelle_brand/CLAUDE.md` for plugin updates. Deploy app: build acelle release alongside, set `.env` (`DB_DATABASE=brand`, `APP_URL=https://app.sgconnect.vn`, keep legacy `APP_KEY`/mail), `composer install --no-dev`, `migrate:fresh` + seed `DatabaseInit` + `TemplateSeeder`, then `mv app app-legacy && ln -sfn app-new app` (no sudo needed — nginx `SCRIPT_FILENAME=$realpath_root` + opcache revalidate_freq=2). Rollback: `rm /home/vbrand/app && mv /home/vbrand/app-legacy /home/vbrand/app`.
+
+**NOTE (2026-06-03 after cutover):** All sites use `/home/<DIR_NAME>/wordpress/` (mỗi customer 1 Linux user). Old server (52.220.55.112) had a different structure — that setup is now obsolete.
 
 ## Lessons Learned (từ audit 2026-04-06)
 
@@ -126,7 +146,7 @@ Khi cần clone 1 WP site sang domain mới:
 8. SSL: `certbot --nginx -d domain --non-interactive --agree-tos --email <email> --redirect`. **Bỏ `-d www.<domain>`** nếu DNS www chưa trỏ — sẽ fail NXDOMAIN, kill cả cert. Add www sau khi DNS sẵn sàng.
 9. Sau SSL: `wp option update siteurl/home https://...` + `wp search-replace http://new https://new --skip-columns=guid --all-tables`
 10. **Reset vbrandsync settings cho customer mới** — DB clone copy luôn `wp_vbs_settings.vbrand_token` của customer cũ. Phải tạo customer mới trên brand app rồi `Setting::set('vbrand_token', $newApiToken)` qua tinker bên trong vbrandsync plugin.
-11. Tạo customer trên brand app: `Customer::createCustomerWithDefaultUser(...)` (Vietnamese language id, role = default admin) → set `customer->wordpress_endpoint = "https://newdomain/wp-json/vbrandsync/v1"`
+11. Tạo customer trên brand app: `App\Services\AccountManagement\AccountProvisioningService::createCustomer(...)` → create brand_site_connection via /rui/brand connection screen using `ConnectionService::connect($customer, $endpoint, $auth_meta)` (không set customer->wordpress_endpoint — column đã remove).
 12. Run `enforce-cod-vbrand-express.php` (COD only + vBrand Express + coming-soon=no) — bắt buộc
 13. **Set `show_on_front=page`** trước khi public — fresh DB clones default `posts` → homepage hiện blog index thay vì template page. Kèm `wp option update page_on_front <id>` (page id của Trang Chủ).
 14. **Dọn duplicate pages**: khi activate theme mới, vbrandsync auto tạo lại page mới với slug `-2` (Trang Chủ-2 etc) — keep originals (id 10/11/12/13), delete duplicates, set `_wp_page_template` đúng.
@@ -144,7 +164,7 @@ Khi cần clone 1 WP site sang domain mới:
   request_terminate_timeout = 60s   # NEW — kill workers hung > 60s
   ```
   Backup giữ tại `vbrand.conf.bak-2026-05-10`. `sudo systemctl restart php8.3-fpm` để apply.
-- **Lesson:** mỗi lần thêm site mới vào `/home/vbrand/sites/` → check `pm.max_children` đã đủ chưa. Quy ước hiện tại: ~1.5× số sites đang chạy. Server có 1.9GB RAM nên cap ở 15 (mỗi worker ~80MB peak).
+- **Lesson:** mỗi lần thêm site mới vào `/home/<DIR_NAME>/wordpress` → tạo php-fpm pool riêng `/etc/php/8.3/fpm/pool.d/<DIR_NAME>.conf` (mode `ondemand`, `pm.max_children=4`, `request_terminate_timeout=60s`). Tổng tất cả pools không vượt ~60 workers trên server 911 MB RAM (sau migration 2026-05-24). Brand app pool giữ `dynamic` (max 8). Server cũ 1.9 GB cho 15 max — config khác.
 - **Lesson:** WP/vbrandsync gọi outbound HTTP (brand-app webhook, font CDN, ...) ở init time. Nếu không có `request_terminate_timeout`, 1 endpoint chậm = downtime toàn server. Luôn set timeout ≤ 60s cho mọi pool serving WP.
 
 ### Clone WP site + đổi theme (rebrand mạnh)
@@ -304,6 +324,56 @@ Khi clone 1 site sang brand mới (ví dụ orgafood → voducfoods):
 - Output mới: thêm field `images[]` (tất cả ảnh), `slug`, `short_description`, `in_stock` — import script hiện chỉ dùng primary image.
 - **Lesson:** Trước khi reach cho headless scraper, luôn thử WC Store API endpoint — 60% các site B2B Vietnamese đều có nó open. Tiết kiệm 99% thời gian + 0 risk bị block IP.
 
+### Khi import B2B contact-for-price products vào WooCommerce → add-to-cart silently fails (2026-05-22)
+- Ductrico → khomaynenkhi import: all products có `price=""` (B2B liên hệ). WC's `WC_Product::is_purchasable()` requires `'' !== $this->get_price()` → returns false for empty price → submitting the cart form just reloads the product page với 0 cookies set, 0 error messages. UX hoàn toàn câm.
+- Cart page mới (fresh sites) dùng WC block-based cart (`<!-- wp:woocommerce/cart -->`) — render qua React, ignore theme overrides, show English "Your cart is currently empty!" + auto cross-sell "New in store" block không cách nào style được.
+- Fix in `khomaynenkhi/functions.php`:
+  1. **`woocommerce_is_purchasable` filter** — return true for any published + in-stock product regardless of price (cart still works, COD-only flow turns into "request quote")
+  2. **`woocommerce_empty_price_html` + `woocommerce_get_price_html`** filters — show "Liên hệ" when price ≤ 0 instead of blank/Free
+  3. **`init` hook to rewrite cart/checkout page content** from `[wp:woocommerce/cart]` → `[woocommerce_cart]` shortcode (and same for checkout) → WC falls back to classic templates → theme's `woocommerce/cart/cart-empty.php` override takes over
+  4. **`woocommerce_add_to_cart_redirect`** → redirect to cart page sau add-to-cart (user gets visual confirmation, not silent stay)
+  5. **`gettext` + `ngettext` filters** mapping common WC English strings to Vietnamese ("Your cart is currently empty", "View cart", "Cart totals", "Proceed to checkout", etc.) — covers both `__()` and `_n()` (the success notice "%s has been added to your cart" uses `_n` for plural)
+- Template overrides: `woocommerce/cart/cart-empty.php` với SVG icon + Vietnamese copy + 2 CTAs ("Xem sản phẩm" + "Liên hệ tư vấn"); single product `woocommerce/content-single-product.php` redesign với 2-column layout (sticky gallery + summary), feature checklist, "Yêu cầu báo giá" secondary CTA, tab-based description/specs/reviews.
+- **Lessons:**
+  1. Sau khi WC import từ source có empty price, **luôn test add-to-cart end-to-end** (curl POST → check `Set-Cookie: woocommerce_cart_hash`) — `is_purchasable` filter false fails silently không log.
+  2. Fresh WC site (8.x+) dùng cart/checkout blocks by default → kill theme override khả năng. Filter trên `init` để rewrite về shortcode là path duy nhất giữ control của theme.
+  3. `_n()` strings (plural-aware) cần filter `ngettext` riêng, không match qua `gettext`. WC notice "%s has been added to your cart" là `_n`, không phải `__`.
+  4. Khi user phàn nàn "button không work + page xấu", debug **end-to-end qua curl** (open page → POST form → check cookies + redirect) trước khi đoán nguyên nhân. HTML response code 200 không có nghĩa là form work — phải xem cookies + final URL.
+
+### rsync of vbrandsync plugin can leak local dev provider into prod cache → every page 500 (2026-05-22)
+- Rsync push of `site/wp-content/plugins/vbrandsync/` from local to server includes `bootstrap/cache/packages.php` + `services.php`. Local repo was at some point booted with dev deps installed → cache references `NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider`. Server `vendor/` is `composer install --no-dev` → class doesn't exist.
+- On next request, `vbrandsync_getResponse()` boots Laravel, kernel handle tries to register providers, fails on missing Collision class → bootstrap aborts BEFORE `DatabaseServiceProvider::boot()` runs → Eloquent's connection resolver stays null. Every subsequent `Model::where(...)` call throws `Call to a member function connection() on null`.
+- Symptom: storefront 500 on every product/category/archive page (header.php calls `vbrand_load_theme_data()` → `Setting::get('theme.options')` → boom). REST `/wp-json/vbrandsync/v1/*` endpoints might still work because they call `vbrandsync_getResponse('/')` themselves and the static `$app` caches across that call.
+- Stack hint to recognize this: error message `Class "NunoMaduro\Collision\..." not found` in `storage/logs/laravel.log` immediately followed by `Call to a member function connection() on null` for every subsequent page render.
+- Fix (immediate): `sudo rm bootstrap/cache/{packages,services}.php` on the affected server, then `sudo systemctl reload php8.3-fpm`. Laravel regenerates the cache from the actual installed `vendor/` on next boot — clean state.
+- Fix (durable): `bots/automated/deploy-sites.md` `rsync` now excludes `.env`, `vendor/`, `storage/logs/*`, **and `bootstrap/cache/packages.php` + `services.php`**. Plus a post-rsync `grep + rm` step that deletes the cache if it references the Collision provider.
+- **Lesson:** `bootstrap/cache/` is environment-specific output, not source-of-truth. Treat it like `vendor/` — never sync from a dev machine to prod. The `.gitignore` already excludes it from commits; rsync needs the same protection.
+
+### Importer was silently dropping gallery + categories + slug + description images (2026-05-22)
+- Khi user phàn nàn "nội dung sản phẩm chưa được copy qua WP" và share screenshot product page chỉ có title + 1 ảnh, **đừng giả định** scraper sai. Verify chain end-to-end:
+  1. Check scraped JSON: `python3 -c "import json; [print(p['name'], len(p['description']), len(p['images']), p['categories']) for p in json.load(open('shops/X/products.json'))]"` — scraped data có thể đầy đủ.
+  2. Check imported WP: `curl https://site.com/wp-json/wc/store/v1/products?slug=X` — so sánh description/images/categories field với scraped.
+  3. Gap thường ở **importer** chứ không phải scraper. `import-to-woocommerce.js` historically chỉ pass `title/description/image_url/price` — bỏ rơi `images[]`, `categories[]`, `slug`, `short_description`, `in_stock`.
+- Concrete bugs found in ductrico → khomaynenkhi import:
+  - `productData` không có `image_urls[]` → mỗi product chỉ 1 thumbnail thay vì gallery 2-4 ảnh
+  - `categoryMap` được build ở step 4 nhưng never referenced khi build per-product data → product `categories: []` trên storefront, no breadcrumb
+  - `slug` không được pass → WP auto-generate từ title → URL drift khỏi source canonical slug
+  - Description HTML chứa `<img src="http://source.com/...">` → hotlinked vĩnh viễn; nếu source xuống = ảnh chết + SEO juice rò sang source
+- Fix (full pipeline):
+  - `import-to-woocommerce.js`: build `galleryUrls` từ `p.images[]` (normalize + dedupe), build `categoryIds` từ `categoryMap[name]`, pass `slug` / `short_description` / `in_stock` / `image_urls[]` / `category_ids[]`
+  - `vbrandsync/wordpress/api/import.php` `vbrandsync_api_import_product()`:
+    * Set `post_name` từ `slug` qua `wp_update_post()` sau khi `$product->save()` (Product model dùng `wp_insert_post` không support `post_name`)
+    * Set `post_excerpt` từ `short_description`
+    * Sau khi save, download remaining `image_urls` không trùng `image_url` → `insertImageAsAttachment` → append vào `_product_image_gallery` meta
+    * **Sideload description images:** regex `<img src="https?://...">` trong description, filter external (host ≠ `home_url`), download + attach to product + rewrite URL inline qua `strtr($desc, $rewriteMap)` + `wp_update_post(post_content)`
+    * `set_stock_status` respect `in_stock === '0'` thay vì hardcoded `instock`
+- **Lessons:**
+  1. Khi 2 endpoints (importer + endpoint) cùng implement contract: viết test scenario mỗi field flow end-to-end. Khi nâng cấp scraper output (thêm `images[]`, `slug`, ...), audit luôn importer + endpoint có consume hay không.
+  2. Hotlinked images trong description = silent SEO/availability liability. Sideload luôn ngay khi import — không để "fix sau".
+  3. `Product::save()` (vbrandsync Product model) **không support `post_name`**. Phải `wp_update_post(['ID' => $id, 'post_name' => $slug])` sau khi save.
+  4. Khi user share screenshot UI, **tìm dữ liệu trong DB trước**: API response cho biết WP có gì → so với source → biết gap ở đâu. Không chỉ trust screenshot.
+  5. **WordPress auto-slashes `$_POST`** via `wp_magic_quotes()` (legacy magic_quotes_gpc compat). Khi field chứa HTML với quotes (e.g. `<img src="...">`), `$_POST['description']` arrives as `<img src=\"...\">`. Regex like `src=["\']([^"\']+)` doesn't match the `\"` form. **Always `wp_unslash($_POST[key])` before regex/string ops.** `wp_insert_post()` and `wp_update_post()` expect slashed input (they internally unslash before DB write), so if you've already `wp_unslash`ed, the round-trip still stores the correct value because update_post will re-slash. Diagnostic: add `bin2hex(substr($desc, 0, 80))` to a debug stamp — look for `5c22` (`\"`) to confirm slashing.
+
 ### `import-to-woocommerce.js` `SITE_URL` typo bug (2026-05-20)
 - Line 273 dùng `SITE_URL` (undefined) thay vì `siteUrl` → crash ở Step 6 "Storefront sanity check" sau khi import xong. Products vẫn được import thành công nhưng coming-soon check không chạy. Lỗi `Storefront check skipped: SITE_URL is not defined` ở cuối log.
 - Fix: line 273 đổi sang `siteUrl`.
@@ -355,7 +425,7 @@ Mobile App / Webapp → Laravel API → WordPress REST API (vbrandsync plugin) �
 
 - Laravel app là trung tâm — quản lý tất cả qua API tới WordPress
 - vbrandsync plugin expose REST endpoints cho Laravel gọi (products, orders, attributes, themes, ...)
-- Mobile app gọi Laravel API (không gọi WP trực tiếp)
+- Mobile app gọi Laravel API (không gọi WP trực tiếp) — api.sgconnect.vn route vào /rui/brand/* của acelle mainline + brand plugin
 
 ---
 

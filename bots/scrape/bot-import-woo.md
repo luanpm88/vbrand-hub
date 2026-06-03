@@ -87,15 +87,26 @@ bots/scrape/bot-import-woo.md import https://nike.b-teka.com shops/nike-flagship
 | Field | Source | Mô tả |
 |-------|--------|--------|
 | `title` | `p.name` | Tên sản phẩm |
+| `slug` | `p.slug` | Giữ URL slug từ source (tránh URL drift) |
+| `description` | `p.description` | HTML mô tả đầy đủ |
+| `short_description` | `p.short_description` | Excerpt ngắn (`post_excerpt`) |
 | `price` | `p.price` | Giá gốc (VND) |
 | `discount_price` | `p.salePrice` | Giá sale (nếu có) |
 | `sold_count` | `p.sold` | Số lượng đã bán |
 | `rating` | `p.rating` | Rating 0-5 |
 | `sku` | `p.sku` | SKU (optional) |
-| `image_url` | `p.image` | URL hình chính |
+| `image_url` | `p.image` | URL hình chính (legacy single image) |
+| `image_urls[]` | `p.images` | **Tất cả gallery images** (download + attach hết) |
+| `category_ids[]` | (mapped) | WP term IDs từ `categoryMap[name]` (từ step categories) |
+| `in_stock` | `p.in_stock` | `"1"`/`"0"` → set stock_status |
 | `product_id` | `p.id` | ID trên platform gốc |
-| `source` | `p.source` | "lazada" / "shopee" / ... |
+| `source` | `p.source` | "lazada" / "shopee" / "woocommerce" / ... |
 | `product_url` | `p.url` | URL gốc |
+
+**Server-side (vbrandsync `/import/product`) cũng sẽ:**
+- Sideload tất cả `<img src>` external trong `description` → attach về product + rewrite URL inline (không hotlink source domain)
+- Set `post_name` từ `slug` để URL match source
+- Set `post_excerpt` từ `short_description`
 
 ## Run command
 
@@ -113,7 +124,7 @@ node scripts/import-to-woocommerce.js <site_url> <shop_dir> [options]
 curl http://brand-site.test/wp-json/vbrandsync/v1/import/status
 
 # Kiểm tra plugin active
-ssh vbrand@18.141.199.175 "cd /home/vbrand/sites/nike_b_teka_com && wp plugin list --status=active"
+ssh vbrand@54.169.34.13 "cd /home/nike_b_teka_com/wordpress && wp plugin list --status=active"
 ```
 
 ### 0 products sau import

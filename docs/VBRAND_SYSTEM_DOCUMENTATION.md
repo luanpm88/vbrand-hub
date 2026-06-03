@@ -1,4 +1,12 @@
-# vBrand System - Complete Technical Documentation
+# Brand/Shop System - Complete Technical Documentation
+
+> **Architecture note (post 2026-06-03 cutover):** This system is no longer a
+> standalone forked "vBrand" app. The brand/shop/website features now run on the
+> **mainline acelle codebase** (`~/apps/acelle`, the refactor `/rui` UI) **plus
+> the `acelle/brand` plugin** (`~/apps/acelle_brand`, symlinked into
+> `storage/app/plugins/acelle/brand`). The legacy forked app is retired (kept
+> only for rollback). This document describes the brand/shop feature set
+> delivered via that plugin, not a separate product.
 
 ## Mục Lục
 1. [Tổng Quan Hệ Thống](#1-tổng-quan-hệ-thống)
@@ -34,77 +42,78 @@ vBrand là một **SaaS e-commerce platform** cho phép mỗi customer quản l�
 - Tất cả data (products, orders, theme settings) được **sync qua REST API** giữa Laravel và WordPress
 - Hệ thống **template schema** cho phép customer customize website mà không cần code
 
-### Hai Thành Phần Chính
-| Component | Path | Technology | Role |
-|-----------|------|------------|------|
-| **App** (Dashboard) | `/app` | Laravel 12 | Customer panel, Admin panel, API gateway |
-| **BrandSite** | `/brandsite` | WordPress + WooCommerce | Customer's storefront website |
+### Thành Phần Chính
+| Component | Location | Technology | Role |
+|-----------|----------|-----------|------|
+| **Acelle Mainline** | `~/apps/acelle` | Laravel 12 (mainline codebase) | Dashboard, admin, API — serves multiple products including brand/shop |
+| **Brand Plugin** | `~/apps/acelle_brand` (symlinked to acelle/storage/app/plugins/acelle/brand) | Laravel plugin | Brand/shop features (site connections, products, orders, themes, builder) |
+| **Customer WordPress Sites** | Customer-provisioned (various hosts) | WordPress + WooCommerce | Customer's storefront website (not part of vbrand repository) |
 
 ---
 
 ## 2. Kiến Trúc Tổng Thể
 
 ```
-┌─────────────────────────────────────────────┐
-│              LARAVEL APP (/app)              │
-│                                              │
-│  ┌──────────┐  ┌──────────┐  ┌───────────┐  │
-│  │ Customer  │  │  Admin   │  │  Public   │  │
-│  │  Panel    │  │  Panel   │  │   API     │  │
-│  │ (brand/*) │  │(admin/*) │  │ (api/*)   │  │
-│  └─────┬─────┘  └─────┬────┘  └─────┬─────┘  │
-│        │              │              │         │
-│  ┌─────▼──────────────▼──────────────▼──────┐ │
-│  │        Acelle\Wordpress\* Models         │ │
-│  │   (Product, Order, Article, Category)    │ │
-│  │        Acelle\Wordpress\Wordpress        │ │
-│  └─────────────────┬────────────────────────┘ │
-└────────────────────┼──────────────────────────┘
-                     │ REST API (cURL)
-                     │ wordpress_endpoint column
-                     ▼
-┌─────────────────────────────────────────────┐
-│          WORDPRESS SITE (/brandsite)         │
-│                                              │
-│  ┌──────────────────────────────────────┐   │
-│  │   Plugin: vbrandsync                  │   │
-│  │   REST API: /wp-json/vbrandsync/v1/*  │   │
-│  │                                       │   │
-│  │  ┌─────────┐ ┌────────┐ ┌─────────┐  │   │
-│  │  │Product  │ │ Order  │ │ Theme   │  │   │
-│  │  │API      │ │ API    │ │ API     │  │   │
-│  │  └────┬────┘ └───┬────┘ └────┬────┘  │   │
-│  │       │          │           │        │   │
-│  │  ┌────▼──────────▼───────────▼─────┐  │   │
-│  │  │  WooCommerce / WordPress Core   │  │   │
-│  │  │  (wp_posts, wc_orders, etc.)    │  │   │
-│  │  └─────────────────────────────────┘  │   │
-│  └──────────────────────────────────────┘   │
-│                                              │
-│  ┌──────────────────────────────────────┐   │
-│  │   Themes: e.g. logitech/             │   │
-│  │   - schema.php (template config)     │   │
-│  │   - page-homepage.php                │   │
-│  │   - page-aboutus.php                 │   │
-│  │   - page-news.php, etc.              │   │
-│  └──────────────────────────────────────┘   │
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│        ACELLE MAINLINE  (~/apps/acelle, "/rui" UI)         │
+│                                                            │
+│  ┌──────────────────┐  ┌──────────┐  ┌─────────────────┐   │
+│  │  Customer Panel  │  │  Admin   │  │   Public API    │   │
+│  │  (/rui/brand/*)  │  │ (admin/*)│  │     (api/*)     │   │
+│  └────────┬─────────┘  └─────┬────┘  └────────┬────────┘   │
+│           │                  │                │            │
+│  ┌────────▼──────────────────▼────────────────▼─────────┐  │
+│  │        PLUGIN  acelle/brand  (Acelle\Brand\*)        │  │
+│  │   storage/app/plugins/acelle/brand → ~/apps/acelle_brand│
+│  │                                                      │  │
+│  │   ConnectionService::clientFor(Customer) ──► WpClient│  │
+│  │   BrandSiteConnection model                          │  │
+│  │     └─ table: brand_site_connections                 │  │
+│  │          (endpoint_url, auth_meta{secret}, tls_verify)│ │
+│  └───────────────────────────┬──────────────────────────┘ │
+└──────────────────────────────┼────────────────────────────┘
+                               │ REST cURL via WpClient
+                               │ → brand_site_connections.endpoint_url
+                               ▼
+┌──────────────────────────────────────────────────────────┐
+│   CUSTOMER WORDPRESS SITE  (/home/<DIR_NAME>/wordpress)    │
+│                                                            │
+│  ┌──────────────────────────────────────────────────┐     │
+│  │   Plugin: vbrandsync                              │     │
+│  │   REST: /wp-json/vbrandsync/v1/*  (unauthenticated)│    │
+│  │                                                   │     │
+│  │  ┌─────────┐ ┌────────┐ ┌─────────┐               │     │
+│  │  │Product  │ │ Order  │ │ Theme   │               │     │
+│  │  │API      │ │ API    │ │ API     │               │     │
+│  │  └────┬────┘ └───┬────┘ └────┬────┘               │     │
+│  │       │          │           │                    │     │
+│  │  ┌────▼──────────▼───────────▼─────┐              │     │
+│  │  │  WooCommerce / WordPress Core   │              │     │
+│  │  │  (wp_posts, wc_orders, ...)     │              │     │
+│  │  └─────────────────────────────────┘              │     │
+│  └──────────────────────────────────────────────────┘     │
+│                                                            │
+│  ┌──────────────────────────────────────────────────┐     │
+│  │   Themes: e.g. logitech/                          │     │
+│  │   - schema.php (template config)                  │     │
+│  │   - page-homepage.php / page-aboutus.php / ...     │    │
+│  └──────────────────────────────────────────────────┘     │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ### Connection Flow
 ```
-App (Laravel)                        BrandSite (WordPress)
-     │                                      │
-     │  customers.wordpress_endpoint ──────►│ REST API base URL
-     │                                      │
-     │◄──── settings.vbrand_endpoint ───────│ Laravel API base URL
-     │◄──── settings.vbrand_token ──────────│ API authentication token
-     │                                      │
-     │  Acelle\Wordpress\Wordpress->request()│
-     │  ────── cURL (GET/POST) ────────────►│ /wp-json/vbrandsync/v1/*
-     │                                      │
-     │  App\Services\VBrand->request()      │
-     │◄────── cURL (GET/POST) ─────────────│ api/brand/* endpoints
+Acelle (Laravel mainline + plugin)      Customer WordPress Site
+     │                                           │
+     │  brand_site_connections.endpoint_url ──►│ REST API base URL
+     │  (customer_id, endpoint_url, auth_meta) │
+     │                                           │
+     │  Acelle\Brand\Wordpress\WpClient         │
+     │  ────── cURL (GET/POST) ────────────────►│ /wp-json/vbrandsync/v1/*
+     │  (sends X-Brand-Token if secret set)    │
+     │                                           │
+     │                                           │ vbrandsync plugin endpoint
+     │                                           │ (unchanged)
 ```
 
 ---
@@ -117,6 +126,27 @@ App (Laravel)                        BrandSite (WordPress)
 - **Main routes file**: `routes/brand.php`
 
 ### 3.2 Key Directories
+
+Post-cutover directory structure:
+```
+~/apps/acelle/ (mainline)
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── Brand/          # Customer panel controllers (routed via plugin)
+│   │   ├── Store/          # Store management
+│   │   ├── Admin/Brand/    # Admin panel controllers
+│   │   └── Api/Brand/      # Public API controllers
+
+~/apps/acelle_brand/ (plugin)
+├── src/
+│   ├── Http/Controllers/   # Brand-specific customer/admin controllers
+│   ├── Services/           # ConnectionService, WpClient, etc.
+│   ├── Models/             # Brand DB models (brand_site_connections, etc.)
+│   └── Wordpress/          # WpClient, connection management
+├── database/migrations/    # brand_site_connections table, etc.
+```
+
+The legacy forked layout (for historical reference only):
 ```
 app/
 ├── app/
@@ -150,17 +180,33 @@ app/
 ```
 
 ### 3.3 Customer Model (`Acelle\Model\Customer`)
-File: `app/app/Model/Customer.php` (~1800 lines)
+File: `~/apps/acelle/app/Model/Customer.php` (mainline, ~1800 lines)
 
-**Key DB columns:**
-- `wordpress_endpoint` — URL endpoint của WordPress site (e.g. `https://brandsite.com/wp-json/vbrandsync/v1`)
+**Connection storage (post-cutover):**
+The customer ↔ WordPress connection is now stored in the `brand_site_connections`
+table (columns: `customer_id`, `endpoint_url`, `auth_meta`, `tls_verify`,
+`status`, `last_checked_at`, `last_error`) instead of on the `customers` table.
+The legacy `customers.wordpress_endpoint` column may still exist for rollback,
+but SHOULD NOT be used.
+
+**Key DB columns (Customer):**
 - `uid` — Unique identifier
 - `status` — `active` | `inactive`
 
-**Key methods:**
+**Connection access (post-cutover):**
+Connections are now managed by `Acelle\Brand\Services\ConnectionService`. Example:
 ```php
-// Lấy WordPress connection instance
-$customer->wordpress()  // returns Acelle\Wordpress\Wordpress instance
+// Legacy (may still work for backward compatibility):
+$customer->wordpress()  // may be deprecated
+
+// New pattern (via plugin):
+// clientFor() is a ConnectionService method that takes the Customer and
+// returns a WpClient (or null if no connection). It is NOT a method on the
+// connection/model — never call $connection->clientFor().
+$client = app(\Acelle\Brand\Services\ConnectionService::class)->clientFor($customer); // ?WpClient
+if ($client) {
+    // Use $client for API calls
+}
 
 // Template management
 $customer->getWordPressTemplates()
@@ -201,6 +247,8 @@ $customer->roles()          // hasMany Role
 
 ### 3.4 WordPress Wrapper Classes (`Acelle\Wordpress\*`)
 
+> ⚠️ LEGACY (retired): the `Acelle\Wordpress\*` wrapper classes shown below (this entire section 3.4) were the OLD client. The current client is `Acelle\Brand\Wordpress\WpClient`, obtained via `ConnectionService::clientFor($customer)`. Kept here as historical reference only.
+
 Đây là **proxy classes** - không lưu data trực tiếp vào DB của Laravel. Thay vào đó, gọi REST API sang WordPress.
 
 #### `Acelle\Wordpress\Wordpress` (Main API Client)
@@ -237,7 +285,7 @@ class Wordpress {
 ```
 
 **Connection failure handling:**
-- Nếu `customers.wordpress_endpoint` chưa được cấu hình hoặc WordPress site không phản hồi, `Wordpress::request()` sẽ ném `Acelle\Exceptions\WordpressConnectionException`.
+- Nếu `brand_site_connections` record của customer chưa tồn tại hoặc WordPress site không phản hồi, WpClient sẽ ném `WordpressConnectionException`. Connection state được kiểm tra qua `ConnectionStateService::configured()` và `ConnectionStateService::connected()`.
 - Mobile webapp (`/brand/mobile/*`) render thông báo thân thiện cho customer thay vì show stack trace/exception page.
 - Desktop brand app (`/brand/*`) dùng `Customer::getWordPressConnectionState()` để tránh gọi trực tiếp WordPress trong layout/menu chung.
 - Desktop AJAX GET cho các list trong `/brand/*` trả về HTML cảnh báo ngay trong vùng list; desktop mutation requests vẫn trả JSON lỗi để frontend xử lý đúng.
@@ -362,7 +410,12 @@ class Article {
 ## 4. WordPress Plugin VBrandSync (`/brandsite`)
 
 ### 4.1 Plugin Entry Point
-File: `brandsite/wp-content/plugins/vbrandsync/plugin.php`
+File: `wp-content/plugins/vbrandsync/plugin.php` (on each customer's WordPress site)
+
+> **Deployment note (post-cutover):** The `vbrandsync` plugin is deployed to each
+> customer's WordPress site independently during site provisioning. It is **not**
+> versioned in the vbrand/acelle repository as a bundled `/brandsite` directory.
+> The plugin source code may live in a separate repository or distribution package.
 
 Plugin này là **cầu nối** giữa Laravel app và WordPress. Nó:
 1. Đăng ký **REST API endpoints** tại `/wp-json/vbrandsync/v1/*`
@@ -384,6 +437,11 @@ function vbrandsync_getResponse($path=null) {
 ```
 
 Điều này cho phép sử dụng **Eloquent models** (`App\Models\Setting`, `App\Library\ThemeData`) và **Laravel services** bên trong WordPress.
+
+> **Note (post-cutover):** This embedded Laravel application lives inside the
+> `vbrandsync` plugin deployed to customer WordPress sites. It allows WooCommerce
+> hooks to call Laravel code for theme data, settings, and API operations. It is
+> **not** part of the mainline acelle codebase.
 
 ### 4.3 Plugin Structure
 ```
@@ -451,6 +509,9 @@ Auto-status on checkout: New orders → `wc-ordered` (via `woocommerce_checkout_
 
 #### `App\Wordpress\Models\Product` (WP side)
 File: `vbrandsync/app/Wordpress/Models/Product.php`
+
+> **Note (post-cutover):** These WP-side model files are part of the `vbrandsync`
+> plugin deployed to customer WordPress sites, not in the acelle or vbrand repositories.
 
 Wraps WooCommerce product operations using native WP/WC functions:
 ```php
@@ -551,11 +612,15 @@ function vbrand_setfrontPageByTemplate($template);
 
 ### 5.1 App → WordPress (Laravel gọi sang WordPress)
 
-**Connection setup:**
-1. Admin sets `customer.wordpress_endpoint` = WordPress REST API URL
-2. `$customer->wordpress()` returns `Acelle\Wordpress\Wordpress` instance
+**Connection setup (post-cutover):**
+1. Admin creates a WordPress site for the customer (external provisioning)
+2. Admin creates a `brand_site_connections` record linking customer to the site's `/wp-json/vbrandsync/v1` endpoint via the `/rui/brand` connection screen
+3. `app(\Acelle\Brand\Services\ConnectionService::class)->clientFor($customer)` returns the `WpClient` instance (or `null`) for API calls. `clientFor()` is a `ConnectionService` method that takes the `Customer` — it is NOT a method on the connection/model. (`ConnectionService::getOrNull($customer)` returns the raw `BrandSiteConnection` model, which only exposes a `secret()` method.)
 
 **Flow:**
+
+> ⚠️ LEGACY (retired): the `Acelle\Wordpress\*` wrapper classes and the `{wordpress_endpoint}` reference shown below were the OLD client. The current client is `Acelle\Brand\Wordpress\WpClient`, obtained via `ConnectionService::clientFor($customer)`, which cURLs to `brand_site_connections.endpoint_url`. Kept here as historical reference only.
+
 ```
 Controller (Brand/Store)
     → Acelle\Wordpress\{Product|Order|Article}::method()
@@ -565,6 +630,9 @@ Controller (Brand/Store)
 ```
 
 **Example: List products**
+
+> ⚠️ LEGACY (retired): the `Acelle\Wordpress\*` wrapper classes and the `{wordpress_endpoint}` reference shown below were the OLD client. The current client is `Acelle\Brand\Wordpress\WpClient`, obtained via `ConnectionService::clientFor($customer)`. Kept here as historical reference only.
+
 ```php
 // In Laravel controller
 $products = Acelle\Wordpress\Product::list(['per_page' => 10, 'page' => 1]);
@@ -576,9 +644,11 @@ $products = Acelle\Wordpress\Product::list(['per_page' => 10, 'page' => 1]);
 
 ### 5.2 WordPress → App (WordPress gọi ngược về Laravel)
 
-**Connection setup:**
-1. Laravel calls `$customer->wordpress()->updateBrandAPI($endpoint, $token)`
-2. WordPress stores `vbrand_endpoint` + `vbrand_token` in `settings` table
+**Connection setup (post-cutover):**
+1. When a `brand_site_connections` record is created, the app sends the vbrand_endpoint and token to WordPress via API
+2. WordPress stores `vbrand_endpoint` + `vbrand_token` in its `settings` table (unchanged)
+
+Note: The plugin's `ConnectionService` now owns this setup logic instead of the Customer model.
 
 **Flow:**
 ```
@@ -908,6 +978,9 @@ $revenue = $order->total - $order->tax - $order->getPlanFee() - $order->shipping
 ## 8. Product Management
 
 ### 8.1 Product Data Flow
+
+> ⚠️ LEGACY (retired): the `Acelle\Wordpress\*` wrapper classes shown below were the OLD client. The current client is `Acelle\Brand\Wordpress\WpClient`, obtained via `ConnectionService::clientFor($customer)`. Kept here as historical reference only.
+
 ```
 Customer Panel (Laravel)                    WordPress/WooCommerce
         │                                           │
@@ -1051,7 +1124,7 @@ $customer->wordpress()->request(...)
 - Admin can "one click login": `admin/brand/customers/{uid}/one-click-login`
 
 ### 11.4 WordPress API Authentication
-Currently, WordPress REST API endpoints use `'permission_callback' => '__return_true'` (public access). Security relies on the WordPress site being accessible only from the Laravel app.
+WordPress REST API endpoints use `'permission_callback' => '__return_true'` (public access). Security relies on the WordPress site being accessible only from the acelle app. The `vbrandsync` plugin optionally accepts an `X-Brand-Token` header when a secret is configured in `brand_site_connections.auth_meta`, adding an optional layer of authentication hardening.
 
 ### 11.5 WordPress → Laravel API Auth
 Uses `api_token` query parameter: `$data['api_token'] = Setting::get('vbrand_token')`
@@ -1062,7 +1135,8 @@ Uses `api_token` query parameter: `$data['api_token'] = Setting::get('vbrand_tok
 
 ### 12.1 Laravel Database (Main App)
 Key tables:
-- `customers` — Customer accounts (with `wordpress_endpoint`)
+- `customers` — Customer accounts (the `wordpress_endpoint` column is legacy — use `brand_site_connections` instead)
+- `brand_site_connections` — Connection records linking customers to WordPress endpoints (NEW, owned by plugin)
 - `users` — Login accounts (with `api_token`, belongs to customer)
 - `orders` — Local order records
 - `products` — Local product records
@@ -1078,12 +1152,14 @@ Key tables:
 - `provinces`, `districts`, `wards` — Vietnamese geography
 
 ### 12.2 WordPress Database (Per site)
-Standard WP + WooCommerce tables plus:
-- `settings` table (from vbrandsync migrations) — Key-value store for:
+Standard WP + WooCommerce tables plus vbrandsync-specific tables (unchanged mechanism):
+- `settings` table (from vbrandsync plugin migrations) — Key-value store for:
   - `vbrand_endpoint` — Laravel API URL
   - `vbrand_token` — API auth token
   - `theme.options` — JSON blob of all theme customizations
   - `last_sync_at` — Last data sync timestamp
+
+Note: These WordPress databases are customer-provisioned, not part of the vbrand/acelle repository.
 
 WooCommerce data (in standard WP tables):
 - Products: `wp_posts` (type=product) + `wp_postmeta`
@@ -1169,14 +1245,14 @@ WooCommerce data (in standard WP tables):
 
 ### 13.2 Mobile Webapp Controllers (`Brand\Webapp\*`)
 
-Routes prefix: `brand/mobile`, Views: `resources/views/webapp/`
+Routes prefix: `/rui/brand/mobile` (via acelle mainline), Views: acelle mainline `resources/views/brand/mobile/` or plugin overrides
 
 #### `Brand\Webapp\AuthController`
 - `showLogin()` — Mobile-optimized login page (guest route, no auth required)
 - `login()` — Handle login POST (redirects to `webapp.dashboard` on success)
 - `logout()` — Logout and redirect to mobile login
 
-**Auth redirect**: `Authenticate` middleware detects `brand/mobile*` requests and redirects unauthenticated users to `brand/mobile/login` instead of desktop `/login`.
+**Auth redirect**: Routes are now `/rui/brand/mobile/login`, `/rui/brand/mobile/`, etc. The `Authenticate` middleware now detects `/rui/brand/mobile*` requests and redirects unauthenticated users to `/rui/brand/mobile/login` instead of the desktop `/login`.
 
 #### `Brand\Webapp\DashboardController`
 - `index()` — Dashboard with stats (orders, products, theme), recent orders
@@ -1291,11 +1367,18 @@ POST   brand/mobile/orders/{id}/confirm    → ... (all status actions same as s
 ### 14.2 Laravel Routes (brand.php)
 
 #### Frontend (Customer) Routes — Middleware: `auth, frontend`
+
+> **Post-cutover:** these routes now live under the `/rui` prefix in the mainline
+> acelle codebase (e.g. `/rui/brand/`, `/rui/brand/hostings`). The legacy
+> `brand/*` (no `/rui`) routes are GONE. The paths below show the `/rui`-prefixed
+> form; older fragments in this section that still read `brand/...` are legacy and
+> should be read as `/rui/brand/...`.
+
 ```
-GET    brand/                              → Brand\HomeController@index
-GET    brand/hostings                      → Brand\HomeController@hostings
-GET    brand/templates                     → Brand\HomeController@templates
-GET    brand/invoice                       → Brand\HomeController@invoice
+GET    /rui/brand/                         → Brand\HomeController@index
+GET    /rui/brand/hostings                 → Brand\HomeController@hostings
+GET    /rui/brand/templates                → Brand\HomeController@templates
+GET    /rui/brand/invoice                  → Brand\HomeController@invoice
 
 # Media
 GET    brand/media                         → MediaController@index
@@ -1379,9 +1462,14 @@ POST   store/orders/{id}/delete            → Store\OrdersController@delete
 ```
 
 #### Backend (Admin) Routes — Middleware: `auth, backend`
+
+> **Post-cutover:** these admin routes are defined in the mainline acelle
+> codebase (delivered via mainline or the `acelle/brand` plugin), not a separate
+> vbrand app.
+
 ```
 # Customer Management
-RESOURCE admin/brand/customers             → Admin\Brand\CustomerController
+RESOURCE /admin/brand/customers            → Admin\Brand\CustomerController
 GET    admin/brand/customers/login-as/{uid} → loginAs
 GET    admin/brand/customers/{uid}/one-click-login → oneClickLogin
 POST   admin/brand/customers/{uid}/assign-plan → assignPlan
@@ -1485,15 +1573,16 @@ GET    api/v1/brand/address/wards          → AddressController@wards
 
 ## 15. Prompt Guide: How to Work with This Codebase
 
-### 15.1 Adding a New Feature to Customer Panel
+### 15.1 Adding a New Feature to Customer Panel (post-cutover)
 ```
-1. Define route in: app/routes/brand.php (frontend group)
-2. Create/edit controller in: app/app/Http/Controllers/Brand/
-3. If involves WordPress data:
-   a. Create API wrapper in: app/app/Wordpress/{Entity}.php
-   b. Create REST endpoint in: brandsite/wp-content/plugins/vbrandsync/wordpress/api/{entity}.php
-   c. Create WP model wrapper in: brandsite/wp-content/plugins/vbrandsync/app/Wordpress/Models/{Entity}.php
-4. Create views in: app/resources/views/brand/
+1. Define route in: acelle mainline routes/brand.php OR plugin routes
+   (depending on feature ownership) — under the /rui prefix
+2. Create/edit controller in: acelle mainline app/Http/Controllers/Brand/
+   OR plugin src/Http/Controllers/Brand/
+3. If involves WordPress data: use the existing WpClient
+   (Acelle\Brand\Wordpress\WpClient or plugin equivalent)
+4. Create views in: acelle mainline resources/views/brand/
+   OR plugin resources/views/brand/
 ```
 
 ### 15.2 Adding a New Theme Customization Option
@@ -1536,55 +1625,52 @@ GET    api/v1/brand/address/wards          → AddressController@wards
 4. Update views as needed
 ```
 
-### 15.5 Connecting a New Customer to WordPress
+### 15.5 Creating a New Customer Site (the new normal)
 ```
-1. Admin: admin/brand/customers → create customer
-2. Admin: store/wordpress/connect/{customer_uid}
-   - Set customer.wordpress_endpoint = "https://site.com/wp-json/vbrandsync/v1"
-3. WordPress side: Install vbrandsync plugin
-4. Via API or manually: Set vbrand_endpoint and vbrand_token in WordPress settings
-   - Or: $customer->wordpress()->updateBrandAPI($laravelEndpoint, $apiToken)
+1. Provision the WordPress+Woo site externally (vbrandsync plugin already
+   deployed, exposing /wp-json/vbrandsync/v1)
+2. Create the acelle customer account
+   (admin "create customer" or AccountProvisioningService)
+3. Create a brand_site_connection pointing the customer at their site's
+   /wp-json/vbrandsync/v1 endpoint via the /rui/brand connection screen
+   — NOT the old customers.wordpress_endpoint column
 ```
 
-### 15.6 Key File Locations Quick Reference
+Accounts are provisioned via
+`App\Services\AccountManagement\AccountProvisioningService::createCustomer` /
+`createInstallAccount`.
+
+### 15.6 Key File Locations Quick Reference (post-cutover)
 ```
-Routes:           app/routes/brand.php        (webapp)
-                  app/routes/brand_webapp.php  (mobile webapp)
-                  app/routes/brand_api_v1.php  (mobile app API)
-Customer Model:   app/app/Model/Customer.php
-WP API Client:    app/app/Wordpress/Wordpress.php
-WP Product:       app/app/Wordpress/Product.php
-WP Order:         app/app/Wordpress/Order.php
-WP Article:       app/app/Wordpress/Article.php
+Routes:           ~/apps/acelle/routes/brand.php   (mainline, /rui prefix)
+Customer Model:   ~/apps/acelle/app/Model/Customer.php   (mainline)
+WP API Client:    Acelle\Brand\Wordpress\WpClient   (plugin) or mainline equivalent
+Middleware:       ~/apps/acelle/app/Http/Middleware/   (Frontend, ApiBrandInit — mainline)
+Connections:      Acelle\Brand\Services\ConnectionService   (plugin)
+Connection Model: Acelle\Brand\Models\BrandSiteConnection   (plugin)
 
-Middleware:        app/app/Http/Middleware/Frontend.php      (webapp - sets WP connection)
-                  app/app/Http/Middleware/ApiBrandInit.php   (API - sets WP connection)
-
-Plugin Entry:     brandsite/wp-content/plugins/vbrandsync/plugin.php
-Plugin APIs:      brandsite/wp-content/plugins/vbrandsync/wordpress/api/*.php
-Plugin Models:    brandsite/wp-content/plugins/vbrandsync/app/Wordpress/Models/*.php
-Theme Data:       brandsite/wp-content/plugins/vbrandsync/app/Library/ThemeData.php
-VBrand Service:   brandsite/wp-content/plugins/vbrandsync/app/Services/VBrand.php
-Settings Model:   brandsite/wp-content/plugins/vbrandsync/app/Models/Setting.php
-Theme Schema:     brandsite/wp-content/themes/{theme}/schema.php
-Payment:          brandsite/wp-content/plugins/vbrandsync/wordpress/payment.php
-Shipping:         brandsite/wp-content/plugins/vbrandsync/wordpress/shipping/*.php
+The vbrandsync plugin files (plugin.php, wordpress/api/*.php,
+app/Wordpress/Models/*.php, app/Library/ThemeData.php, app/Services/VBrand.php,
+app/Models/Setting.php, wordpress/payment.php, wordpress/shipping/*.php) and
+theme schemas (wp-content/themes/{theme}/schema.php) are deployed to customer
+WordPress sites, NOT versioned in the vbrand/acelle repository.
 ```
 
 ### 15.7 Common Patterns
 
-#### CRITICAL: WordPress Connection Initialization
+#### CRITICAL: WordPress Connection Initialization (post-cutover)
 ```
-Any route that calls Product::list(), Order::list(), or any Wordpress model method
-MUST first initialize WordpressConnectionFacade::setWordpress().
+Any route that calls Product::list(), Order::list(), or WooCommerce operations
+MUST first establish the WordPress connection via ConnectionService or
+ConnectionStateService.
 
-- Webapp routes: handled by `frontend` middleware (web redirects on error)
-- API routes:    handled by `api_brand_init` middleware (JSON errors)
+- Webapp routes: handled by plugin middleware or mainline `frontend` middleware
+- API routes:    handled by `api_brand_init` middleware (unchanged pattern)
 
 If products/orders return EMPTY from API but work in webapp:
-→ Check that `api_brand_init` middleware is in the route group.
-→ File: app/app/Http/Middleware/ApiBrandInit.php
-→ Registered as alias `api_brand_init` in bootstrap/app.php
+→ Check that the customer's brand_site_connection exists and is configured
+→ Check that the connection's endpoint_url is valid
+→ Use ConnectionService::getOrNull($customer) to retrieve the connection safely
 ```
 
 #### CRITICAL: vbrandsync API Property Names vs WooCommerce REST API
@@ -1643,6 +1729,9 @@ API CONTROLLERS (app/app/Http/Controllers/Brand/Api/):
 ```
 
 #### WordPress API Call Pattern (Laravel side)
+
+> ⚠️ LEGACY (retired): the `Acelle\Wordpress\*` wrapper classes and the `WordpressConnectionFacade::getWordpress()` pattern shown below were the OLD client. The current client is `Acelle\Brand\Wordpress\WpClient`, obtained via `ConnectionService::clientFor($customer)`. Kept here as historical reference only.
+
 ```php
 // All Wordpress wrapper classes use the same pattern:
 public static function wordpress() {
@@ -1922,14 +2011,16 @@ The `test_all_price_displays_are_numeric` test in WebappSmokeTest verifies all `
 
 ### 17.1 DTO Layer
 
-Response shaping is now centralized in DTO classes instead of inline in controllers:
+Response shaping is centralized in DTO classes instead of inline in controllers.
+Post-cutover these DTOs live in the acelle mainline at
+`~/apps/acelle/app/DTOs/` (or plugin equivalent):
 
-| DTO | File | Matches TypeScript |
-|-----|------|-------------------|
-| `ProductDTO::summary()` | `app/DTOs/ProductDTO.php` | `ProductSummary` |
-| `ProductDTO::detail()` | `app/DTOs/ProductDTO.php` | `ProductDetail` |
-| `OrderDTO::summary()` | `app/DTOs/OrderDTO.php` | `OrderSummary` |
-| `OrderDTO::detail()` | `app/DTOs/OrderDTO.php` | `OrderDetail` |
+| DTO | Location | Matches TypeScript |
+|-----|----------|-------------------|
+| `ProductDTO::summary()` | acelle mainline `app/DTOs/ProductDTO.php` | `ProductSummary` |
+| `ProductDTO::detail()` | acelle mainline `app/DTOs/ProductDTO.php` | `ProductDetail` |
+| `OrderDTO::summary()` | acelle mainline `app/DTOs/OrderDTO.php` | `OrderSummary` |
+| `OrderDTO::detail()` | acelle mainline `app/DTOs/OrderDTO.php` | `OrderDetail` |
 
 ### 17.2 Error Handling
 

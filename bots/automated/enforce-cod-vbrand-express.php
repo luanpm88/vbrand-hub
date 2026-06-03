@@ -2,7 +2,7 @@
 /**
  * vBrand site standardisation: COD-only payment + vBrand Express-only shipping.
  *
- * Run on the server with `wp --path=/home/vbrand/sites/<dir> eval-file <this>`.
+ * Run on the server with `wp --path=/home/<dir>/wordpress eval-file <this>`.
  * Idempotent — safe to run on a fresh site or one that was already configured.
  *
  * Source of truth: docs/USER_GUIDE_DESKTOP.md §"Cửa hàng → Đơn hàng" + CLAUDE.md

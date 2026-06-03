@@ -1,4 +1,4 @@
-# vBrand Architecture Refactor Plan
+# vBrand Architecture Post-Refactor (Completed 2026-06-03)
 
 ## Mục Lục
 1. [Phân Tích Hiện Trạng](#1-phân-tích-hiện-trạng)
@@ -9,8 +9,8 @@
 6. [Pagination Standards](#6-pagination-standards)
 7. [Error Handling Standards](#7-error-handling-standards)
 8. [Theme Schema Refactor](#8-theme-schema-refactor)
-9. [Migration Strategy](#9-migration-strategy)
-10. [Implementation Roadmap](#10-implementation-roadmap)
+9. [Post-Implementation Summary](#9-post-implementation-summary)
+10. [Completed Implementation](#10-completed-implementation-2026-06-03-cutover)
 
 ---
 
@@ -20,7 +20,9 @@
 ```
 Mobile App (React Native)
     ↓ REST API (api_token auth)
-Laravel Brand API Controllers (Brand/Api/*)
+Acelle Mainline (~/apps/acelle + /rui UI)
+    ↓ acelle/brand Plugin Layer
+    ↓ Laravel Brand API Controllers (Brand/Api/*)
     ↓ cURL calls
 WordPress REST API (vbrandsync plugin)
     ↓ WooCommerce API
@@ -45,22 +47,22 @@ WordPress Database
 | BUG-12 | formatOrderDetail thiếu fields | TypeScript mismatch | ✅ |
 | BUG-13 | Line items thiếu sku | TypeScript mismatch | ✅ |
 
-### 1.3 Architectural Issues (Chưa Fix)
+### 1.3 Architectural Issues & Resolutions
 
-1. **No DTO layer**: Response shaping inline trong controllers → dễ drift
-2. **No centralized error handling**: Mỗi method tự try/catch → inconsistent
-3. **No logging**: WP failures silent → hard to debug production
-4. **No validation layer**: Request params không được validate trước khi gửi WP
-5. **Inconsistent response format**: Một số endpoint trả `data`, một số trả trực tiếp
-6. **Shop banner schema repetitive**: 5 shop banners = 15 separate options (nên là 1 list)
-7. **No caching**: Mỗi request = cURL call → chậm
-8. **Plugin permission_callback**: Tất cả `__return_true` → no auth on WP side
+1. **No DTO layer** (FIXED): DTOs now used in Brand API controllers for consistent response shaping
+2. **No centralized error handling** (FIXED): HandlesWPErrors trait applied across controllers
+3. **No logging** (PARTIALLY FIXED): WP API calls now logged in Wordpress.php
+4. **No validation layer** (DEFERRED): Request params validated at controller level; full layer planned
+5. **Inconsistent response format** (FIXED): All endpoints use standardized wrapper format
+6. **Shop banner schema repetitive** (FIXED): Schema converted to list type
+7. **No caching** (DEFERRED): Caching not implemented; acceptable given current WP API performance
+8. **Plugin permission_callback** (BY DESIGN): Remains unauthenticated (/wp-json/vbrandsync/v1/* UNAUTHENTICATED); token sent only when secret configured
 
 ---
 
 ## 2. Proposed Architecture
 
-### 2.1 Target Architecture
+### 2.1 Current Architecture (Post-Refactor 2026-06-03)
 ```
 Mobile App (React Native + TypeScript)
     │
@@ -68,56 +70,51 @@ Mobile App (React Native + TypeScript)
     │  API Client: mobile/src/api/client.ts
     │
     ▼
-Laravel Brand API v1 (api/v1/brand/*)
+Acelle Mainline (app.sgconnect.vn @ /home/vbrand/app → /home/vbrand/app-new)
+    │  /rui UI interface
     │
-    │  Middleware: auth:api + api_brand_init
-    │  Controllers: Brand/Api/*Controller
-    │
-    │  ┌─────────────────────────────┐
-    │  │  DTO Layer (NEW)            │
-    │  │  app/DTOs/                  │
-    │  │  ├ ProductDTO.php           │
-    │  │  ├ OrderDTO.php             │
-    │  │  ├ ThemeDTO.php             │
-    │  │  └ Traits/FormatsResponse   │
-    │  └─────────────────────────────┘
-    │
-    │  ┌─────────────────────────────┐
-    │  │  WordPress Model Layer      │
-    │  │  app/Wordpress/             │
-    │  │  ├ Product.php              │
-    │  │  ├ Order.php                │
-    │  │  ├ Wordpress.php (client)   │
-    │  │  └ Concerns/ (NEW)         │
-    │  │    └ HandlesWPErrors.php    │
-    │  └─────────────────────────────┘
+    ├─ acelle/brand Plugin
+    │  └─ storage/app/plugins/acelle/brand/src/
+    │     ├ Http/Controllers/Api/*Controller
+    │     │  ┌─────────────────────────────┐
+    │     │  │  DTO Layer                  │
+    │     │  │  Dto/ProductDTO.php         │
+    │     │  │  Dto/OrderDTO.php           │
+    │     │  └─────────────────────────────┘
+    │     │
+    │     ├─ Services/
+    │     │  ├ ConnectionService           │
+    │     │  └ ConnectionStateService      │
+    │     │
+    │     └─ Wordpress/
+    │        ├ WpClient.php (updated)      │
+    │        └ Concerns/HandlesWPErrors    │
     │
     ▼
-WordPress REST API (vbrandsync plugin)
-    │
-    │  REST: /wp-json/vbrandsync/v1/*
-    │  Models: app/Wordpress/Models/*
-    │  Theme: ThemeData.php
+WordPress REST API (vbrandsync plugin @ /wp-json/vbrandsync/v1)
+    │  (UNAUTHENTICATED; X-Brand-Token sent if secret configured)
     │
     ▼
 WooCommerce / WordPress Database
 ```
 
-### 2.2 Key Changes
+### 2.2 Key Achievements (Post-Refactor)
 
-1. **DTO classes** — Centralized response shaping, single source of truth matching TypeScript
-2. **HandlesWPErrors trait** — DRY error handling for all WP-calling methods
-3. **Consistent API response wrapper** — All endpoints use same format
-4. **Logging** — Log all WP API calls for debugging
-5. **Theme schema improvements** — Convert repetitive shop banners to list type
+1. **DTO classes** — Implemented in plugin; centralized response shaping matching TypeScript contracts
+2. **HandlesWPErrors trait** — Implemented; DRY error handling across all WP-calling controllers
+3. **Consistent API response wrapper** — Implemented; all endpoints return standardized format
+4. **Logging** — Implemented in Wordpress.php; all WP API calls logged for debugging
+5. **Theme schema improvements** — Completed; shop banners converted to list type
+6. **Customer↔WordPress mapping moved** — From customers.wordpress_endpoint to brand_site_connections table; managed by ConnectionService + ConnectionStateService
+7. **Routes relocated** — Brand customer UI now at /rui/brand/* (no legacy /brand/* routes)
 
 ---
 
 ## 3. API Layer Design
 
-### 3.1 Current Endpoints (Keep As-Is)
+### 3.1 API Endpoints (Brand Plugin)
 
-All existing routes stay at `api/v1/brand/*` — **no URL changes**.
+API routes are served by the acelle/brand plugin controllers. Web UI routes (customer-facing) are under /rui/brand/* (home, connection, contacts, products, categories, attributes, orders, warehouse, themes, builder, import, revenue). Legacy /brand/* routes are retired.
 
 ```
 POST   auth/login
@@ -167,15 +164,15 @@ No changes to middleware.
 
 ## 4. DTO Structure
 
-### 4.1 Design Principle
+### 4.1 DTO Implementation (Acelle/Brand Plugin)
 
-Each DTO is a PHP class with a single `static toArray($model)` method that maps from WordPress model to the exact shape expected by TypeScript interfaces.
+DTOs are implemented as PHP classes in the plugin's Dto/ namespace. Each DTO provides static methods (e.g., summary(), detail()) that transform WordPress models to TypeScript-matching shapes. Located in storage/app/plugins/acelle/brand/src/Dto/.
 
 ### 4.2 ProductDTO
 
 ```php
-// app/app/DTOs/ProductDTO.php
-namespace Acelle\DTOs;
+// storage/app/plugins/acelle/brand/src/Dto/ProductDTO.php
+namespace Acelle\Brand\Dto;
 
 class ProductDTO
 {
@@ -223,8 +220,8 @@ class ProductDTO
 ### 4.3 OrderDTO
 
 ```php
-// app/app/DTOs/OrderDTO.php
-namespace Acelle\DTOs;
+// storage/app/plugins/acelle/brand/src/Dto/OrderDTO.php
+namespace Acelle\Brand\Dto;
 
 class OrderDTO
 {
@@ -290,12 +287,12 @@ class OrderDTO
 
 ### 4.4 DTO ↔ TypeScript Contract
 
-| PHP DTO | TypeScript Interface | File |
-|---------|---------------------|------|
-| `ProductDTO::summary()` | `ProductSummary` | `mobile/src/types/index.ts:165` |
-| `ProductDTO::detail()` | `ProductDetail` | `mobile/src/types/index.ts:180` |
-| `OrderDTO::summary()` | `OrderSummary` | `mobile/src/types/index.ts:116` |
-| `OrderDTO::detail()` | `OrderDetail` | `mobile/src/types/index.ts:127` |
+| PHP DTO | TypeScript Interface | Location |
+|---------|---------------------|----------|
+| `ProductDTO::summary()` | `ProductSummary` | mobile/src/types/index.ts |
+| `ProductDTO::detail()` | `ProductDetail` | mobile/src/types/index.ts |
+| `OrderDTO::summary()` | `OrderSummary` | mobile/src/types/index.ts |
+| `OrderDTO::detail()` | `OrderDetail` | mobile/src/types/index.ts |
 
 **Rule:** When changing a DTO, ALWAYS update the matching TypeScript interface and vice versa.
 
@@ -383,8 +380,8 @@ Response `meta`:
 ### 7.1 HandlesWPErrors Trait
 
 ```php
-// app/app/Wordpress/Concerns/HandlesWPErrors.php
-namespace Acelle\Wordpress\Concerns;
+// storage/app/plugins/acelle/brand/src/Wordpress/Concerns/HandlesWPErrors.php
+namespace Acelle\Brand\Wordpress\Concerns;
 
 trait HandlesWPErrors
 {
@@ -487,7 +484,9 @@ Options cần thêm cho completeness:
 
 ---
 
-## 9. Migration Strategy
+## 9. Post-Implementation Summary
+
+The refactor was completed and deployed on 2026-06-03. The following migrations were executed successfully:
 
 ### Nguyên tắc
 - **Zero downtime**: Không break gì đang chạy
@@ -496,9 +495,9 @@ Options cần thêm cho completeness:
 
 ### 9.1 Phase 1 — DTO Layer (app/)
 
-1. Tạo `app/app/DTOs/ProductDTO.php` — extract logic từ controller formatProduct/formatProductDetail
-2. Tạo `app/app/DTOs/OrderDTO.php` — extract logic từ controller formatOrder/formatOrderDetail
-3. Tạo `app/app/Wordpress/Concerns/HandlesWPErrors.php` — extract try/catch pattern
+1. Tạo `storage/app/plugins/acelle/brand/src/Dto/ProductDTO.php` — extract logic từ controller formatProduct/formatProductDetail
+2. Tạo `storage/app/plugins/acelle/brand/src/Dto/OrderDTO.php` — extract logic từ controller formatOrder/formatOrderDetail
+3. Tạo `storage/app/plugins/acelle/brand/src/Wordpress/Concerns/HandlesWPErrors.php` — extract try/catch pattern
 4. Update controllers để dùng DTO + trait
 5. **Test**: Curl commands verify identical output
 
@@ -532,61 +531,49 @@ Options cần thêm cho completeness:
 
 ---
 
-## 10. Implementation Roadmap
+## 10. Completed Implementation (2026-06-03 Cutover)
 
 ### Phase 1: DTO Layer + Error Handling
-**Scope:** `app/` only
-**Risk:** Low — extracting existing code into DTOs, no behavior change
+**Scope:** acelle/brand plugin
+**Status:** COMPLETED (2026-06-03)
 
-Files to create:
-- `app/app/DTOs/ProductDTO.php`
-- `app/app/DTOs/OrderDTO.php`
-- `app/app/Wordpress/Concerns/HandlesWPErrors.php`
+Files created:
+- `storage/app/plugins/acelle/brand/src/Dto/ProductDTO.php`
+- `storage/app/plugins/acelle/brand/src/Dto/OrderDTO.php`
+- `storage/app/plugins/acelle/brand/src/Wordpress/Concerns/HandlesWPErrors.php`
 
-Files to modify:
-- `app/app/Http/Controllers/Brand/Api/ProductController.php`
-- `app/app/Http/Controllers/Brand/Api/OrderController.php`
-- `app/app/Http/Controllers/Brand/Api/DashboardController.php`
+Files modified:
+- `storage/app/plugins/acelle/brand/src/Http/Controllers/Api/ProductController.php`
+- `storage/app/plugins/acelle/brand/src/Http/Controllers/Api/OrderController.php`
+- `storage/app/plugins/acelle/brand/src/Http/Controllers/Api/DashboardController.php`
 
 ### Phase 2: Controller Cleanup
-**Scope:** `app/` only
-**Risk:** Low — adding try/catch and logging
+**Status:** COMPLETED (2026-06-03)
 
-Files to modify:
-- `app/app/Http/Controllers/Brand/Api/ProductController.php` (destroy, categories)
-- `app/app/Wordpress/Wordpress.php` (add logging)
+Files modified:
+- `storage/app/plugins/acelle/brand/src/Http/Controllers/Api/ProductController.php` (destroy, categories)
+- `storage/app/plugins/acelle/brand/src/Wordpress/WpClient.php` (added logging)
 
-### Phase 3: Plugin Improvements
-**Scope:** `site/wp-content/plugins/vbrandsync/`
-**Risk:** Low — additive changes only
+### Phase 3: WordPress Plugin (vbrandsync)
+**Status:** OPERATIONAL (unchanged from pre-refactor)
 
-Files to modify:
-- `site/wp-content/plugins/vbrandsync/app/Services/VBrand.php` (logging)
-- `site/wp-content/plugins/vbrandsync/wordpress/api/product.php` (validation)
-- `site/wp-content/plugins/vbrandsync/wordpress/api/order.php` (validation)
+The vbrandsync plugin continues to expose /wp-json/vbrandsync/v1/* endpoints (UNAUTHENTICATED). No Acelle-side changes required for existing WordPress sites.
 
 ### Phase 4: Theme Schema
-**Scope:** `site/wp-content/themes/logitech/`
-**Risk:** Medium — need backward compatibility
+**Status:** COMPLETED (2026-06-03)
 
-Files to modify:
-- `site/wp-content/themes/logitech/schema.php`
-- `site/wp-content/themes/logitech/page-homepage.php`
-- `site/wp-content/themes/logitech/header-home.php`
+Theme schema refactor completed. Shop banners converted to list type. Legacy options remain readable for backward compatibility.
 
 ### Phase 5: Mobile
-**Scope:** `mobile/`
-**Risk:** Low — type definitions only
+**Status:** VERIFIED (2026-06-03)
 
-Files to verify/modify:
-- `mobile/src/types/index.ts`
-- `mobile/src/api/` service files
+TypeScript interfaces aligned with updated DTO output. API client compatible with plugin routes.
 
 ---
 
-## Commit Strategy
+## Completed Commits (2026-06-03 Cutover)
 
-Mỗi phase = multiple small commits:
+The refactor was delivered as a series of commits:
 
 ```
 Phase 1:

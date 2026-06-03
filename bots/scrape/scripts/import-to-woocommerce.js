@@ -26,7 +26,7 @@ const path = require('path');
 const args = process.argv.slice(2);
 let siteUrl = '';
 let shopDir = '';
-let opts = { clean: false, limit: 0, skipImages: false, dryRun: false };
+let opts = { clean: false, limit: 0, skipImages: false, dryRun: false, overwriteSiteInfo: false };
 
 for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -34,6 +34,7 @@ for (let i = 0; i < args.length; i++) {
         case '--limit': opts.limit = parseInt(args[++i]); break;
         case '--skip-images': opts.skipImages = true; break;
         case '--dry-run': opts.dryRun = true; break;
+        case '--overwrite-site-info': opts.overwriteSiteInfo = true; break;
         default:
             if (!args[i].startsWith('--')) {
                 if (!siteUrl) siteUrl = args[i].replace(/\/$/, '');
@@ -148,18 +149,25 @@ async function main() {
 
     // ============================================================
     // STEP 3: Import shop info
+    // When importing source-shop data into an already-branded destination
+    // (e.g. ductrico data → khomaynenkhi.com), we MUST NOT overwrite the
+    // destination's blogname/logo with the source's. By default we only
+    // track metadata (shop_id / seller_id / shop_url). Pass --overwrite-site-info
+    // to also set blogname + logo from the source (use when migrating an entire
+    // shop identity to a new domain).
     // ============================================================
     if (shopInfo) {
         console.log('\n🏪 Importing shop info...');
-        const logoUrl = shopInfo.logo || shopInfo.avatar || '';
         const shopData = {
-            name: shopInfo.name || '',
             shop_id: shopInfo.shopId || '',
             seller_id: shopInfo.sellerId || '',
             shop_url: shopInfo.url || '',
         };
-        if (logoUrl && !opts.skipImages) {
-            shopData.logo_url = logoUrl;
+        if (opts.overwriteSiteInfo) {
+            shopData.name = shopInfo.name || '';
+            const logoUrl = shopInfo.logo || shopInfo.avatar || '';
+            if (logoUrl && !opts.skipImages) shopData.logo_url = logoUrl;
+            console.log('   ⚠ --overwrite-site-info: replacing destination blogname/logo with source');
         }
         const result = await apiPost('/import/shop-info', shopData);
         console.log(`   Updated: ${result.updated.join(', ')}`);
@@ -193,12 +201,21 @@ async function main() {
     for (let i = 0; i < products.length; i++) {
         const p = products[i];
 
-        // Build image URL
+        // Build image URLs — gallery + primary
         let imageUrl = '';
+        let galleryUrls = [];
         if (!opts.skipImages) {
-            imageUrl = p.image || '';
-            if (imageUrl.startsWith('//')) imageUrl = 'https:' + imageUrl;
-            imageUrl = imageUrl.replace(/_\d+x\d+q\d+/, '_720x720q80'); // Lazada: get higher res
+            const normalize = (u) => {
+                if (!u) return '';
+                let url = u;
+                if (url.startsWith('//')) url = 'https:' + url;
+                return url.replace(/_\d+x\d+q\d+/, '_720x720q80'); // Lazada: get higher res
+            };
+            imageUrl = normalize(p.image || '');
+            galleryUrls = (p.images || []).map(normalize).filter(Boolean);
+            // Ensure primary is first; de-dupe
+            if (imageUrl && !galleryUrls.includes(imageUrl)) galleryUrls.unshift(imageUrl);
+            galleryUrls = [...new Set(galleryUrls)];
         }
 
         // Standard format (cross-platform) with Lazada backward-compat fallbacks.
@@ -217,9 +234,15 @@ async function main() {
         );
         const soldCount = p.sold ?? p.soldLastMonth ?? 0;
 
+        const categoryIds = (p.categories || [])
+            .map(name => categoryMap[name])
+            .filter(Boolean);
+
         const productData = {
             title: p.name || p.nameRaw || '',
             description: p.description || '',
+            short_description: p.short_description || '',
+            slug: p.slug || '',
             price: regularPrice || '',
             discount_price: salePrice || '',
             product_id: p.id || '',
@@ -230,10 +253,17 @@ async function main() {
             sold_count: soldCount || '',
             brand_id: p.brandId || '',
             product_url: p.url || '',
+            in_stock: p.in_stock === false ? '0' : '1',
         };
 
         if (imageUrl) {
             productData.image_url = imageUrl;
+        }
+        if (galleryUrls.length) {
+            productData.image_urls = galleryUrls;
+        }
+        if (categoryIds.length) {
+            productData.category_ids = categoryIds;
         }
 
         try {
@@ -276,9 +306,9 @@ async function main() {
             console.log('\n⚠️  WARNING: WooCommerce Coming Soon mode is ENABLED on this site.');
             console.log('   Imported products will be HIDDEN from /shop/ and product pages.');
             console.log('   Fix on the server with:');
-            console.log(`     wp --path=/home/vbrand/sites/<DIR_NAME> option update woocommerce_coming_soon no`);
-            console.log(`     wp --path=/home/vbrand/sites/<DIR_NAME> option update woocommerce_store_pages_only no`);
-            console.log(`     wp --path=/home/vbrand/sites/<DIR_NAME> cache flush`);
+            console.log(`     wp --path=/home/<DIR_NAME>/wordpress option update woocommerce_coming_soon no`);
+            console.log(`     wp --path=/home/<DIR_NAME>/wordpress option update woocommerce_store_pages_only no`);
+            console.log(`     wp --path=/home/<DIR_NAME>/wordpress cache flush`);
             console.log('   Or run bots/automated/enforce-cod-vbrand-express.php which now disables it too.');
         } else {
             console.log('   Storefront: visible (coming-soon off) ✓');

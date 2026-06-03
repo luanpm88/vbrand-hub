@@ -3,6 +3,15 @@
 Hướng dẫn từng bước tạo một WordPress + WooCommerce site local cho vBrand.
 Copy-paste từng bước là xong. Thay đổi các biến ở đầu cho phù hợp site mới.
 
+> **App architecture (post 2026-06-03 cutover):** vBrand/BrandViet giờ chạy trên
+> codebase **mainline acelle** (`~/apps/acelle`, UI refactor `/rui`) cộng plugin
+> `acelle/brand` (source `~/apps/acelle_brand`, symlink vào
+> `storage/app/plugins/acelle/brand`). App forked cũ (`~/apps/vbrand/app`) đã
+> **RETIRED**. Guide này chỉ lo phần dựng **WordPress+Woo site standalone** —
+> process tạo site KHÔNG đổi. Việc gắn site vào tài khoản customer giờ làm qua
+> bảng `brand_site_connections` ở màn `/rui/brand` (xem cuối guide), KHÔNG còn
+> nằm trong thư mục app.
+
 ---
 
 ## Biến cần thay đổi cho mỗi site
@@ -26,12 +35,19 @@ SITE_TITLE="Brand Site"
 ADMIN_USER="admin"
 ADMIN_PASS="admin"
 ADMIN_EMAIL="admin@${SITE_DOMAIN}"
-VBRAND_ROOT="$HOME/apps/vbrand"
+# Thư mục cha chứa WordPress site files (standalone — KHÔNG phải app dir).
+# App vBrand/BrandViet giờ chạy từ ~/apps/acelle + plugin acelle/brand;
+# WordPress site là cài đặt độc lập, không nằm trong cây thư mục app nữa.
+SITES_ROOT="$HOME/apps/brand-sites"
 DB_USER="root"
 DB_PASS="123456"
 DB_HOST="127.0.0.1"
 NGINX_CONF="/opt/homebrew/etc/nginx/servers/apps"
-VBRANDSYNC_SRC="$HOME/apps/wordpress/wp-content/plugins/vbrandsync"
+# vbrandsync được deploy độc lập trên TỪNG WordPress+Woo site tại
+# wp-content/plugins/vbrandsync. Không có một location trung tâm quản lý nó.
+# Nếu copy từ một template, set VBRANDSYNC_SRC trỏ tới repo/site nguồn thực tế
+# (vd: copy từ một site đã có: <site-dir>/wp-content/plugins/vbrandsync).
+VBRANDSYNC_SRC="$HOME/apps/brand-sites/site/wp-content/plugins/vbrandsync"
 ```
 
 ---
@@ -55,13 +71,17 @@ brew services list | grep -E 'nginx|php'
 ## Step 1: Download WordPress
 
 ```bash
-mkdir -p "${VBRAND_ROOT}/${SITE_DIR}"
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+mkdir -p "${SITES_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 
 wp core download --locale=en_US
 ```
 
-Kết quả: WordPress files trong `${VBRAND_ROOT}/${SITE_DIR}/`
+Kết quả: WordPress+Woo site được tạo như một cài đặt **standalone** (local hoặc
+remote) — files nằm trong `${SITES_ROOT}/${SITE_DIR}/`. App Acelle sẽ kết nối tới
+site này sau bằng cách tạo một row `brand_site_connection` trỏ tới endpoint
+`/wp-json/vbrandsync/v1` của site (qua màn `/rui/brand`), KHÔNG còn dùng cột
+legacy `customers.wordpress_endpoint` và KHÔNG quản lý qua cây thư mục app.
 
 ---
 
@@ -109,7 +129,7 @@ cat >> "${NGINX_CONF}" << NGINX_EOF
 server {
     listen 80;
     server_name ${SITE_DOMAIN};
-    root ${VBRAND_ROOT}/${SITE_DIR};
+    root ${SITES_ROOT}/${SITE_DIR};
 
     index index.php index.html;
 
@@ -148,7 +168,7 @@ nginx -t && brew services restart nginx
 ## Step 5: Tạo wp-config.php
 
 ```bash
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 
 wp config create \
   --dbname="${DB_NAME}" \
@@ -162,7 +182,7 @@ wp config create \
 ## Step 6: Cài đặt WordPress
 
 ```bash
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 
 wp core install \
   --url="http://${SITE_DOMAIN}" \
@@ -184,7 +204,7 @@ curl -sI "http://${SITE_DOMAIN}" | head -5
 ## Step 7: Cài vbrandsync plugin
 
 ```bash
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 
 cp -r "${VBRANDSYNC_SRC}" wp-content/plugins/vbrandsync
 wp plugin activate vbrandsync
@@ -195,7 +215,7 @@ wp plugin activate vbrandsync
 ## Step 8: Cài WooCommerce
 
 ```bash
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 
 wp plugin install woocommerce --activate
 ```
@@ -205,7 +225,7 @@ wp plugin install woocommerce --activate
 ## Step 9: Cấu hình Permalinks
 
 ```bash
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 
 wp rewrite structure '/%postname%/' --hard
 ```
@@ -215,7 +235,7 @@ wp rewrite structure '/%postname%/' --hard
 ## Step 10: Verify toàn bộ
 
 ```bash
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 
 # Check HTTP
 curl -sI "http://${SITE_DOMAIN}" | head -3
@@ -252,22 +272,24 @@ SITE_TITLE="Brand Site 2"
 ADMIN_USER="admin"
 ADMIN_PASS="admin"
 ADMIN_EMAIL="admin@${SITE_DOMAIN}"
-VBRAND_ROOT="$HOME/apps/vbrand"
+# Thư mục cha chứa WordPress site files (standalone — KHÔNG phải app dir).
+SITES_ROOT="$HOME/apps/brand-sites"
 DB_USER="root"
 DB_PASS="123456"
 DB_HOST="127.0.0.1"
 NGINX_CONF="/opt/homebrew/etc/nginx/servers/apps"
-VBRANDSYNC_SRC="$HOME/apps/wordpress/wp-content/plugins/vbrandsync"
+# vbrandsync deploy độc lập trên từng site; trỏ tới repo/site nguồn thực tế.
+VBRANDSYNC_SRC="$HOME/apps/brand-sites/site/wp-content/plugins/vbrandsync"
 
 echo "==> Creating WordPress site: ${SITE_DOMAIN}"
-echo "    Directory: ${VBRAND_ROOT}/${SITE_DIR}"
+echo "    Directory: ${SITES_ROOT}/${SITE_DIR}"
 echo "    Database:  ${DB_NAME}"
 echo ""
 
 # 1. Download WordPress
 echo "[1/9] Downloading WordPress..."
-mkdir -p "${VBRAND_ROOT}/${SITE_DIR}"
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+mkdir -p "${SITES_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 wp core download --locale=en_US
 
 # 2. /etc/hosts
@@ -293,7 +315,7 @@ cat >> "${NGINX_CONF}" << NGINX_EOF
 server {
     listen 80;
     server_name ${SITE_DOMAIN};
-    root ${VBRAND_ROOT}/${SITE_DIR};
+    root ${SITES_ROOT}/${SITE_DIR};
 
     index index.php index.html;
     charset utf-8;
@@ -324,7 +346,7 @@ nginx -t && brew services restart nginx
 
 # 5. wp-config.php
 echo "[5/9] Creating wp-config.php..."
-cd "${VBRAND_ROOT}/${SITE_DIR}"
+cd "${SITES_ROOT}/${SITE_DIR}"
 wp config create \
   --dbname="${DB_NAME}" \
   --dbuser="${DB_USER}" \
@@ -362,7 +384,7 @@ echo "  URL:    http://${SITE_DOMAIN}"
 echo "  Admin:  http://${SITE_DOMAIN}/wp-admin/"
 echo "  Login:  ${ADMIN_USER} / ${ADMIN_PASS}"
 echo "  DB:     ${DB_NAME}"
-echo "  Dir:    ${VBRAND_ROOT}/${SITE_DIR}"
+echo "  Dir:    ${SITES_ROOT}/${SITE_DIR}"
 echo "============================================"
 ```
 
@@ -387,11 +409,35 @@ standardization".
 cd /path/to/wp-root && wp eval-file /Users/luan/apps/vbrand/bots/automated/enforce-cod-vbrand-express.php
 
 # Server
-scp /Users/luan/apps/vbrand/bots/automated/enforce-cod-vbrand-express.php vbrand@18.141.199.175:/tmp/enforce-cod-vbrand-express.php
-ssh vbrand@18.141.199.175 "wp --path=/home/vbrand/sites/<DIR_NAME> eval-file /tmp/enforce-cod-vbrand-express.php"
+scp /Users/luan/apps/vbrand/bots/automated/enforce-cod-vbrand-express.php vbrand@54.169.34.13:/tmp/enforce-cod-vbrand-express.php
+ssh vbrand@54.169.34.13 "wp --path=/home/<DIR_NAME>/wordpress eval-file /tmp/enforce-cod-vbrand-express.php"
 ```
 
 Output kết thúc bằng `OK — site is COD-only + vBrand Express-only` mới được bàn giao.
+
+---
+
+## Gắn site vào tài khoản Acelle (connection)
+
+Sau khi site WordPress+Woo đã chạy (các bước trên), nối nó với một customer
+trong app Acelle. **Không** còn dùng cột legacy `customers.wordpress_endpoint`.
+
+1. **Provision WordPress+Woo site** — process ở trên (vbrandsync expose
+   `/wp-json/vbrandsync/v1`, UNAUTHENTICATED).
+2. **Tạo customer account Acelle** — admin "create customer", hoặc
+   `App\Services\AccountManagement\AccountProvisioningService::createCustomer` /
+   `createInstallAccount`.
+3. **Tạo `brand_site_connection`** — vào màn `/rui/brand` (connection screen),
+   trỏ customer tới endpoint `/wp-json/vbrandsync/v1` của site họ. Mỗi customer
+   một row trong bảng plugin `brand_site_connections`
+   (`customer_id`, `endpoint_url`, `auth_meta` JSON `{secret}`, `tls_verify`,
+   `status`, `last_checked_at`, `last_error`).
+
+Lifecycle do `Acelle\Brand\Services\ConnectionService` (connect / clientFor /
+getOrNull) + `ConnectionStateService` (state configured/connected cho
+sidebar/dashboard) quản lý. `Acelle\Brand\Wordpress\WpClient` nói chuyện với
+site **không đổi** — chỉ gửi header `X-Brand-Token` khi có set `secret`
+(hardening tùy chọn).
 
 ---
 

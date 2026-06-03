@@ -1,6 +1,6 @@
 # Bot: Deploy Brand App
 
-Deploy Laravel brand app lên production server.
+Deploy acelle app with brand plugin to production server.
 
 ## Cách dùng
 
@@ -10,9 +10,9 @@ bots/automated/deploy-app.md
 
 ## SSH accounts
 
-- `vbrand@18.141.199.175` — deploy operations
-- Production app path: `/home/vbrand/app`
-- Branch: `brand`
+- `vbrand@54.169.34.13` — deploy operations (server migration 2026-05-24; old IP `18.141.199.175` retired)
+- Production app path: `/home/vbrand/app` (symlink → /home/vbrand/app-new; legacy real dir at /home/vbrand/app-legacy)
+- Branch: `main` (acelle mainline); plugin source: acelle_brand repo
 
 ## Flow
 
@@ -22,66 +22,50 @@ So sánh local vs server:
 
 ```bash
 # Local
-cd /Users/luan/apps/vbrand/app
-echo "=== Local (branch: $(git branch --show-current)) ==="
+cd /Users/luan/apps/acelle
+echo "=== Local acelle (branch: $(git branch --show-current)) ==="
 git log --oneline -3
 echo "=== Unpushed commits ==="
-git log origin/brand..brand --oneline 2>/dev/null || echo "None"
+git log origin/main..main --oneline 2>/dev/null || echo "None"
 ```
 
 ```bash
 # Server
-ssh vbrand@18.141.199.175 "cd /home/vbrand/app && echo '=== Server ===' && git log --oneline -1 && echo '=== Status ===' && git status --short"
+ssh vbrand@54.169.34.13 "ls -la /home/vbrand/app && echo '(symlink; see /home/vbrand/app-new for current release)'"
 ```
 
-Nếu có unpushed commits → cảnh báo: "Có commits chưa push. Push trước: `cd /Users/luan/apps/vbrand/app && git push origin brand`"
+Nếu có unpushed commits → cảnh báo: "Có commits chưa push. Push trước: `cd /Users/luan/apps/acelle && git push origin main`"
 
 ### Bước 2: Deploy
 
-**Trước khi pull** — reset server về trạng thái sạch (discard mọi uncommitted + untracked changes):
+Build a new release alongside the current one, prepare it, then atomically swap the symlink:
 
 ```bash
-ssh vbrand@18.141.199.175 "
-cd /home/vbrand/app
-echo '=== Cleaning server working directory ==='
-git checkout -- .
-git clean -fd
-echo '=== Pulling ==='
-git pull origin brand
-php composer.phar install --no-dev --optimize-autoloader
-php artisan migrate --force
-php artisan config:cache
-php artisan cache:clear
-php artisan view:clear
-php artisan route:clear
-"
+# On server: build release at /home/vbrand/app-new (or next build dir), composer install --no-dev, set .env (DB_DATABASE=brand, etc.), php artisan migrate:fresh, then: rm /home/vbrand/app && ln -sfn /home/vbrand/app-new /home/vbrand/app
 ```
 
-> **Tại sao reset trước khi pull?**
-> Server có thể có uncommitted/untracked changes (do edit trực tiếp, hoặc code được copy lên ngoài git). Nếu không reset, `git pull` sẽ fail do conflict. Vì source of truth luôn là git repo (local commit → push → server pull), nên discard server changes là an toàn.
+Build and prepare release at /home/vbrand/app-new with: composer install --no-dev, php artisan migrate:fresh, php artisan db:seed --class DatabaseInit, php artisan db:seed --class TemplateSeeder, php artisan config:cache. Then symlink swap.
+
+> **Tại sao không git pull trên server?**
+> The new deployment builds the release offline (at /home/vbrand/app-new), tests it, then atomically swaps the symlink—no git pull on server, no cleanup needed.
 
 > ⚠️ **Quan trọng — Cache rules:**
-> - Luôn dùng `config:cache` (KHÔNG dùng `config:clear`) — vì `routes/web.php` dùng `config('app.brand')` để conditionally load brand routes. Nếu config không được cache thì brand routes sẽ không load → 404 toàn bộ `/brand/*`
-> - Luôn dùng `route:clear` (KHÔNG dùng `route:cache`) — vì `BaokimController` không tồn tại trên prod, khiến `route:cache` fail
+> During offline release build: use `config:cache` (opcache.validate_timestamps=On ensures revalidation), skip `route:cache` (not needed for /rui/* routes under acelle's dynamic routing). No conditional brand route loading; brand features are activated via the acelle/brand plugin status.
 
 ### Bước 3: Verify
 
 ```bash
-ssh vbrand@18.141.199.175 "
-cd /home/vbrand/app
-echo '=== Current commit ==='
-git log --oneline -1
-echo '=== App version ==='
-php artisan --version
+ssh vbrand@54.169.34.13 "
+ls -la /home/vbrand/app && readlink /home/vbrand/app && echo '=== Release ===' && ls -la /home/vbrand/app-new && php /home/vbrand/app/artisan --version
 "
 ```
 
 ### Output
 
 ```
-✅ Brand app deployed!
-- Server: vbrand@18.141.199.175:/home/vbrand/app
-- Branch: brand
+✅ Acelle app (with brand plugin) deployed!
+- Server: vbrand@54.169.34.13:/home/vbrand/app (symlink → /home/vbrand/app-new)
+- Mainline branch: main
 - Commit: <hash> — <message>
 - Deployed at: <timestamp>
 ```

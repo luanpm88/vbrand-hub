@@ -1,4 +1,4 @@
-# Bot: Upgrade Old Site
+# Bot: Upgrade Old Site → New vBrand (on Acelle)
 
 Nâng cấp website cũ/xấu/lỗi thời thành site chuyên nghiệp trên vBrand platform. Giữ nguyên 100% nội dung, sản phẩm, hình ảnh từ site cũ — chỉ thay đổi thiết kế.
 
@@ -26,13 +26,14 @@ bots/automated/upgrade-site.md review <theme-name>
 
 ## Output
 
-- Theme hoàn chỉnh tại `/site/wp-content/themes/<theme-name>/`
+- Theme hoàn chỉnh tại `/site/wp-content/themes/<theme-name>/` (WordPress site; connects to Acelle via vbrandsync plugin at /wp-json/vbrandsync/v1)
 - Scraped content tại `<theme>/original/` (screenshots, products, images, analysis)
 - Design plan tại `<theme>/plan/` (design-plan, content, image-plan, sitemap)
 - Design audit tại `<theme>/design/` (versions/audit_N, final)
 - Schema-driven: MỌI text, image, section đều configurable
 - Git commit
 - (Optional) Production site live + products imported
+- Register site in Acelle: create brand_site_connection row (customer_id, endpoint_url: https://<domain>/wp-json/vbrandsync/v1, optional auth_meta secret)
 
 ---
 
@@ -49,8 +50,8 @@ bots/automated/upgrade-site.md review <theme-name>
 8. **KHÔNG để kiến thức chết trong context window** — ghi ra file trong cùng commit
 
 **Khi upgrade site:**
-- Reference latest theme để học patterns
-- KHÔNG clone/copy code từ theme cũ — build from scratch
+- Reference latest theme để học patterns + COPY + customize (3-4x nhanh hơn build from scratch)
+- Nếu design cần unique → build from scratch từ tác vụ scrape
 - Đọc latest theme's `design/HISTORY.md` để tránh lặp lỗi cũ
 - Đọc `create-theme-from-url.md` KNOWN PITFALLS — tất cả đều áp dụng
 
@@ -250,11 +251,10 @@ Schema-driven: `$phone`, `$g('zalo', $phone)`, `$g('map_url', 'https://maps.goog
 
 ### vbrandsync storage permissions trên production
 **Bài học dieu-an:** Fresh rsync → storage/logs + storage/framework/sessions permission denied → 500.
-**Fix:** Sau rsync plugin, LUÔN chạy:
+**DEPRECATED** (vbrandsync no longer has separate storage — it's a WordPress plugin; Acelle storage is managed at the app level `/home/vbrand/app/storage`).
+**Fix:** Nếu rsync fails on Acelle storage dirs, run:
 ```bash
-ssh vbrand@server "cd /path/wp-content/plugins/vbrandsync && \
-    mkdir -p storage/logs storage/framework/sessions storage/framework/views storage/framework/cache && \
-    chmod -R 775 storage bootstrap/cache"
+ssh vbrand@server 'cd /home/vbrand/app && chmod -R 775 storage bootstrap/cache'
 ```
 
 ### Copy audit cuối thành `final/`
@@ -670,16 +670,32 @@ NODE_PATH=/tmp/node_modules WP_URL="http://brand-site.test" node <theme>/design/
 
 # PHASE 6: Deploy to Production (Optional)
 
-Nếu user cung cấp domain (vd `dieuan.b-teka.com`):
+**For WordPress site:** Follow WordPress provisioning (IP, domain DNS, MySQL, rsync, nginx vhost, SSL). Same as before — unchanged.
+
+**For Acelle app:** (ONE-TIME, global to all sites)
+- Acelle mainline + brand plugin deployed at /home/vbrand/app (symlink to /home/vbrand/app-new)
+- Uses brand database (or vbrand legacy for rollback)
+- Serves /rui/brand/* UI for all customer accounts
+- Managed by Acelle lifecycle, NOT per-site
+
+**Post-deploy checklist:**
+1. WordPress site live: curl https://<domain> → 200
+2. vbrandsync endpoint live: curl https://<domain>/wp-json/vbrandsync/v1 → 200
+3. Acelle app running: curl https://app.sgconnect.vn/rui/brand → 302 to login
+4. Create Acelle customer account for this site
+5. Register site in brand_site_connection (customer_id + endpoint_url)
 
 ## 6.1 Pre-flight
 ```bash
-dig +short <domain>  # Must be 18.141.199.175
-ssh vbrand@18.141.199.175 "ls /home/vbrand/sites/<dir_name>"  # Must not exist
+dig +short <domain>  # Must be 54.169.34.13
+ssh vbrand@54.169.34.13 "ls /home/<DIR_NAME>/wordpress"  # Must not exist
 ```
 
-## 6.2 Create site (follow `bots/vbrand_new_prod_site.md`)
-Steps 1-16: MySQL → WP → WC → rsync → nginx → SSL → brand app → verify
+## 6.2 Create WordPress site + Acelle customer
+1. WordPress provisioning (unchanged: MySQL DB, WP core, WooCommerce, vbrandsync plugin)
+2. Deploy/update Acelle release (acelle mainline + brand plugin): see PROD DEPLOYMENT in NEW REALITY
+3. In Acelle admin, create customer account via AccountProvisioningService or 'create customer' form
+4. Link customer to WordPress: /rui/brand/connection screen → endpoint URL = https://<domain>/wp-json/vbrandsync/v1
 
 ## 6.3 Post-deploy REQUIRED steps
 ```bash
@@ -719,7 +735,7 @@ Add entry to `bots/report/sites.md`
 
 1. `cp -r design/versions/audit_N design/versions/final`
 2. Write `design/HISTORY.md` (design system, pages, build timeline, known issues)
-3. Git commit theme:
+3. Git commit theme (LOCAL workflow — themes are customer-specific WordPress assets):
    ```bash
    cd /Users/luan/apps/vbrand/site/wp-content/themes
    git add <theme-name>/
@@ -727,6 +743,7 @@ Add entry to `bots/report/sites.md`
    ```
 4. **Cập nhật bot này** (`upgrade-site.md`) với lessons learned
 5. Update `Latest theme:` at top of this file
+6. Document in bots/report/sites.md: theme name, customer name, domain, Acelle customer ID
 
 ---
 
@@ -736,6 +753,8 @@ Xem `create-theme-from-url.md` — SCHEMA REFERENCE section. Áp dụng y hệt.
 
 **Required sessions:** general, menu, home, about-us, contact
 **Required options:** site_name, logo, favicon, phone, phone_2, email, address, address_warehouse, menus, hero_slides, trust_stats, sport_categories, products_section, about_preview, cta, partners, newsletter, about_hero, about_sections, about_vision, about_mission, about_stats, contact_title, contact_form_title, faq, footer columns, copyright_links, promo, topbar_links, map_url, zalo
+
+(Same list as before, but note: schema.php generates WordPress option values + theme content; the Acelle brand plugin reads these via /wp-json/vbrandsync/v1 and syncs into the Acelle database — relationship is no longer 1:1 direct, Acelle reads/writes products, categories, orders via the WP REST API.)
 
 ---
 
@@ -749,10 +768,10 @@ Xem `create-theme-from-url.md` — SCHEMA REFERENCE section. Áp dụng y hệt.
 - Products import fail → retry without images, then WP CLI for images
 - Theme đã tồn tại → hỏi confirm overwrite
 - CSS ↔ PHP class mismatch → fix PHP to match CSS
-- Front page shows shop → check woocommerce_shop_page_id != page_on_front
+- Front page shows shop instead of homepage → check woocommerce_shop_page_id != page_on_front; if same, reassign shop page ID to a different page
 - Page content empty → check _wp_page_template meta + Template Name header
 - Product text invisible → check display:block on image container
-- vbrandsync 500 → check storage/logs permissions
+- vbrandsync /wp-json/vbrandsync/v1 → 500 error: check WordPress/PHP-FPM logs, vbrandsync plugin activation, database connection
 
 ---
 
