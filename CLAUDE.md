@@ -88,7 +88,7 @@ Old layout (pre-cutover, retired — kept here for historical reference of the l
 |-----------|-----------|------------|--------|--------|
 | acelle (mainline) | `/Users/luan/apps/acelle` | `origin` (upstream acelle repo) | `develop` or release branch | deploy as app-new → symlink |
 | brand plugin | `/Users/luan/apps/acelle_brand` | `origin` (brand plugin repo) | relevant branch | rsync into storage/app/plugins/acelle/brand |
-| vbrandsync | `/Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync` | `origin` (luanpm88/vbrandsync) | `main` | rsync |
+| vbrandsync | `/Users/luan/apps/acelle_brand/vbrandsync` | `origin` (luanpm88/vbrandsync) | `main` | rsync |
 | themes | `/Users/luan/apps/vbrand/site/wp-content/themes` | `origin` (luanpm88/vbrand-themes) | `main` | rsync |
 | mobile | `/Users/luan/apps/vbrand/mobile` | `origin` (luanpm88/vbrand-mobile) | `main` | EAS build (manual) |
 | ~~kb~~ | ~~`/Users/luan/apps/vbrand/kb`~~ | **Consolidated 2026-05-09** into `acellemail/landing/` (subfolder `acellemail.com/kb/*`). Standalone `kb/` folder removed; remote repo `luanpm88/acelle-knowledge-base` archived. KB content lives in `acellemail/landing/database/seeders/Article*Seeder.php`. See [`acellemail/landing/docs/SEO_PLAN_KB.md`](acellemail/landing/docs/SEO_PLAN_KB.md). | — | — |

@@ -32,7 +32,7 @@ Từ DOMAIN, tính ra:
 
 ## Nguồn local
 
-- Plugin: `/Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync/`
+- Plugin: `/Users/luan/apps/acelle_brand/vbrandsync/`
 - Themes: `/Users/luan/apps/vbrand/site/wp-content/themes/`
 
 ## Flow: sync 1 site
@@ -67,7 +67,7 @@ rsync -avz --delete \
   --exclude 'storage/logs/*' \
   --exclude 'bootstrap/cache/packages.php' \
   --exclude 'bootstrap/cache/services.php' \
-  /Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync/ \
+  /Users/luan/apps/acelle_brand/vbrandsync/ \
   ubuntu@54.169.34.13:/tmp/deploy-${DIR_NAME}-plugin/
 
 # Step 2b — sudo rsync staging → site, chown to site user, cleanup

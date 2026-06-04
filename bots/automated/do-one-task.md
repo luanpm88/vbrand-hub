@@ -74,14 +74,14 @@ bots/automated/do-one-task.md list all
 | Component | Local path | Git remote | Branch | Deploy method |
 |---|---|---|---|---|
 | app | `/Users/luan/apps/vbrand/app` | `origin` (louisitvn/acellemail) | `brand` | SSH git pull |
-| vbrandsync | `/Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync` | `origin` (luanpm88/vbrandsync) | `main` | rsync |
+| vbrandsync | `/Users/luan/apps/acelle_brand/vbrandsync` | `origin` (luanpm88/vbrandsync) | `main` | rsync |
 | themes | `/Users/luan/apps/vbrand/site/wp-content/themes/` | `origin` (luanpm88/vbrand-themes) | `main` | rsync |
 | mobile | `/Users/luan/apps/vbrand/mobile` | `origin` (luanpm88/vbrand-mobile) | `main` | EAS build (manual) |
 
 ## SSH accounts
 
-- `vbrand@18.141.199.175` — app operations, rsync, wp-cli
-- `ubuntu@18.141.199.175` — sudo operations (nếu cần)
+- `vbrand@54.169.34.13` — app operations, rsync, wp-cli
+- `ubuntu@54.169.34.13` — sudo operations (nếu cần)
 
 ## Flow: list
 
@@ -205,7 +205,7 @@ git push origin brand
 
 **vbrandsync:**
 ```bash
-cd /Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync
+cd /Users/luan/apps/acelle_brand/vbrandsync
 git add <specific-files>
 git commit -m "<prefix>: <mô tả> (fixes #N)"
 git push origin main
@@ -235,7 +235,7 @@ Tự động deploy dựa trên component đã thay đổi. KHÔNG hỏi confirm
 **Nếu component:app đã thay đổi → Deploy brand app:**
 
 ```bash
-ssh vbrand@18.141.199.175 "
+ssh vbrand@54.169.34.13 "
 cd /home/vbrand/app
 git pull origin brand
 php composer.phar install --no-dev --optimize-autoloader
@@ -255,14 +255,14 @@ php artisan route:clear
 
 ```bash
 # Sync plugin
-rsync -avz --delete /Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync/ vbrand@18.141.199.175:/home/vbrand/sites/${DIR_NAME}/wp-content/plugins/vbrandsync/
+rsync -avz --delete /Users/luan/apps/acelle_brand/vbrandsync/ vbrand@54.169.34.13:/home/${DIR_NAME}/wordpress/wp-content/plugins/vbrandsync/
 
 # Sync themes
-rsync -avz --delete /Users/luan/apps/vbrand/site/wp-content/themes/ vbrand@18.141.199.175:/home/vbrand/sites/${DIR_NAME}/wp-content/themes/
+rsync -avz --delete /Users/luan/apps/vbrand/site/wp-content/themes/ vbrand@54.169.34.13:/home/${DIR_NAME}/wordpress/wp-content/themes/
 
 # Fix .env + install + migrate
-ssh vbrand@18.141.199.175 "
-cd /home/vbrand/sites/${DIR_NAME}/wp-content/plugins/vbrandsync
+ssh vbrand@54.169.34.13 "
+cd /home/${DIR_NAME}/wordpress/wp-content/plugins/vbrandsync
 sed -i 's/^DB_DATABASE=.*/DB_DATABASE=${DIR_NAME}/' .env
 sed -i 's/^DB_USERNAME=.*/DB_USERNAME=${DIR_NAME}/' .env
 sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=aA456321@/' .env
@@ -291,7 +291,7 @@ Sau khi deploy, verify trên prod server để đảm bảo code đã up-to-date
 
 **Nếu component:app đã deploy:**
 ```bash
-ssh vbrand@18.141.199.175 "cd /home/vbrand/app && echo '=== App ===' && git log --oneline -1 && git status --short"
+ssh vbrand@54.169.34.13 "cd /home/vbrand/app && echo '=== App ===' && git log --oneline -1 && git status --short"
 ```
 So sánh commit hash trên server phải match local. Nếu khác → báo lỗi.
 
@@ -299,10 +299,10 @@ So sánh commit hash trên server phải match local. Nếu khác → báo lỗi
 ```bash
 for DIR_NAME in <danh_sách_sites>; do
   echo "=== ${DIR_NAME} ==="
-  ssh vbrand@18.141.199.175 "
-    echo 'Plugin:' && ls -la /home/vbrand/sites/${DIR_NAME}/wp-content/plugins/vbrandsync/app/Wordpress/Models/ | tail -3
-    echo 'Theme:' && ls -la /home/vbrand/sites/${DIR_NAME}/wp-content/themes/logitech/css/ | tail -3
-    echo 'Active:' && cd /home/vbrand/sites/${DIR_NAME} && wp plugin list --status=active --name=vbrandsync --format=csv 2>/dev/null
+  ssh vbrand@54.169.34.13 "
+    echo 'Plugin:' && ls -la /home/${DIR_NAME}/wordpress/wp-content/plugins/vbrandsync/app/Wordpress/Models/ | tail -3
+    echo 'Theme:' && ls -la /home/${DIR_NAME}/wordpress/wp-content/themes/logitech/css/ | tail -3
+    echo 'Active:' && cd /home/${DIR_NAME}/wordpress && wp plugin list --status=active --name=vbrandsync --format=csv 2>/dev/null
   "
 done
 ```

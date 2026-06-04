@@ -102,7 +102,7 @@ Path: `site/wp-content/plugins/vbrandsync/`
 
 **Sau khi implement:**
 ```bash
-cd /Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync
+cd /Users/luan/apps/acelle_brand/vbrandsync
 git add <specific-files>
 git commit -m "feat: <mô tả> [vbrandsync] (implements #N)"
 git push origin main
@@ -311,7 +311,7 @@ Giống do-one-task.md bước 7. Thứ tự:
 
 ```bash
 # App deploy:
-ssh vbrand@18.141.199.175 "
+ssh vbrand@54.169.34.13 "
 cd /home/vbrand/app
 git pull origin brand
 php composer.phar install --no-dev --optimize-autoloader

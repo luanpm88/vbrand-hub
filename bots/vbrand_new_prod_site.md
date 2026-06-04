@@ -258,7 +258,7 @@ rsync qua `vbrand@` — file tự động thuộc `vbrand:vbrand`, không cần 
 
 ```bash
 # Sync plugin vbrandsync
-rsync -avz --delete /Users/luan/apps/vbrand/site/wp-content/plugins/vbrandsync/ vbrand@54.169.34.13:/home/${DIR_NAME}/wordpress/wp-content/plugins/vbrandsync/
+rsync -avz --delete /Users/luan/apps/acelle_brand/vbrandsync/ vbrand@54.169.34.13:/home/${DIR_NAME}/wordpress/wp-content/plugins/vbrandsync/
 
 # Sync toàn bộ themes
 rsync -avz --delete /Users/luan/apps/vbrand/site/wp-content/themes/ vbrand@54.169.34.13:/home/${DIR_NAME}/wordpress/wp-content/themes/
