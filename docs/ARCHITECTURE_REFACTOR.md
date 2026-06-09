@@ -1,3 +1,5 @@
+> ⚠️ **LEGACY / HISTORICAL — not a source of truth.** The 2026-06-03 migration log documenting the move FROM the forked app TO the acelle mainline + plugin — a useful historical record, not the current architecture. The current brand system is the `acelle/brand` plugin — see `~/apps/acelle_brand/docs/`.
+
 # vBrand Architecture Post-Refactor (Completed 2026-06-03)
 
 ## Mục Lục

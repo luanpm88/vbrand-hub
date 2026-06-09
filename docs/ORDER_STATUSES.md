@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for the order state machine is **`~/apps/acelle_brand/docs/guide/ORDER_STATUSES.md`**. Kept for historical reference only.
+
 # ORDER_STATUSES
 
 ## Purpose

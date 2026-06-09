@@ -1,3 +1,5 @@
+> ⚠️ **LEGACY / HISTORICAL — not a source of truth.** A 2026-04-06 pre-cutover smoke-test snapshot of the old forked-app system. The current brand system is the `acelle/brand` plugin — see `~/apps/acelle_brand/docs/`.
+
 # vBrand Full E2E Audit
 
 > Started: 2026-04-06

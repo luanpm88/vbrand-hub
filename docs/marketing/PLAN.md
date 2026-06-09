@@ -1,3 +1,5 @@
+> ⚠️ **LEGACY / HISTORICAL — not a source of truth.** This is the AcelleMail product marketing plan — MISPLACED here; it is not about vBrand/brand. The current brand system is the `acelle/brand` plugin — see `~/apps/acelle_brand/docs/`.
+
 # AcelleMail Marketing Plan
 
 > Source of truth cho tất cả marketing activities: SEO, social channels, content strategy.

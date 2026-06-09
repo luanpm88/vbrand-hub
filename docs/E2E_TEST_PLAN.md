@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for E2E testing is **`~/apps/acelle_brand/docs/guide/E2E_TEST_PLAN.md`**. Kept for historical reference only.
+
 # vBrand — E2E Test Plan (Playwright)
 
 > Phụ thuộc: `docs/SALES_HANDOVER.md`, `docs/USER_GUIDE_DESKTOP.md`, `docs/USER_GUIDE_MOBILE.md`

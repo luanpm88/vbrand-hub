@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for the theme system is **`~/apps/acelle_brand/docs/guide/THEMES.md`**. Kept for historical reference only.
+
 # vBrand Theme System - Complete Design Documentation
 
 ## Mục Lục

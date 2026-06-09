@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for Super Buyer is **`~/apps/acelle_brand/docs/guide/SUPER_BUYER.md`**. Kept for historical reference only.
+
 # vBrand Super Buyer - Complete Technical Documentation
 
 ## Mục Lục

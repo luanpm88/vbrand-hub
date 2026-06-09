@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for WordPress/WooCommerce + vbrandsync site setup is **`~/apps/acelle_brand/docs/guide/WP_SITE_SETUP.md`**. Kept for historical reference only.
+
 # WordPress + WooCommerce Local Site Setup Guide
 
 Hướng dẫn từng bước tạo một WordPress + WooCommerce site local cho vBrand.

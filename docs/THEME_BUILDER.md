@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for the theme editor/builder is **`~/apps/acelle_brand/docs/THEME_EDITOR.md` + `~/apps/acelle_brand/docs/guide/THEMES.md`**. Kept for historical reference only.
+
 # Theme Builder — Fullscreen Page Builder
 
 ## Tổng quan

@@ -1,3 +1,5 @@
+> 📦 **DESIGN ARCHIVE — never shipped.** This was a design for the legacy fork and is OUT OF SCOPE for the `acelle/brand` plugin (see plugin PLAN.md decision D12). Kept as a design reference only.
+
 # vBrand RFQ — Seller Mobile App (React Native + Expo) Design
 
 ## Mục Lục

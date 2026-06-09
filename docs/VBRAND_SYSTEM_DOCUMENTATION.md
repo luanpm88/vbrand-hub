@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for the system architecture is **`~/apps/acelle_brand/docs/` (PLAN.md / DESIGN.md / guide/SYSTEM_OVERVIEW.md)**. Kept for historical reference only.
+
 # Brand/Shop System - Complete Technical Documentation
 
 > **Architecture note (post 2026-06-03 cutover):** This system is no longer a

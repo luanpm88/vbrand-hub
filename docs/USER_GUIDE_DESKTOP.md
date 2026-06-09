@@ -1,6 +1,8 @@
+> ⚠️ **SUPERSEDED — not a source of truth.** This describes the retired forked vBrand app (`~/apps/vbrand/app`). The current source of truth for the customer UI guide is **`~/apps/acelle_brand/docs/guide/USER_GUIDE_CUSTOMER.md`**. Kept for historical reference only.
+
 # Hướng dẫn sử dụng vBrand — Desktop (Máy tính)
 
-> Cập nhật: 2026-05-10
+> Cập nhật: 2026-05-20
 
 ---
 
