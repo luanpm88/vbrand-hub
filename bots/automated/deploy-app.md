@@ -1,18 +1,58 @@
 # Bot: Deploy Brand App
 
-Deploy acelle app with brand plugin to production server.
+Deploy the acelle app + **both plugins** (`acelle/brand` **and** `acelle/messenger`)
+to the BrandViet production server (https://app.sgconnect.vn).
+
+`app.sgconnect.vn` officially runs acelle mainline + `acelle/brand` + `acelle/messenger`
+(messenger went live on prod 2026-06-11). A normal "deploy brand prod" updates BOTH
+plugins.
 
 ## Cách dùng
 
+**Standard recurring deploy = the plugins (what changes day-to-day):**
+
+```bash
+bash ~/apps/vbrand/bots/automated/deploy-plugins.sh            # both plugins (default)
+bash ~/apps/vbrand/bots/automated/deploy-plugins.sh messenger  # one plugin only
+bash ~/apps/vbrand/bots/automated/deploy-plugins.sh brand
 ```
-bots/automated/deploy-app.md
-```
+
+`deploy-plugins.sh` is idempotent and safe to re-run: per plugin it backs up the live
+dir, rsyncs the full plugin source (`--delete`, prod's `vendor/` preserved), then
+register → `vendor:publish` → `migrate --force` → activate, and finally
+`config:cache` + verify (`artisan --version`, plugins active, `/login` 200,
+`/rui/messenger/inbox` 302). Rollback a plugin:
+`ssh vbrand@54.169.34.13 'cd /home/vbrand/app-new/storage/app/plugins/acelle && rm -rf <name> && mv <name>.bak-* <name>'`.
+
+The full acelle host-app rebuild (below) is rarely needed — only for host (non-plugin)
+code changes. Most prod work ships through the plugins.
 
 ## SSH accounts
 
 - `vbrand@54.169.34.13` — deploy operations (server migration 2026-05-24; old IP `18.141.199.175` retired)
 - Production app path: `/home/vbrand/app` (symlink → /home/vbrand/app-new; legacy real dir at /home/vbrand/app-legacy)
-- Branch: `main` (acelle mainline); plugin source: acelle_brand repo
+- Plugins on prod: `/home/vbrand/app-new/storage/app/plugins/acelle/{brand,messenger}`
+- Branch: `main` (acelle mainline); plugin sources: `~/apps/acelle_brand`, `~/apps/acelle_messenger`
+
+## ⚠️ Deploy the WHOLE plugin, never single files
+
+2026-06-09 incident: rsyncing ONE messenger `ServiceProvider.php` across a version
+skew fataled `php artisan` (a class existed locally but not on prod). Always deploy the
+entire plugin so code + classes + migrations stay internally consistent — that's exactly
+what `deploy-plugins.sh` does. If a plugin adds a NEW composer dependency, install it on
+prod's plugin `vendor/` first (the rsync preserves prod `vendor/`).
+
+## Messenger platform-app keys (Meta / Zalo)
+
+The admin platform-app credentials live in the `messenger_settings` table, **encrypted
+with the instance APP_KEY** — so you cannot copy ciphertext between instances. Transfer
+DECRYPTED values and let the target re-encrypt: read locally via
+`PlatformAppSettingsService` accessors, then on prod call `$svc->set(...)` /
+`$svc->setBool(...)` (see the one-off `/tmp` tinker pattern used on 2026-06-11). The
+Meta App ID/secret/config-id/verify-token + Zalo App ID/secret + feature flags +
+`messenger_platform_mode_availability` grid were seeded this way (no DB seeder). After
+moving keys, the admin must re-point the Meta/Zalo webhook callback URLs at
+`https://app.sgconnect.vn/...` and re-attest in the vendor dashboards.
 
 ## Flow
 
