@@ -38,7 +38,7 @@ Từ DOMAIN, tính ra các biến:
 - `WP_ADMIN_USER` = `admin`
 - `WP_ADMIN_PASS` = `aA456321@`
 - `WP_PATH` = `/home/${DIR_NAME}/wordpress`
-- `BRAND_USER_PASS` = `123456`
+- `BRAND_USER_PASS` = `<Stem>@2026` — **Stem** = nhãn đầu của DOMAIN viết hoa chữ cái đầu (ví dụ `khomaynenkhi.com` → `Khomaynenkhi@2026`, `logitech.b-teka.com` → `Logitech@2026`, `cafedanhphat.vn` → `Cafedanhphat@2026`). ⛔ **TUYỆT ĐỐI KHÔNG dùng `123456`** — mật khẩu chung yếu, gây security incident 2026-06-19 (toàn bộ shop đã bị reset sang pattern này). Mỗi shop một mật khẩu riêng theo stem.
 - `BRAND_APP_PATH` = `/home/vbrand/app` — **lưu ý:** sau cutover (2026-06-03) đây là **symlink** trỏ tới `/home/vbrand/app-new` (release acelle mainline + plugin `acelle/brand`). Bản fork cũ giữ lại để rollback tại `/home/vbrand/app-legacy`. DB của app là `brand` (DB cũ `vbrand` giữ để rollback).
 - `BRAND_APP_ENDPOINT` = endpoint mà WP gọi ngược về Brand app. **KHÔNG còn `/api/brand` như app fork cũ.** Trong kiến trúc plugin mới, việc đẩy endpoint+secret sang WP được `ConnectionService::connect()` tự làm (xem bước 14), nên KHÔNG cần điền tay. Nếu cần external JSON API thì plugin expose `/api/v1/brand/*` (guard `auth:api`).
 - `WP_API_ENDPOINT` = `https://${DOMAIN}/wp-json/vbrandsync/v1` (sau khi SSL, nếu SSL fail thì `http://`)

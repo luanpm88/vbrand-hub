@@ -4,6 +4,17 @@
 
 Đọc `docs/VBRAND_SYSTEM_DOCUMENTATION.md` trước khi code — chứa toàn bộ design, architecture, patterns, API contracts.
 
+## 🔗 Repos liên quan — đọc CẢ HAI khi làm việc brand / SGConnect
+
+Project này gắn chặt với hệ sinh thái **SGConnect** (chung server, deploy, shops, order lifecycle). Khi làm bất kỳ việc gì liên quan brand / shop / mobile / deploy → đọc các repo sau cùng lúc:
+
+| Repo | Vai trò |
+|---|---|
+| **`~/apps/acelle_brand/`** | Plugin `acelle/brand` (SGConnect commerce trên `app.sgconnect.vn`) + mobile app. Đọc `docs/MOBILE.md`, `docs/TEST.md`. |
+| **`~/apps/acelle_landing/`** | Landing + ops/cutover của hệ sinh thái. Deploy/maintenance/cutover docs ở `docs/` (DEPLOY, MAINTENANCE, CUTOVER_PLAYBOOK). |
+
+Repo này (`vbrand`) giữ: ⭐ `bots/report/sites.md` (registry 16 shop + **credentials đăng nhập app**), `bots/vbrand_new_prod_site.md` (bot tạo site mới), `docs/**` (deploy/server/architecture/order-status), plugin `vbrandsync`.
+
 ## Quy tắc bắt buộc
 
 1. **Luôn đọc docs trước** — không assume, không đoán
