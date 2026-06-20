@@ -19,7 +19,8 @@ banner pointing at their plugin source of truth.
 ### ✅ Current (maintained here — no plugin equivalent)
 | File | Scope |
 |---|---|
-| `SERVER_MOVE_PLAN.md` | Prod infrastructure / ops — servers, per-site users, php-fpm pools, server move + rollback. |
+| `DEPLOY-SGCONNECT.md` | **Standard deploy playbook** for live `app.sgconnect.vn` — rsync host + plugins (messenger/brand) + vbrandsync to all WP sites, migrate/publish/clear, verify, rollback. **Read first before any prod deploy.** |
+| `SERVER_MOVE_PLAN.md` | Prod infrastructure / ops — servers, per-site users, php-fpm pools; the one-time 2026-05 server move + rollback (historical; ongoing deploys → `DEPLOY-SGCONNECT.md`). |
 | `SALES_HANDOVER.md` | Sales / business — feature list, onboarding, demo sites (platform-level, backend-agnostic). |
 
 ### ↪︎ Superseded by the plugin (kept for history; see each file's banner)

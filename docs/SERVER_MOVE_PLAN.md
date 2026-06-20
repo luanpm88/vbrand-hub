@@ -1,5 +1,10 @@
 # vBrand Server Migration Plan — 2026-05-24
 
+> 📌 **For ongoing deploys to the live server, use [`DEPLOY-SGCONNECT.md`](DEPLOY-SGCONNECT.md)** —
+> the standard playbook (rsync host + plugins + vbrandsync to all WP sites, migrate/publish/clear,
+> verify). THIS file is the **historical one-time migration record** (old IP → `54.169.34.13`,
+> completed ~2026-05-27); keep it for rollback context only.
+
 **Old server:** `52.220.55.112` (was `18.141.199.175` — IP got swapped on AWS Lightsail)
 **New server:** `54.169.34.13` (Ubuntu 24.04, fresh)
 **Strategy:** Provision new → clone all source + DB as-is → smoke test → SSL → keep old as rollback ~1-2 tuần → decommission.

@@ -222,8 +222,8 @@ gh label create "type:perf" --color "bfdadc" --repo luanpm88/vbrand-hub
 
 ## Server Info
 
-- Production: `18.141.199.175`
+- Production: `54.169.34.13`
 - SSH: `vbrand@` (app ops), `ubuntu@` (sudo)
 - Brand app: `/home/vbrand/app` (branch: `brand`)
-- WP sites: `/home/vbrand/sites/*/`
+- WP sites: `/home/<DIR_NAME>/wordpress/ — mỗi customer 1 user/`
 - Sites registry: `bots/report/sites.md`

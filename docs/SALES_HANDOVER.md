@@ -1,6 +1,6 @@
 # vBrand — Tài liệu bàn giao Sales
 
-> Cập nhật: 2026-05-10
+> Cập nhật: 2026-05-20
 
 ---
 
