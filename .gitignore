@@ -20,3 +20,10 @@ acellemail
 
 # KB
 kb
+
+# Stray clone — separate project, not part of this hub (636M)
+auriuscrm/
+
+# Ephemeral artifacts
+migration-backup/
+test-results/
