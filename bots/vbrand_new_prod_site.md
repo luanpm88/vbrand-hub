@@ -248,7 +248,30 @@ wp option update woocommerce_price_num_decimals '0'
 "
 ```
 
-**Lưu ý**: `woocommerce_default_country = VN` là bắt buộc. WC Blocks dùng option này để khởi tạo country mặc định trong checkout form — nếu không set, Blocks sẽ hiển thị địa chỉ Mỹ (US). Plugin vbrandsync đã có filter `pre_option_woocommerce_default_country` nhưng set thẳng vào DB ở đây để chắc chắn.
+> **KHÔNG cần chạy tay các lệnh dưới** nếu bạn chạy `configure-wp-site.sh` (Bước 7.5) —
+> script đó đã enforce currency + lang + **classic checkout** cho MỌI site, mọi lần deploy.
+
+**⛔ BẮT BUỘC: checkout phải là CLASSIC (không phải WC Blocks).** Địa chỉ VN-2026 2 cấp
+của SGconnect (**Tỉnh/Thành → Phường/Xã**, KHÔNG còn Quận/Huyện — cải cách hành chính
+2025) được vbrandsync gắn vào **classic checkout** (`woocommerce_checkout_fields` +
+cascade JS tỉnh→phường load từ API host `/api/brand/address/vn/wards`). **WC Blocks
+checkout là surface React riêng, các field này KHÔNG với tới → checkout Blocks hiện
+KHÔNG có tỉnh/phường và KHÔNG đặt được đơn.** Vì vậy phải ép trang checkout về shortcode:
+
+```bash
+ssh vbrand@54.169.34.13 "
+cd /home/${DIR_NAME}/wordpress
+cid=\$(wp option get woocommerce_checkout_page_id)
+wp post update \$cid --post_content='[woocommerce_checkout]' --post_status=publish
+"
+```
+
+**Lưu ý:** `woocommerce_default_country = VN` là bắt buộc — WC dùng option này để render
+dropdown tỉnh (`woocommerce_states['VN']`, 34 tỉnh VN-2026) trong checkout. Phí ship
+Express tính theo TỈNH (cùng tỉnh 25k / khác tỉnh 100k) qua endpoint host
+`/api/brand/get-vbrand-express-price-2026?to_province=` — không còn phụ thuộc quận.
+Tất cả những cái này được `configure-wp-site.sh` enforce lại mỗi lần deploy (idempotent),
+nên site cũ hay mới đều pass checkout.
 
 ### Bước 6: Sync plugin vbrandsync + themes từ local (rsync → vbrand@)
 
